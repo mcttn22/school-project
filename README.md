@@ -1,1 +1,3 @@
-- AI (or multiple types to compare) to learn dataset patterns, neural network tutorial, talk about {types of ai, how it works, dataset, how its trained, result}, images=square from cirle?, fin summber => talk in application
+# Year 13 Computer Science Programming Project
+## About
+Current focus is on learning Artificial Neural Networks
