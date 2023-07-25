@@ -1,2 +1,8 @@
-.vscode/
-main
+# Byte compiled files
+__pycache__/
+
+# Packaging
+*.egg-info
+
+# Devlopment
+venv/
