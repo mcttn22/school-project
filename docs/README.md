@@ -1,4 +1,4 @@
-# About
+# About AI
 - Artificial Intelligence (AI) mimics human cognition in order to perform tasks and learn from them
 - Machine Learning is a subfield of AI that uses algorithms trained on data to produce adaptable models (trained programs)
 - Deep Learning is a subfield of Machine Learning that uses Artificial Neural Networks (ANNs)
