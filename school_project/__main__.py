@@ -1,16 +1,12 @@
-import math
-
-def sigmoid(z):
-    return 1 / (1 + math.expr(-z))
-
-def train():
-    pass
-
-def model():
-    pass
+import sys
+from xor_model import XorModel
 
 def main():
-    model()
+    if len(sys.argv) > 1 and sys.argv[1] == "--xor":
+        xorModel = XorModel()
+        xorModel.main()
+    else:
+        print("Invalid option, add '--xor' option to run the XOR model.")
 
 if __name__ == "__main__":
     main()
