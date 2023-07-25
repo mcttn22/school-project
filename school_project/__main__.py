@@ -1,7 +1,8 @@
 import sys
 from xor_model import XorModel
 
-def main():
+def main() -> None:
+    "Entrypoint of project, decides which model to run"
     if len(sys.argv) > 1 and sys.argv[1] == "--xor":
         xorModel = XorModel()
         xorModel.main()
