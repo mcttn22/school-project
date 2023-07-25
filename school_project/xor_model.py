@@ -25,7 +25,7 @@ class XorModel():
     def train(self):
         "Train weights and biases"
         print("\n*** Training Weights and Biases ***\n")
-        # for i in range(100):
+        # for epoch in range(100):
         #     pass
 
     def model(self):
