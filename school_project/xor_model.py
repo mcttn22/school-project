@@ -5,10 +5,16 @@ class XorModel():
         return 1 / (1 + math.expr(-z))
 
     def train(self):
-        pass
+        "Train weights and bias'"
+        # for i in range(100):
+        #     pass
 
     def model(self):
-        pass
+        bias: float = 0
+        weights: list[int] = []
+        inputs: list[int] = [0,1]
+        self.train()
 
     def main(self):
-        print("xor")
+        print("XOR model")
+        self.model()
