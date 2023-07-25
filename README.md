@@ -1,13 +1,13 @@
 # Year 13 Computer Science Programming Project
 ## About
-Current focus is on learning Artificial Neural Networks
+This project focuses on learning Artificial Neural Networks and their applications
 
 ## Run
-Run with 'python3 school_project'
+Run with 'python3 school_project' and option '--xor' to run the XOR model
 
 ## Dev Setup
 - Create a virtualenv with 'python3 -m venv {venv name}'
-- Use 'source ./virtualenv/bin/activate' to enter venv
+- Use 'source ./venv/bin/activate' to enter venv
 - Use pip as normal in the venv
 - Use 'python3 setup.py develop' to setup preferences of setup.py (install package to venv in developing mode)
 ### Tests
@@ -16,4 +16,6 @@ Run with 'python3 school_project'
 - 
 
 ## TODO
-- 
+- Setup project plan and theory (with images)
+- Create XOR model
+- Longterm aim to develop image recognition model and a final application with a UI and specific focus
