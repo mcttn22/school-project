@@ -8,5 +8,7 @@ setup(
     author='Max Cotton',
     author_email='maxcotton22@gmail.com',
     description='Current focus is on learning Artificial Neural Networks',
-    install_requires=[],
+    install_requires=[
+            'numpy',
+    ],
 )
