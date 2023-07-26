@@ -16,6 +16,6 @@ Run with 'python3 school_project' and option '--xor' to run the XOR model
 - 
 
 ## TODO
-- Setup project plan and theory (with images)
+- Setup project plan and theory (with images) with latex
 - Create XOR model
 - Longterm aim to develop image recognition model and a final application with a UI and specific focus
