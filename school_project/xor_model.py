@@ -59,3 +59,4 @@ class XorModel():
         plt.plot(losses)
         plt.xlabel("Epochs")
         plt.ylabel("Loss Value")
+        plt.show()
