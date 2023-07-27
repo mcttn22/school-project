@@ -10,7 +10,7 @@
 - Hidden layers of calculations (the more layers, the more accurate the prediction), consisting of the following:
   - An Activation function:
     - Calculate the dot product of the input array with a hidden weight array, then sum the result with a bias
-  - A Transfer function to get an output, Eg: Sigmoid function to transform the result of the Activation function to a number between 0 and 1
+  - A Transfer function to get an output, Eg: Sigmoid function to transform the result of the Activation function to a number between 0 and 1, then the result can be classified as closer to 0 or 1 (known as logistic regression)
 - Output layer to output the final result of the calculations from the hidden layers, consisting of the following:
   - An Activation function:
     - Caclulate the dot product of the hidden layer output with an output weight array, then sum the result with a bias
