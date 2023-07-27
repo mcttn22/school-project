@@ -14,8 +14,8 @@ Run with 'python3 school_project' and option '--xor' to run the XOR model
 - Use 'python3 -m unittest discover school_project/test/' to run tests
 ### Documentation
 - XOR model: https://medium.com/analytics-vidhya/coding-a-neural-network-for-xor-logic-classifier-from-scratch-b90543648e8a
+- Image model: https://towardsdatascience.com/step-by-step-guide-to-building-your-own-neural-network-from-scratch-df64b1c5ab6e
 
 ## TODO
-- XOR model TODOs
-- Add biases to XOR model
+- Develop theory and code for image model
 - Longterm aim to develop image recognition model and a final application with a UI and specific focus
