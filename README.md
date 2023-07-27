@@ -13,7 +13,7 @@ Run with 'python3 school_project' and option '--xor' to run the XOR model
 ### Tests
 - Use 'python3 -m unittest discover school_project/test/' to run tests
 ### Documentation
-- 
+- XOR model: https://medium.com/analytics-vidhya/coding-a-neural-network-for-xor-logic-classifier-from-scratch-b90543648e8a
 
 ## TODO
 - Setup project plan and theory (with images) with latex
