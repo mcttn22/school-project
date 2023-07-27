@@ -24,9 +24,9 @@ class XorModel():
 
     def back_propagation(self, hiddenOutput, prediction) -> None:
         "Adjust the weights via gradient descent"
-        outputWeightGradient = np.dot(prediction - self.outputs, hiddenOutput.T) / self.inputs.shape[1]   # Why divide by m ?
+        outputWeightGradient = np.dot(prediction - self.outputs, hiddenOutput.T) / self.inputs.shape[1]   # TODO: Why divide by number of inputs 
         hiddenWeightGradient = np.dot(np.dot(self.outputWeights.T, prediction - self.outputs) * hiddenOutput * (1 - hiddenOutput), self.inputs.T) / self.inputs.shape[1]
-        # Reshape arrays
+        # Reshape arrays to match the weight arrays for multiplication
         outputWeightGradient = np.reshape(outputWeightGradient, self.outputWeights.shape)
         hiddenWeightGradient = np.reshape(hiddenWeightGradient, self.hiddenWeights.shape)
         # Update weights
@@ -46,7 +46,7 @@ class XorModel():
         print("\n*** Using trained weights to predict output of XOR gate on two inputs ***\n")
         hiddenOutput, prediction = self.forward_propagation()
         for i in range(self.inputs.shape[1]):
-            print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {prediction[0][i]}")
+            print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {1 if np.squeeze(prediction)[i] > 0.5 else 0}")
         print("\nFinal state of model:")
         print(self)
 

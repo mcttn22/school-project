@@ -16,6 +16,6 @@ Run with 'python3 school_project' and option '--xor' to run the XOR model
 - XOR model: https://medium.com/analytics-vidhya/coding-a-neural-network-for-xor-logic-classifier-from-scratch-b90543648e8a
 
 ## TODO
-- Setup project plan and theory (with images) with latex
-- Create XOR model, initially without biases but can add after
+- XOR model TODOs
+- Add biases to XOR model
 - Longterm aim to develop image recognition model and a final application with a UI and specific focus
