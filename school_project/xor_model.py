@@ -20,7 +20,7 @@ class XorModel():
 
     def sigmoid(self, z):
         "Transfer function, transforms input to number between 0 and 1"
-        return 1 / (1 + np.expr(-z))
+        return 1 / (1 + np.exp(-z))
 
     def back_propagation(self, hiddenOutput, prediction) -> None:
         "Adjust the weights and biases via gradient descent"
