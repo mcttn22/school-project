@@ -40,9 +40,9 @@ For each epoch the input array consisting of a combination of a 0 and/or 1, is f
 
 \begin{itemize}
     \item Once a prediction is obtained, you then move back through the network adjusting the weights
-    \item The "Loss" (L) (how wrong the prediction is) can be calculated with the Loss function, which calculates the average    difference between the prediction (A2) and the actual value (Y), the average is found by summing the result for each prediction then dividing by the number of predictions (m). This shows how well the network is performing.
+    \item The "Loss" (L) (how wrong the prediction is) can be calculated with the Loss function, which calculates the average difference between the prediction (A2) and the actual value (Y), the average is found by summing the result for each prediction then dividing by the number of predictions (m). This shows how well the network is performing.
     \begin{itemize}
-        \item Where $L = -(\frac{1}{m}) * \sum(Y * log(A2) + (1-Y) * log(1-A2))$
+        \item Where $L = -(\frac{1}{m}) * \sum(Y * log(A2) + (1-Y) * log(1-A2))$ and "log()" is the natural logarithm (e is the base)
     \end{itemize}
     \item Weights are adjusted via Gradient Descent, which aims to get the minimum Loss value, with the following formula:
     \begin{itemize}
