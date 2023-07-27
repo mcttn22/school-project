@@ -52,7 +52,7 @@ class XorModel():
 
     def train(self, epochs: int) -> None:
         "Train weights"
-        print("\n*** Training Weights and Biases ***\n")
+        print("\n*** Training Weights ***\n")
         losses: list[float] = []
         for epoch in range(epochs):
             hiddenOutput, prediction = self.forward_propagation()
