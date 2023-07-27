@@ -20,7 +20,7 @@
 - Forward Propagation, the process of feeding inputs into the neural network and getting a result/prediction
 - Back Propagation, the process of calculating the error in the prediction then adjusting the weights and biases accordingly, consisting of the following:
   - A Cost function (used for graphs and deriving formula for gradient descent):
-    - Finds the average of the difference between the actual and the predicted value for each input squared, this is squared to stop negatives cancelling out
+    - Finds the average of the difference between the actual and the predicted value for each input
   - Gradient descent:
     - Update the hidden/output weight arrays and bias, by subtracting the rate of change of Cost with respect to Weight, multiplied with a learning rate
     - This repetitive process will continue to reduce the cost to a minimum, if the learning rate is set to an appropriate value

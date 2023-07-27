@@ -30,21 +30,21 @@
         \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
     \end{itemize}
     \item Z2 is the dot product of the W2 array and A1
-    \item A2 is sigmoid(Z2), which is the prediction Y
+    \item A2 is sigmoid(Z2), which is the prediction
 \end{itemize}
 
 \section{Forward Propagation}
-For each epoch the input array consisting of a combination of a 0 and/or 1, is fed through the network to obtain a prediction Y
+For each epoch the input array consisting of a combination of a 0 and/or 1, is fed through the network to obtain a prediction A2
 
 \section{Back Propagation}
 
 \begin{itemize}
     \item Once a prediction is obtained, you then move back through the network adjusting the weights
-    \item The "Cost" (how wrong the prediction is) can be calculated with the cost function, which calculates the average squared difference between the prediction and the actual values. This shows how well the network is performing.
+    \item The "Loss" (L) (how wrong the prediction is) can be calculated with the Loss function, which calculates the average    difference between the prediction (A2) and the actual value (Y), the average is found by summing the result for each prediction then dividing by the number of predictions (m). This shows how well the network is performing.
     \begin{itemize}
-        \item Where $Cost = -(\frac{1}{nInputs}) * \sum(Y * log(A2) + (1-Y) * log(1-A2))$
+        \item Where $L = -(\frac{1}{m}) * \sum(Y * log(A2) + (1-Y) * log(1-A2))$
     \end{itemize}
-    \item Weights are adjusted via Gradient Descent, which aims to get the minimum cost value, with the following formula:
+    \item Weights are adjusted via Gradient Descent, which aims to get the minimum Loss value, with the following formula:
     \begin{itemize}
         \item $W = W - learningRate * \frac{\partial{L}}{\partial{W}}$
         \item Where $\frac{\partial{L}}{\partial{W2}} = (A2-Y) * A1$
@@ -53,5 +53,16 @@ For each epoch the input array consisting of a combination of a 0 and/or 1, is f
 \end{itemize}
 
 \section{Derivations for $\frac{\partial{L}}{\partial{W2}}$ and $\frac{\partial{L}}{\partial{W1}}$}
+
+\begin{itemize}
+    \item Functions used so far:
+    \begin{enumerate}
+        \item $Z1 = W1 . X$
+        \item $A1 = \frac{1}{1+e^{-Z1}}$
+        \item $Z2 = W2 . A1$
+        \item $A2 = \frac{1}{1+e^{-Z2}}$
+        \item $L = -(\frac{1}{m}) * \sum(Y * log(A2) + (1-Y) * log(1-A2))$
+    \end{enumerate}
+\end{itemize}
 
 \end{document}
