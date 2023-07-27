@@ -6,7 +6,7 @@ def main() -> None:
     if len(sys.argv) > 1 and sys.argv[1] == "--xor":
         print("XOR model")
         xorModel = XorModel()
-        xorModel.train(epochs=0)
+        xorModel.train(epochs=50_000)
         xorModel.predict()
     else:
         print("Invalid option, add '--xor' option to run the XOR model.")

@@ -16,14 +16,14 @@ class XorModel():
 
     def __repr__(self) -> str:
         "Read current state of model"
-        return f"Hidden Weights: {self.hiddenWeights}\nOutput Weights: {self.outputWeights}\nLearning Rate: {self.LEARNING_RATE}"
+        return f"Hidden Weights: {self.hiddenWeights.tolist()}\nOutput Weights: {self.outputWeights.tolist()}\nLearning Rate: {self.LEARNING_RATE}"
 
     def sigmoid(self, z):
         "Transfer function, transforms input to number between 0 and 1"
         return 1 / (1 + np.exp(-z))
 
     def back_propagation(self, hiddenOutput, prediction) -> None:
-        "Adjust the weights and biases via gradient descent"
+        "Adjust the weights via gradient descent"
         outputWeightGradient = np.dot(prediction - self.outputs, hiddenOutput.T) / self.inputs.shape[1]   # Why divide by m ?
         hiddenWeightGradient = np.dot(np.dot(self.outputWeights.T, prediction - self.outputs) * hiddenOutput * (1 - hiddenOutput), self.inputs.T) / self.inputs.shape[1]
         # Reshape arrays
@@ -34,7 +34,7 @@ class XorModel():
         self.outputWeights -= self.LEARNING_RATE * outputWeightGradient
 
     def forward_propagation(self):
-        "Generate a prediction with the weights and biases, returns the hidden layer output and a prediction"
+        "Generate a prediction with the weights, returns the hidden layer output and a prediction"
         z1 = np.dot(self.hiddenWeights, self.inputs)
         hiddenOutput = self.sigmoid(z1)
         z2 = np.dot(self.outputWeights, hiddenOutput)
@@ -42,13 +42,16 @@ class XorModel():
         return hiddenOutput, prediction
 
     def predict(self) -> None:
-        "Use trained weights and biases to predict ouput of XOR gate on two inputs"
-        print("\n*** Using trained weights and biases to predict output of XOR gate on two inputs ***\n")
-        print("\nFinal state of model:\n")
+        "Use trained weights to predict ouput of XOR gate on two inputs"
+        print("\n*** Using trained weights to predict output of XOR gate on two inputs ***\n")
+        hiddenOutput, prediction = self.forward_propagation()
+        for i in range(self.inputs.shape[1]):
+            print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {prediction[0][i]}")
+        print("\nFinal state of model:")
         print(self)
 
     def train(self, epochs: int) -> None:
-        "Train weights and biases"
+        "Train weights"
         print("\n*** Training Weights and Biases ***\n")
         losses: list[float] = []
         for epoch in range(epochs):
