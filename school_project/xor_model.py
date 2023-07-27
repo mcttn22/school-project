@@ -56,6 +56,9 @@ class XorModel():
         losses: list[float] = []
         for epoch in range(epochs):
             hiddenOutput, prediction = self.forward_propagation()
+            # Output input and prediction
+            for i in range(self.inputs.shape[1]):
+                print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {np.squeeze(prediction)[i]}")
             loss = - (1/self.inputs.shape[1]) * np.sum(self.outputs * np.log(prediction) + (1 - self.outputs) * np.log(1 - prediction))
             losses.append(loss)
             self.back_propagation(hiddenOutput=hiddenOutput, prediction=prediction)
