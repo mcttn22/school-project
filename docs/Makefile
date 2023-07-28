@@ -1,4 +1,4 @@
-all: maths numpy xor clean
+all: maths numpy xor image clean
 
 numpy:
 	latexmk src/latex/numpy.tex
