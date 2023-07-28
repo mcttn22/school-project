@@ -3,7 +3,7 @@
 This project focuses on learning Artificial Neural Networks and their applications
 
 ## Run
-Run with 'python3 school_project' and option '--xor' to run the XOR model
+Run with 'python3 school_project' and option '--xor' to run the XOR model or '--image' to run the Image model
 
 ## Dev Setup
 - Create a virtualenv with 'python3 -m venv {venv name}'
