@@ -17,5 +17,5 @@ Run with 'python3 school_project' and option '--xor' to run the XOR model or '--
 - Image model: https://towardsdatascience.com/step-by-step-guide-to-building-your-own-neural-network-from-scratch-df64b1c5ab6e
 
 ## TODO
-- Develop theory and code for image model
+- Develop theory and code for image model, is it a CNN?
 - Longterm aim to develop image recognition model and a final application with a UI and specific focus
