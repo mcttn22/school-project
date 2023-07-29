@@ -13,7 +13,7 @@ def main() -> None:
         print("Image model")
         imageModel = ImageModel()
         imageModel.train(epochs=2_000)
-        # imageModel.predict()
+        imageModel.predict()
     else:
         print("Invalid option, add '--xor' option to run the XOR model or '--image' option to run the Image model.")
 

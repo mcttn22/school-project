@@ -11,11 +11,11 @@ class ImageModel():
         # Initialise weights and bias to 0
         self.weights = np.zeros(shape=(self.trainInputs.shape[0], 1))
         self.bias: float = 0
-        self.LEARNING_RATE: float = 0.5
+        self.LEARNING_RATE: float = 0.005
 
     def __repr__(self) -> str:
         "Read current state of model"
-        return f"Weights: {self.weights.tolist()}\nLearning Rate: {self.LEARNING_RATE}"
+        return f"Learning Rate: {self.LEARNING_RATE}"
     
     def load_datasets(self): # TODO Not all dataset variables are used
         # Load datasets, h5 file stores large amount of data with quick access
@@ -63,7 +63,15 @@ class ImageModel():
 
     def predict(self) -> None:
         "Use trained weights and bias to predict if image is a cat or not a cat"
-        print("\n*** Using trained weights to predict output of XOR gate on two inputs ***\n")
+        print("\n*** Using trained weights and bias to predict if image is a cat or not a cat ***\n")
+        z1 = np.dot(self.weights.T, self.testInputs) + self.bias
+        prediction = np.squeeze(self.sigmoid(z1).tolist())
+        plt.imshow(self.testInputs[:,0].reshape((64,64,3)))
+        print(1 if prediction[0] > 0.5 else 0)
+        plt.show()
+        plt.imshow(self.testInputs[:,14].reshape((64,64,3)))
+        print(1 if prediction[14] > 0.5 else 0)
+        plt.show()
         print("\nFinal state of model:")
         print(self)
 
@@ -74,9 +82,9 @@ class ImageModel():
         for epoch in range(epochs):
             prediction = self.forward_propagation()
             loss = - (1/self.trainInputs.shape[1]) * np.sum(self.trainOutputs * np.log(prediction) + (1 - self.trainOutputs) * np.log(1 - prediction))
-            losses.append(loss)
+            losses.append(np.squeeze(loss))
             self.back_propagation(prediction=prediction)
-        plt.plot(losses)
+        plt.plot(np.squeeze(losses))
         plt.xlabel("Epochs")
         plt.ylabel("Loss Value")
         plt.show()
