@@ -1,1 +1,1 @@
-__all__ = ['xor_model']
+__all__ = ['xor_model','image_model']
