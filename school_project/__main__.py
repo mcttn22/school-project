@@ -12,8 +12,8 @@ def main() -> None:
     elif len(sys.argv) > 1 and sys.argv[1] == "--image":
         print("Image model")
         imageModel = ImageModel()
-        imageModel.train(epochs=50_000)
-        imageModel.predict()
+        imageModel.train(epochs=2_000)
+        # imageModel.predict()
     else:
         print("Invalid option, add '--xor' option to run the XOR model or '--image' option to run the Image model.")
 
