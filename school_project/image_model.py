@@ -53,7 +53,7 @@ class ImageModel():
         prediction = self.sigmoid(z1)
         return prediction
 
-    def predict(self) -> None: # TODO: find percentage of correct predictions
+    def predict(self) -> None:
         "Use trained weights and bias to predict if image is a cat or not a cat"
         print("\n*** Using trained weights and bias to predict if image is a cat or not a cat ***\n")
         # Calculate prediction for test dataset
