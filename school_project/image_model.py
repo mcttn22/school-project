@@ -17,30 +17,20 @@ class ImageModel():
         "Read current state of model"
         return f"Learning Rate: {self.LEARNING_RATE}"
     
-    def load_datasets(self): # TODO Not all dataset variables are used
+    def load_datasets(self):
         # Load datasets, h5 file stores large amount of data with quick access
         trainDataset = h5py.File('school_project/datasets/train-cat.h5', "r")
         testDataset = h5py.File('school_project/datasets/test-cat.h5', "r")
-
         # Input arrays, containing the RGB values for each pixel in each 64x64 pixel image, for 209 images
         trainInputs = np.array(trainDataset["train_set_x"][:])
         testInputs = np.array(testDataset["test_set_x"][:])
-
-        # Output arrays, 1 for cat, 0 for not cat
+        # Output array, 1 for cat, 0 for not cat
         trainOutputs = np.array(trainDataset["train_set_y"][:])
-        testOutputs = np.array(testDataset["test_set_y"][:])
-
         # Reshape input arrays into 1 dimension (flatten), then divide by 255 (RGB) to standardize them TODO
         trainInputs = trainInputs.reshape((trainInputs.shape[0], -1)).T / 255
         testInputs = testInputs.reshape((testInputs.shape[0], -1)).T / 255
-
-        # Reshape output arrays TODO
+        # Reshape output array TODO
         trainOutputs = trainOutputs.reshape((1, trainOutputs.shape[0]))
-        testOutputs = testOutputs.reshape((1, testOutputs.shape[0]))
-
-        # Load names for test dataset images
-        testNames = np.array(testDataset["list_classes"][:])
-
         return trainInputs, trainOutputs, testInputs
 
     def sigmoid(self, z):
