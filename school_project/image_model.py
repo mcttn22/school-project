@@ -42,7 +42,7 @@ class ImageModel():
     def back_propagation(self, prediction) -> None:
         "Adjust the weights and bias via gradient descent"
         weightGradient = np.dot(self.trainInputs, (prediction - self.trainOutputs).T) / self.trainInputs.shape[1]   # TODO: Why divide by number of inputs 
-        biasGradient = np.sum(prediction - self.trainOutputs) / self.trainInputs.shape[1]
+        biasGradient = np.sum(prediction - self.trainOutputs) / self.trainInputs.shape[1]   # TODO: Learn bias derivative
         # Update weights and bias
         self.weights -= self.LEARNING_RATE * weightGradient
         self.bias -= self.LEARNING_RATE * biasGradient

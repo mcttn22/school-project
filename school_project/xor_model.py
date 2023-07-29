@@ -46,7 +46,7 @@ class XorModel():
         print("\n*** Using trained weights to predict output of XOR gate on two inputs ***\n")
         hiddenOutput, prediction = self.forward_propagation()
         for i in range(self.inputs.shape[1]):
-            print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {1 if np.squeeze(prediction)[i] > 0.5 else 0}")
+            print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {1 if np.squeeze(prediction)[i] >= 0.5 else 0}")
         print("\nFinal state of model:")
         print(self)
 
