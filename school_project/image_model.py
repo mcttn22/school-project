@@ -15,7 +15,7 @@ class ImageModel():
 
     def __repr__(self) -> str:
         "Read current state of model"
-        return f"Weights: {self.weights}\nLearning Rate: {self.LEARNING_RATE}"
+        return f"Weights: {self.weights}\nBias: {self.bias}\nLearning Rate: {self.LEARNING_RATE}"
     
     def load_datasets(self):
         # Load datasets, h5 file stores large amount of data with quick access
