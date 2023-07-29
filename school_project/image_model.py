@@ -7,7 +7,7 @@ class ImageModel():
     def __init__(self) -> None:
         "Initialise model values"
         # Load datasets
-        self.trainInputs, self.trainOutputs, self.testInputs = self.load_datasets()
+        self.trainInputs, self.trainOutputs, self.testInputs, self.testOutputs = self.load_datasets()
         # Initialise weights and bias to 0
         self.weights = np.zeros(shape=(self.trainInputs.shape[0], 1))
         self.bias: float = 0
@@ -15,7 +15,7 @@ class ImageModel():
 
     def __repr__(self) -> str:
         "Read current state of model"
-        return f"Learning Rate: {self.LEARNING_RATE}"
+        return f"Weights: {self.weights}\nLearning Rate: {self.LEARNING_RATE}"
     
     def load_datasets(self):
         # Load datasets, h5 file stores large amount of data with quick access
@@ -24,14 +24,16 @@ class ImageModel():
         # Input arrays, containing the RGB values for each pixel in each 64x64 pixel image, for 209 images
         trainInputs = np.array(trainDataset["train_set_x"][:])
         testInputs = np.array(testDataset["test_set_x"][:])
-        # Output array, 1 for cat, 0 for not cat
+        # Output arrays, 1 for cat, 0 for not cat
         trainOutputs = np.array(trainDataset["train_set_y"][:])
+        testOutputs = np.array(testDataset["test_set_y"][:])
         # Reshape input arrays into 1 dimension (flatten), then divide by 255 (RGB) to standardize them TODO
         trainInputs = trainInputs.reshape((trainInputs.shape[0], -1)).T / 255
         testInputs = testInputs.reshape((testInputs.shape[0], -1)).T / 255
-        # Reshape output array TODO
+        # Reshape output arrays TODO
         trainOutputs = trainOutputs.reshape((1, trainOutputs.shape[0]))
-        return trainInputs, trainOutputs, testInputs
+        testOutputs = testOutputs.reshape((1, testOutputs.shape[0]))
+        return trainInputs, trainOutputs, testInputs, testOutputs
 
     def sigmoid(self, z):
         "Transfer function, transforms input to number between 0 and 1"
@@ -51,16 +53,23 @@ class ImageModel():
         prediction = self.sigmoid(z1)
         return prediction
 
-    def predict(self) -> None:
+    def predict(self) -> None: # TODO: find percentage of correct predictions
         "Use trained weights and bias to predict if image is a cat or not a cat"
         print("\n*** Using trained weights and bias to predict if image is a cat or not a cat ***\n")
+        # Calculate prediction for test dataset
         z1 = np.dot(self.weights.T, self.testInputs) + self.bias
-        prediction = np.squeeze(self.sigmoid(z1).tolist())
+        prediction = self.sigmoid(z1)
+        # Calculate performance of model
+        testOutputs = self.testOutputs
+        accuracy = 100 - np.mean(np.abs(prediction - testOutputs)) * 100
+        print(f"Prediction accuracy: {round(accuracy)}%\n")
+        # Output results
+        print("Example results:")
         plt.imshow(self.testInputs[:,0].reshape((64,64,3)))
-        print(1 if prediction[0] > 0.5 else 0)
+        print("Cat" if np.squeeze(prediction)[0] >= 0.5 else "Not a cat")
         plt.show()
         plt.imshow(self.testInputs[:,14].reshape((64,64,3)))
-        print(1 if prediction[14] > 0.5 else 0)
+        print("Cat" if np.squeeze(prediction)[14] >= 0.5 else "Not a cat")
         plt.show()
         print("\nFinal state of model:")
         print(self)
