@@ -76,8 +76,8 @@ class ImageModel():
         print(self)
 
     def train(self, epochs: int) -> None:
-        "Train weights"
-        print("\n*** Training Weights ***\n")
+        "Train weights and bias"
+        print("\n*** Training Weights and Bias ***\n")
         losses: list[float] = []
         for epoch in range(epochs):
             prediction = self.forward_propagation()
