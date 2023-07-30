@@ -6,7 +6,7 @@
 \usepackage{natbib}
 \usepackage{graphicx}
 
-\title{Image model theory}
+\title{Image model theory - Cat recognition}
 \author{Max Cotton}
 \date{}
 
@@ -16,8 +16,68 @@
 
 \section{Setup}
 
+\begin{itemize}
+    \item Load image datasets from '.h5' files
+    \begin{itemize}
+        \item Where each image in the input dataset, is represented by an R, G and B matrice, to store the RGB values of each pixel in the 64x64 pixel images
+        \item Each image's RGB matrices are then 'flattened' into a 1 dimensional array of values, where each element is also divided by 255 (max RGB value) to a number between 0 and 1, to standardize the dataset
+        \item The output dataset is also loaded, and is reshaped into a 1 dimensional array of 1s and 0s, to store the output of each image (1 for cat, 0 for non cat)
+    \end{itemize}
+    \item There is a training dataset with 209 pictures and a test dataset with 50 pictures (fewer pictures are needed for testing)
+    \item Afterwards, the weights and the bias are all initialised to zero/s
+\end{itemize}
+
 \section{Forward Propagation}
+For each epoch, the input array (X) of RGB values is dot producted with the weights (W), summed with a bias (B) (to produce Z) and transferred through the sigmoid function to obtain a prediction between 0 and 1 (A) (where a prediction greater than or equal to 0.5 predicts cat)
 
 \section{Back Propagation}
+
+\begin{itemize}
+    \item Once a prediction is obtained, you then move back through the network adjusting the weights and the bias
+    \item The "Loss" (L) (how wrong the prediction is) can be calculated with the Loss function, which calculates the average difference between the prediction and the actual value (Y), the average is found by summing the result for each prediction then dividing by the number of predictions (m). This shows how well the network is performing.
+    \begin{itemize}
+        \item Where $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$ and "log()" is the natural logarithm (e is the base)
+    \end{itemize}
+    \item The weights and the bias are adjusted via Gradient Descent, which aims to get the minimum Loss value, with the following formulae:
+    \begin{itemize}
+        \item $W = W - learningRate * \frac{\partial{L}}{\partial{W}}$
+        \begin{itemize}
+            \item Where $\frac{\partial{L}}{\partial{W}} = X * (A-Y)$
+        \end{itemize}
+        \item $B = B - learningRate * \frac{\partial{L}}{\partial{B}}$
+        \begin{itemize}
+            \item Where $\frac{\partial{L}}{\partial{B}} = (A-Y)$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\section{Derivations for $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$}
+
+\begin{itemize}
+    \item Functions used so far:
+    \begin{enumerate}
+        \item $Z = W . X + B$
+        \item $A = \frac{1}{1+e^{-Z}}$
+        \item $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$
+    \end{enumerate}
+    \item $\frac{\partial{L}}{\partial{W}}$ derivation:
+    \begin{itemize}
+        \item By the Chain rule, $\frac{\partial{L}}{\partial{W}} = \frac{\partial{L}}{\partial{A}} * \frac{\partial{A}}{\partial{Z}} * \frac{\partial{Z}}{\partial{W}}$
+        \item Using function 3, $\frac{\partial{L}}{\partial{A}} = (-\frac{1}{m})(\frac{Y-A}{A(1-A)})$
+        \item Using function 2, $\frac{\partial{A}}{\partial{Z}} = A * (1-A)$
+        \item Using function 1, $\frac{\partial{Z}}{\partial{W}} = X$
+        \item => $\frac{\partial{L}}{\partial{W}} = (-\frac{1}{m})(\frac{Y-A}{A(1-A)}) * A * (1-A) * X\\
+              = X * (A-Y)$
+    \end{itemize}
+    \item $\frac{\partial{L}}{\partial{B}}$ derivation:
+    \begin{itemize}
+        \item By the chain rule, $\frac{\partial{L}}{\partial{B}} = \frac{\partial{L}}{\partial{A}} * \frac{\partial{A}}{\partial{Z}} * \frac{\partial{Z}}{\partial{B}}$
+        \item Derived above, $\frac{\partial{L}}{\partial{A}} = (-\frac{1}{m})(\frac{Y-A}{A(1-A)})$
+        \item Derived above, $\frac{\partial{A}}{\partial{Z}} = A * (1-A)$
+        \item Using function 1, $\frac{\partial{Z}}{\partial{B}} = 1$
+        \item => $\frac{\partial{L}}{\partial{W}} = (-\frac{1}{m})(\frac{Y-A}{A(1-A)}) * A * (1-A) * 1\\
+              = (A-Y)$
+    \end{itemize}
+\end{itemize}
 
 \end{document}
