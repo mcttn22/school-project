@@ -24,7 +24,7 @@ class XorModel():
 
     def back_propagation(self, hiddenOutput, prediction) -> None:
         "Adjust the weights via gradient descent"
-        outputWeightGradient = np.dot(prediction - self.outputs, hiddenOutput.T) / self.inputs.shape[1]   # TODO: Why divide by number of inputs 
+        outputWeightGradient = np.dot(prediction - self.outputs, hiddenOutput.T) / self.inputs.shape[1]
         hiddenWeightGradient = np.dot(np.dot(self.outputWeights.T, prediction - self.outputs) * hiddenOutput * (1 - hiddenOutput), self.inputs.T) / self.inputs.shape[1]
         # Reshape arrays to match the weight arrays for multiplication
         outputWeightGradient = np.reshape(outputWeightGradient, self.outputWeights.shape)
