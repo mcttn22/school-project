@@ -61,8 +61,8 @@ class ImageModel():
         prediction = self.sigmoid(z1)
         # Calculate performance of model
         testOutputs = self.testOutputs
-        accuracy = 100 - np.mean(np.abs(prediction - testOutputs)) * 100
-        print(f"Prediction accuracy: {round(accuracy)}%\n")
+        accuracy = 100 - np.mean(np.abs(prediction.round() - testOutputs)) * 100
+        print(f"Prediction correctness: {round(accuracy)}%\n")
         # Output results
         print("Example results:")
         plt.imshow(self.testInputs[:,0].reshape((64,64,3)))
