@@ -27,10 +27,10 @@ class ImageModel():
         # Output arrays, 1 for cat, 0 for not cat
         trainOutputs = np.array(trainDataset["train_set_y"][:])
         testOutputs = np.array(testDataset["test_set_y"][:])
-        # Reshape input arrays into 1 dimension (flatten), then divide by 255 (RGB) to standardize them TODO
+        # Reshape input arrays into 1 dimension (flatten), then divide by 255 (RGB) to standardize them to a number between 0 and 1
         trainInputs = trainInputs.reshape((trainInputs.shape[0], -1)).T / 255
         testInputs = testInputs.reshape((testInputs.shape[0], -1)).T / 255
-        # Reshape output arrays TODO
+        # Reshape output arrays into a 1 dimensional list of outputs
         trainOutputs = trainOutputs.reshape((1, trainOutputs.shape[0]))
         testOutputs = testOutputs.reshape((1, testOutputs.shape[0]))
         return trainInputs, trainOutputs, testInputs, testOutputs
@@ -41,8 +41,8 @@ class ImageModel():
 
     def back_propagation(self, prediction) -> None:
         "Adjust the weights and bias via gradient descent"
-        weightGradient = np.dot(self.trainInputs, (prediction - self.trainOutputs).T) / self.trainInputs.shape[1]   # TODO: Why divide by number of inputs 
-        biasGradient = np.sum(prediction - self.trainOutputs) / self.trainInputs.shape[1]   # TODO: Learn bias derivative
+        weightGradient = np.dot(self.trainInputs, (prediction - self.trainOutputs).T) / self.trainInputs.shape[1]
+        biasGradient = np.sum(prediction - self.trainOutputs) / self.trainInputs.shape[1]
         # Update weights and bias
         self.weights -= self.LEARNING_RATE * weightGradient
         self.bias -= self.LEARNING_RATE * biasGradient
@@ -60,8 +60,7 @@ class ImageModel():
         z1 = np.dot(self.weights.T, self.testInputs) + self.bias
         prediction = self.sigmoid(z1)
         # Calculate performance of model
-        testOutputs = self.testOutputs
-        accuracy = 100 - np.mean(np.abs(prediction.round() - testOutputs)) * 100
+        accuracy = 100 - np.mean(np.abs(prediction.round() - self.testOutputs)) * 100
         print(f"Prediction correctness: {round(accuracy)}%\n")
         # Output results
         print("Example results:")
