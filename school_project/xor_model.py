@@ -3,12 +3,12 @@ import numpy as np
 
 class XorModel():
     "ANN model that trains to predict the output of a XOR gate with two inputs"
-    def __init__(self) -> None:
+    def __init__(self, numHiddenNeurons=2, numInputs=2, numOutputNeurons=1) -> None:
         "Initialise model values"
         # Setup pseudo random values for weight arrays
         np.random.seed(2)
-        self.hiddenWeights = np.random.rand(2, 2)
-        self.outputWeights = np.random.rand(1, 2)
+        self.hiddenWeights = np.random.rand(numHiddenNeurons, numInputs)
+        self.outputWeights = np.random.rand(numOutputNeurons, numHiddenNeurons)
         self.LEARNING_RATE: float = 0.1
         self.inputs = np.array([[0,0,1,1],
                                [0,1,0,1]])
@@ -45,6 +45,11 @@ class XorModel():
         "Use trained weights to predict ouput of XOR gate on two inputs"
         print("\n*** Using trained weights to predict output of XOR gate on two inputs ***\n")
         hiddenOutput, prediction = self.forward_propagation()
+        # Calculate performance of model
+        accuracy = 100 - np.mean(np.abs(prediction - self.outputs)) * 100
+        print(f"Prediction accuracy: {round(accuracy)}%\n")
+        # Output results
+        print("Example results:")
         for i in range(self.inputs.shape[1]):
             print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {1 if np.squeeze(prediction)[i] >= 0.5 else 0}")
         print("\nFinal state of model:")
@@ -56,9 +61,6 @@ class XorModel():
         losses: list[float] = []
         for epoch in range(epochs):
             hiddenOutput, prediction = self.forward_propagation()
-            # Output input and prediction
-            for i in range(self.inputs.shape[1]):
-                print(f"{self.inputs[0][i]},{self.inputs[1][i]} = {np.squeeze(prediction)[i]}")
             loss = - (1/self.inputs.shape[1]) * np.sum(self.outputs * np.log(prediction) + (1 - self.outputs) * np.log(1 - prediction))
             losses.append(loss)
             self.back_propagation(hiddenOutput=hiddenOutput, prediction=prediction)
