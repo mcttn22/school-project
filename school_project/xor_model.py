@@ -3,8 +3,9 @@ import numpy as np
 
 class XorModel():
     "ANN model that trains to predict the output of a XOR gate with two inputs"
-    def __init__(self, numHiddenNeurons=2, numInputs=2, numOutputNeurons=1) -> None:
+    def __init__(self, numInputs=2, numHiddenNeurons=4, numOutputNeurons=1) -> None:
         "Initialise model values"
+        self.numHiddenNeurons = numHiddenNeurons
         # Setup pseudo random values for weight arrays
         np.random.seed(2)
         self.hiddenWeights = np.random.rand(numHiddenNeurons, numInputs)
@@ -16,7 +17,7 @@ class XorModel():
 
     def __repr__(self) -> str:
         "Read current state of model"
-        return f"Hidden Weights: {self.hiddenWeights.tolist()}\nOutput Weights: {self.outputWeights.tolist()}\nLearning Rate: {self.LEARNING_RATE}"
+        return f"Number of hidden neurons: {self.numHiddenNeurons}\nHidden Weights: {self.hiddenWeights.tolist()}\nOutput Weights: {self.outputWeights.tolist()}\nLearning Rate: {self.LEARNING_RATE}"
 
     def sigmoid(self, z):
         "Transfer function, transforms input to number between 0 and 1"
