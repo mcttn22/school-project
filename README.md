@@ -17,4 +17,4 @@ Run with 'python3 school_project' and option '--xor' to run the XOR model or '--
 - Image model: https://towardsdatascience.com/step-by-step-guide-to-building-your-own-neural-network-from-scratch-df64b1c5ab6e
 
 ## TODO
-- Add UI (tkinter (click on image to test)), focus on image recognition, include XOR model (comparing no layer vs layer (accuracy)) and layers in description of how ANNs work
+- Add UI (tkinter, plan in notes), focus on image recognition (compare learning rates (accuracy)), include XOR model (compare num of hidden neurons + learning rates (accuracy)), description of how ANNs work
