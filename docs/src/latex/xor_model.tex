@@ -22,13 +22,13 @@
 \end{figure}
 
 \begin{itemize}
-    \item Where the weights W11, W12, W21 and W22 are together in an array W1, as the hidden weights, initially given random values
-    \item Weights W3 and W4 are together in array W2, as the output weights
+    \item Where W1 is the array of hidden weights, initially given random values
     \item Z11 and Z12 are together in an array Z1, and is the dot product of the W1 array and the input array (X)
     \item A11 and A12 are together in an array A1, and is sigmoid(Z1)
     \begin{itemize}
         \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
     \end{itemize}
+    \item W2 is the array of output weights, initially given random values
     \item Z2 is the dot product of the W2 array and A1
     \item A2 is sigmoid(Z2), which is the prediction
 \end{itemize}
