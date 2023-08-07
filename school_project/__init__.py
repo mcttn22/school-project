@@ -1,1 +1,1 @@
-__all__ = ['experiments','home_page','image_recognition']
+__all__ = ['about','experiments','image_recognition']

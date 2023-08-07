@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkf
 from experiments import Experiments
-from home_page import HomePage
+from about import About
 from image_recognition import ImageRecognition
 
 class SchoolProject(tk.Frame):
@@ -12,12 +12,12 @@ class SchoolProject(tk.Frame):
         self.root = root.title("School Project")
         # School project variables
         self.currentPage: int = 0
-        self.pages: list[tk.Frame] = [HomePage(root=self, width=self.WIDTH - 100, height=self.HEIGHT),
+        self.pages: list[tk.Frame] = [About(root=self, width=self.WIDTH - 100, height=self.HEIGHT),
                                     ImageRecognition(root=self, width=self.WIDTH - 100, height=self.HEIGHT),
                                     Experiments(root=self, width=self.WIDTH - 100, height=self.HEIGHT)]
         # Widgets
         self.menu = tk.Frame(self, height=self.HEIGHT, width=self.WIDTH, bg="white")
-        self.menuButtons: list[tk.Button] = [tk.Button(self.menu, width=13, height=1, text="Home", command=lambda: self.load_page(index=0), font=tkf.Font(size=12)),
+        self.menuButtons: list[tk.Button] = [tk.Button(self.menu, width=13, height=1, text="About", command=lambda: self.load_page(index=0), font=tkf.Font(size=12)),
                                             tk.Button(self.menu, width=13, height=1, text="Image Recognition", command=lambda: self.load_page(index=1), font=tkf.Font(size=12)),
                                             tk.Button(self.menu, width=13, height=1, text="Experiments", command=lambda: self.load_page(index=2), font=tkf.Font(size=12))]
         # Pack Widgets

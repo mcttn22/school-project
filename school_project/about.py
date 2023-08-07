@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class HomePage(tk.Frame):
+class About(tk.Frame):
     def __init__(self, root: tk.Tk, width: int, height: int):
         super().__init__(root, width=width, height=height, bg="red")
         self.HEIGHT = height
