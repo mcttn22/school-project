@@ -1,5 +1,7 @@
 import h5py
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import os
 import threading
@@ -100,6 +102,10 @@ class ImageRecognition(tk.Frame):
         self.theoryButton: tk.Button = tk.Button(self, width=13, height=1, text="View Theory", command=lambda: os.system("open docs/image_model.pdf"), font=tkf.Font(size=12))
         self.trainButton: tk.Button = tk.Button(self, width=13, height=1, text="Train Model", command=self.start_training, font=tkf.Font(size=12))
         self.modelStatus: tk.Label = tk.Label(self, bg="white", fg="red", font=("Arial", 10))
+        self.lossFigure: Figure = Figure()
+        self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self)
+        self.imageFigure: Figure = Figure()
+        self.imageCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.imageFigure, master=self)
         # Pack widgets
         self.title.pack()
         self.about.pack()
@@ -113,12 +119,13 @@ class ImageRecognition(tk.Frame):
         "Wait for model predicting thread to finish, then output prediction results"
         if not predictThread.is_alive():
             # Output example prediction results
-            plt.imshow(self.catModel.testInputs[:,0].reshape((64,64,3)))
-            print("Cat" if np.squeeze(self.catModel.prediction)[0] >= 0.5 else "Not a cat")
-            plt.show()
-            plt.imshow(self.catModel.testInputs[:,14].reshape((64,64,3)))
-            print("Cat" if np.squeeze(self.catModel.prediction)[14] >= 0.5 else "Not a cat")
-            plt.show()
+            image1 = self.imageFigure.add_subplot(121)
+            image1.set_title("Cat" if np.squeeze(self.catModel.prediction)[0] >= 0.5 else "Not a cat")
+            image1.imshow(self.catModel.testInputs[:,0].reshape((64,64,3)))
+            image2 = self.imageFigure.add_subplot(122)
+            image2.set_title("Cat" if np.squeeze(self.catModel.prediction)[14] >= 0.5 else "Not a cat")
+            image2.imshow(self.catModel.testInputs[:,14].reshape((64,64,3)))
+            self.imageCanvas.get_tk_widget().pack(side="top")
         else:
             self.after(1_000, self.manage_predicting, predictThread)
 
@@ -126,10 +133,11 @@ class ImageRecognition(tk.Frame):
         "Wait for model training thread to finish, then start predicting with model in new thread"
         if not trainThread.is_alive():
             # Plot losses of model training
-            plt.plot(np.squeeze(self.catModel.trainLosses))
-            plt.xlabel("Epochs")
-            plt.ylabel("Loss Value")
-            plt.show()
+            graph = self.lossFigure.add_subplot(111)
+            graph.set_xlabel("Epochs")
+            graph.set_ylabel("Loss Value")
+            graph.plot(np.squeeze(self.catModel.trainLosses))
+            self.lossCanvas.get_tk_widget().pack(side="top")
             # Start predicting thread
             self.modelStatus.configure(text="Using trained weights and bias to predict", fg="green")
             predictThread: threading.Thread = threading.Thread(target=self.catModel.predict)

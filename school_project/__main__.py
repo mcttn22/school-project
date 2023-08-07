@@ -45,15 +45,12 @@ def main() -> None:
     schoolProject = SchoolProject(root=root, width=1360, height=800)
     schoolProject.pack(side="top", fill="both", expand=True)
     root.mainloop()
+    # Stop models training when GUI closes
     schoolProject.pages[1].catModel.running = False
     # print("XOR model")
     # xorModel = XorModel()
     # xorModel.train(epochs=50_000)
     # xorModel.predict()
-    # print("Image model")
-    # imageModel = ImageModel()
-    # imageModel.train(epochs=5_000)
-    # imageModel.predict()
 
 if __name__ == "__main__":
     main()
