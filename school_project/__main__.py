@@ -16,7 +16,7 @@ class SchoolProject(tk.Frame):
                                     ImageRecognition(root=self, width=self.WIDTH - 100, height=self.HEIGHT),
                                     Experiments(root=self, width=self.WIDTH - 100, height=self.HEIGHT)]
         # Widgets
-        self.menu = tk.Frame(self, height=self.HEIGHT, width=self.WIDTH, bg="white")
+        self.menu: tk.Frame = tk.Frame(self, height=self.HEIGHT, width=self.WIDTH, bg="white")
         self.menuButtons: list[tk.Button] = [tk.Button(self.menu, width=13, height=1, text="About", command=lambda: self.load_page(index=0), font=tkf.Font(size=12)),
                                             tk.Button(self.menu, width=13, height=1, text="Image Recognition", command=lambda: self.load_page(index=1), font=tkf.Font(size=12)),
                                             tk.Button(self.menu, width=13, height=1, text="Experiments", command=lambda: self.load_page(index=2), font=tkf.Font(size=12))]
@@ -42,7 +42,7 @@ class SchoolProject(tk.Frame):
 def main() -> None:
     "Entrypoint of project"
     root = tk.Tk()
-    schoolProject = SchoolProject(root, 800, 800)
+    schoolProject = SchoolProject(root=root, width=1360, height=800)
     schoolProject.pack(side="top", fill="both", expand=True)
     root.mainloop()
     # print("XOR model")
