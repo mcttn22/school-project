@@ -31,12 +31,13 @@ class SchoolProject(tk.Frame):
         self.pack_propagate(False)
 
     def load_page(self, index: int):
-        "Unpack current page, then pack new page"
-        # Unpack current frame
-        self.pages[self.currentPage].pack_forget()
-        # Pack new frame
-        self.currentPage = index
-        self.pages[self.currentPage].pack(side="right", fill="both", expand=True)
+        "If new page is different to current, unpack current page, then pack new page"
+        if index != self.currentPage:
+            # Unpack current frame
+            self.pages[self.currentPage].pack_forget()
+            # Pack new frame
+            self.currentPage = index
+            self.pages[self.currentPage].pack(side="right", fill="both", expand=True)
 
 def main() -> None:
     "Entrypoint of project"
