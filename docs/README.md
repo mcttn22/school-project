@@ -10,7 +10,8 @@
 - Hidden layers of calculations (the more layers, the more accurate the prediction), consisting of the following:
   - An Activation function:
     - Calculate the dot product of the input array with a hidden weight array, then sum the result with a bias
-  - A Transfer function to get an output, Eg: Sigmoid function to transform the result of the Activation function to a number between 0 and 1, then the result can be classified as closer to 0 or 1 (known as logistic regression), with 0 being one state and 1 being another
+  - A Transfer function to get an output, Eg: Sigmoid function to transform the result of the Activation function to a number between 0 and 1,
+  then the result can be classified as closer to 0 or 1 (known as logistic regression),with 0 being one state and 1 being another
 - Output layer to output the final result of the calculations from the hidden layers, consisting of the following:
   - An Activation function:
     - Caclulate the dot product of the hidden layer output with an output weight array, then sum the result with a bias
@@ -24,5 +25,3 @@
   - Gradient descent:
     - Update the hidden/output weight arrays and bias, by subtracting the rate of change of Cost with respect to Weight, multiplied with a learning rate
     - This repetitive process will continue to reduce the cost to a minimum, if the learning rate is set to an appropriate value
-
-# Use 'make all' to generate project theory PDFs

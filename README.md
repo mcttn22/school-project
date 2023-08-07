@@ -13,6 +13,7 @@ Run with 'python3 school_project'
 ### Tests
 - Use 'python3 -m unittest discover school_project/test/' to run tests
 ### Documentation
+- Use 'make all' in 'docs/' to generate project theory PDFs
 - XOR model: https://medium.com/analytics-vidhya/coding-a-neural-network-for-xor-logic-classifier-from-scratch-b90543648e8a
 - Image model: https://towardsdatascience.com/step-by-step-guide-to-building-your-own-neural-network-from-scratch-df64b1c5ab6e
 
