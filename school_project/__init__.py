@@ -1,1 +1,1 @@
-__all__ = ['xor_model','image_model']
+__all__ = ['experiments','home_page','image_recognition']

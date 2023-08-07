@@ -1,8 +1,9 @@
 import h5py
 import matplotlib.pyplot as plt
 import numpy as np
+import tkinter as tk
 
-class ImageModel():
+class CatModel():
     "ANN model that trains to predict if an image is a cat or not a cat"
     def __init__(self) -> None:
         "Initialise model values"
@@ -86,3 +87,14 @@ class ImageModel():
         plt.xlabel("Epochs")
         plt.ylabel("Loss Value")
         plt.show()
+
+class ImageRecognition(tk.Frame):
+    def __init__(self, root: tk.Tk, width: int, height: int):
+        super().__init__(root, width=width, height=height, bg="green")
+        self.HEIGHT = height
+        self.WIDTH = width
+        self.root = root
+        # Image recognition variables
+        # Widgets
+        # Setup
+        self.pack_propagate(False)

@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import tkinter as tk
 
 class XorModel():
     "ANN model that trains to predict the output of a XOR gate with two inputs"
@@ -69,3 +70,14 @@ class XorModel():
         plt.xlabel("Epochs")
         plt.ylabel("Loss Value")
         plt.show()
+
+class Experiments(tk.Frame):
+    def __init__(self, root: tk.Tk, width: int, height: int):
+        super().__init__(root, width=width, height=height, bg="blue")
+        self.HEIGHT = height
+        self.WIDTH = width
+        self.root = root
+        # Experiments variables
+        # Widgets
+        # Setup
+        self.pack_propagate(False)

@@ -3,7 +3,7 @@
 This project focuses on learning Artificial Neural Networks and their applications
 
 ## Run
-Run with 'python3 school_project' and option '--xor' to run the XOR model or '--image' to run the Image model
+Run with 'python3 school_project'
 
 ## Dev Setup
 - Create a virtualenv with 'python3 -m venv {venv name}'
@@ -17,4 +17,4 @@ Run with 'python3 school_project' and option '--xor' to run the XOR model or '--
 - Image model: https://towardsdatascience.com/step-by-step-guide-to-building-your-own-neural-network-from-scratch-df64b1c5ab6e
 
 ## TODO
-- Add UI (PyQt5, plan in notes), focus on image recognition (compare learning rates (accuracy)), include XOR model (compare num of hidden neurons + learning rates (accuracy)), description of how ANNs work
+- Add UI (tkinter, plan in notes), focus on neural networks, with image recognition (compare learning rates (accuracy)), and experiments with XOR model (compare num of hidden neurons + learning rates (accuracy)), description of how ANNs work
