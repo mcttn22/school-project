@@ -47,10 +47,7 @@ def main() -> None:
     root.mainloop()
     # Stop models training when GUI closes
     schoolProject.pages[1].catModel.running = False
-    # print("XOR model")
-    # xorModel = XorModel()
-    # xorModel.train(epochs=50_000)
-    # xorModel.predict()
+    schoolProject.pages[2].xorModel.running = False
 
 if __name__ == "__main__":
     main()
