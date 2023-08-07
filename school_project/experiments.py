@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import tkinter as tk
+import tkinter.font as tkf
 
 class XorModel():
     "ANN model that trains to predict the output of a XOR gate with two inputs"
@@ -73,11 +75,16 @@ class XorModel():
 
 class Experiments(tk.Frame):
     def __init__(self, root: tk.Tk, width: int, height: int):
-        super().__init__(root, width=width, height=height, bg="blue")
+        super().__init__(root, width=width, height=height, bg="white")
         self.HEIGHT = height
         self.WIDTH = width
         self.root = root
         # Experiments variables
         # Widgets
+        self.title: tk.Label = tk.Label(self, bg="white", font=("Arial", 20), text="Experiments")
+        self.theoryButton: tk.Button = tk.Button(self, width=13, height=1, text="View Theory", command=lambda: os.system("open docs/xor_model.pdf"), font=tkf.Font(size=12))
+        # Pack widgets
+        self.title.pack()
+        self.theoryButton.pack()
         # Setup
         self.pack_propagate(False)
