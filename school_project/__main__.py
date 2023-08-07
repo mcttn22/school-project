@@ -45,6 +45,7 @@ def main() -> None:
     schoolProject = SchoolProject(root=root, width=1360, height=800)
     schoolProject.pack(side="top", fill="both", expand=True)
     root.mainloop()
+    schoolProject.pages[1].catModel.running = False
     # print("XOR model")
     # xorModel = XorModel()
     # xorModel.train(epochs=50_000)
