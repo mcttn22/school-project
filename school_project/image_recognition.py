@@ -12,8 +12,8 @@ class CatModel():
     def __init__(self) -> None:
         "Initialise model values"
         self.trainLosses: list[float] = []
-        self.prediction = None
-        self.predictionAccuracy = None
+        self.testPrediction = None
+        self.testPredictionAccuracy = None
         self.running: bool = True
         # Load datasets
         self.trainInputs, self.trainOutputs, self.testInputs, self.testOutputs = self.load_datasets()
@@ -72,9 +72,9 @@ class CatModel():
         "Use trained weights and bias to predict if image is a cat or not a cat"
         # Calculate prediction for test dataset
         z1 = np.dot(self.weights.T, self.testInputs) + self.bias
-        self.prediction = self.sigmoid(z1)
+        self.testPrediction = self.sigmoid(z1)
         # Calculate performance of model
-        self.predictionAccuracy = 100 - np.mean(np.abs(self.prediction.round() - self.testOutputs)) * 100
+        self.testPredictionAccuracy = 100 - np.mean(np.abs(self.testPrediction.round() - self.testOutputs)) * 100
 
     def train(self, epochs: int) -> None:
         "Train weights and bias"
@@ -126,12 +126,12 @@ class ImageRecognition(tk.Frame):
         "Wait for model predicting thread to finish, then output prediction results"
         if not predictThread.is_alive():
             # Output example prediction results
-            self.imageFigure.suptitle(f"Prediction Correctness: {round(self.catModel.predictionAccuracy)}%")
+            self.imageFigure.suptitle(f"Prediction Correctness: {round(self.catModel.testPredictionAccuracy)}%")
             image1 = self.imageFigure.add_subplot(121)
-            image1.set_title("Cat" if np.squeeze(self.catModel.prediction)[0] >= 0.5 else "Not a cat")
+            image1.set_title("Cat" if np.squeeze(self.catModel.testPrediction)[0] >= 0.5 else "Not a cat")
             image1.imshow(self.catModel.testInputs[:,0].reshape((64,64,3)))
             image2 = self.imageFigure.add_subplot(122)
-            image2.set_title("Cat" if np.squeeze(self.catModel.prediction)[14] >= 0.5 else "Not a cat")
+            image2.set_title("Cat" if np.squeeze(self.catModel.testPrediction)[14] >= 0.5 else "Not a cat")
             image2.imshow(self.catModel.testInputs[:,14].reshape((64,64,3)))
             self.imageCanvas.get_tk_widget().pack(side="right")
             # Enable train button
