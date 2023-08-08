@@ -19,4 +19,3 @@ Run with 'python3 school_project'
 
 ## TODO
 - Tidy UI
-- Add layer control
