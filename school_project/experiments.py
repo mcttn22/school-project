@@ -8,19 +8,19 @@ import tkinter.font as tkf
 
 class XorModel():
     "ANN model that trains to predict the output of a XOR gate with two inputs"
-    def __init__(self, numInputs=2, numHiddenNeurons=4, numOutputNeurons=1) -> None:
+    def __init__(self) -> None:
         "Initialise model values"
         self.trainLosses: list[float] = []
         self.prediction = None
         self.predictionAccuracy = None
         self.running: bool = True
-        self.numInputs = numInputs
-        self.numHiddenNeurons = numHiddenNeurons
-        self.numOutputNeurons = numOutputNeurons
+        self.numInputs = 2
+        self.numHiddenNeurons = 4
+        self.numOutputNeurons = 1
         # Setup pseudo random values for weight arrays
         np.random.seed(2)
-        self.hiddenWeights = np.random.rand(numHiddenNeurons, numInputs)
-        self.outputWeights = np.random.rand(numOutputNeurons, numHiddenNeurons)
+        self.hiddenWeights = np.random.rand(self.numHiddenNeurons, self.numInputs)
+        self.outputWeights = np.random.rand(self.numOutputNeurons, self.numHiddenNeurons)
         self.LEARNING_RATE: float = 0.1
         self.inputs = np.array([[0,0,1,1],
                                [0,1,0,1]])
@@ -89,6 +89,10 @@ class Experiments(tk.Frame):
         self.about: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text="For experimenting with Artificial Neural Networks, a XOR-gate model has been used for its lesser computation time")
         self.theoryButton: tk.Button = tk.Button(self, width=13, height=1, text="View Theory", command=lambda: os.system("open docs/xor_model.pdf"), font=tkf.Font(size=12))
         self.trainButton: tk.Button = tk.Button(self, width=13, height=1, text="Train Model", command=self.start_training, font=tkf.Font(size=12))
+        self.learningRateScale: tk.Scale = tk.Scale(self, bg="white", from_=0, to=1, resolution=0.01, orient="horizontal", label="Learning Rate", length=185)
+        self.learningRateScale.set(0.1)
+        self.numHiddenNeuronsScale: tk.Scale = tk.Scale(self, bg="white", from_=1, to=20, orient="horizontal", label="Number of Hidden Neurons", length=185)
+        self.numHiddenNeuronsScale.set(4)
         self.modelStatus: tk.Label = tk.Label(self, bg="white", fg="red", font=("Arial", 15))
         self.lossFigure: Figure = Figure()
         self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self)
@@ -98,6 +102,8 @@ class Experiments(tk.Frame):
         self.about.pack()
         self.theoryButton.pack()
         self.trainButton.pack()
+        self.learningRateScale.pack()
+        self.numHiddenNeuronsScale.pack()
         self.modelStatus.pack()
         # Setup
         self.pack_propagate(False)
@@ -144,6 +150,8 @@ class Experiments(tk.Frame):
         self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self)
         self.results.pack_forget()
         # Start training thread
+        self.xorModel.LEARNING_RATE = self.learningRateScale.get()
+        self.xorModel.numHiddenNeurons = self.numHiddenNeuronsScale.get()
         self.modelStatus.configure(text="Training weights...")
         trainThread: threading.Thread = threading.Thread(target=self.xorModel.train, args=(50_000,))
         trainThread.start()
