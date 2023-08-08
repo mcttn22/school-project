@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.font as tkf
 
 class About(tk.Frame):
     def __init__(self, root: tk.Tk, width: int, height: int):
@@ -21,5 +20,5 @@ class About(tk.Frame):
         self.pack_propagate(False)
 
     def load_theory(self):
-        with open("docs/README.md","r") as file:
+        with open("docs/about.txt","r") as file:
             return "".join(file.readlines())
