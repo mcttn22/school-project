@@ -26,7 +26,7 @@ class SchoolProject(tk.Frame):
         for button in self.menuButtons:
             button.pack(fill="y", expand=True)
         ## Pack homepage
-        self.pages[self.currentPage].pack(side="right", fill="both", expand=True)
+        self.pages[self.currentPage].pack(side="right", fill="both", expand=True, pady=(50,0))
         # Setup
         self.pack_propagate(False)
 
@@ -37,7 +37,7 @@ class SchoolProject(tk.Frame):
             self.pages[self.currentPage].pack_forget()
             # Pack new frame
             self.currentPage = index
-            self.pages[self.currentPage].pack(side="right", fill="both", expand=True)
+            self.pages[self.currentPage].pack(side="right", fill="both", expand=True, pady=(50,0))
 
 def main() -> None:
     "Entrypoint of project"
