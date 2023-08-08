@@ -126,6 +126,8 @@ class ImageRecognition(tk.Frame):
             image2.set_title("Cat" if np.squeeze(self.catModel.prediction)[14] >= 0.5 else "Not a cat")
             image2.imshow(self.catModel.testInputs[:,14].reshape((64,64,3)))
             self.imageCanvas.get_tk_widget().pack(side="right")
+            # Enable train button
+            self.trainButton["state"] = "normal"
         else:
             self.after(1_000, self.manage_predicting, predictThread)
 
@@ -149,6 +151,16 @@ class ImageRecognition(tk.Frame):
 
     def start_training(self):
         "Start training model in new thread"
+        # Disable train button
+        self.trainButton["state"] = "disabled"
+        # Reset canvases and figures
+        self.lossFigure: Figure = Figure()
+        self.lossCanvas.get_tk_widget().destroy()
+        self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self)
+        self.imageFigure: Figure = Figure()
+        self.imageCanvas.get_tk_widget().destroy()
+        self.imageCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.imageFigure, master=self)
+        # Start training thread
         self.modelStatus.configure(text="Training weights and bias...")
         trainThread: threading.Thread = threading.Thread(target=self.catModel.train, args=(5_000,))
         trainThread.start()

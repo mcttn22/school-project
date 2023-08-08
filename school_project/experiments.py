@@ -111,6 +111,8 @@ class Experiments(tk.Frame):
                 results += f"{self.xorModel.inputs[0][i]},{self.xorModel.inputs[1][i]} = {1 if np.squeeze(self.xorModel.prediction)[i] >= 0.5 else 0}\n"
             self.results.configure(text=results)
             self.results.pack(side="right")
+            # Enable train button
+            self.trainButton["state"] = "normal"
         else:
             self.after(1_000, self.manage_predicting, predictThread)
 
@@ -134,6 +136,14 @@ class Experiments(tk.Frame):
 
     def start_training(self):
         "Start training model in new thread"
+        # Disable train button
+        self.trainButton["state"] = "disabled"
+        # Reset canvases and figures
+        self.lossFigure: Figure = Figure()
+        self.lossCanvas.get_tk_widget().destroy()
+        self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self)
+        self.results.pack_forget()
+        # Start training thread
         self.modelStatus.configure(text="Training weights...")
         trainThread: threading.Thread = threading.Thread(target=self.xorModel.train, args=(50_000,))
         trainThread.start()
