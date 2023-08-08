@@ -87,7 +87,7 @@ class Experiments(tk.Frame):
         # Widgets
         self.menuFrame: tk.Frame = tk.Frame(self, bg="white")
         self.title: tk.Label = tk.Label(self.menuFrame, bg="white", font=("Arial", 20), text="Experiments")
-        self.about: tk.Label = tk.Label(self.menuFrame, bg="white", font=("Arial", 14), text="For experimenting with Artificial Neural Networks, a XOR-gate model has been used for its lesser computation time")
+        self.about: tk.Label = tk.Label(self.menuFrame, bg="white", font=("Arial", 14), text="For experimenting with Artificial Neural Networks, a XOR single-layer model has been used for its lesser computation time")
         self.theoryButton: tk.Button = tk.Button(self.menuFrame, width=13, height=1, text="View Theory", command=lambda: os.system("open docs/xor_model.pdf"), font=tkf.Font(size=12))
         self.trainButton: tk.Button = tk.Button(self.menuFrame, width=13, height=1, text="Train Model", command=self.start_training, font=tkf.Font(size=12))
         self.learningRateScale: tk.Scale = tk.Scale(self.menuFrame, bg="white", from_=0, to=1, resolution=0.01, orient="horizontal", label="Learning Rate", length=185)
