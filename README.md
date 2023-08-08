@@ -18,4 +18,4 @@ Run with 'python3 school_project'
 - Image model: https://towardsdatascience.com/step-by-step-guide-to-building-your-own-neural-network-from-scratch-df64b1c5ab6e
 
 ## TODO
-- Add experiments with models (changing learning rate + number of neurons etc) and multiple trainings of a model
+- Tidy UI
