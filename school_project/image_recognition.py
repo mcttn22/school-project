@@ -97,10 +97,10 @@ class ImageRecognition(tk.Frame):
         self.catModel = CatModel()
         # Widgets
         self.title: tk.Label = tk.Label(self, bg="white", font=("Arial", 20), text="Image Recognition")
-        self.about: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text="This is a cat model")
+        self.about: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text="An Image model trained on recognising if an image is a cat or not")
         self.theoryButton: tk.Button = tk.Button(self, width=13, height=1, text="View Theory", command=lambda: os.system("open docs/image_model.pdf"), font=tkf.Font(size=12))
         self.trainButton: tk.Button = tk.Button(self, width=13, height=1, text="Train Model", command=self.start_training, font=tkf.Font(size=12))
-        self.modelStatus: tk.Label = tk.Label(self, bg="white", fg="red", font=("Arial", 12))
+        self.modelStatus: tk.Label = tk.Label(self, bg="white", fg="red", font=("Arial", 15))
         self.lossFigure: Figure = Figure()
         self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self)
         self.imageFigure: Figure = Figure()
@@ -118,7 +118,7 @@ class ImageRecognition(tk.Frame):
         "Wait for model predicting thread to finish, then output prediction results"
         if not predictThread.is_alive():
             # Output example prediction results
-            self.imageFigure.suptitle(f"Prediction correctness: {round(self.catModel.predictionAccuracy)}%")
+            self.imageFigure.suptitle(f"Prediction Correctness: {round(self.catModel.predictionAccuracy)}%")
             image1 = self.imageFigure.add_subplot(121)
             image1.set_title("Cat" if np.squeeze(self.catModel.prediction)[0] >= 0.5 else "Not a cat")
             image1.imshow(self.catModel.testInputs[:,0].reshape((64,64,3)))
@@ -149,7 +149,7 @@ class ImageRecognition(tk.Frame):
 
     def start_training(self):
         "Start training model in new thread"
-        self.modelStatus.configure(text="training weights and bias...")
+        self.modelStatus.configure(text="Training weights and bias...")
         trainThread: threading.Thread = threading.Thread(target=self.catModel.train, args=(5_000,))
         trainThread.start()
         self.manage_training(trainThread)

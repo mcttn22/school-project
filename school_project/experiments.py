@@ -86,10 +86,10 @@ class Experiments(tk.Frame):
         self.xorModel = XorModel()
         # Widgets
         self.title: tk.Label = tk.Label(self, bg="white", font=("Arial", 20), text="Experiments")
-        self.about: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text="This is a XOR model because of less computation time")
+        self.about: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text="For experimenting with Artificial Neural Networks, a XOR-gate model has been used for its lesser computation time")
         self.theoryButton: tk.Button = tk.Button(self, width=13, height=1, text="View Theory", command=lambda: os.system("open docs/xor_model.pdf"), font=tkf.Font(size=12))
         self.trainButton: tk.Button = tk.Button(self, width=13, height=1, text="Train Model", command=self.start_training, font=tkf.Font(size=12))
-        self.modelStatus: tk.Label = tk.Label(self, bg="white", fg="red", font=("Arial", 12))
+        self.modelStatus: tk.Label = tk.Label(self, bg="white", fg="red", font=("Arial", 15))
         self.lossFigure: Figure = Figure()
         self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self)
         self.results: tk.Label = tk.Label(self, bg="white", font=("Arial", 20))
@@ -106,7 +106,7 @@ class Experiments(tk.Frame):
         "Wait for model predicting thread to finish, then output prediction results"
         if not predictThread.is_alive():
             # Output example prediction results
-            results = f"Results:\nPrediction Accuracy: {round(self.xorModel.predictionAccuracy)}%\nNumber of Hidden Neurons:{self.xorModel.numHiddenNeurons}\n"
+            results = f"Prediction Accuracy: {round(self.xorModel.predictionAccuracy)}%\nNumber of Hidden Neurons: {self.xorModel.numHiddenNeurons}\n"
             for i in range(self.xorModel.inputs.shape[1]):
                 results += f"{self.xorModel.inputs[0][i]},{self.xorModel.inputs[1][i]} = {1 if np.squeeze(self.xorModel.prediction)[i] >= 0.5 else 0}\n"
             self.results.configure(text=results)
@@ -134,7 +134,7 @@ class Experiments(tk.Frame):
 
     def start_training(self):
         "Start training model in new thread"
-        self.modelStatus.configure(text="training weights...")
+        self.modelStatus.configure(text="Training weights...")
         trainThread: threading.Thread = threading.Thread(target=self.xorModel.train, args=(50_000,))
         trainThread.start()
         self.manage_training(trainThread)

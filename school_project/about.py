@@ -9,8 +9,13 @@ class About(tk.Frame):
         self.root = root
         # Home page variables
         # Widgets
+        self.title: tk.Label = tk.Label(self, bg="white", font=("Arial", 20), text="About")
+        self.about: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text="Year 13 Computer Science Programming Project on learning Artificial Neural Networks and their applications\n- Max Cotton")
         self.theory: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text=self.load_theory(), justify="left")
         # Pack widgets
+        self.title.pack()
+        self.about.pack()
+        self.theory.pack()
         self.theory.pack()
         # Setup
         self.pack_propagate(False)

@@ -42,7 +42,7 @@ class SchoolProject(tk.Frame):
 def main() -> None:
     "Entrypoint of project"
     root = tk.Tk()
-    schoolProject = SchoolProject(root=root, width=1360, height=800)
+    schoolProject = SchoolProject(root=root, width=1400, height=800)
     schoolProject.pack(side="top", fill="both", expand=True)
     root.mainloop()
     # Stop models training when GUI closes
