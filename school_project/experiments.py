@@ -118,9 +118,9 @@ class ExperimentsFrame(tk.Frame):
         self.pack_propagate(False)
 
     def manage_predicting(self, predictThread: threading.Thread) -> None:
-        "Wait for model predicting thread to finish, then output testPrediction results"
+        "Wait for model predicting thread to finish, then output prediction results"
         if not predictThread.is_alive():
-            # Output example testPrediction results
+            # Output example prediction results
             results: str = f"Prediction Accuracy: {round(self.xorModel.testPredictionAccuracy)}%\nNumber of Hidden Neurons: {self.xorModel.numHiddenNeurons}\n"
             for i in range(self.xorModel.trainInputs.shape[1]):
                 results += f"{self.xorModel.trainInputs[0][i]},{self.xorModel.trainInputs[1][i]} = {1 if np.squeeze(self.xorModel.testPrediction)[i] >= 0.5 else 0}\n"
