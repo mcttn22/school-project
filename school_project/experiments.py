@@ -83,9 +83,9 @@ class ExperimentsFrame(tk.Frame):
     def __init__(self, root: tk.Tk, width: int, height: int) -> None:
         "Initialise experiments frame widgets"
         super().__init__(root, width=width, height=height, bg="white")
-        self.HEIGHT = height
-        self.WIDTH = width
         self.root = root
+        self.WIDTH = width
+        self.HEIGHT = height
         # Experiments variables
         self.xorModel = XorModel()
         # Widgets

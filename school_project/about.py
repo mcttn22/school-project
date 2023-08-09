@@ -5,9 +5,9 @@ class AboutFrame(tk.Frame):
     def __init__(self, root: tk.Tk, width: int, height: int) -> None:
         "Inititalise about page widgets"
         super().__init__(root, width=width, height=height, bg="white")
-        self.HEIGHT = height
-        self.WIDTH = width
         self.root = root
+        self.WIDTH = width
+        self.HEIGHT = height
         # Widgets
         self.titleLabel: tk.Label = tk.Label(self, bg="white", font=("Arial", 20), text="About")
         self.aboutLabel: tk.Label = tk.Label(self, bg="white", font=("Arial", 14), text="Year 13 Computer Science Programming Project on learning Artificial Neural Networks and their applications\n- Max Cotton")
