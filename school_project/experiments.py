@@ -12,11 +12,11 @@ class XorModel():
         "Initialise model values"
         self.running: bool = True
         # Setup model data
-        self.trainInputs: np.ndarray = np.array([[0,0,1,1],
+        self.trainInputs: np.ndarray[float] = np.array([[0,0,1,1],
                                                  [0,1,0,1]])
-        self.trainOutputs: np.ndarray = np.array([[0,1,1,0]])
+        self.trainOutputs: np.ndarray[float] = np.array([[0,1,1,0]])
         self.trainLosses: list[float] = []
-        self.testPrediction: np.ndarray = None
+        self.testPrediction: np.ndarray[float] = None
         self.testPredictionAccuracy: float = None
         # Model attributes
         self.numInputs: int = self.trainInputs.shape[0]
@@ -25,8 +25,8 @@ class XorModel():
         # Initialise weights to random values
         ## Setup pseudo random values for weight arrays
         np.random.seed(2)
-        self.hiddenWeights: np.ndarray = np.random.rand(self.numHiddenNeurons, self.numInputs)
-        self.outputWeights: np.ndarray = np.random.rand(self.numOutputNeurons, self.numHiddenNeurons)
+        self.hiddenWeights: np.ndarray[float] = np.random.rand(self.numHiddenNeurons, self.numInputs)
+        self.outputWeights: np.ndarray[float] = np.random.rand(self.numOutputNeurons, self.numHiddenNeurons)
         self.LEARNING_RATE: float = 0.1
 
     def __repr__(self) -> str:
@@ -42,10 +42,10 @@ class XorModel():
         "Transfer function, transforms input to number between 0 and 1"
         return 1 / (1 + np.exp(-z))
 
-    def back_propagation(self, hiddenOutput: np.ndarray, testPrediction: np.ndarray) -> None:
+    def back_propagation(self, hiddenOutput: np.ndarray[float], testPrediction: np.ndarray[float]) -> None:
         "Adjust the weights via gradient descent"
-        outputWeightGradient: np.ndarray = np.dot(testPrediction - self.trainOutputs, hiddenOutput.T) / self.trainInputs.shape[1]
-        hiddenWeightGradient: np.ndarray = np.dot(np.dot(self.outputWeights.T, testPrediction - self.trainOutputs) * hiddenOutput * (1 - hiddenOutput), self.trainInputs.T) / self.trainInputs.shape[1]
+        outputWeightGradient: np.ndarray[float] = np.dot(testPrediction - self.trainOutputs, hiddenOutput.T) / self.trainInputs.shape[1]
+        hiddenWeightGradient: np.ndarray[float] = np.dot(np.dot(self.outputWeights.T, testPrediction - self.trainOutputs) * hiddenOutput * (1 - hiddenOutput), self.trainInputs.T) / self.trainInputs.shape[1]
         # Reshape arrays to match the weight arrays for multiplication
         outputWeightGradient = np.reshape(outputWeightGradient, self.outputWeights.shape)
         hiddenWeightGradient = np.reshape(hiddenWeightGradient, self.hiddenWeights.shape)
@@ -53,12 +53,12 @@ class XorModel():
         self.hiddenWeights -= self.LEARNING_RATE * hiddenWeightGradient
         self.outputWeights -= self.LEARNING_RATE * outputWeightGradient
 
-    def forward_propagation(self) -> tuple[np.ndarray, np.ndarray]:
+    def forward_propagation(self) -> tuple[np.ndarray[float], np.ndarray[float]]:
         "Generate a prediction with the weights, returns the hidden layer output and a prediction"
-        z1: np.ndarray = np.dot(self.hiddenWeights, self.trainInputs)
-        hiddenOutput: np.ndarray = self.sigmoid(z1)
-        z2: np.ndarray = np.dot(self.outputWeights, hiddenOutput)
-        testPrediction: np.ndarray = self.sigmoid(z2)
+        z1: np.ndarray[float] = np.dot(self.hiddenWeights, self.trainInputs)
+        hiddenOutput: np.ndarray[float] = self.sigmoid(z1)
+        z2: np.ndarray[float] = np.dot(self.outputWeights, hiddenOutput)
+        testPrediction: np.ndarray[float] = self.sigmoid(z2)
         return hiddenOutput, testPrediction
 
     def predict(self) -> None:

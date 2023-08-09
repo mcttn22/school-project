@@ -15,10 +15,10 @@ class CatModel():
         # Load datasets
         self.trainInputs, self.trainOutputs, self.testInputs, self.testOutputs = self.load_datasets()
         self.trainLosses: list[float] = []
-        self.testPrediction: np.ndarray = None
+        self.testPrediction: np.ndarray[float] = None
         self.testPredictionAccuracy: float = None
         # Initialise weights and bias to 0/s
-        self.weights: np.ndarray = np.zeros(shape=(self.trainInputs.shape[0], 1))
+        self.weights: np.ndarray[float] = np.zeros(shape=(self.trainInputs.shape[0], 1))
         self.bias: float = 0
         self.LEARNING_RATE: float = 0.001
 
@@ -31,17 +31,17 @@ class CatModel():
         self.weights = np.zeros(shape=(self.trainInputs.shape[0], 1))
         self.bias = 0
     
-    def load_datasets(self) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def load_datasets(self) -> tuple[np.ndarray[float], np.ndarray[float], np.ndarray[float], np.ndarray[float]]:
         "Returns image input arrays and output arrays for training and testing"
         # Load datasets, h5 file stores large amount of data with quick access
         trainDataset: h5py.File = h5py.File('school_project/datasets/train-cat.h5', "r")
         testDataset: h5py.File = h5py.File('school_project/datasets/test-cat.h5', "r")
         # Input arrays, containing the RGB values for each pixel in each 64x64 pixel image, for 209 images
-        trainInputs: np.ndarray = np.array(trainDataset["train_set_x"][:])
-        testInputs: np.ndarray = np.array(testDataset["test_set_x"][:])
+        trainInputs: np.ndarray[float] = np.array(trainDataset["train_set_x"][:])
+        testInputs: np.ndarray[float] = np.array(testDataset["test_set_x"][:])
         # Output arrays, 1 for cat, 0 for not cat
-        trainOutputs: np.ndarray = np.array(trainDataset["train_set_y"][:])
-        testOutputs: np.ndarray = np.array(testDataset["test_set_y"][:])
+        trainOutputs: np.ndarray[float] = np.array(trainDataset["train_set_y"][:])
+        testOutputs: np.ndarray[float] = np.array(testDataset["test_set_y"][:])
         # Reshape input arrays into 1 dimension (flatten), then divide by 255 (RGB) to standardize them to a number between 0 and 1
         trainInputs = trainInputs.reshape((trainInputs.shape[0], -1)).T / 255
         testInputs = testInputs.reshape((testInputs.shape[0], -1)).T / 255
@@ -54,24 +54,24 @@ class CatModel():
         "Transfer function, transforms input to number between 0 and 1"
         return 1 / (1 + np.exp(-z))
 
-    def back_propagation(self, prediction: np.ndarray) -> None:
+    def back_propagation(self, prediction: np.ndarray[float]) -> None:
         "Adjust the weights and bias via gradient descent"
-        weightGradient: np.ndarray = np.dot(self.trainInputs, (prediction - self.trainOutputs).T) / self.trainInputs.shape[1]
-        biasGradient: np.ndarray = np.sum(prediction - self.trainOutputs) / self.trainInputs.shape[1]
+        weightGradient: np.ndarray[float] = np.dot(self.trainInputs, (prediction - self.trainOutputs).T) / self.trainInputs.shape[1]
+        biasGradient: np.ndarray[float] = np.sum(prediction - self.trainOutputs) / self.trainInputs.shape[1]
         # Update weights and bias
         self.weights -= self.LEARNING_RATE * weightGradient
         self.bias -= self.LEARNING_RATE * biasGradient
 
-    def forward_propagation(self) -> np.ndarray:
+    def forward_propagation(self) -> np.ndarray[float]:
         "Generate a prediction with the weights and bias, returns a prediction"
-        z1: np.ndarray = np.dot(self.weights.T, self.trainInputs) + self.bias
-        prediction: np.ndarray = self.sigmoid(z1)
+        z1: np.ndarray[float] = np.dot(self.weights.T, self.trainInputs) + self.bias
+        prediction: np.ndarray[float] = self.sigmoid(z1)
         return prediction
 
     def predict(self) -> None:
         "Use trained weights and bias to predict if image is a cat or not a cat"
         # Calculate prediction for test dataset
-        z1: np.ndarray = np.dot(self.weights.T, self.testInputs) + self.bias
+        z1: np.ndarray[float] = np.dot(self.weights.T, self.testInputs) + self.bias
         self.testPrediction = self.sigmoid(z1)
         # Calculate performance of model
         self.testPredictionAccuracy = 100 - np.mean(np.abs(self.testPrediction.round() - self.testOutputs)) * 100
