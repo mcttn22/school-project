@@ -86,7 +86,7 @@ class ExperimentsFrame(tk.Frame):
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
-        # Experiments variables
+        # Experiments frame variables
         self.xorModel = XorModel()
         # Widgets
         self.menuFrame: tk.Frame = tk.Frame(self, bg="white")

@@ -95,7 +95,7 @@ class ImageRecognitionFrame(tk.Frame):
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
-        # Image recognition variables
+        # Image recognition frame variables
         self.catModel: CatModel = CatModel()
         # Widgets
         self.menuFrame: tk.Frame = tk.Frame(self, bg="white")
