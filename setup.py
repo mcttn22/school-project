@@ -7,11 +7,11 @@ setup(
     url='https://github.com/mcttn22/school-project.git',
     author='Max Cotton',
     author_email='maxcotton22@gmail.com',
-    description='Current focus is on learning Artificial Neural Networks',
+    description='Year 13 Computer Science Programming Project',
     install_requires=[
-            'h5py',
-            'matplotlib',
-            'numpy',
-            'tk',
+                      'h5py',
+                      'matplotlib',
+                      'numpy',
+                      'tk',
     ],
 )
