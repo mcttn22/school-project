@@ -102,7 +102,7 @@ class ExperimentsFrame(tk.Frame):
         self.resultsFrame: tk.Frame = tk.Frame(self, bg="white")
         self.lossFigure: Figure = Figure()
         self.lossCanvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.lossFigure, master=self.resultsFrame)
-        self.results: tk.Label = tk.Label(self.resultsFrame, bg="white", font=("Arial", 20))
+        self.resultsLabel: tk.Label = tk.Label(self.resultsFrame, bg="white", font=("Arial", 20))
         # Pack widgets
         self.titleLabel.grid(row=0, column=0, columnspan=4)
         self.aboutLabel.grid(row=1, column=0, columnspan=4, pady=(10,0))
@@ -124,8 +124,8 @@ class ExperimentsFrame(tk.Frame):
             results: str = f"Prediction Accuracy: {round(self.xorModel.testPredictionAccuracy)}%\nNumber of Hidden Neurons: {self.xorModel.numHiddenNeurons}\n"
             for i in range(self.xorModel.trainInputs.shape[1]):
                 results += f"{self.xorModel.trainInputs[0][i]},{self.xorModel.trainInputs[1][i]} = {1 if np.squeeze(self.xorModel.testPrediction)[i] >= 0.5 else 0}\n"
-            self.results.configure(text=results)
-            self.results.pack(side="right")
+            self.resultsLabel.configure(text=results)
+            self.resultsLabel.pack(side="right")
             # Enable train button
             self.trainButton["state"] = "normal"
         else:
@@ -157,7 +157,7 @@ class ExperimentsFrame(tk.Frame):
         self.lossFigure = Figure()
         self.lossCanvas.get_tk_widget().destroy()
         self.lossCanvas = FigureCanvasTkAgg(figure=self.lossFigure, master=self.resultsFrame)
-        self.results.pack_forget()
+        self.resultsLabel.pack_forget()
         # Start training thread
         self.xorModel.LEARNING_RATE = self.learningRateScale.get()
         self.xorModel.numHiddenNeurons = self.numHiddenNeuronsScale.get()
