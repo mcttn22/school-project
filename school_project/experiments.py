@@ -13,7 +13,7 @@ class XorModel():
         self.running: bool = True
         # Setup model data
         self.trainInputs: np.ndarray[float] = np.array([[0,0,1,1],
-                                                 [0,1,0,1]])
+                                                        [0,1,0,1]])
         self.trainOutputs: np.ndarray[float] = np.array([[0,1,1,0]])
         self.trainLosses: list[float] = []
         self.testPrediction: np.ndarray[float] = None
