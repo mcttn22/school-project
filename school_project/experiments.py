@@ -75,7 +75,7 @@ class XorModel():
         return 1 / (1 + np.exp(-z))
 
     def back_propagation(self, hidden_output: np.ndarray,
-                         test_prediction: np.ndarray) -> None:
+                         prediction: np.ndarray) -> None:
         """Adjust the weights via gradient descent.
         
         Args:
@@ -86,8 +86,8 @@ class XorModel():
             (incorrect shape)
         
         """
-        output_weight_gradient: np.ndarray = np.dot(test_prediction - self.train_outputs, hidden_output.T) / self.train_inputs.shape[1]
-        hidden_weight_gradient: np.ndarray = np.dot(np.dot(self.output_weights.T, test_prediction - self.train_outputs) * hidden_output * (1 - hidden_output), self.train_inputs.T) / self.train_inputs.shape[1]
+        output_weight_gradient: np.ndarray = np.dot(prediction - self.train_outputs, hidden_output.T) / self.train_inputs.shape[1]
+        hidden_weight_gradient: np.ndarray = np.dot(np.dot(self.output_weights.T, prediction - self.train_outputs) * hidden_output * (1 - hidden_output), self.train_inputs.T) / self.train_inputs.shape[1]
         
         # Reshape arrays to match the weight arrays for multiplication
         output_weight_gradient = np.reshape(output_weight_gradient,
@@ -110,8 +110,8 @@ class XorModel():
         z1: np.ndarray = np.dot(self.hidden_weights, self.train_inputs)
         hidden_output: np.ndarray = self.sigmoid(z1)
         z2: np.ndarray = np.dot(self.output_weights, hidden_output)
-        test_prediction: np.ndarray = self.sigmoid(z2)
-        return hidden_output, test_prediction
+        prediction: np.ndarray = self.sigmoid(z2)
+        return hidden_output, prediction
 
     def predict(self) -> None:
         """Use trained weights to predict ouput of XOR gate on two inputs."""
@@ -134,11 +134,11 @@ class XorModel():
         for epoch in range(epochs):
             if not self.running:
                 break
-            hidden_output, test_prediction = self.forward_propagation()
-            loss: float = - (1/self.train_inputs.shape[1]) * np.sum(self.train_outputs * np.log(test_prediction) + (1 - self.train_outputs) * np.log(1 - test_prediction))
+            hidden_output, prediction = self.forward_propagation()
+            loss: float = - (1/self.train_inputs.shape[1]) * np.sum(self.train_outputs * np.log(prediction) + (1 - self.train_outputs) * np.log(1 - prediction))
             self.train_losses.append(loss)
             self.back_propagation(hidden_output=hidden_output,
-                                  test_prediction=test_prediction)
+                                  prediction=prediction)
 
 class ExperimentsFrame(tk.Frame):
     """Frame for experiments page."""
