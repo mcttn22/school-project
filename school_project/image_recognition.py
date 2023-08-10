@@ -37,7 +37,9 @@ class CatModel():
             bias and learning rate values.
 
         """
-        return f"Weights: {self.weights}\nBias: {self.bias}\nLearning Rate: {self.LEARNING_RATE}"
+        return (f"Weights: {self.weights}\n" +
+                f"Bias: {self.bias}\n" +
+                f"Learning Rate: {self.LEARNING_RATE}")
     
     def init_model_values(self) -> None:
         """Initialise weights and bias to 0/s."""
@@ -140,7 +142,12 @@ class CatModel():
         self.test_prediction = self.sigmoid(z1)
         
         # Calculate performance of model
-        self.test_prediction_accuracy = 100 - np.mean(np.abs(self.test_prediction.round() - self.test_outputs)) * 100
+        self.test_prediction_accuracy = 100 - np.mean(
+                                              np.abs(
+                                                  self.test_prediction.round()
+                                                  - self.test_outputs
+                                                  )
+                                              ) * 100
 
     def train(self, epochs: int) -> None:
         """Train weights and bias.
@@ -185,10 +192,13 @@ class ImageRecognitionFrame(tk.Frame):
                                               bg='white',
                                               font=('Arial', 20),
                                               text="Image Recognition")
-        self.about_label: tk.Label = tk.Label(master=self.menu_frame,
-                                              bg='white',
-                                              font=('Arial', 14),
-                                              text="An Image model trained on recognising if an image is a cat or not")
+        self.about_label: tk.Label = tk.Label(
+                                     master=self.menu_frame,
+                                     bg='white',
+                                     font=('Arial', 14),
+                                     text="An Image model trained on " +
+                                     "recognising if an image is a cat or not"
+                                    )
         self.theory_button: tk.Button = tk.Button(
                                                master=self.menu_frame, 
                                                width=13,
@@ -260,17 +270,20 @@ class ImageRecognitionFrame(tk.Frame):
             
             # Output example prediction results
             self.image_figure.suptitle(
-             f"Prediction Correctness: {round(self.cat_model.test_prediction_accuracy)}%"
+             "Prediction Correctness: " +
+             f"{round(self.cat_model.test_prediction_accuracy)}%"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
-            image1.set_title(
-             "Cat" if np.squeeze(self.cat_model.test_prediction)[0] >= 0.5 else "Not a cat"
-             )
+            if np.squeeze(self.cat_model.test_prediction)[0] >= 0.5:
+                image1.set_title("Cat")
+            else:
+                image1.set_title("Not a cat")
             image1.imshow(self.cat_model.test_inputs[:,0].reshape((64,64,3)))
             image2: Figure.axes = self.image_figure.add_subplot(122)
-            image2.set_title(
-             "Cat" if np.squeeze(self.cat_model.test_prediction)[14] >= 0.5 else "Not a cat"
-            )
+            if np.squeeze(self.cat_model.test_prediction)[14] >= 0.5:
+                image2.set_title("Cat")
+            else:
+                image2.set_title("Not a cat")
             image2.imshow(self.cat_model.test_inputs[:,14].reshape((64,64,3)))
             self.image_canvas.get_tk_widget().pack(side='right')
             

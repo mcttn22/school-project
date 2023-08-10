@@ -47,7 +47,10 @@ class XorModel():
             bias and learning rate values.
 
         """
-        return f"Number of hidden neurons: {self.hidden_neuron_count}\nHidden Weights: {self.hidden_weights.tolist()}\nOutput Weights: {self.output_weights.tolist()}\nLearning Rate: {self.LEARNING_RATE}"
+        return (f"Number of hidden neurons: {self.hidden_neuron_count}\n" +
+                f"Hidden Weights: {self.hidden_weights.tolist()}\n" +
+                f"Output Weights: {self.output_weights.tolist()}\n" +
+                f"Learning Rate: {self.LEARNING_RATE}")
 
     def init_weights(self) -> None:
         """Initialise weights to randdom values."""
@@ -84,7 +87,7 @@ class XorModel():
         
         """
         output_weight_gradient: np.ndarray = np.dot(test_prediction - self.train_outputs, hidden_output.T) / self.train_inputs.shape[1]
-        hidden_weight_gradient: np.ndarray = np.dot(np.dot(self.output_weights.T,test_prediction - self.train_outputs) * hidden_output * (1 - hidden_output), self.train_inputs.T) / self.train_inputs.shape[1]
+        hidden_weight_gradient: np.ndarray = np.dot(np.dot(self.output_weights.T, test_prediction - self.train_outputs) * hidden_output * (1 - hidden_output), self.train_inputs.T) / self.train_inputs.shape[1]
         
         # Reshape arrays to match the weight arrays for multiplication
         output_weight_gradient = np.reshape(output_weight_gradient,
@@ -115,7 +118,10 @@ class XorModel():
         hidden_output, self.test_prediction = self.forward_propagation()
         
         # Calculate performance of model
-        self.test_prediction_accuracy = 100 - np.mean(np.abs(self.test_prediction - self.train_outputs)) * 100
+        self.test_prediction_accuracy = 100 - np.mean(
+                                              np.abs(self.test_prediction
+                                                     - self.train_outputs)
+                                              ) * 100
 
     def train(self, epochs: int) -> None:
         """Train weights.
@@ -165,7 +171,8 @@ class ExperimentsFrame(tk.Frame):
          master=self.menu_frame, 
          bg='white', 
          font=('Arial', 14), 
-         text="For experimenting with Artificial Neural Networks, a XOR single-layer model has been used for its lesser computation time"
+         text="For experimenting with Artificial Neural Networks, " +
+              "a XOR gate model has been used for its lesser computation time"
          )
         self.theory_button: tk.Button = tk.Button(
                                                  master=self.menu_frame,
@@ -192,7 +199,7 @@ class ExperimentsFrame(tk.Frame):
                                                       to=1,
                                                       resolution=0.01)
         self.learning_rate_scale.set(value=self.xor_model.LEARNING_RATE)
-        self.num_hidden_neurons_scale: tk.Scale = tk.Scale(
+        self.hidden_neuron_count_scale: tk.Scale = tk.Scale(
                                              master=self.menu_frame,
                                              bg='white',
                                              orient='horizontal',
@@ -202,7 +209,7 @@ class ExperimentsFrame(tk.Frame):
                                              to=20,
                                              resolution=1.0
                                              )
-        self.num_hidden_neurons_scale.set(
+        self.hidden_neuron_count_scale.set(
                                      value=self.xor_model.hidden_neuron_count
                                      )
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
@@ -226,7 +233,7 @@ class ExperimentsFrame(tk.Frame):
         self.train_button.grid(row=2, column=3, pady=(10,0))
         self.learning_rate_scale.grid(row=3, column=1, padx=(0,5),
                                       pady=(10,0), sticky='e')
-        self.num_hidden_neurons_scale.grid(row=3, column=2, padx=(5,0),
+        self.hidden_neuron_count_scale.grid(row=3, column=2, padx=(5,0),
                                            pady=(10,0), sticky='w')
         self.model_status_label.grid(row=4, column=0, columnspan=4,
                                      pady=(10,0))
@@ -251,11 +258,19 @@ class ExperimentsFrame(tk.Frame):
         if not predict_thread.is_alive():
             
             # Output example prediction results
-            results: str = f"Prediction Accuracy: {round(self.xor_model.test_prediction_accuracy)}%\nNumber of Hidden Neurons: {self.xor_model.hidden_neuron_count}\n"
+            results: str = (
+                      f"Prediction Accuracy: " +
+                      f"{round(self.xor_model.test_prediction_accuracy)}%\n" +
+                      f"Number of Hidden Neurons: " +
+                      f"{self.xor_model.hidden_neuron_count}\n"
+                      )
             for i in range(self.xor_model.train_inputs.shape[1]):
                 results += f"{self.xor_model.train_inputs[0][i]},"
                 results += f"{self.xor_model.train_inputs[1][i]} = "
-                results += f"{1 if np.squeeze(self.xor_model.test_prediction)[i] >= 0.5 else 0}\n"
+                if np.squeeze(self.xor_model.test_prediction)[i] >= 0.5:
+                    results += "1\n"
+                else:
+                    results += "0\n"
             self.results_label.configure(text=results)
             self.results_label.pack(side='right')
             
@@ -310,7 +325,7 @@ class ExperimentsFrame(tk.Frame):
         
         # Start training thread
         self.xor_model.LEARNING_RATE = self.learning_rate_scale.get()
-        self.xor_model.hidden_neuron_count = self.num_hidden_neurons_scale.get()
+        self.xor_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
         self.xor_model.init_weights()
         self.model_status_label.configure(text="Training weights...")
         train_thread: threading.Thread = threading.Thread(
