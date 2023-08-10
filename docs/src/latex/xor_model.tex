@@ -74,7 +74,7 @@ For each epoch the input array consisting of a combination of a 0 and/or 1, is f
     \end{itemize}
     \item $\frac{\partial{L}}{\partial{W1}}$ derivation:
     \begin{itemize}
-        \item By the chain rule, $\frac{\partial{L}}{\partial{W1}} = \frac{\partial{A1}}{\partial{Z1}} * \frac{\partial{Z1}}{\partial{W1}} * \frac{\partial{L}}{\partial{Z2}} * \frac{\partial{Z2}}{\partial{A1}}$
+        \item By the Chain rule, $\frac{\partial{L}}{\partial{W1}} = \frac{\partial{A1}}{\partial{Z1}} * \frac{\partial{Z1}}{\partial{W1}} * \frac{\partial{L}}{\partial{Z2}} * \frac{\partial{Z2}}{\partial{A1}}$
         \item Using function 2, $\frac{\partial{A1}}{\partial{Z1}} = A1 * (1-A1)$
         \item Using function 1, $\frac{\partial{Z1}}{\partial{W1}} = X$
         \item Using function 5, $\frac{\partial{L}}{\partial{Z2}} = A2 - Y$
