@@ -14,7 +14,8 @@ class CatModel():
         """Initialise model values."""
         
         # Setup model data
-        self.train_inputs, self.train_outputs, self.test_inputs, self.test_outputs = self.load_datasets()
+        self.train_inputs, self.train_outputs,\
+        self.test_inputs, self.test_outputs = self.load_datasets()
         self.train_losses: list[float] = []
         self.test_prediction: np.ndarray = None
         self.test_prediction_accuracy: float = None
@@ -23,7 +24,8 @@ class CatModel():
         self.running: bool = True
         
         # Initialise weights and bias to 0/s
-        self.weights: np.ndarray = np.zeros(shape=(self.train_inputs.shape[0], 1))
+        self.weights: np.ndarray = np.zeros(shape=(self.train_inputs.shape[0],
+                                                   1))
         self.bias: float = 0
         self.LEARNING_RATE: float = 0.001
 
@@ -31,7 +33,8 @@ class CatModel():
         """Read current state of model.
         
         Returns:
-            a string description of the model's weights, bias and learning rate values.
+            a string description of the model's weights,
+            bias and learning rate values.
 
         """
         return f"Weights: {self.weights}\nBias: {self.bias}\nLearning Rate: {self.LEARNING_RATE}"
@@ -41,7 +44,8 @@ class CatModel():
         self.weights = np.zeros(shape=(self.train_inputs.shape[0], 1))
         self.bias = 0
     
-    def load_datasets(self) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
+                                     np.ndarray, np.ndarray]:
         """Load image datasets.
         
         Returns:
@@ -51,11 +55,20 @@ class CatModel():
 
         """
         
-        # Load datasets from h5 files (h5 files stores large amount of data with quick access)
-        train_dataset: h5py.File = h5py.File(r'school_project/datasets/train-cat.h5', 'r')
-        test_dataset: h5py.File = h5py.File(r'school_project/datasets/test-cat.h5', 'r')
+        # Load datasets from h5 files
+        # (h5 files stores large amount of data with quick access)
+        train_dataset: h5py.File = h5py.File(
+                                      r'school_project/datasets/train-cat.h5',
+                                      'r'
+                                      )
+        test_dataset: h5py.File = h5py.File(
+                                      r'school_project/datasets/test-cat.h5',
+                                      'r'
+                                      )
         
-        # Load input arrays, containing the RGB values for each pixel in each 64x64 pixel image, for 209 images
+        # Load input arrays,
+        # containing the RGB values for each pixel in each 64x64 pixel image,
+        # for 209 images
         train_inputs: np.ndarray = np.array(train_dataset['train_set_x'][:])
         test_inputs: np.ndarray = np.array(test_dataset['test_set_x'][:])
         
@@ -63,7 +76,9 @@ class CatModel():
         train_outputs: np.ndarray = np.array(train_dataset['train_set_y'][:])
         test_outputs: np.ndarray = np.array(test_dataset['test_set_y'][:])
         
-        # Reshape input arrays into 1 dimension (flatten), then divide by 255 (RGB) to standardize them to a number between 0 and 1
+        # Reshape input arrays into 1 dimension (flatten),
+        # then divide by 255 (RGB)
+        # to standardize them to a number between 0 and 1
         train_inputs = train_inputs.reshape((train_inputs.shape[0], -1)).T / 255
         test_inputs = test_inputs.reshape((test_inputs.shape[0], -1)).T / 255
         
@@ -73,12 +88,14 @@ class CatModel():
         return train_inputs, train_outputs, test_inputs, test_outputs
 
     def sigmoid(self, z: np.ndarray | int | float) -> np.ndarray | float:
-        """Transfer function, transform input to output number between 0 and 1.
+        """Transfer function, transform input to output number between 0-1.
 
         Args:
-            z (numpy.ndarray | int | float): the numpy.ndarray | int | float to be transferred.
+            z (numpy.ndarray | int | float):
+            the numpy.ndarray | int | float to be transferred.
         Returns:
-            numpy.ndarray | float, with all values | the value transferred to a number between 0 and 1.
+            numpy.ndarray | float,
+            with all values | the value transferred to a number between 0-1.
         Raises:
             TypeError: if z is not of type numpy.ndarray | int | float.
 
@@ -91,7 +108,9 @@ class CatModel():
         Args:
             prediction (numpy.ndarray): the matrice of prediction values
         Raises:
-            ValueError: if prediction matrice is not a suitable multiplier with the weights (incorrect shape)
+            ValueError:
+            if prediction is not a suitable multiplier with the weights\
+            (incorrect shape)
         
         """
         weight_gradient: np.ndarray = np.dot(self.train_inputs, (prediction - self.train_outputs).T) / self.train_inputs.shape[1]
@@ -113,7 +132,8 @@ class CatModel():
         return prediction
 
     def predict(self) -> None:
-        """Use trained weights and bias to predict if image is a cat or not a cat."""
+        """Use trained weights and bias
+           to predict if image is a cat or not a cat."""
         
         # Calculate prediction for test dataset
         z1: np.ndarray = np.dot(self.weights.T, self.test_inputs) + self.bias
@@ -161,15 +181,29 @@ class ImageRecognitionFrame(tk.Frame):
         
         # Setup widgets
         self.menu_frame: tk.Frame = tk.Frame(master=self, bg='white')
-        self.title_label: tk.Label = tk.Label(master=self.menu_frame, bg='white', font=('Arial', 20), text="Image Recognition")
-        self.about_label: tk.Label = tk.Label(master=self.menu_frame, bg='white', font=('Arial', 14), text="An Image model trained on recognising if an image is a cat or not")
-        self.theory_button: tk.Button = tk.Button(master=self.menu_frame, 
-                                                  width=13,
-                                                  height=1,
-                                                  font=tkf.Font(size=12),
-                                                  text="View Theory",
-                                                  command=lambda: os.system(r'open docs/image_model.pdf'))
-        self.train_button: tk.Button = tk.Button(master=self.menu_frame, width=13, height=1, font=tkf.Font(size=12), text="Train Model", command=self.start_training)
+        self.title_label: tk.Label = tk.Label(master=self.menu_frame,
+                                              bg='white',
+                                              font=('Arial', 20),
+                                              text="Image Recognition")
+        self.about_label: tk.Label = tk.Label(master=self.menu_frame,
+                                              bg='white',
+                                              font=('Arial', 14),
+                                              text="An Image model trained on recognising if an image is a cat or not")
+        self.theory_button: tk.Button = tk.Button(
+                                               master=self.menu_frame, 
+                                               width=13,
+                                               height=1,
+                                               font=tkf.Font(size=12),
+                                               text="View Theory",
+                                               command=lambda: os.system(
+                                                r'open docs/image_model.pdf'
+                                                )
+                                               )
+        self.train_button: tk.Button = tk.Button(master=self.menu_frame,
+                                                 width=13, height=1,
+                                                 font=tkf.Font(size=12),
+                                                 text="Train Model",
+                                                 command=self.start_training)
         self.learning_rate_scale: tk.Scale = tk.Scale(master=self.menu_frame,
                                                       bg='white',
                                                       orient='horizontal',
@@ -179,20 +213,31 @@ class ImageRecognitionFrame(tk.Frame):
                                                       to=0.037,
                                                       resolution=0.001)
         self.learning_rate_scale.set(value=self.cat_model.LEARNING_RATE)
-        self.model_status_label: tk.Label = tk.Label(master=self.menu_frame, bg='white', fg='red', font=('Arial', 15))
+        self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
+                                                     bg='white',
+                                                     fg='red',
+                                                     font=('Arial', 15))
         self.results_frame: tk.Frame = tk.Frame(master=self, bg='white')
         self.loss_figure: Figure = Figure()
-        self.loss_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.loss_figure, master=self.results_frame)
+        self.loss_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(
+                                                    figure=self.loss_figure,
+                                                    master=self.results_frame
+                                                    )
         self.image_figure: Figure = Figure()
-        self.image_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(figure=self.image_figure, master=self.results_frame)
+        self.image_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(
+                                                    figure=self.image_figure,
+                                                    master=self.results_frame
+                                                    )
         
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=2)
-        self.about_label.grid(row=1, column=0, columnspan=2, pady=(10,0))
-        self.theory_button.grid(row=2, column=0, pady=(10,0))
-        self.train_button.grid(row=2, column=1, pady=(10,0))
-        self.learning_rate_scale.grid(row=3, column=0, columnspan=2, pady=(10,0))
-        self.model_status_label.grid(row=4, column=0, columnspan=2, pady=(10,0))
+        self.about_label.grid(row=1, column=0, columnspan=2, pady=(10, 0))
+        self.theory_button.grid(row=2, column=0, pady=(10, 0))
+        self.train_button.grid(row=2, column=1, pady=(10, 0))
+        self.learning_rate_scale.grid(row=3, column=0,
+                                      columnspan=2, pady=(10, 0))
+        self.model_status_label.grid(row=4, column=0,
+                                     columnspan=2, pady=(10, 0))
         self.menu_frame.pack()
         self.results_frame.pack(pady=(50,0))
         
@@ -201,10 +246,12 @@ class ImageRecognitionFrame(tk.Frame):
         self.pack_propagate(False)
 
     def manage_predicting(self, predict_thread: threading.Thread) -> None:
-        """Wait for model predicting thread to finish, then output prediction results.
+        """Wait for model predicting thread to finish,
+           then output prediction results.
         
         Args:
-            predict_thread (threading.Thread): the thread running the image model's predict() method.
+            predict_thread (threading.Thread):
+            the thread running the image model's predict() method.
         Raises:
             TypeError: if predict_thread is not of type threading.Thread.
         
@@ -212,12 +259,18 @@ class ImageRecognitionFrame(tk.Frame):
         if not predict_thread.is_alive():
             
             # Output example prediction results
-            self.image_figure.suptitle(f"Prediction Correctness: {round(self.cat_model.test_prediction_accuracy)}%")
+            self.image_figure.suptitle(
+             f"Prediction Correctness: {round(self.cat_model.test_prediction_accuracy)}%"
+             )
             image1: Figure.axes = self.image_figure.add_subplot(121)
-            image1.set_title("Cat" if np.squeeze(self.cat_model.test_prediction)[0] >= 0.5 else "Not a cat")
+            image1.set_title(
+             "Cat" if np.squeeze(self.cat_model.test_prediction)[0] >= 0.5 else "Not a cat"
+             )
             image1.imshow(self.cat_model.test_inputs[:,0].reshape((64,64,3)))
             image2: Figure.axes = self.image_figure.add_subplot(122)
-            image2.set_title("Cat" if np.squeeze(self.cat_model.test_prediction)[14] >= 0.5 else "Not a cat")
+            image2.set_title(
+             "Cat" if np.squeeze(self.cat_model.test_prediction)[14] >= 0.5 else "Not a cat"
+            )
             image2.imshow(self.cat_model.test_inputs[:,14].reshape((64,64,3)))
             self.image_canvas.get_tk_widget().pack(side='right')
             
@@ -226,10 +279,12 @@ class ImageRecognitionFrame(tk.Frame):
             self.after(1_000, self.manage_predicting, predict_thread)
 
     def manage_training(self, train_thread: threading.Thread) -> None:
-        """Wait for model training thread to finish, then start predicting with model in new thread.
+        """Wait for model training thread to finish,
+           then start predicting with model in new thread.
         
         Args:
-            train_thread (threading.Thread): the thread running the image model's train() method.
+            train_thread (threading.Thread):
+            the thread running the image model's train() method.
         Raises:
             TypeError: if train_thread is not of type threading.Thread.
 
@@ -245,8 +300,13 @@ class ImageRecognitionFrame(tk.Frame):
             self.loss_canvas.get_tk_widget().pack(side='left')
             
             # Start predicting thread
-            self.model_status_label.configure(text="Using trained weights and bias to predict", fg='green')
-            predict_thread: threading.Thread = threading.Thread(target=self.cat_model.predict)
+            self.model_status_label.configure(
+                             text="Using trained weights and bias to predict",
+                             fg='green'
+                             )
+            predict_thread: threading.Thread = threading.Thread(
+                                                target=self.cat_model.predict
+                                                )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
         else:
@@ -259,15 +319,20 @@ class ImageRecognitionFrame(tk.Frame):
         # Reset canvases and figures
         self.loss_figure = Figure()
         self.loss_canvas.get_tk_widget().destroy()
-        self.loss_canvas = FigureCanvasTkAgg(figure=self.loss_figure, master=self.results_frame)
+        self.loss_canvas = FigureCanvasTkAgg(figure=self.loss_figure,
+                                             master=self.results_frame)
         self.image_figure = Figure()
         self.image_canvas.get_tk_widget().destroy()
-        self.image_canvas = FigureCanvasTkAgg(figure=self.image_figure, master=self.results_frame)
+        self.image_canvas = FigureCanvasTkAgg(figure=self.image_figure,
+                                              master=self.results_frame)
         
         # Start training thread
         self.cat_model.LEARNING_RATE = self.learning_rate_scale.get()
         self.cat_model.init_model_values()
         self.model_status_label.configure(text="Training weights and bias...")
-        train_thread: threading.Thread = threading.Thread(target=self.cat_model.train, args=(5_000,))
+        train_thread: threading.Thread = threading.Thread(
+                                                  target=self.cat_model.train,
+                                                  args=(5_000,)
+                                                  )
         train_thread.start()
         self.manage_training(train_thread=train_thread)

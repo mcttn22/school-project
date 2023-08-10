@@ -25,30 +25,48 @@ class SchoolProjectFrame(tk.Frame):
         
         # Setup school project variables
         self.current_page: int = 0
-        self.pages: list[tk.Frame] = [AboutFrame(root=self, width=self.WIDTH - 100, height=self.HEIGHT),
-                                      ImageRecognitionFrame(root=self, width=self.WIDTH - 100, height=self.HEIGHT),
-                                      ExperimentsFrame(root=self, width=self.WIDTH - 100, height=self.HEIGHT)]
+        self.pages: list[tk.Frame] = [AboutFrame(root=self,
+                                                 width=self.WIDTH - 100,
+                                                 height=self.HEIGHT),
+                                      ImageRecognitionFrame(
+                                                       root=self,
+                                                       width=self.WIDTH - 100,
+                                                       height=self.HEIGHT
+                                                       ),
+                                      ExperimentsFrame(root=self,
+                                                       width=self.WIDTH - 100,
+                                                       height=self.HEIGHT)]
         
         # Setup widgets
-        self.menu_frame: tk.Frame = tk.Frame(master=self, height=self.HEIGHT, width=self.WIDTH, bg='white')
-        self.menu_buttons: list[tk.Button] = [tk.Button(master=self.menu_frame,
-                                                        width=13,
-                                                        height=1,
-                                                        text="About",
-                                                        command=lambda: self.load_page(index=0),
-                                                        font=tkf.Font(size=12)),
-                                             tk.Button(master=self.menu_frame,
-                                                       width=13,
-                                                       height=1,
-                                                       text="Image Recognition",
-                                                       command=lambda: self.load_page(index=1),
-                                                       font=tkf.Font(size=12)),
-                                             tk.Button(master=self.menu_frame,
-                                                       width=13,
-                                                       height=1,
-                                                       text="Experiments",
-                                                       command=lambda: self.load_page(index=2),
-                                                       font=tkf.Font(size=12))]
+        self.menu_frame: tk.Frame = tk.Frame(master=self,
+                                             height=self.HEIGHT,
+                                             width=self.WIDTH,
+                                             bg='white')
+        self.menu_buttons: list[tk.Button] = [
+                                    tk.Button(
+                                      master=self.menu_frame,
+                                      width=13,
+                                      height=1,
+                                      text="About",
+                                      command=lambda: self.load_page(index=0),
+                                      font=tkf.Font(size=12)),
+                                    tk.Button(
+                                      master=self.menu_frame,
+                                      width=13,
+                                      height=1,
+                                      text="Image Recognition",
+                                      command=lambda: self.load_page(index=1),
+                                      font=tkf.Font(size=12)
+                                      ),
+                                    tk.Button(
+                                      master=self.menu_frame,
+                                      width=13,
+                                      height=1,
+                                      text="Experiments",
+                                      command=lambda: self.load_page(index=2),
+                                      font=tkf.Font(size=12)
+                                      )
+                                    ]
         
         # Pack menu widget
         self.menu_frame.pack(side='left', fill='y')
@@ -56,16 +74,19 @@ class SchoolProjectFrame(tk.Frame):
             button.pack(fill='y', expand=True)
         
         # Pack homepage widget
-        self.pages[self.current_page].pack(side='right', fill='both', expand=True, pady=(50,0))
+        self.pages[self.current_page].pack(side='right', fill='both',
+                                           expand=True, pady=(50,0))
         
         # Setup frame attributes
         self.pack_propagate(False)
 
     def load_page(self, index: int) -> None:
-        """Unpack current page and pack new page, if the new page is different to the current page.
+        """Unpack current page and pack new page,
+           if the new page is different to the current page.
         
         Args:
-            index (int): the index of the new page to pack from the pages array.
+            index (int):
+            the index of the new page to pack from the pages array.
         Raises:
             TypeError: if index is not an integer.
             IndexError: if index is not in range of the pages array.
@@ -78,7 +99,8 @@ class SchoolProjectFrame(tk.Frame):
             
             # Pack new frame
             self.current_page = index
-            self.pages[self.current_page].pack(side='right', fill='both', expand=True, pady=(50,0))
+            self.pages[self.current_page].pack(side='right', fill='both',
+                                               expand=True, pady=(50,0))
 
 def main() -> None:
     """Entrypoint of project."""

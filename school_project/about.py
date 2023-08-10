@@ -19,12 +19,19 @@ class AboutFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup widgets
-        self.title_label: tk.Label = tk.Label(master=self, bg='white', font=('Arial', 20), text="About")
-        self.about_label: tk.Label = tk.Label(master=self,
-                                              bg='white',
-                                              font=('Arial', 14),
-                                              text="Year 13 Computer Science Programming Project on learning Artificial Neural Networks and their applications\n- Max Cotton")
-        self.theory_label: tk.Label = tk.Label(master=self, bg='white', font=('Arial', 14), text=self.load_theory(), justify='left')
+        self.title_label: tk.Label = tk.Label(master=self, bg='white',
+                                             font=('Arial', 20), text="About")
+        self.about_label: tk.Label = tk.Label(
+                                  master=self,
+                                  bg='white',
+                                  font=('Arial', 14),
+                                  text="Year 13 Computer Science Programming Project on learning Artificial Neural Networks and their applications\n- Max Cotton"
+                                  )
+        self.theory_label: tk.Label = tk.Label(master=self,
+                                               bg='white',
+                                               font=('Arial', 14),
+                                               text=self.load_theory(),
+                                               justify='left')
         
         # Pack widgets
         self.title_label.pack()
