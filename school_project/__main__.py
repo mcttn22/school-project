@@ -45,14 +45,14 @@ class SchoolProjectFrame(tk.Frame):
         self.menu_buttons: list[tk.Button] = [
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=13,
+                                      width=14,
                                       height=1,
                                       text="About",
                                       command=lambda: self.load_page(index=0),
                                       font=tkf.Font(size=12)),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=13,
+                                      width=14,
                                       height=1,
                                       text="Image Recognition",
                                       command=lambda: self.load_page(index=1),
@@ -60,7 +60,7 @@ class SchoolProjectFrame(tk.Frame):
                                       ),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=13,
+                                      width=14,
                                       height=1,
                                       text="Experiments",
                                       command=lambda: self.load_page(index=2),

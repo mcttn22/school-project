@@ -1,5 +1,5 @@
+import os
 import threading
-import webbrowser
 
 import h5py
 from matplotlib.figure import Figure
@@ -206,11 +206,15 @@ class ImageRecognitionFrame(tk.Frame):
                                           width=13,
                                           height=1,
                                           font=tkf.Font(size=12),
-                                          text="View Theory",
-                                          command=lambda: webbrowser.open_new_tab(
-                                                       r'docs/image_model.pdf'
-                                                       )
-                                          )
+                                          text="View Theory")
+        if os.name == 'posix':
+            self.theory_button.configure(command=lambda: os.system(
+                                                  r'open docs/image_model.pdf'
+                                                  ))
+        elif os.name == 'nt':
+            self.theory_button.configure(command=lambda: os.system(
+                                                       r'.\docs\image_model.pdf'
+                                                       ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13, height=1,
                                                  font=tkf.Font(size=12),
