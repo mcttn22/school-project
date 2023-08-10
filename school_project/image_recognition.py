@@ -88,7 +88,7 @@ class CatModel():
         return train_inputs, train_outputs, test_inputs, test_outputs
 
     def sigmoid(self, z: np.ndarray | int | float) -> np.ndarray | float:
-        """Transfer function, transform input to output number between 0-1.
+        """Transfer function, transform input to number between 0 and 1.
 
         Args:
             z (numpy.ndarray | int | float):
@@ -109,7 +109,7 @@ class CatModel():
             prediction (numpy.ndarray): the matrice of prediction values
         Raises:
             ValueError:
-            if prediction is not a suitable multiplier with the weights\
+            if prediction is not a suitable multiplier with the weights
             (incorrect shape)
         
         """
