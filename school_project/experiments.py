@@ -217,7 +217,6 @@ class ExperimentsFrame(tk.Frame):
                                      )
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
-                                                     fg='red',
                                                      font=('Arial', 15))
         self.results_frame: tk.Frame = tk.Frame(master=self, bg='white')
         self.loss_figure: Figure = Figure()
@@ -330,7 +329,8 @@ class ExperimentsFrame(tk.Frame):
         self.xor_model.LEARNING_RATE = self.learning_rate_scale.get()
         self.xor_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
         self.xor_model.init_weights()
-        self.model_status_label.configure(text="Training weights...")
+        self.model_status_label.configure(text="Training weights...",
+                                          fg='red')
         train_thread: threading.Thread = threading.Thread(
                                                   target=self.xor_model.train,
                                                   args=(50_000,)

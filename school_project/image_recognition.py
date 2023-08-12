@@ -231,7 +231,6 @@ class ImageRecognitionFrame(tk.Frame):
         self.learning_rate_scale.set(value=self.cat_model.LEARNING_RATE)
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
-                                                     fg='red',
                                                      font=('Arial', 15))
         self.results_frame: tk.Frame = tk.Frame(master=self, bg='white')
         self.loss_figure: Figure = Figure()
@@ -348,7 +347,8 @@ class ImageRecognitionFrame(tk.Frame):
         # Start training thread
         self.cat_model.LEARNING_RATE = self.learning_rate_scale.get()
         self.cat_model.init_model_values()
-        self.model_status_label.configure(text="Training weights and bias...")
+        self.model_status_label.configure(text="Training weights and bias...",
+                                          fg='red')
         train_thread: threading.Thread = threading.Thread(
                                                   target=self.cat_model.train,
                                                   args=(5_000,)
