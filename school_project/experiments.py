@@ -59,7 +59,7 @@ class XorModel():
                 f"Output biases: {self.output_biases.tolist()}\n" +
                 f"Learning Rate: {self.LEARNING_RATE}")
 
-    def init_weights(self) -> None:
+    def init_model_values(self) -> None:
         """Initialise weights to randdom values and biases to 0s"""
         self.hidden_weights = np.random.rand(self.hidden_neuron_count,
                                              self.input_neuron_count)
@@ -88,7 +88,7 @@ class XorModel():
 
     def back_propagation(self, hidden_output: np.ndarray,
                          prediction: np.ndarray) -> None:
-        """Adjust the weights via gradient descent.
+        """Adjust the weights and biases via gradient descent.
         
         Args:
             hidden_output (numpy.ndarray): the matrice of hidden output values
@@ -132,7 +132,7 @@ class XorModel():
         return hidden_output, prediction
 
     def predict(self) -> None:
-        """Use trained weights to predict ouput of XOR gate on two inputs."""
+        """Use trained weights and biases to predict ouput of XOR gate on two inputs."""
         hidden_output, self.test_prediction = self.forward_propagation()
         
         # Calculate performance of model
@@ -322,7 +322,7 @@ class ExperimentsFrame(tk.Frame):
             # Start predicting thread
             self.model_status_label.configure(
                                       fg='green',
-                                      text="Using trained weights to predict"
+                                      text="Using trained weights and biases to predict"
                                       )
             predict_thread: threading.Thread = threading.Thread(
                                                 target=self.xor_model.predict
@@ -346,8 +346,8 @@ class ExperimentsFrame(tk.Frame):
         # Start training thread
         self.xor_model.LEARNING_RATE = self.learning_rate_scale.get()
         self.xor_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
-        self.xor_model.init_weights()
-        self.model_status_label.configure(text="Training weights...",
+        self.xor_model.init_model_values()
+        self.model_status_label.configure(text="Training weights and biases...",
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
                                                   target=self.xor_model.train,
