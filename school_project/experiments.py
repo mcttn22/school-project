@@ -24,7 +24,7 @@ class XorModel():
         # Setup model attributes
         self.running: bool = True
         self.input_neuron_count: int = self.train_inputs.shape[0]
-        self.hidden_neuron_count: int = 4
+        self.hidden_neuron_count: int = 2
         self.output_neuron_count: int = 1
         
         # Initialise weights to random values and biases to 0s
