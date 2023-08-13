@@ -86,7 +86,7 @@ For each epoch the input array consisting of a combination of a 0 and/or 1, is f
         \item Using function 5, $\frac{\partial{L}}{\partial{A2}} = (-\frac{1}{m})(\frac{Y-A2}{A2 * (1-A2)})$
         \item Using function 4, $\frac{\partial{A2}}{\partial{Z2}} = A2 * (1-A2)$
         \item Using function 3, $\frac{\partial{Z2}}{\partial{B2}} = 1$
-        \item => $\frac{\partial{L}}{\partial{B2}} = \frac{Y-A2}{A2 * (1-A2)} * A2 * (1-A2)\\
+        \item => $\frac{\partial{L}}{\partial{B2}} = (-\frac{1}{m})(\frac{Y-A2}{A2 * (1-A2)}) * A2 * (1-A2)\\
               =(-\frac{1}{m})(A2-Y)$
     \end{itemize}
     \item $\frac{\partial{L}}{\partial{W1}}$ derivation:
