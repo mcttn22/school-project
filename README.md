@@ -14,3 +14,6 @@ Run with 'python3 school_project'
 - Use 'python3 -m unittest discover school_project/test/' to run tests
 ### Documentation
 - Use 'make all' in 'docs/' to generate project theory PDFs
+
+## TODO
+- Try XOR model deep ANN
