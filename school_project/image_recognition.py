@@ -22,11 +22,11 @@ class CatModel():
 
         # Setup model attributes
         self.running: bool = True
-        self.input_count: int = self.train_inputs.shape[0]
+        self.input_neuron_count: int = self.train_inputs.shape[0]
         self.output_neuron_count: int = 1
         
         # Initialise weights and bias to 0/s
-        self.weights: np.ndarray = np.zeros(shape=(self.input_count,
+        self.weights: np.ndarray = np.zeros(shape=(self.input_neuron_count,
                                                    self.output_neuron_count))
         self.bias: float = 0
         self.LEARNING_RATE: float = 0.001
