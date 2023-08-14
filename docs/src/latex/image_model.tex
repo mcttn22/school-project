@@ -42,11 +42,11 @@ For each epoch, the input array (X) of RGB values is dot producted with the weig
     \begin{itemize}
         \item $W = W - learningRate * \frac{\partial{L}}{\partial{W}}$
         \begin{itemize}
-            \item Where $\frac{\partial{L}}{\partial{W}} = X * (-\frac{1}{m})(A-Y)$
+            \item Where $\frac{\partial{L}}{\partial{W}} = X * (\frac{1}{m})(A-Y)$
         \end{itemize}
         \item $B = B - learningRate * \frac{\partial{L}}{\partial{B}}$
         \begin{itemize}
-            \item Where $\frac{\partial{L}}{\partial{B}} = (-\frac{1}{m})(A-Y)$
+            \item Where $\frac{\partial{L}}{\partial{B}} = (\frac{1}{m})(A-Y)$
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -67,7 +67,7 @@ For each epoch, the input array (X) of RGB values is dot producted with the weig
         \item Using function 2, $\frac{\partial{A}}{\partial{Z}} = A * (1-A)$
         \item Using function 1, $\frac{\partial{Z}}{\partial{W}} = X$
         \item => $\frac{\partial{L}}{\partial{W}} = (-\frac{1}{m})(\frac{Y-A}{A * (1-A)}) * A * (1-A) * X\\
-              = X * (-\frac{1}{m})(A-Y)$
+              = X * (\frac{1}{m})(A-Y)$
     \end{itemize}
     \item $\frac{\partial{L}}{\partial{B}}$ derivation:
     \begin{itemize}
@@ -76,7 +76,7 @@ For each epoch, the input array (X) of RGB values is dot producted with the weig
         \item Derived above, $\frac{\partial{A}}{\partial{Z}} = A * (1-A)$
         \item Using function 1, $\frac{\partial{Z}}{\partial{B}} = 1$
         \item => $\frac{\partial{L}}{\partial{W}} = (-\frac{1}{m})(\frac{Y-A}{A * (1-A)}) * A * (1-A)\\
-              = (-\frac{1}{m})(A-Y)$
+              = (\frac{1}{m})(A-Y)$
     \end{itemize}
 \end{itemize}
 
