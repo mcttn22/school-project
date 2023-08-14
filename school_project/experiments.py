@@ -17,9 +17,9 @@ class XorModel():
         self.train_inputs: np.ndarray = np.array([[0, 0, 1, 1],
                                                   [0, 1, 0, 1]])
         self.train_outputs: np.ndarray = np.array([[0, 1, 1, 0]])
-        self.train_losses: list[float] = []
-        self.test_prediction: np.ndarray = None
-        self.test_prediction_accuracy: float = None
+        self.train_losses: list[float]
+        self.test_prediction: np.ndarray
+        self.test_prediction_accuracy: float
         
         # Setup model attributes
         self.running: bool = True
@@ -27,21 +27,12 @@ class XorModel():
         self.hidden_neuron_count: int = 2
         self.output_neuron_count: int = 1
         
-        # Initialise weights to random values and biases to 0s
+        # Setup weights and biases
         np.random.seed(2)  # Sets up pseudo random values for weight arrays
-        self.hidden_weights: np.ndarray = np.random.rand(
-                                                     self.hidden_neuron_count,
-                                                     self.input_neuron_count
-                                                     )
-        self.output_weights: np.ndarray = np.random.rand(
-                                                     self.output_neuron_count,
-                                                     self.hidden_neuron_count
-                                                     )
-        self.hidden_biases: np.ndarray = np.zeros(
-                                          shape=(self.hidden_neuron_count, 1)
-                                          )
-        self.output_biases: np.ndarray = np.zeros(
-                                          shape=(self.output_neuron_count, 1))
+        self.hidden_weights: np.ndarray
+        self.output_weights: np.ndarray
+        self.hidden_biases: np.ndarray
+        self.output_biases: np.ndarray
         self.LEARNING_RATE: float = 0.1
 
     def __repr__(self) -> str:

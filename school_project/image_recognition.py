@@ -16,19 +16,18 @@ class CatModel():
         # Setup model data
         self.train_inputs, self.train_outputs,\
         self.test_inputs, self.test_outputs = self.load_datasets()
-        self.train_losses: list[float] = []
-        self.test_prediction: np.ndarray = None
-        self.test_prediction_accuracy: float = None
+        self.train_losses: list[float]
+        self.test_prediction: np.ndarray
+        self.test_prediction_accuracy: float
 
         # Setup model attributes
         self.running: bool = True
         self.input_neuron_count: int = self.train_inputs.shape[0]
         self.output_neuron_count: int = 1
         
-        # Initialise weights and bias to 0/s
-        self.weights: np.ndarray = np.zeros(shape=(self.input_neuron_count,
-                                                   self.output_neuron_count))
-        self.bias: float = 0
+        # Setup weights and bias
+        self.weights: np.ndarray
+        self.bias: float
         self.LEARNING_RATE: float = 0.001
 
     def __repr__(self) -> str:
