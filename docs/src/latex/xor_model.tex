@@ -94,7 +94,7 @@ For each epoch the input array consisting of a combination of a 0 and/or 1, is f
         \item By the Chain rule, $\frac{\partial{L}}{\partial{W1}} = \frac{\partial{A1}}{\partial{Z1}} * \frac{\partial{Z1}}{\partial{W1}} * \frac{\partial{L}}{\partial{Z2}} * \frac{\partial{Z2}}{\partial{A1}}$
         \item Using function 2, $\frac{\partial{A1}}{\partial{Z1}} = A1 * (1-A1)$
         \item Using function 1, $\frac{\partial{Z1}}{\partial{W1}} = X$
-        \item Using function 5, $\frac{\partial{L}}{\partial{Z2}} = (-\frac{1}{m})(A2 - Y)$
+        \item Using $\frac{\partial{L}}{\partial{W2}}$ derivation, $\frac{\partial{L}}{\partial{Z2}} = (\frac{1}{m})(A2 - Y)$
         \item Using function 3, $\frac{\partial{Z2}}{\partial{A1}} = W2$
         \item => $\frac{\partial{L}}{\partial{W1}} = X * A1 * (1-A1) * W2 * (\frac{1}{m})(A2-Y)$
     \end{itemize}
@@ -103,7 +103,7 @@ For each epoch the input array consisting of a combination of a 0 and/or 1, is f
         \item By the Chain rule, $\frac{\partial{L}}{\partial{B1}} = \frac{\partial{A1}}{\partial{Z1}} * \frac{\partial{Z1}}{\partial{B1}} * \frac{\partial{L}}{\partial{Z2}} * \frac{\partial{Z2}}{\partial{A1}}$
         \item Using function 2, $\frac{\partial{A1}}{\partial{Z1}} = A1 * (1-A1)$
         \item Using function 1, $\frac{\partial{Z1}}{\partial{B1}} = 1$
-        \item Using function 5, $\frac{\partial{L}}{\partial{Z2}} = (-\frac{1}{m})(A2 - Y)$
+        \item Using $\frac{\partial{L}}{\partial{W2}}$ derivation, $\frac{\partial{L}}{\partial{Z2}} = (\frac{1}{m})(A2 - Y)$
         \item Using function 3, $\frac{\partial{Z2}}{\partial{A1}} = W2$
         \item => $\frac{\partial{L}}{\partial{B1}} = A1 * (1-A1) * W2 * (\frac{1}{m})(A2-Y)$
     \end{itemize}
