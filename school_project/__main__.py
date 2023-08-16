@@ -1,9 +1,9 @@
 import tkinter as tk
 import tkinter.font as tkf
 
-from experiments import ExperimentsFrame
-from about import AboutFrame
-from image_recognition import ImageRecognitionFrame
+from pages.about import AboutFrame
+from pages.experiments import ExperimentsFrame
+from pages.cat_recognition import CatRecognitionFrame
 
 class SchoolProjectFrame(tk.Frame):
     """Main frame of school project."""
@@ -28,7 +28,7 @@ class SchoolProjectFrame(tk.Frame):
         self.pages: list[tk.Frame] = [AboutFrame(root=self,
                                                  width=self.WIDTH - 100,
                                                  height=self.HEIGHT),
-                                      ImageRecognitionFrame(
+                                      CatRecognitionFrame(
                                                        root=self,
                                                        width=self.WIDTH - 100,
                                                        height=self.HEIGHT
@@ -110,8 +110,9 @@ def main() -> None:
     root.mainloop()
     
     # Stop models training when GUI closes
-    school_project.pages[1].cat_model.running = False
-    school_project.pages[2].xor_model.running = False
+    school_project.pages[1].perceptron_model.running = False
+    school_project.pages[2].model_frames[0].shallow_model.running = False
+    school_project.pages[2].model_frames[1].deep_model.running = False
 
 if __name__ == "__main__":
     main()

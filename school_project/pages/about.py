@@ -26,7 +26,7 @@ class AboutFrame(tk.Frame):
            bg='white',
            font=('Arial', 14),
            text="Year 13 Computer Science Programming Project " +
-           "on learning Artificial Neural Networks and their applications\n" +
+           "on developing image recognition from scratch with Artificial Neural Networks, to recognise letter images\n" +
            "- Max Cotton"
                                   )
         self.theory_label: tk.Label = tk.Label(master=self,

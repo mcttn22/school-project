@@ -1,1 +1,1 @@
-__all__ = ['about','experiments','image_recognition']
+__all__  = ['models', 'pages']

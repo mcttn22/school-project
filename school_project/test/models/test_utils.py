@@ -1,10 +1,9 @@
 import unittest
-from school_project.image_recognition import CatModel
+from school_project.models.tools import sigmoid
 
-class TestCatModel(unittest.TestCase):
+class TestTools(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-        super(TestCatModel, self).__init__(*args, **kwargs)
-        self.cat_model = CatModel()
+        super(TestTools, self).__init__(*args, **kwargs)
 
     def test_sigmoid(self) -> None:
         """Test sigmoid output range to be within 0-1.
@@ -15,7 +14,7 @@ class TestCatModel(unittest.TestCase):
         """
         test_inputs = [-100,0,100]
         for test_input in test_inputs:
-            output = self.cat_model.sigmoid(test_input)
+            output = sigmoid(test_input)
             self.assertTrue(output >= 0 and output <= 1,
                             "Sigmoid should return a number between 0 and 1")
 
