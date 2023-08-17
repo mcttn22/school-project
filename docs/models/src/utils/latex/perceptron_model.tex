@@ -6,7 +6,7 @@
 \usepackage{natbib}
 \usepackage{graphicx}
 
-\title{Image model theory - Cat recognition}
+\title{Perceptron model theory}
 \author{Max Cotton}
 \date{}
 
@@ -16,19 +16,23 @@
 
 \section{Setup}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{src/utils/images/perceptron-ann-diagram.png}
+\caption{This model uses no hidden layers and is known as a Perceptron Artificial Neural Netwok.}
+\end{figure}
+
 \begin{itemize}
-    \item Load image datasets from '.h5' files. (Cat image datasets sourced from https://github.com/marcopeix)
+    \item Where W is the array of weights, initially set to zeroes, and B is the array of biases, initially set to zeros
+    \item Z is the dot product of the W array and the input array (X) summed with the B array
+    \item A is sigmoid(Z), which is the prediction
     \begin{itemize}
-        \item Where each image in the input dataset, is represented by an R, G and B matrice, to store the RGB values of each pixel in the 64x64 pixel images
-        \item Each image's RGB matrices are then 'flattened' into a 1 dimensional array of values, where each element is also divided by 255 (max RGB value) to a number between 0 and 1, to standardize the dataset
-        \item The output dataset is also loaded, and is reshaped into a 1 dimensional array of 1s and 0s, to store the output of each image (1 for cat, 0 for non cat)
+        \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
     \end{itemize}
-    \item There is a training dataset with 209 pictures and a test dataset with 50 pictures (fewer pictures are needed for testing)
-    \item Afterwards, the weights and the bias are all initialised to zero/s
 \end{itemize}
 
 \section{Forward Propagation}
-For each epoch, the input array (X) of RGB values is dot producted with the weights (W), summed with a bias (B) (to produce Z) and transferred through the sigmoid function to obtain a prediction between 0 and 1 (A) (where a prediction greater than or equal to 0.5 predicts cat)
+For each epoch the input array of values, is fed through the network to obtain a prediction A
 
 \section{Back Propagation}
 

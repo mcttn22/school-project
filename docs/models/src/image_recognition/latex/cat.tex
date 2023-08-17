@@ -1,0 +1,33 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\title{Cat Image Recognition model theory}
+\author{Max Cotton}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Setup}
+
+\begin{itemize}
+    \item Load image datasets from '.h5' files. (Cat image datasets sourced from https://github.com/marcopeix)
+    \begin{itemize}
+        \item Where each image in the input dataset, is represented by an R, G and B matrice, to store the RGB values of each pixel in the 64x64 pixel images
+        \item Each image's RGB matrices are then 'flattened' into a 1 dimensional array of values, where each element is also divided by 255 (max RGB value) to a number between 0 and 1, to standardize the dataset
+        \item The output dataset is also loaded, and is reshaped into a 1 dimensional array of 1s and 0s, to store the output of each image (1 for cat, 0 for non cat)
+    \end{itemize}
+    \item There is a training dataset with 209 pictures and a test dataset with 50 pictures (fewer pictures are needed for testing)
+    \item Afterwards, the weights and the bias are all initialised to zero/s
+\end{itemize}
+
+\section{Model}
+This cat image recognition model uses a Perceptron Artifical Neural Network model, with the RGB values as the input array, and uses the sigmoid transfer function to obtain a single output neuron/prediction between 0 and 1 (where a prediction greater than or equal to 0.5 predicts cat), for a binary classification of 'cat' or 'not a cat'
+
+\end{document}
