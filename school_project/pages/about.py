@@ -1,4 +1,7 @@
+import os
+
 import tkinter as tk
+import tkinter.font as tkf
 
 class AboutFrame(tk.Frame):
     """Frame for about page."""
@@ -25,10 +28,24 @@ class AboutFrame(tk.Frame):
            master=self,
            bg='white',
            font=('Arial', 14),
-           text="Year 13 Computer Science Programming Project " +
-           "on developing image recognition from scratch with Artificial Neural Networks, to recognise letter images\n" +
+           text="Year 13 Computer Science Programming Project, " +
+           "on developing Image Recognition from scratch with Artificial Neural Networks,\n" +
+           "then applying the models to problems, such as recognising letter images.\n" +
            "- Max Cotton"
                                   )
+        self.theory_button: tk.Button = tk.Button(master=self,
+                                                  width=13,
+                                                  height=1,
+                                                  font=tkf.Font(size=12),
+                                                  text="View Theory")
+        if os.name == 'posix':
+            self.theory_button.configure(command=lambda: os.system(
+                                                    r'open docs/models/ann.pdf'
+                                                    ))
+        elif os.name == 'nt':
+            self.theory_button.configure(command=lambda: os.system(
+                                                         r'.\docs\models\ann.pdf'
+                                                         ))
         self.theory_label: tk.Label = tk.Label(master=self,
                                                bg='white',
                                                font=('Arial', 14),
@@ -37,8 +54,9 @@ class AboutFrame(tk.Frame):
         
         # Pack widgets
         self.title_label.pack()
-        self.about_label.pack()
-        self.theory_label.pack()
+        self.about_label.pack(pady=(10,0))
+        self.theory_button.pack(pady=(10,0))
+        self.theory_label.pack(pady=(10,0))
         
         # Setup frame attributes
         self.pack_propagate(False)

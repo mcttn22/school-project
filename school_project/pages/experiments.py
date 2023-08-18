@@ -7,7 +7,7 @@ import numpy as np
 import tkinter as tk
 import tkinter.font as tkf
 
-from models.xor import ShallowModel, DeepModel
+from school_project.models.xor import ShallowModel, DeepModel
 
 class ShallowModelFrame(tk.Frame):
     "Frame for Shallow model."
@@ -36,18 +36,18 @@ class ShallowModelFrame(tk.Frame):
                                               bg='white',
                                               font=('Arial', 20),
                                               text="XOR Shallow ANN")
-        self.theory_button: tk.Button = tk.Button(master=self.menu_frame,
+        self.model_theory_button: tk.Button = tk.Button(master=self.menu_frame,
                                                   width=13,
                                                   height=1,
                                                   font=tkf.Font(size=12),
-                                                  text="View Theory")
+                                                  text="View Model Theory")
         if os.name == 'posix':
-            self.theory_button.configure(command=lambda: os.system(
-                                                    r'open docs/xor_shallow_model.pdf'
+            self.model_theory_button.configure(command=lambda: os.system(
+                                                    r'open docs/models/utils/shallow_model.pdf'
                                                     ))
         elif os.name == 'nt':
-            self.theory_button.configure(command=lambda: os.system(
-                                                         r'.\docs\xor_shallow_model.pdf'
+            self.model_theory_button.configure(command=lambda: os.system(
+                                                         r'.\docs\models\utils\shallow_model.pdf'
                                                          ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13,
@@ -63,7 +63,7 @@ class ShallowModelFrame(tk.Frame):
                                                       from_=0,
                                                       to=1,
                                                       resolution=0.01)
-        self.learning_rate_scale.set(value=self.shallow_model.LEARNING_RATE)
+        self.learning_rate_scale.set(value=self.shallow_model.learning_rate)
         self.hidden_neuron_count_scale: tk.Scale = tk.Scale(
                                              master=self.menu_frame,
                                              bg='white',
@@ -92,7 +92,7 @@ class ShallowModelFrame(tk.Frame):
         
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=4)
-        self.theory_button.grid(row=2, column=0, pady=(10,0))
+        self.model_theory_button.grid(row=2, column=0, pady=(10,0))
         self.train_button.grid(row=2, column=3, pady=(10,0))
         self.learning_rate_scale.grid(row=3, column=1, padx=(0,5),
                                       pady=(10,0), sticky='e')
@@ -156,7 +156,7 @@ class ShallowModelFrame(tk.Frame):
 
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
-            graph.set_title(f"Learning rate: {self.shallow_model.LEARNING_RATE}")
+            graph.set_title(f"Learning rate: {self.shallow_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
             graph.plot(np.squeeze(self.shallow_model.train_losses))
@@ -187,7 +187,7 @@ class ShallowModelFrame(tk.Frame):
         self.results_label.pack_forget()
         
         # Start training thread
-        self.shallow_model.LEARNING_RATE = self.learning_rate_scale.get()
+        self.shallow_model.learning_rate = self.learning_rate_scale.get()
         self.shallow_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
         self.shallow_model.init_model_values()
         self.model_status_label.configure(text="Training weights and biases...",
@@ -226,18 +226,18 @@ class DeepModelFrame(tk.Frame):
                                               bg='white',
                                               font=('Arial', 20),
                                               text="XOR Deep ANN")
-        self.theory_button: tk.Button = tk.Button(master=self.menu_frame,
+        self.model_theory_button: tk.Button = tk.Button(master=self.menu_frame,
                                                   width=13,
                                                   height=1,
                                                   font=tkf.Font(size=12),
-                                                  text="View Theory")
+                                                  text="View Model Theory")
         if os.name == 'posix':
-            self.theory_button.configure(command=lambda: os.system(
-                                                    r'open docs/xor_deep_model.pdf'
+            self.model_theory_button.configure(command=lambda: os.system(
+                                                    r'open docs/models/utils/deep_model.pdf'
                                                     ))
         elif os.name == 'nt':
-            self.theory_button.configure(command=lambda: os.system(
-                                                         r'.\docs\xor_deep_model.pdf'
+            self.model_theory_button.configure(command=lambda: os.system(
+                                                         r'.\docs\models\utils\deep_model.pdf'
                                                          ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13,
@@ -253,7 +253,7 @@ class DeepModelFrame(tk.Frame):
                                                       from_=0,
                                                       to=1,
                                                       resolution=0.01)
-        self.learning_rate_scale.set(value=self.deep_model.LEARNING_RATE)
+        self.learning_rate_scale.set(value=self.deep_model.learning_rate)
         self.hidden_neuron_count_scale: tk.Scale = tk.Scale(
                                              master=self.menu_frame,
                                              bg='white',
@@ -282,7 +282,7 @@ class DeepModelFrame(tk.Frame):
         
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=4)
-        self.theory_button.grid(row=2, column=0, pady=(10,0))
+        self.model_theory_button.grid(row=2, column=0, pady=(10,0))
         self.train_button.grid(row=2, column=3, pady=(10,0))
         self.learning_rate_scale.grid(row=3, column=1, padx=(0,5),
                                       pady=(10,0), sticky='e')
@@ -346,7 +346,7 @@ class DeepModelFrame(tk.Frame):
 
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
-            graph.set_title(f"Learning rate: {self.deep_model.LEARNING_RATE}")
+            graph.set_title(f"Learning rate: {self.deep_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
             graph.plot(np.squeeze(self.deep_model.train_losses))
@@ -377,7 +377,7 @@ class DeepModelFrame(tk.Frame):
         self.results_label.pack_forget()
         
         # Start training thread
-        self.deep_model.LEARNING_RATE = self.learning_rate_scale.get()
+        self.deep_model.learning_rate = self.learning_rate_scale.get()
         self.deep_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
         self.deep_model.init_model_values()
         self.model_status_label.configure(text="Training weights and biases...",
@@ -430,7 +430,7 @@ class ExperimentsFrame(tk.Frame):
          bg='white', 
          font=('Arial', 14), 
          text="For experimenting with Artificial Neural Networks, " +
-              "XOR gate models have been used for their lesser computation time"
+              "XOR gate models have been used for their lesser computation time."
          )
         self.shallow_model_frame_button: tk.Button = tk.Button(
                                       master=self.menu_frame,

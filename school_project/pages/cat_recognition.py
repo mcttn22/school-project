@@ -7,7 +7,7 @@ import numpy as np
 import tkinter as tk
 import tkinter.font as tkf
 
-from models.image_recognition.cat import PerceptronModel
+from school_project.models.image_recognition.cat import PerceptronModel
 
 class CatRecognitionFrame(tk.Frame):
     """Frame for Cat Recognition page."""
@@ -35,27 +35,39 @@ class CatRecognitionFrame(tk.Frame):
         self.title_label: tk.Label = tk.Label(master=self.menu_frame,
                                               bg='white',
                                               font=('Arial', 20),
-                                              text="Image Recognition")
+                                              text="Cat Recognition")
         self.about_label: tk.Label = tk.Label(
                                      master=self.menu_frame,
                                      bg='white',
                                      font=('Arial', 14),
                                      text="An Image model trained on " +
-                                     "recognising if an image is a cat or not"
+                                     "recognising if an image is a cat or not."
                                     )
-        self.theory_button: tk.Button = tk.Button(
+        self.cat_recognition_theory_button: tk.Button = tk.Button(
                                           master=self.menu_frame, 
-                                          width=13,
+                                          width=23,
                                           height=1,
                                           font=tkf.Font(size=12),
-                                          text="View Theory")
+                                          text="View Cat Recognition Theory")
+        self.model_theory_button: tk.Button = tk.Button(
+                                          master=self.menu_frame, 
+                                          width=15,
+                                          height=1,
+                                          font=tkf.Font(size=12),
+                                          text="View Model Theory")
         if os.name == 'posix':
-            self.theory_button.configure(command=lambda: os.system(
-                                                  r'open docs/image_model.pdf'
+            self.cat_recognition_theory_button.configure(command=lambda: os.system(
+                                                  r'open docs/models/image_recognition/cat.pdf'
+                                                  ))
+            self.model_theory_button.configure(command=lambda: os.system(
+                                                  r'open docs/models/utils/perceptron_model.pdf'
                                                   ))
         elif os.name == 'nt':
-            self.theory_button.configure(command=lambda: os.system(
-                                                       r'.\docs\image_model.pdf'
+            self.cat_recognition_theory_button.configure(command=lambda: os.system(
+                                                  r'docs\models\image_recognition\cat.pdf'
+                                                  ))
+            self.model_theory_button.configure(command=lambda: os.system(
+                                                       r'.\docs\models\utils\perceptron_model.pdf'
                                                        ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13, height=1,
@@ -70,7 +82,7 @@ class CatRecognitionFrame(tk.Frame):
                                                       from_=0,
                                                       to=0.037,
                                                       resolution=0.001)
-        self.learning_rate_scale.set(value=self.perceptron_model.LEARNING_RATE)
+        self.learning_rate_scale.set(value=self.perceptron_model.learning_rate)
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
@@ -87,14 +99,15 @@ class CatRecognitionFrame(tk.Frame):
                                                     )
         
         # Pack widgets
-        self.title_label.grid(row=0, column=0, columnspan=2)
-        self.about_label.grid(row=1, column=0, columnspan=2, pady=(10, 0))
-        self.theory_button.grid(row=2, column=0, pady=(10, 0))
-        self.train_button.grid(row=2, column=1, pady=(10, 0))
-        self.learning_rate_scale.grid(row=3, column=0,
-                                      columnspan=2, pady=(10, 0))
-        self.model_status_label.grid(row=4, column=0,
-                                     columnspan=2, pady=(10, 0))
+        self.title_label.grid(row=0, column=0, columnspan=3)
+        self.about_label.grid(row=1, column=0, columnspan=3, pady=(10, 0))
+        self.cat_recognition_theory_button.grid(row=2, column=1, pady=(10,0))
+        self.model_theory_button.grid(row=3, column=0, pady=(50, 0))
+        self.train_button.grid(row=3, column=2, pady=(50, 0))
+        self.learning_rate_scale.grid(row=4, column=0,
+                                      columnspan=3, pady=(10, 0))
+        self.model_status_label.grid(row=5, column=0,
+                                     columnspan=3, pady=(10, 0))
         self.menu_frame.pack()
         self.results_frame.pack(pady=(50,0))
         
@@ -118,7 +131,7 @@ class CatRecognitionFrame(tk.Frame):
             # Output example prediction results
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(self.perceptron_model.test_prediction_accuracy)}%"
+             f"{round(self.perceptron_model.test_prediction_correctness)}%"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             if np.squeeze(self.perceptron_model.test_prediction)[0] >= 0.5:
@@ -153,7 +166,7 @@ class CatRecognitionFrame(tk.Frame):
             
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
-            graph.set_title(f"Learning rate: {self.perceptron_model.LEARNING_RATE}")
+            graph.set_title(f"Learning rate: {self.perceptron_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
             graph.plot(np.squeeze(self.perceptron_model.train_losses))
@@ -187,7 +200,7 @@ class CatRecognitionFrame(tk.Frame):
                                               master=self.results_frame)
         
         # Start training thread
-        self.perceptron_model.LEARNING_RATE = self.learning_rate_scale.get()
+        self.perceptron_model.learning_rate = self.learning_rate_scale.get()
         self.perceptron_model.init_model_values()
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
