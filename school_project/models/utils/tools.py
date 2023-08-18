@@ -25,7 +25,7 @@ class ModelInterface():
         raise NotImplementedError
 
     def back_propagation(self, prediction: np.ndarray) -> None:
-        """Adjust the weights and bias via gradient descent.
+        """Adjust the weights and bias/biases via gradient descent.
         
         Args:
             prediction (numpy.ndarray): the matrice of prediction values
@@ -36,7 +36,7 @@ class ModelInterface():
         raise NotImplementedError
 
     def forward_propagation(self) -> np.ndarray:
-        """Generate a prediction with the weights and bias.
+        """Generate a prediction with the weights and bias/biases.
         
         Returns:
             numpy.ndarray of prediction values.
@@ -47,8 +47,7 @@ class ModelInterface():
         raise NotImplementedError
 
     def predict(self) -> None:
-        """Use trained weights and bias
-           to predict if image is a cat or not a cat.
+        """Use trained weights and bias/biases to predict.
            
         Raises:
             NotImplementedError: if this method is not implemented.
@@ -57,7 +56,7 @@ class ModelInterface():
         raise NotImplementedError
 
     def train(self, epochs: int) -> None:
-        """Train weights and bias.
+        """Train weights and bias/biases.
         
         Args:
             epochs (int): the number of forward and back propagations to do.
