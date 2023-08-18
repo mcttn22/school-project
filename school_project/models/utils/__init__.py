@@ -1,1 +1,1 @@
-__all__ = ['deep_model', 'perceptron', 'shallow_model', 'tools']
+__all__ = ['perceptron_model', 'shallow_model', 'tools']
