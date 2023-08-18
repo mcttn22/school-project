@@ -18,5 +18,5 @@ Run with 'python3 school_project'
 ## TODO
 - Add deep model
 - Add letter recognition model + page (online dataset) (multi-class classification (more than one output neuron))
-- PEP8 styling
 - Format for windows
+- Maybe use desktop GPUs for calculations via remote access
