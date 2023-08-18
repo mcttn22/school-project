@@ -54,7 +54,7 @@ class SchoolProjectFrame(tk.Frame):
                                       master=self.menu_frame,
                                       width=14,
                                       height=1,
-                                      text="Image Recognition",
+                                      text="Cat Recognition",
                                       command=lambda: self.load_page(index=1),
                                       font=tkf.Font(size=12)
                                       ),
@@ -105,14 +105,13 @@ class SchoolProjectFrame(tk.Frame):
 def main() -> None:
     """Entrypoint of project."""
     root = tk.Tk()
-    school_project = SchoolProjectFrame(root=root, width=1400, height=800)
+    school_project = SchoolProjectFrame(root=root, width=1400, height=930)
     school_project.pack(side='top', fill='both', expand=True)
     root.mainloop()
     
     # Stop models training when GUI closes
     school_project.pages[1].perceptron_model.running = False
     school_project.pages[2].model_frames[0].shallow_model.running = False
-    school_project.pages[2].model_frames[1].deep_model.running = False
 
 if __name__ == "__main__":
     main()
