@@ -1,15 +1,25 @@
 import numpy as np
 
-from school_project.models.utils.tools import ModelInterface, sigmoid, calculate_loss, calculate_prediction_accuracy, calculate_prediction_correctness
+from school_project.models.utils.tools import (
+                                              ModelInterface,
+                                              sigmoid,
+                                              calculate_loss,
+                                              calculate_prediction_accuracy,
+                                              calculate_prediction_correctness
+                                              )
 
 class AbstractShallowModel(ModelInterface):
     """ANN model with a single hidden layer"""
-    def __init__(self, hidden_neuron_count: int, output_neuron_count: int, learning_rate: float) -> None:
+    def __init__(self, hidden_neuron_count: int,
+                 output_neuron_count: int,
+                 learning_rate: float) -> None:
         """Initialise model values.
 
         Args:
-            hidden_neuron_count (int): the number of hidden neurons in the model.
-            output_neuron_count (int): the number of output neurons in the model.
+            hidden_neuron_count (int):
+            the number of hidden neurons in the model.
+            output_neuron_count (int):
+            the number of output neurons in the model.
             learning_rate (float): the learning rate of the model.
         
         """
@@ -113,8 +123,14 @@ class AbstractShallowModel(ModelInterface):
         hidden_output, self.test_prediction = self.forward_propagation()
         
         # Calculate performance of model
-        self.test_prediction_accuracy = calculate_prediction_accuracy(prediction=self.test_prediction, outputs=self.test_outputs)
-        self.test_prediction_correctness = calculate_prediction_correctness(prediction=self.test_prediction, outputs=self.test_outputs)
+        self.test_prediction_accuracy = calculate_prediction_accuracy(
+                                              prediction=self.test_prediction,
+                                              outputs=self.test_outputs
+                                              )
+        self.test_prediction_correctness = calculate_prediction_correctness(
+                                               prediction=self.test_prediction,
+                                               outputs=self.test_outputs
+                                               )
 
     def train(self, epochs: int) -> None:
         """Train weights and biases.
@@ -128,7 +144,9 @@ class AbstractShallowModel(ModelInterface):
             if not self.running:
                 break
             hidden_output, prediction = self.forward_propagation()
-            loss = calculate_loss(input_count=self.input_count, outputs=self.train_outputs, prediction=prediction)
+            loss = calculate_loss(input_count=self.input_count,
+                                  outputs=self.train_outputs,
+                                  prediction=prediction)
             self.train_losses.append(loss)
             self.back_propagation(hidden_output=hidden_output,
                                   prediction=prediction)

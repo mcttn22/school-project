@@ -1,7 +1,9 @@
 import h5py
 import numpy as np
 
-from school_project.models.utils.perceptron_model import AbstractPerceptronModel
+from school_project.models.utils.perceptron_model import (
+                                                       AbstractPerceptronModel
+                                                       )
 
 class PerceptronModel(AbstractPerceptronModel):
     """ANN model with no hidden layers,
@@ -25,13 +27,13 @@ class PerceptronModel(AbstractPerceptronModel):
         # Load datasets from h5 files
         # (h5 files stores large amount of data with quick access)
         train_dataset: h5py.File = h5py.File(
-                                      r'school_project/models/image_recognition/datasets/train-cat.h5',
-                                      'r'
-                                      )
+             r'school_project/models/image_recognition/datasets/train-cat.h5',
+             'r'
+             )
         test_dataset: h5py.File = h5py.File(
-                                      r'school_project/models/image_recognition/datasets/test-cat.h5',
-                                      'r'
-                                      )
+              r'school_project/models/image_recognition/datasets/test-cat.h5',
+              'r'
+              )
         
         # Load input arrays,
         # containing the RGB values for each pixel in each 64x64 pixel image,
@@ -46,7 +48,8 @@ class PerceptronModel(AbstractPerceptronModel):
         # Reshape input arrays into 1 dimension (flatten),
         # then divide by 255 (RGB)
         # to standardize them to a number between 0 and 1
-        train_inputs = train_inputs.reshape((train_inputs.shape[0], -1)).T / 255
+        train_inputs = train_inputs.reshape((train_inputs.shape[0],
+                                             -1)).T / 255
         test_inputs = test_inputs.reshape((test_inputs.shape[0], -1)).T / 255
         
         # Reshape output arrays into a 1 dimensional list of outputs

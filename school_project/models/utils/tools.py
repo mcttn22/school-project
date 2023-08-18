@@ -82,39 +82,48 @@ def sigmoid(z: np.ndarray | int | float) -> np.ndarray | float:
     """
     return 1 / (1 + np.exp(-z))
 
-def calculate_loss(input_count: int, outputs: np.ndarray, prediction: np.ndarray) -> float:
+def calculate_loss(input_count: int,
+                   outputs: np.ndarray,
+                   prediction: np.ndarray) -> float:
     """Calculate average loss/error of the prediction to the outputs.
     
     Args:
         input_count (int): the number of inputs.
-        outputs (np.ndarray): the train/test outputs array to compare with the prediction.
+        outputs (np.ndarray):
+        the train/test outputs array to compare with the prediction.
         prediction (np.ndarray): the array of prediction values.
     Returns:
         float loss.
     Raises:
-        ValueError: if outputs is not a suitable multiplier with the prediction (incorrect shapes)
+        ValueError:
+        if outputs is not a suitable multiplier with the prediction
+        (incorrect shapes)
 
     """
     return np.squeeze(- (1/input_count) * np.sum(outputs * np.log(prediction) + (1 - outputs) * np.log(1 - prediction)))
 
-def calculate_prediction_accuracy(prediction: np.ndarray, outputs: np.ndarray) -> float:
+def calculate_prediction_accuracy(prediction: np.ndarray,
+                                  outputs: np.ndarray) -> float:
     """Calculate the percentage accuracy of the predictions.
     
     Args:
         prediction (np.ndarray): the array of prediction values.
-        outputs (np.ndarray): the train/test outputs array to compare with the prediction.
+        outputs (np.ndarray):
+        the train/test outputs array to compare with the prediction.
     Returns:
         float prediction accuracy
 
     """
     return 100 - np.mean(np.abs(prediction - outputs)) * 100
 
-def calculate_prediction_correctness(prediction: np.ndarray, outputs: np.ndarray) -> float:
+def calculate_prediction_correctness(prediction: np.ndarray,
+                                     outputs: np.ndarray) -> float:
     """Calculate the percentage correctness of the predictions.
     
     Args:
         prediction (np.ndarray): the array of prediction values.
-        outputs (np.ndarray): the train/test outputs array to compare with the prediction.
+        outputs (np.ndarray):
+        the train/test outputs array to compare with the prediction.
     Returns:
         float prediction accuracy
 

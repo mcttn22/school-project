@@ -56,19 +56,21 @@ class CatRecognitionFrame(tk.Frame):
                                           font=tkf.Font(size=12),
                                           text="View Model Theory")
         if os.name == 'posix':
-            self.cat_recognition_theory_button.configure(command=lambda: os.system(
-                                                  r'open docs/models/image_recognition/cat.pdf'
-                                                  ))
+            self.cat_recognition_theory_button.configure(
+                                                    command=lambda: os.system(
+                                 r'open docs/models/image_recognition/cat.pdf'
+                                 ))
             self.model_theory_button.configure(command=lambda: os.system(
-                                                  r'open docs/models/utils/perceptron_model.pdf'
-                                                  ))
+                                r'open docs/models/utils/perceptron_model.pdf'
+                                ))
         elif os.name == 'nt':
-            self.cat_recognition_theory_button.configure(command=lambda: os.system(
-                                                  r'docs\models\image_recognition\cat.pdf'
-                                                  ))
+            self.cat_recognition_theory_button.configure(
+                                                    command=lambda: os.system(
+                                      r'docs\models\image_recognition\cat.pdf'
+                                      ))
             self.model_theory_button.configure(command=lambda: os.system(
-                                                       r'.\docs\models\utils\perceptron_model.pdf'
-                                                       ))
+                                   r'.\docs\models\utils\perceptron_model.pdf'
+                                   ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13, height=1,
                                                  font=tkf.Font(size=12),
@@ -138,13 +140,17 @@ class CatRecognitionFrame(tk.Frame):
                 image1.set_title("Cat")
             else:
                 image1.set_title("Not a cat")
-            image1.imshow(self.perceptron_model.test_inputs[:,0].reshape((64,64,3)))
+            image1.imshow(
+                     self.perceptron_model.test_inputs[:,0].reshape((64,64,3))
+                     )
             image2: Figure.axes = self.image_figure.add_subplot(122)
             if np.squeeze(self.perceptron_model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
                 image2.set_title("Not a cat")
-            image2.imshow(self.perceptron_model.test_inputs[:,14].reshape((64,64,3)))
+            image2.imshow(
+                    self.perceptron_model.test_inputs[:,14].reshape((64,64,3))
+                    )
             self.image_canvas.get_tk_widget().pack(side='right')
             
             self.train_button['state'] = 'normal'
@@ -166,7 +172,8 @@ class CatRecognitionFrame(tk.Frame):
             
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
-            graph.set_title(f"Learning rate: {self.perceptron_model.learning_rate}")
+            graph.set_title(f"Learning rate: " +
+                            "{self.perceptron_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
             graph.plot(np.squeeze(self.perceptron_model.train_losses))
@@ -178,8 +185,8 @@ class CatRecognitionFrame(tk.Frame):
                              fg='green'
                              )
             predict_thread: threading.Thread = threading.Thread(
-                                                target=self.perceptron_model.predict
-                                                )
+                                          target=self.perceptron_model.predict
+                                          )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
         else:
@@ -205,8 +212,8 @@ class CatRecognitionFrame(tk.Frame):
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
-                                                  target=self.perceptron_model.train,
-                                                  args=(5_000,)
-                                                  )
+                                           target=self.perceptron_model.train,
+                                           args=(5_000,)
+                                           )
         train_thread.start()
         self.manage_training(train_thread=train_thread)

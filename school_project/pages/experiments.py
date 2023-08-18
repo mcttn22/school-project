@@ -22,7 +22,9 @@ class ShallowModelFrame(tk.Frame):
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white', highlightbackground='black', highlightthickness=2)
+        super().__init__(master=root, width=width,
+                         height=height, bg='white',
+                         highlightbackground='black', highlightthickness=2)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
@@ -36,19 +38,20 @@ class ShallowModelFrame(tk.Frame):
                                               bg='white',
                                               font=('Arial', 20),
                                               text="XOR Shallow ANN")
-        self.model_theory_button: tk.Button = tk.Button(master=self.menu_frame,
-                                                  width=13,
-                                                  height=1,
-                                                  font=tkf.Font(size=12),
-                                                  text="View Model Theory")
+        self.model_theory_button: tk.Button = tk.Button(
+                                                     master=self.menu_frame,
+                                                     width=13,
+                                                     height=1,
+                                                     font=tkf.Font(size=12),
+                                                     text="View Model Theory")
         if os.name == 'posix':
             self.model_theory_button.configure(command=lambda: os.system(
-                                                    r'open docs/models/utils/shallow_model.pdf'
-                                                    ))
+                                   r'open docs/models/utils/shallow_model.pdf'
+                                   ))
         elif os.name == 'nt':
             self.model_theory_button.configure(command=lambda: os.system(
-                                                         r'.\docs\models\utils\shallow_model.pdf'
-                                                         ))
+                                      r'.\docs\models\utils\shallow_model.pdf'
+                                      ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13,
                                                  height=1,
@@ -75,8 +78,8 @@ class ShallowModelFrame(tk.Frame):
                                              resolution=1.0
                                              )
         self.hidden_neuron_count_scale.set(
-                                     value=self.shallow_model.hidden_neuron_count
-                                     )
+                                  value=self.shallow_model.hidden_neuron_count
+                                  )
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
@@ -156,7 +159,8 @@ class ShallowModelFrame(tk.Frame):
 
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
-            graph.set_title(f"Learning rate: {self.shallow_model.learning_rate}")
+            graph.set_title("Learning rate: " +
+                            f"{self.shallow_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
             graph.plot(np.squeeze(self.shallow_model.train_losses))
@@ -164,12 +168,12 @@ class ShallowModelFrame(tk.Frame):
             
             # Start predicting thread
             self.model_status_label.configure(
-                                      fg='green',
-                                      text="Using trained weights and biases to predict"
-                                      )
+                            fg='green',
+                            text="Using trained weights and biases to predict"
+                            )
             predict_thread: threading.Thread = threading.Thread(
-                                                target=self.shallow_model.predict
-                                                )
+                                             target=self.shallow_model.predict
+                                             )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
         else:
@@ -212,7 +216,9 @@ class DeepModelFrame(tk.Frame):
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white', highlightbackground='black', highlightthickness=2)
+        super().__init__(master=root, width=width,
+                         height=height, bg='white',
+                         highlightbackground='black', highlightthickness=2)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
@@ -233,12 +239,12 @@ class DeepModelFrame(tk.Frame):
                                                   text="View Model Theory")
         if os.name == 'posix':
             self.model_theory_button.configure(command=lambda: os.system(
-                                                    r'open docs/models/utils/deep_model.pdf'
-                                                    ))
+                                      r'open docs/models/utils/deep_model.pdf'
+                                      ))
         elif os.name == 'nt':
             self.model_theory_button.configure(command=lambda: os.system(
-                                                         r'.\docs\models\utils\deep_model.pdf'
-                                                         ))
+                                         r'.\docs\models\utils\deep_model.pdf'
+                                         ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13,
                                                  height=1,
@@ -312,11 +318,11 @@ class DeepModelFrame(tk.Frame):
             
             # Output example prediction results
             results: str = (
-                      f"Prediction Accuracy: " +
-                      f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
-                      f"Number of Hidden Neurons: " +
-                      f"{self.deep_model.hidden_neuron_count}\n"
-                      )
+                     f"Prediction Accuracy: " +
+                     f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
+                     f"Number of Hidden Neurons: " +
+                     f"{self.deep_model.hidden_neuron_count}\n"
+                     )
             for i in range(self.deep_model.train_inputs.shape[1]):
                 results += f"{self.deep_model.train_inputs[0][i]},"
                 results += f"{self.deep_model.train_inputs[1][i]} = "
@@ -354,9 +360,9 @@ class DeepModelFrame(tk.Frame):
             
             # Start predicting thread
             self.model_status_label.configure(
-                                      fg='green',
-                                      text="Using trained weights and biases to predict"
-                                      )
+                            fg='green',
+                            text="Using trained weights and biases to predict"
+                            )
             predict_thread: threading.Thread = threading.Thread(
                                                 target=self.deep_model.predict
                                                 )
@@ -409,12 +415,14 @@ class ExperimentsFrame(tk.Frame):
         
         # Setup experiments frame variables
         self.current_model_frame: int = 0
-        self.model_frames: list[tk.Frame] = [ShallowModelFrame(root=self,
-                                                            width=self.WIDTH,
-                                                            height=self.HEIGHT - 100),
-                                             DeepModelFrame(root=self,
-                                                               width=self.WIDTH,
-                                                               height=self.HEIGHT - 100)]
+        self.model_frames: list[tk.Frame] = [
+                                    ShallowModelFrame(root=self,
+                                                    width=self.WIDTH,
+                                                    height=self.HEIGHT - 100),
+                                    DeepModelFrame(root=self,
+                                                    width=self.WIDTH,
+                                                    height=self.HEIGHT - 100)
+                                    ]
 
         # Setup widgets
         self.menu_frame: tk.Frame = tk.Frame(master=self,
@@ -430,22 +438,23 @@ class ExperimentsFrame(tk.Frame):
          bg='white', 
          font=('Arial', 14), 
          text="For experimenting with Artificial Neural Networks, " +
-              "XOR gate models have been used for their lesser computation time."
+              "XOR gate models have been used " +
+              "for their lesser computation time."
          )
         self.shallow_model_frame_button: tk.Button = tk.Button(
-                                      master=self.menu_frame,
-                                      width=13,
-                                      height=1,
-                                      text="Shallow Model",
-                                      command=lambda: self.load_model_frame(index=0),
-                                      font=tkf.Font(size=12))
+                               master=self.menu_frame,
+                               width=13,
+                               height=1,
+                               text="Shallow Model",
+                               command=lambda: self.load_model_frame(index=0),
+                               font=tkf.Font(size=12))
         self.deep_model_frame_button: tk.Button = tk.Button(
-                                      master=self.menu_frame,
-                                      width=13,
-                                      height=1,
-                                      text="Deep Model",
-                                      command=lambda: self.load_model_frame(index=1),
-                                      font=tkf.Font(size=12)
+                               master=self.menu_frame,
+                               width=13,
+                               height=1,
+                               text="Deep Model",
+                               command=lambda: self.load_model_frame(index=1),
+                               font=tkf.Font(size=12)
                                       )
         
         # Pack menu widget

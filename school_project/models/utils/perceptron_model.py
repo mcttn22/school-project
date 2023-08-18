@@ -1,14 +1,22 @@
 import numpy as np
 
-from school_project.models.utils.tools import ModelInterface, sigmoid, calculate_loss, calculate_prediction_accuracy, calculate_prediction_correctness
+from school_project.models.utils.tools import (
+                                              ModelInterface, 
+                                              sigmoid,
+                                              calculate_loss,
+                                              calculate_prediction_accuracy,
+                                              calculate_prediction_correctness
+                                              )
 
 class AbstractPerceptronModel(ModelInterface):
     """ANN model with no hidden layers"""
-    def __init__(self, output_neuron_count: int, learning_rate: float) -> None:
+    def __init__(self, output_neuron_count: int, 
+                 learning_rate: float) -> None:
         """Initialise model values.
 
         Args:
-            output_neuron_count (int): the number of output neurons in the model.
+            output_neuron_count (int): 
+            the number of output neurons in the model.
             learning_rate (float): the learning rate of the model.
         
         """
@@ -45,7 +53,8 @@ class AbstractPerceptronModel(ModelInterface):
     
     def init_model_values(self) -> None:
         """Initialise weights and bias to 0/s."""
-        self.weights = np.zeros(shape=(self.input_neuron_count, self.output_neuron_count))
+        self.weights = np.zeros(shape=(self.input_neuron_count,
+                                       self.output_neuron_count))
         self.bias = 0
 
     def back_propagation(self, prediction: np.ndarray) -> None:
@@ -85,8 +94,14 @@ class AbstractPerceptronModel(ModelInterface):
         self.test_prediction = sigmoid(z1)
         
         # Calculate performance of model
-        self.test_prediction_accuracy = calculate_prediction_accuracy(prediction=self.test_prediction, outputs=self.test_outputs)
-        self.test_prediction_correctness = calculate_prediction_correctness(prediction=self.test_prediction, outputs=self.test_outputs)
+        self.test_prediction_accuracy = calculate_prediction_accuracy(
+                                              prediction=self.test_prediction,
+                                              outputs=self.test_outputs
+                                              )
+        self.test_prediction_correctness = calculate_prediction_correctness(
+                                              prediction=self.test_prediction,
+                                              outputs=self.test_outputs
+                                              )
 
     def train(self, epochs: int) -> None:
         """Train weights and bias.
@@ -100,6 +115,8 @@ class AbstractPerceptronModel(ModelInterface):
             if not self.running:
                 break
             prediction = self.forward_propagation()
-            loss = calculate_loss(input_count=self.input_count, outputs=self.train_outputs, prediction=prediction)
+            loss = calculate_loss(input_count=self.input_count,
+                                  outputs=self.train_outputs,
+                                  prediction=prediction)
             self.train_losses.append(loss)
             self.back_propagation(prediction=prediction)

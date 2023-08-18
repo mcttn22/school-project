@@ -7,7 +7,9 @@ class ShallowModel(AbstractShallowModel):
       that trains to predict the output of a XOR gate with two inputs."""
     def __init__(self) -> None:
         """Initialise Model's Base class."""
-        super().__init__(hidden_neuron_count=2, output_neuron_count=1, learning_rate=0.1)
+        super().__init__(hidden_neuron_count=2,
+                         output_neuron_count=1,
+                         learning_rate=0.1)
 
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:
@@ -29,7 +31,9 @@ class DeepModel(AbstractShallowModel):
       that trains to predict the output of a XOR gate with two inputs."""
     def __init__(self) -> None:
         """Initialise Model's Base class."""
-        super().__init__(hidden_neuron_count=2, output_neuron_count=1, learning_rate=0.1)
+        super().__init__(hidden_neuron_count=2,
+                         output_neuron_count=1,
+                         learning_rate=0.1)
 
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:

@@ -29,8 +29,10 @@ class AboutFrame(tk.Frame):
            bg='white',
            font=('Arial', 14),
            text="Year 13 Computer Science Programming Project, " +
-           "on developing Image Recognition from scratch with Artificial Neural Networks,\n" +
-           "then applying the models to problems, such as recognising letter images.\n" +
+           "on developing Image Recognition from scratch " +
+           "with Artificial Neural Networks,\n" +
+           "then applying the models to problems, " +
+           "such as recognising letter images.\n" +
            "- Max Cotton"
                                   )
         self.theory_button: tk.Button = tk.Button(master=self,
