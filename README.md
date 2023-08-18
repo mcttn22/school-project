@@ -1,6 +1,6 @@
 # Year 13 Computer Science Programming Project
 ## About
-This project focuses on learning Artificial Neural Networks and their applications
+This project focuses on image recognition, by creating Artificial Neural Networks from scratch and applying them to problems, such as recognising letters from images.
 
 ## Run
 Run with 'python3 school_project'
@@ -13,4 +13,10 @@ Run with 'python3 school_project'
 ### Tests
 - Use 'python3 -m unittest discover school_project/test/' to run tests
 ### Documentation
-- Use 'make all' in 'docs/' to generate project theory PDFs
+- Use 'make all' in 'docs/models/' to generate model theory PDFs
+
+## TODO
+- Add deep model
+- Add letter recognition model + page (online dataset) (multi-class classification (more than one output neuron))
+- PEP8 styling
+- Format for windows
