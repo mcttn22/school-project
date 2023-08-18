@@ -2,7 +2,7 @@ import numpy as np
 
 from school_project.models.utils.tools import ModelInterface, sigmoid, calculate_loss, calculate_prediction_accuracy, calculate_prediction_correctness
 
-class AbstractPerceptronMode(ModelInterface):
+class AbstractPerceptronModel(ModelInterface):
     """ANN model with no hidden layers"""
     def __init__(self, output_neuron_count: int, learning_rate: float) -> None:
         """Initialise model values.

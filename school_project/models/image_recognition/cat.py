@@ -1,9 +1,9 @@
 import h5py
 import numpy as np
 
-from school_project.models.utils.perceptron_model import AbstractPerceptronMode
+from school_project.models.utils.perceptron_model import AbstractPerceptronModel
 
-class PerceptronModel(AbstractPerceptronMode):
+class PerceptronModel(AbstractPerceptronModel):
     """ANN model with no hidden layers,
        that trains to predict if an image is a cat or not a cat."""
     def __init__(self) -> None:
