@@ -25,11 +25,11 @@ class PerceptronModel(AbstractPerceptronMode):
         # Load datasets from h5 files
         # (h5 files stores large amount of data with quick access)
         train_dataset: h5py.File = h5py.File(
-                                      r'school_project/datasets/train-cat.h5',
+                                      r'school_project/models/image_recognition/datasets/train-cat.h5',
                                       'r'
                                       )
         test_dataset: h5py.File = h5py.File(
-                                      r'school_project/datasets/test-cat.h5',
+                                      r'school_project/models/image_recognition/datasets/test-cat.h5',
                                       'r'
                                       )
         
