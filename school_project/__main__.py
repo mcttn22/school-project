@@ -105,13 +105,13 @@ class SchoolProjectFrame(tk.Frame):
 def main() -> None:
     """Entrypoint of project."""
     root = tk.Tk()
-    school_project = SchoolProjectFrame(root=root, width=1400, height=930)
+    school_project = SchoolProjectFrame(root=root, width=1400, height=900)
     school_project.pack(side='top', fill='both', expand=True)
     root.mainloop()
     
     # Stop models training when GUI closes
     school_project.pages[1].perceptron_model.running = False
-    school_project.pages[2].model_frames[0].shallow_model.running = False
+    school_project.pages[2].shallow_model.running = False
 
 if __name__ == "__main__":
     main()

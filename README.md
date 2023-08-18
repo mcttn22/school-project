@@ -16,7 +16,7 @@ Run with 'python3 school_project'
 - Use 'make all' in 'docs/models/' to generate model theory PDFs
 
 ## TODO
-- Add deep model
 - Add letter recognition model + page (online dataset) (multi-class classification (more than one output neuron))
 - Format for windows
-- Maybe use desktop GPUs for calculations via remote access
+- Maybe add deep model
+- Maybe use desktop GPU for calculations via remote access
