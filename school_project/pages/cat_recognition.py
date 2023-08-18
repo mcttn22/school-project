@@ -172,8 +172,8 @@ class CatRecognitionFrame(tk.Frame):
             
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
-            graph.set_title(f"Learning rate: " +
-                            "{self.perceptron_model.learning_rate}")
+            graph.set_title("Learning rate: " +
+                            f"{self.perceptron_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
             graph.plot(np.squeeze(self.perceptron_model.train_losses))
