@@ -1,6 +1,6 @@
 # Year 13 Computer Science Programming Project
 ## About
-This project focuses on image recognition, by creating Artificial Neural Networks from scratch and applying them to problems, such as recognising letters from images.
+This project focuses on image recognition, by creating Artificial Neural Networks from scratch and applying them to problems, such as recognising numbers from images.
 
 ## Run
 Run with 'python3 school_project'
