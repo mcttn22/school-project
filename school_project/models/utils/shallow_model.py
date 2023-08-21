@@ -4,8 +4,7 @@ from school_project.models.utils.tools import (
                                               ModelInterface,
                                               sigmoid,
                                               calculate_loss,
-                                              calculate_prediction_accuracy,
-                                              calculate_prediction_correctness
+                                              calculate_prediction_accuracy
                                               )
 
 class AbstractShallowModel(ModelInterface):
@@ -29,7 +28,6 @@ class AbstractShallowModel(ModelInterface):
         self.train_losses: list[float]
         self.test_prediction: np.ndarray
         self.test_prediction_accuracy: float
-        self.test_prediction_correctness: float
         
         # Setup model attributes
         self.running: bool = True
@@ -127,10 +125,6 @@ class AbstractShallowModel(ModelInterface):
                                               prediction=self.test_prediction,
                                               outputs=self.test_outputs
                                               )
-        self.test_prediction_correctness = calculate_prediction_correctness(
-                                               prediction=self.test_prediction,
-                                               outputs=self.test_outputs
-                                               )
 
     def train(self, epochs: int) -> None:
         """Train weights and biases.

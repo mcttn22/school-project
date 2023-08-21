@@ -133,7 +133,7 @@ class CatRecognitionFrame(tk.Frame):
             # Output example prediction results
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(self.perceptron_model.test_prediction_correctness)}%"
+             f"{round(100 - np.mean(np.abs(self.perceptron_model.test_prediction.round() - self.perceptron_model.test_outputs)) * 100)}%"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             if np.squeeze(self.perceptron_model.test_prediction)[0] >= 0.5:

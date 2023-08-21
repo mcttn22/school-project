@@ -114,17 +114,3 @@ def calculate_prediction_accuracy(prediction: np.ndarray,
 
     """
     return 100 - np.mean(np.abs(prediction - outputs)) * 100
-
-def calculate_prediction_correctness(prediction: np.ndarray,
-                                     outputs: np.ndarray) -> float:
-    """Calculate the percentage correctness of the predictions.
-    
-    Args:
-        prediction (np.ndarray): the array of prediction values.
-        outputs (np.ndarray):
-        the train/test outputs array to compare with the prediction.
-    Returns:
-        float prediction accuracy
-
-    """
-    return 100 - np.mean(np.abs(prediction.round() - outputs)) * 100

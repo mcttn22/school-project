@@ -10,7 +10,7 @@ import tkinter.font as tkf
 from school_project.models.image_recognition.number import PerceptronModel
 
 class NumberRecognitionFrame(tk.Frame):
-    """Frame for Letter Recognition page."""
+    """Frame for Number Recognition page."""
     def __init__(self, root: tk.Tk, width: int, height: int) -> None:
         """Initialise Number recognition frame widgets.
         
@@ -133,10 +133,9 @@ class NumberRecognitionFrame(tk.Frame):
             # Output example prediction results
             test_prediction = np.squeeze(self.perceptron_model.test_prediction).T.tolist()
             test_inputs = np.squeeze(self.perceptron_model.test_inputs).T
-            test_outputs = np.squeeze(self.perceptron_model.test_outputs).T.tolist()
             self.image_figure.suptitle(
-             "Prediction Correctness: " +
-             f"{round(self.perceptron_model.test_prediction_correctness)}%"
+             "Prediction Accuracy: " +
+             f"{round(self.perceptron_model.test_prediction_accuracy)}%"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))

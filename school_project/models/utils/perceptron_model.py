@@ -4,8 +4,7 @@ from school_project.models.utils.tools import (
                                               ModelInterface, 
                                               sigmoid,
                                               calculate_loss,
-                                              calculate_prediction_accuracy,
-                                              calculate_prediction_correctness
+                                              calculate_prediction_accuracy
                                               )
 
 class AbstractPerceptronModel(ModelInterface):
@@ -26,7 +25,6 @@ class AbstractPerceptronModel(ModelInterface):
         self.train_losses: list[float]
         self.test_prediction: np.ndarray
         self.test_prediction_accuracy: float
-        self.test_prediction_correctness: float
 
         # Setup model attributes
         self.running: bool = True
@@ -95,10 +93,6 @@ class AbstractPerceptronModel(ModelInterface):
         
         # Calculate performance of model
         self.test_prediction_accuracy = calculate_prediction_accuracy(
-                                              prediction=self.test_prediction,
-                                              outputs=self.test_outputs
-                                              )
-        self.test_prediction_correctness = calculate_prediction_correctness(
                                               prediction=self.test_prediction,
                                               outputs=self.test_outputs
                                               )
