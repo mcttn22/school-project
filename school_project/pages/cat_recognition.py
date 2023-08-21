@@ -123,7 +123,7 @@ class CatRecognitionFrame(tk.Frame):
         
         Args:
             predict_thread (threading.Thread):
-            the thread running the image model's predict() method.
+            the thread running the model's predict() method.
         Raises:
             TypeError: if predict_thread is not of type threading.Thread.
         
@@ -163,7 +163,7 @@ class CatRecognitionFrame(tk.Frame):
         
         Args:
             train_thread (threading.Thread):
-            the thread running the image model's train() method.
+            the thread running the model's train() method.
         Raises:
             TypeError: if train_thread is not of type threading.Thread.
 
