@@ -32,7 +32,7 @@ class AboutFrame(tk.Frame):
            "on developing Image Recognition from scratch " +
            "with Artificial Neural Networks,\n" +
            "then applying the models to problems, " +
-           "such as recognising letter images.\n" +
+           "such as recognising number images.\n" +
            "- Max Cotton"
                                   )
         self.theory_button: tk.Button = tk.Button(master=self,
