@@ -1,1 +1,1 @@
-__all__ = ['cat']
+__all__ = ['cat', 'number']
