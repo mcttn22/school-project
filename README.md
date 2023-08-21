@@ -16,8 +16,5 @@ Run with 'python3 school_project'
 - Use 'make all' in 'docs/models/' to generate model theory PDFs
 
 ## TODO
-- Setup number recognition docs (mnist, multiclass)
-- Maybe try shallow model on image models
 - Format for windows
-- Maybe add deep model
 - Maybe use desktop GPU for calculations via remote access
