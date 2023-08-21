@@ -2,8 +2,9 @@ import tkinter as tk
 import tkinter.font as tkf
 
 from pages.about import AboutFrame
-from pages.experiments import ExperimentsFrame
 from pages.cat_recognition import CatRecognitionFrame
+from pages.experiments import ExperimentsFrame
+from pages.letter_recognition import LetterRecognitionFrame
 
 class SchoolProjectFrame(tk.Frame):
     """Main frame of school project."""
@@ -28,6 +29,11 @@ class SchoolProjectFrame(tk.Frame):
         self.pages: list[tk.Frame] = [AboutFrame(root=self,
                                                  width=self.WIDTH - 100,
                                                  height=self.HEIGHT),
+                                      LetterRecognitionFrame(
+                                                       root=self,
+                                                       width=self.WIDTH - 100,
+                                                       height=self.HEIGHT
+                                                       ),
                                       CatRecognitionFrame(
                                                        root=self,
                                                        width=self.WIDTH - 100,
@@ -45,25 +51,33 @@ class SchoolProjectFrame(tk.Frame):
         self.menu_buttons: list[tk.Button] = [
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=12,
+                                      width=14,
                                       height=1,
                                       text="About",
                                       command=lambda: self.load_page(index=0),
                                       font=tkf.Font(size=12)),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=12,
+                                      width=14,
                                       height=1,
-                                      text="Cat Recognition",
+                                      text="Letter Recognition",
                                       command=lambda: self.load_page(index=1),
                                       font=tkf.Font(size=12)
                                       ),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=12,
+                                      width=14,
+                                      height=1,
+                                      text="Cat Recognition",
+                                      command=lambda: self.load_page(index=2),
+                                      font=tkf.Font(size=12)
+                                      ),
+                                    tk.Button(
+                                      master=self.menu_frame,
+                                      width=14,
                                       height=1,
                                       text="Experiments",
-                                      command=lambda: self.load_page(index=2),
+                                      command=lambda: self.load_page(index=3),
                                       font=tkf.Font(size=12)
                                       )
                                     ]
@@ -111,7 +125,8 @@ def main() -> None:
     
     # Stop models training when GUI closes
     school_project.pages[1].perceptron_model.running = False
-    school_project.pages[2].shallow_model.running = False
+    school_project.pages[2].perceptron_model.running = False
+    school_project.pages[3].shallow_model.running = False
 
 if __name__ == "__main__":
     main()
