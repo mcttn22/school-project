@@ -45,14 +45,14 @@ class SchoolProjectFrame(tk.Frame):
         self.menu_buttons: list[tk.Button] = [
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=14,
+                                      width=12,
                                       height=1,
                                       text="About",
                                       command=lambda: self.load_page(index=0),
                                       font=tkf.Font(size=12)),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=14,
+                                      width=12,
                                       height=1,
                                       text="Cat Recognition",
                                       command=lambda: self.load_page(index=1),
@@ -60,7 +60,7 @@ class SchoolProjectFrame(tk.Frame):
                                       ),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=14,
+                                      width=12,
                                       height=1,
                                       text="Experiments",
                                       command=lambda: self.load_page(index=2),
@@ -105,7 +105,7 @@ class SchoolProjectFrame(tk.Frame):
 def main() -> None:
     """Entrypoint of project."""
     root = tk.Tk()
-    school_project = SchoolProjectFrame(root=root, width=1400, height=900)
+    school_project = SchoolProjectFrame(root=root, width=1430, height=890)
     school_project.pack(side='top', fill='both', expand=True)
     root.mainloop()
     
