@@ -4,7 +4,7 @@ import tkinter.font as tkf
 from pages.about import AboutFrame
 from pages.cat_recognition import CatRecognitionFrame
 from pages.experiments import ExperimentsFrame
-from pages.letter_recognition import LetterRecognitionFrame
+from pages.number_recognition import NumberRecognitionFrame
 
 class SchoolProjectFrame(tk.Frame):
     """Main frame of school project."""
@@ -29,7 +29,7 @@ class SchoolProjectFrame(tk.Frame):
         self.pages: list[tk.Frame] = [AboutFrame(root=self,
                                                  width=self.WIDTH - 100,
                                                  height=self.HEIGHT),
-                                      LetterRecognitionFrame(
+                                      NumberRecognitionFrame(
                                                        root=self,
                                                        width=self.WIDTH - 100,
                                                        height=self.HEIGHT
@@ -51,22 +51,22 @@ class SchoolProjectFrame(tk.Frame):
         self.menu_buttons: list[tk.Button] = [
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=14,
+                                      width=16,
                                       height=1,
                                       text="About",
                                       command=lambda: self.load_page(index=0),
                                       font=tkf.Font(size=12)),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=14,
+                                      width=16,
                                       height=1,
-                                      text="Letter Recognition",
+                                      text="Number Recognition",
                                       command=lambda: self.load_page(index=1),
                                       font=tkf.Font(size=12)
                                       ),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=14,
+                                      width=16,
                                       height=1,
                                       text="Cat Recognition",
                                       command=lambda: self.load_page(index=2),
@@ -74,7 +74,7 @@ class SchoolProjectFrame(tk.Frame):
                                       ),
                                     tk.Button(
                                       master=self.menu_frame,
-                                      width=14,
+                                      width=16,
                                       height=1,
                                       text="Experiments",
                                       command=lambda: self.load_page(index=3),
