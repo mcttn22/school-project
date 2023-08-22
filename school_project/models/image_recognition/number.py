@@ -2,6 +2,7 @@ import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress Tensor Flow messages
 
+# Import MNIST dataset
 from keras.datasets import mnist
 from keras.utils import to_categorical
 
