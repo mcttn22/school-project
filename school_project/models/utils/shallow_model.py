@@ -118,7 +118,10 @@ class AbstractShallowModel(ModelInterface):
 
     def predict(self) -> None:
         """Use trained weights and biases to predict."""
-        hidden_output, self.test_prediction = self.forward_propagation()
+        z1: np.ndarray = np.dot(self.hidden_weights, self.test_inputs) + self.hidden_biases
+        hidden_output: np.ndarray = sigmoid(z1)
+        z2: np.ndarray = np.dot(self.output_weights, hidden_output) + self.output_biases
+        self.test_prediction: np.ndarray = sigmoid(z2)
         
         # Calculate performance of model
         self.test_prediction_accuracy = calculate_prediction_accuracy(
