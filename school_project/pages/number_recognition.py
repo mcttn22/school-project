@@ -207,7 +207,7 @@ class NumberRecognitionFrame(tk.Frame):
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
                                            target=self.perceptron_model.train,
-                                           args=(100,)
+                                           args=(51,)
                                            )
         train_thread.start()
         self.manage_training(train_thread=train_thread)

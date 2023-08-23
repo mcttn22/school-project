@@ -17,7 +17,7 @@ class PerceptronModel(AbstractPerceptronModel):
        that trains to predict Numbers from images."""
     def __init__(self) -> None:
         """Initialise Model's Base class."""
-        super().__init__(output_neuron_count=10, learning_rate=0.85)
+        super().__init__(output_neuron_count=10, learning_rate=1.0)
     
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:
