@@ -16,5 +16,6 @@ Run with 'python3 school_project'
 - Use 'make all' in 'docs/models/' to generate model theory PDFs
 
 ## TODO
+- Try shallow model on image recognition
 - Format for windows
 - Maybe use desktop GPU for calculations via remote access
