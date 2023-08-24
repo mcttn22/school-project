@@ -1,10 +1,10 @@
 import tkinter as tk
 import tkinter.font as tkf
 
-from pages.about import AboutFrame
-from pages.cat_recognition import CatRecognitionFrame
-from pages.experiments import ExperimentsFrame
-from pages.number_recognition import NumberRecognitionFrame
+from school_project.pages.about import AboutFrame
+from school_project.pages.cat_recognition import CatRecognitionFrame
+from school_project.pages.experiments import ExperimentsFrame
+from school_project.pages.number_recognition import NumberRecognitionFrame
 
 class SchoolProjectFrame(tk.Frame):
     """Main frame of school project."""
