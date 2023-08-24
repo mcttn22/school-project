@@ -1,10 +1,5 @@
-# TODO
+### Todo
 
-## Bugs [x]
-
-## Enhancements [ ]
-- Format for Windows
-
-## New Features [ ]
+- Format for Windows (UI and add installation instructions to README)
 - Try using Shallow Model for Image Recognition
 - Use desktop GPU for calculations via remote access
