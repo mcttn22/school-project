@@ -6,7 +6,8 @@ This project focuses on image recognition, by creating Artificial Neural Network
 ## Run
 Run with 'python3 school_project'
 
-## Dev Setup
+## Development
+### Setup
 - Create a virtualenv with 'python3 -m venv {venv name}'
 - Use 'source ./venv/bin/activate' to enter venv
 - Use pip as normal in the venv
