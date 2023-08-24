@@ -3,6 +3,3 @@ __pycache__/
 
 # Packaging
 *.egg-info
-
-# Devlopment
-venv/
