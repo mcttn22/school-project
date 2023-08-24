@@ -14,7 +14,6 @@ setup(
                       'keras',
                       'matplotlib',
                       'numpy',
-                      'tk',
     ],
 )
 
