@@ -27,7 +27,10 @@ class PerceptronModel(AbstractPerceptronModel):
         
         """
         # Load datasets from 'https://s3.amazonaws.com/img-datasets/mnist.pkl.gz'
-        with gzip.open('school_project/models/image_recognition/datasets/mnist.pkl.gz', 'rb') as mnist:
+        with gzip.open(
+              'school_project/models/image_recognition/datasets/mnist.pkl.gz',
+              'rb'
+              ) as mnist:
             (train_inputs, train_outputs),\
             (test_inputs, test_outputs) = pickle.load(mnist, encoding='bytes')
 
