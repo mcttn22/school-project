@@ -1,10 +1,5 @@
-import os
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress Tensor Flow messages
-
-# Import MNIST dataset
-from keras.datasets import mnist
-from keras.utils import to_categorical
+import pickle
+import gzip
 
 import numpy as np
 
@@ -31,9 +26,10 @@ class PerceptronModel(AbstractPerceptronModel):
             FileNotFoundError: if file does not exist.
         
         """
-        # Load datasets from 'http://yann.lecun.com/exdb/mnist/'
-        (train_inputs, train_outputs),\
-        (test_inputs, test_outputs) = mnist.load_data()
+        # Load datasets from 'https://s3.amazonaws.com/img-datasets/mnist.pkl.gz'
+        with gzip.open('school_project/models/image_recognition/datasets/mnist.pkl.gz', 'rb') as mnist:
+            (train_inputs, train_outputs),\
+            (test_inputs, test_outputs) = pickle.load(mnist, encoding='bytes')
 
         # Reshape input arrays into 1 dimension (flatten),
         # then divide by 255 (RGB)
@@ -44,7 +40,7 @@ class PerceptronModel(AbstractPerceptronModel):
 
         # Represent number values
         # with a one at the matching index of an array of zeros
-        train_outputs = to_categorical(train_outputs).T
-        test_outputs = to_categorical(test_outputs).T
+        train_outputs = np.eye(np.max(train_outputs) + 1)[train_outputs].T
+        test_outputs = np.eye(np.max(test_outputs) + 1)[test_outputs].T
 
         return train_inputs, train_outputs, test_inputs, test_outputs

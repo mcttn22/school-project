@@ -1,4 +1,3 @@
-import pip
 from setuptools import setup, find_packages
 
 setup(
@@ -11,10 +10,7 @@ setup(
     description='Year 13 Computer Science Programming Project',
     install_requires=[
                       'h5py',
-                      'keras',
                       'matplotlib',
                       'numpy',
     ],
 )
-
-pip.main(['install', 'tensorflow'])
