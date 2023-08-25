@@ -8,9 +8,14 @@ Create a virtual environment (venv) with:
 python3 -m venv {venv name}
 ```
 Enter the venv with:
-```
-source ./{venv name}/bin/activate
-```
+- Linux:
+  ```
+  source ./{venv name}/bin/activate
+  ```
+- Windows:
+  ```
+  .\{venv name}\Scripts\activate
+  ```
 Download the Repository with:
 ```
 git clone https://github.com/mcttn22/school-project.git
@@ -21,7 +26,7 @@ cd school-project/
 ```
 For normal use, install the dependencies and the project to the venv with:
 ```
-python3 setup.py install
+python3 setup.py install --user
 ```
 
 ## Usage
@@ -35,7 +40,7 @@ python3 school_project
 
 Install the dependencies and the project to the venv in developing mode with:
 ```
-python3 setup.py develop
+python3 setup.py develop --user
 ```
 
 Run Tests with:
