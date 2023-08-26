@@ -84,7 +84,7 @@ Run Tests with:
   python3 -m unittest discover ./school_project/test/
   ```
 
-Compile Model Theory Documentation PDFs with:
+Compile Model Theory PDFs with:
 ```
 make -C ./docs/models/ all
 ```
