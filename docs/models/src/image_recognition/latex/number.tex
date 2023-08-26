@@ -18,7 +18,7 @@
 \section{Setup}
 
 \begin{itemize}
-    \item Load MNIST image datasets from http://yann.lecun.com/exdb/mnist/ (Where each image is of a number from zero to ten)
+    \item Load MNIST image datasets from '.pkl.gz' file (Where each image is of a number from zero to ten). (MNIST image datasets sourced from https://s3.amazonaws.com/img-datasets/mnist.pkl.gz)
     \begin{itemize}
         \item Where each image in the input dataset, is made up from 28x28 pixels and each pixel has an RGB value from 0 to 255
         \item Each image's matrice is then 'flattened' into a 1 dimensional array of values, where each element is also divided by 255 (max RGB value) to a number between 0 and 1, to standardize the dataset

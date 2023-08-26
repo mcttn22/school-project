@@ -26,7 +26,7 @@ class PerceptronModel(AbstractPerceptronModel):
             FileNotFoundError: if file does not exist.
         
         """
-        # Load datasets from 'https://s3.amazonaws.com/img-datasets/mnist.pkl.gz'
+        # Load datasets from pkl.gz file
         with gzip.open(
               'school_project/models/image_recognition/datasets/mnist.pkl.gz',
               'rb'
