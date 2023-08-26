@@ -6,7 +6,16 @@ This project focuses on image recognition, by creating Artificial Neural Network
 
 ## Installation
 
-1. Create a virtual environment (venv) with:
+1. Download the Repository with:
+
+   - ```
+     git clone https://github.com/mcttn22/school-project.git
+     ```
+   - Or by downloading as a Zip file
+
+</br>
+
+2. Create a virtual environment (venv) with:
    - Windows:
      ```
      python -m venv {venv name}
@@ -16,7 +25,7 @@ This project focuses on image recognition, by creating Artificial Neural Network
      python3 -m venv {venv name}
      ```
 
-2. Enter the venv with:
+3. Enter the venv with:
    - Windows:
      ```
      .\{venv name}\Scripts\activate
@@ -25,15 +34,6 @@ This project focuses on image recognition, by creating Artificial Neural Network
      ```
      source ./{venv name}/bin/activate
      ```
-
-3. Download the Repository with:
-
-   - ```
-     git clone https://github.com/mcttn22/school-project.git
-     ```
-   - Or by downloading as a Zip file
-
-</br>
 
 4. Enter the project directory with:
    ```
