@@ -77,11 +77,11 @@ Install the dependencies and the project to the venv in developing mode with:
 Run Tests with:
 - Windows:
   ```
-  python -m unittest discover school_project/test/
+  python -m unittest discover .\school_project\test\
   ```
 - Linux:
   ```
-  python3 -m unittest discover school_project/test/
+  python3 -m unittest discover ./school_project/test/
   ```
 
 Compile Model Theory Documentation PDFs with:
