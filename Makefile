@@ -1,9 +1,9 @@
 TEX = latexmk
 TEXFLAGS = -pdf
 
-all: docs project_report clean
+all: documentation project_report clean
 
-docs:
+documentation:
 	$(TEX) $(TEXFLAGS) -jobname=./docs/models/ann ./docs/models/src/latex/ann.tex
 	$(TEX) $(TEXFLAGS) -jobname=./docs/models/maths ./docs/models/src/latex/maths.tex
 	$(TEX) $(TEXFLAGS) -jobname=./docs/models/image_recognition/cat ./docs/models/src/image_recognition/latex/cat.tex
