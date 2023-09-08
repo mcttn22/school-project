@@ -84,8 +84,8 @@ Run Tests with:
   python3 -m unittest discover ./school_project/test/
   ```
 
-Compile Model Theory PDFs with:
+Compile PDFs with:
 ```
-make -C ./docs/models/ all
+make all
 ```
 *Note: This requires the Latexmk library*
