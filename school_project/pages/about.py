@@ -28,7 +28,7 @@ class AboutFrame(tk.Frame):
            master=self,
            bg='white',
            font=('Arial', 14),
-           text="Year 13 Computer Science Programming Project, " +
+           text="A-level Computer Science NEA Programming Project, " +
            "on developing Image Recognition from scratch " +
            "with Artificial Neural Networks,\n" +
            "then applying the models to problems, " +
