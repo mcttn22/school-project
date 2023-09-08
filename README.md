@@ -1,8 +1,8 @@
 [![python](https://img.shields.io/badge/Python-3-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 
-# Year 13 Computer Science Programming Project
+# Computer Science NEA Programming Project - Image Recognition from scratch
 
-This project focuses on image recognition, by creating Artificial Neural Networks from scratch and applying them to problems, such as recognising numbers from images.
+This project is an investigation into how Artificial Neural Networks (ANNs) work and their applications in Image Recognition, by documenting all theory behind the project and developing applications of the theory, that allow for experimentation via a GUI. The ANNs are created without the use of any 3rd party Machine Learning Libraries and I currently have been able to achieve a prediction accuracy of 95% on the MNIST dataset.
 
 ## Installation
 
