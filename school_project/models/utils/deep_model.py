@@ -26,10 +26,13 @@ class FullyConnectedLayer():
             ('relu' or 'sigmoid')
 
         """
+        # Setup layer attributes
+        self.transfer_type = transfer_type
         self.input: np.ndarray
-        self.z: np.ndarray
         self.output: np.ndarray
+
         # Setup weights and biases
+        np.random.seed(2)  # Sets up pseudo random values for layer weight arrays
         self.weights: np.ndarray
         self.biases: np.ndarray
         self.init_layer_values(
@@ -37,7 +40,6 @@ class FullyConnectedLayer():
                                output_neuron_count=output_neuron_count
                                )
         self.learning_rate = learning_rate
-        self.transfer_type = transfer_type
 
     def __repr__(self) -> str:
         """Read values of the layer.
@@ -51,55 +53,61 @@ class FullyConnectedLayer():
                 f"Biases: {self.biases.tolist()}\n" +
                 f"Learning Rate: {self.learning_rate}")
 
-    def init_layer_values(self, input_neuron_count: int, output_neuron_count: int):
+    def init_layer_values(self, input_neuron_count: int, 
+                          output_neuron_count: int) -> None:
         """Initialise weights to randdom values and biases to 0s"""
         self.weights = np.random.rand(output_neuron_count, input_neuron_count)
         self.biases: np.ndarray = np.zeros(
                                             shape=(output_neuron_count, 1)
                                             )
 
-    def back_propagation(self, loss_derivative: np.ndarray) -> None:
+    def back_propagation(self, dloss_doutput: np.ndarray) -> np.ndarray:
         """Adjust the weights and biases via gradient descent.
         
         Args:
-            hidden_output (numpy.ndarray): the matrice of hidden output values
-            prediction (numpy.ndarray): the matrice of prediction values
+            dloss_doutput (numpy.ndarray): the derivative of the loss of the 
+            layer's output, with respect to the layer's output.
+        Returns:
+            a numpy.ndarray derivative of the loss of the layer's input,
+            with respect to the layer's input.
         Raises:
             ValueError:
-            if prediction or hidden_output
+            if dloss_doutput
             is not a suitable multiplier with the weights
             (incorrect shape)
         
         """
         if self.transfer_type == 'sigmoid':
-            weight_gradient: np.ndarray = np.dot(loss_derivative * sigmoid_derivative(self.output), self.input.T)
-            bias_gradient: np.ndarray = np.sum(loss_derivative * sigmoid_derivative(self.output))
+            dloss_dz: np.ndarray = dloss_doutput * sigmoid_derivative(output=self.output)
+            dloss_dweights: np.ndarray = np.dot(dloss_dz, self.input.T)
+            dloss_dbiases: np.ndarray = np.sum(dloss_dz)
 
-            loss_derivative = np.dot(self.weights.T, loss_derivative * sigmoid_derivative(self.output))
+            dloss_dinput: np.ndarray = np.dot(self.weights.T, dloss_dz)
         
         elif self.transfer_type == 'relu':
-            weight_gradient: np.ndarray = np.dot(loss_derivative * relu_derivative(self.output), self.input.T)
-            bias_gradient: np.ndarray = np.sum(loss_derivative * relu_derivative(self.output))
+            dloss_dz: np.ndarray = dloss_doutput * relu_derivative(output=self.output)
+            dloss_dweights: np.ndarray = np.dot(dloss_dz, self.input.T)
+            dloss_dbiases: np.ndarray = np.sum(dloss_dz)
 
-            loss_derivative = np.dot(self.weights.T, loss_derivative * relu_derivative(self.output))
+            dloss_dinput: np.ndarray = np.dot(self.weights.T, dloss_dz)
 
         # Update weights and biases
-        self.weights -= self.learning_rate * weight_gradient
-        self.biases -= self.learning_rate * bias_gradient
+        self.weights -= self.learning_rate * dloss_dweights
+        self.biases -= self.learning_rate * dloss_dbiases
 
-        return loss_derivative
+        return dloss_dinput
 
-    def forward_propagation(self, inputs: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        """Generate a prediction with the weights and biases.
+    def forward_propagation(self, inputs: np.ndarray) -> np.ndarray:
+        """Generate a layer output with the weights and biases.
         
         Args:
             inputs (np.ndarray): the input values to the layer.
         Returns:
-            a numpy.ndarray of the output values
+            a numpy.ndarray of the output values.
 
         """
         self.input = inputs
-        z = np.dot(self.weights, self.input) + self.biases
+        z: np.ndarray = np.dot(self.weights, self.input) + self.biases
         if self.transfer_type == 'sigmoid':
             self.output = sigmoid(z)
         elif self.transfer_type == 'relu':
@@ -133,10 +141,14 @@ class AbstractDeepModel(ModelInterface):
         self.input_count: int = self.train_inputs.shape[1]
         self.hidden_layers_shape = hidden_layers_shape
         self.output_neuron_count: int = self.train_outputs.shape[0]
+        self.layers_shape: list[chr] = [f'{layer}' for layer in (
+                                                    [self.input_neuron_count] + 
+                                                    self.hidden_layers_shape + 
+                                                    [self.output_neuron_count]
+                                                    )]
         
         # Setup layers
-        self.layers: list[FullyConnectedLayer] = []
-        np.random.seed(2)  # Sets up pseudo random values for layer weight arrays
+        self.layers: list[FullyConnectedLayer]
         self.learning_rate = learning_rate
 
     def __repr__(self) -> str:
@@ -147,48 +159,67 @@ class AbstractDeepModel(ModelInterface):
             weights, bias and learning rate values.
 
         """
-        return (f"Layers Shape: {','.join(f'{i}' for i in ([self.input_neuron_count] + self.hidden_layers_shape + [self.output_neuron_count]))}\n" +
+        return (f"Layers Shape: {','.join(self.layers_shape)}\n" +
                 f"Learning Rate: {self.learning_rate}")
 
     def init_model_values(self) -> None:
         """Initialise model layers"""
+        self.layers = []
+
         # Add input layer
-        self.layers.append(FullyConnectedLayer(learning_rate=self.learning_rate,
-                                               input_neuron_count=self.input_neuron_count,
-                                               output_neuron_count=self.hidden_layers_shape[0],
-                                               transfer_type='sigmoid'))
+        self.layers.append(FullyConnectedLayer(
+                                learning_rate=self.learning_rate,
+                                input_neuron_count=self.input_neuron_count,
+                                output_neuron_count=self.hidden_layers_shape[0],
+                                transfer_type='sigmoid'
+                                ))
 
         # Add hidden layers
         for layer in range(len(self.hidden_layers_shape) - 1):
             self.layers.append(FullyConnectedLayer(
-                                   learning_rate=self.learning_rate,
-                                   input_neuron_count=self.hidden_layers_shape[layer],
-                                   output_neuron_count=self.hidden_layers_shape[layer + 1],
-                                   transfer_type='sigmoid'))
+                        learning_rate=self.learning_rate,
+                        input_neuron_count=self.hidden_layers_shape[layer],
+                        output_neuron_count=self.hidden_layers_shape[layer + 1],
+                        transfer_type='sigmoid'
+                        ))
         
         # Add output layer
-        self.layers.append(FullyConnectedLayer(learning_rate=self.learning_rate,
-                                               input_neuron_count=self.hidden_layers_shape[-1],
-                                               output_neuron_count=self.output_neuron_count,
-                                               transfer_type='sigmoid'))
+        self.layers.append(FullyConnectedLayer(
+                                learning_rate=self.learning_rate,
+                                input_neuron_count=self.hidden_layers_shape[-1],
+                                output_neuron_count=self.output_neuron_count,
+                                transfer_type='sigmoid'
+                                ))
 
-    def back_propagation(self, loss_derivative: np.ndarray) -> None:
+    def back_propagation(self, dloss_doutput: np.ndarray) -> None:
+        """Train each layer's weights and biases.
+        
+        Args:
+            dloss_doutput (np.ndarray): the derivative of the loss of the 
+            output layer's output, with respect to the output layer's output.
+
+        """
         for layer in reversed(self.layers):
-            loss_derivative = layer.back_propagation(loss_derivative)
+            dloss_doutput = layer.back_propagation(dloss_doutput=dloss_doutput)
 
     def forward_propagation(self) -> np.ndarray:
+        """Generate a prediction with the layers.
+        
+        Returns:
+            a numpy.ndarray of the prediction values.
+
+        """
         output = self.train_inputs
         for layer in self.layers:
-            layer.forward_propagation(inputs=output)
-            output = layer.output
+            output = layer.forward_propagation(inputs=output)
         return output
 
     def predict(self) -> None:
-        """Use trained weights and biases to predict."""
+        """Use layers' trained weights and biases to predict."""
         output = self.test_inputs
         for layer in self.layers:
             output = layer.forward_propagation(inputs=output)
-        self.test_prediction: np.ndarray = output
+        self.test_prediction = output
         
         # Calculate performance of model
         self.test_prediction_accuracy = calculate_prediction_accuracy(
@@ -197,7 +228,7 @@ class AbstractDeepModel(ModelInterface):
                                               )
 
     def train(self, epochs: int) -> None:
-        """Train weights and biases.
+        """Train layers' weights and biases.
         
         Args:
             epochs (int): the number of forward and back propagations to do.
@@ -212,5 +243,5 @@ class AbstractDeepModel(ModelInterface):
                                   outputs=self.train_outputs,
                                   prediction=prediction)
             self.train_losses.append(loss)
-            loss_derivative: np.ndarray = -(1/self.input_count) * ((self.train_outputs - prediction)/(prediction * (1 - prediction)))
-            self.back_propagation(loss_derivative=loss_derivative)
+            dloss_doutput: np.ndarray = -(1/self.input_count) * ((self.train_outputs - prediction)/(prediction * (1 - prediction)))
+            self.back_propagation(dloss_doutput=dloss_doutput)
