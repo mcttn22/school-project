@@ -234,6 +234,11 @@ class AbstractDeepModel(ModelInterface):
             epochs (int): the number of forward and back propagations to do.
         
         """
+        self.layers_shape = [f'{layer}' for layer in (
+                            [self.input_neuron_count] + 
+                            self.hidden_layers_shape + 
+                            [self.output_neuron_count]
+                            )]
         self.train_losses = []
         for epoch in range(epochs):
             if not self.running:
