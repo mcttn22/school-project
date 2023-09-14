@@ -66,41 +66,6 @@ class ModelInterface():
         """
         raise NotImplementedError
 
-def relu(z: np.ndarray | int | float) -> np.ndarray | float:
-    """Transfer function, transform input to max number between 0 and z.
-
-    Args:
-        z (numpy.ndarray | int | float):
-        the numpy.ndarray | int | float to be transferred.
-    Returns:
-        numpy.ndarray | float,
-        with all values | the value transferred to max number between 0-z.
-    Raises:
-        TypeError: if z is not of type numpy.ndarray | int | float.
-
-    """
-    return np.maximum(0, z)
-
-def relu_derivative(output: np.ndarray | int | float) -> np.ndarray | float:
-    """Calculate derivative of ReLu transfer function with respect to z.
-
-    Args:
-        output (numpy.ndarray | int | float):
-        the numpy.ndarray | int | float output of the ReLu transfer function.
-    Returns:
-        numpy.ndarray | float,
-        derivative of the ReLu transfer function with respect to z.
-    Raises:
-        TypeError: if output is not of type numpy.ndarray | int | float.
-
-    """
-    # Derivative of ReLu 0 for negative values of output
-    output[ output <= 0 ] = 0
-
-    # Derivate of ReLu is 1 for positive values of output
-    output[ output > 0] = 1
-    return output
-
 def sigmoid(z: np.ndarray | int | float) -> np.ndarray | float:
     """Transfer function, transform input to number between 0 and 1.
 

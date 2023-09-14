@@ -2,8 +2,6 @@ import numpy as np
 
 from school_project.models.utils.tools import (
                                               ModelInterface,
-                                              relu,
-                                              relu_derivative,
                                               sigmoid,
                                               sigmoid_derivative,
                                               calculate_loss,
@@ -22,8 +20,8 @@ class FullyConnectedLayer():
             the number of input neurons into the layer.
             output_neuron_count (int):
             the number of output neurons into the layer.
-            transfer_type (str): the transfer function
-            ('relu' or 'sigmoid')
+            transfer_type (str): the transfer function type
+            ('sigmoid')
 
         """
         # Setup layer attributes
@@ -50,8 +48,7 @@ class FullyConnectedLayer():
 
         """
         return (f"Weights: {self.weights.tolist()}\n" +
-                f"Biases: {self.biases.tolist()}\n" +
-                f"Learning Rate: {self.learning_rate}")
+                f"Biases: {self.biases.tolist()}\n")
 
     def init_layer_values(self, input_neuron_count: int, 
                           output_neuron_count: int) -> None:
@@ -79,17 +76,11 @@ class FullyConnectedLayer():
         """
         if self.transfer_type == 'sigmoid':
             dloss_dz: np.ndarray = dloss_doutput * sigmoid_derivative(output=self.output)
-            dloss_dweights: np.ndarray = np.dot(dloss_dz, self.input.T)
-            dloss_dbiases: np.ndarray = np.sum(dloss_dz)
 
-            dloss_dinput: np.ndarray = np.dot(self.weights.T, dloss_dz)
+        dloss_dweights: np.ndarray = np.dot(dloss_dz, self.input.T)
+        dloss_dbiases: np.ndarray = np.sum(dloss_dz)
         
-        elif self.transfer_type == 'relu':
-            dloss_dz: np.ndarray = dloss_doutput * relu_derivative(output=self.output)
-            dloss_dweights: np.ndarray = np.dot(dloss_dz, self.input.T)
-            dloss_dbiases: np.ndarray = np.sum(dloss_dz)
-
-            dloss_dinput: np.ndarray = np.dot(self.weights.T, dloss_dz)
+        dloss_dinput: np.ndarray = np.dot(self.weights.T, dloss_dz)
 
         # Update weights and biases
         self.weights -= self.learning_rate * dloss_dweights
@@ -110,8 +101,6 @@ class FullyConnectedLayer():
         z: np.ndarray = np.dot(self.weights, self.input) + self.biases
         if self.transfer_type == 'sigmoid':
             self.output = sigmoid(z)
-        elif self.transfer_type == 'relu':
-            self.output = relu(z)
         return self.output
 
 class AbstractDeepModel(ModelInterface):
