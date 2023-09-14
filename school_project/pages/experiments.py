@@ -73,19 +73,13 @@ class ExperimentsFrame(tk.Frame):
                                                       to=1,
                                                       resolution=0.01)
         self.learning_rate_scale.set(value=self.deep_model.learning_rate)
-        # self.hidden_neuron_count_scale: tk.Scale = tk.Scale(
-        #                                      master=self.menu_frame,
-        #                                      bg='white',
-        #                                      orient='horizontal',
-        #                                      label="Number of Hidden Neurons",
-        #                                      length=185,
-        #                                      from_=1,
-        #                                      to=20,
-        #                                      resolution=1.0
-        #                                      )
-        # self.hidden_neuron_count_scale.set(
-        #                           value=self.deep_model.hidden_neuron_count
-        #                           )
+        self.hidden_layers_shape_label: tk.Label = tk.Label(master=self.menu_frame,
+                                                            bg='white',
+                                                            font=('Arial', 12),
+                                                            text="Enter the number of neurons in each\n" +
+                                                                  "hidden layer, separated by commas:")
+        self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self.menu_frame,)
+        self.hidden_layers_shape_entry.insert(0, ",".join(f"{i}" for i in self.deep_model.hidden_layers_shape))
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
@@ -104,11 +98,13 @@ class ExperimentsFrame(tk.Frame):
         self.about_label.grid(row=1, column=0, columnspan=4, pady=(10,0))
         self.model_theory_button.grid(row=2, column=0, pady=(10,0))
         self.train_button.grid(row=2, column=3, pady=(10,0))
-        self.learning_rate_scale.grid(row=3, column=1, padx=(0,5),
-                                      pady=(10,0), sticky='e')
-        # self.hidden_neuron_count_scale.grid(row=3, column=2, padx=(5,0),
-        #                                    pady=(10,0), sticky='w')
-        self.model_status_label.grid(row=4, column=0, columnspan=4,
+        self.hidden_layers_shape_label.grid(row=3, column=2, padx=(5,0),
+                                           pady=(30,0))
+        self.learning_rate_scale.grid(row=4, column=1, 
+                                      padx=(0,5))
+        self.hidden_layers_shape_entry.grid(row=4, column=2, 
+                                            padx=(5,0))
+        self.model_status_label.grid(row=5, column=0, columnspan=4,
                                      pady=(10,0))
         self.menu_frame.pack()
         self.results_frame.pack(pady=(50,0))
@@ -135,7 +131,7 @@ class ExperimentsFrame(tk.Frame):
                       f"Prediction Accuracy: " +
                       f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
                       f"Network Shape: " +
-                      f"{','.join(f'{i}' for i in ([self.deep_model.input_neuron_count] + self.deep_model.hidden_layers_shape + [self.deep_model.output_neuron_count]))}\n"
+                      f"{','.join(self.deep_model.layers_shape)}\n"
                       )
             for i in range(self.deep_model.train_inputs.shape[1]):
                 results += f"{self.deep_model.train_inputs[0][i]},"
@@ -189,6 +185,17 @@ class ExperimentsFrame(tk.Frame):
     def start_training(self) -> None:
         """Start training model in new thread."""
         self.train_button['state'] = 'disabled'
+
+        # Validate hidden layers shape input
+        hidden_layers_shape_input = self.hidden_layers_shape_entry.get().replace(' ', '').split(',')
+        for layer in hidden_layers_shape_input:
+            if not layer.isdigit():
+                self.model_status_label.configure(
+                                        text="Invalid hidden layers shape",
+                                        fg='red'
+                                        )
+                self.train_button['state'] = 'normal'
+                return
         
         # Reset canvases and figures
         self.loss_figure = Figure()
@@ -199,7 +206,8 @@ class ExperimentsFrame(tk.Frame):
         
         # Start training thread
         self.deep_model.learning_rate = self.learning_rate_scale.get()
-        # self.deep_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
+        self.deep_model.hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input]
+
         self.deep_model.init_model_values()
         self.model_status_label.configure(
                                         text="Training weights and biases...",
