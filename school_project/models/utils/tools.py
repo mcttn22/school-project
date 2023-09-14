@@ -81,25 +81,25 @@ def relu(z: np.ndarray | int | float) -> np.ndarray | float:
     """
     return np.maximum(0, z)
 
-def relu_derivative(z: np.ndarray | int | float) -> np.ndarray | float:
+def relu_derivative(output: np.ndarray | int | float) -> np.ndarray | float:
     """Calculate derivative of ReLu transfer function with respect to z.
 
     Args:
-        z (numpy.ndarray | int | float):
-        the numpy.ndarray | int | float differentiated with respect to.
+        output (numpy.ndarray | int | float):
+        the numpy.ndarray | int | float output of the ReLu transfer function.
     Returns:
         numpy.ndarray | float,
         derivative of the ReLu transfer function with respect to z.
     Raises:
-        TypeError: if z is not of type numpy.ndarray | int | float.
+        TypeError: if output is not of type numpy.ndarray | int | float.
 
     """
-    # Derivative of ReLu 0 for negative values of z
-    z[ z <= 0 ] = 0
+    # Derivative of ReLu 0 for negative values of output
+    output[ output <= 0 ] = 0
 
-    # Derivate of ReLu is 1 for positive values of z
-    z[ z > 0] = 1
-    return z
+    # Derivate of ReLu is 1 for positive values of output
+    output[ output > 0] = 1
+    return output
 
 def sigmoid(z: np.ndarray | int | float) -> np.ndarray | float:
     """Transfer function, transform input to number between 0 and 1.
@@ -116,20 +116,20 @@ def sigmoid(z: np.ndarray | int | float) -> np.ndarray | float:
     """
     return 1 / (1 + np.exp(-z))
 
-def sigmoid_derivative(a: np.ndarray | int | float) -> np.ndarray | float:
+def sigmoid_derivative(output: np.ndarray | int | float) -> np.ndarray | float:
     """Calculate derivative of sigmoid Transfer function with respect to z.
 
     Args:
-        a (numpy.ndarray | int | float):
+        output (numpy.ndarray | int | float):
         the numpy.ndarray | int | float output of the sigmoid transfer function.
     Returns:
         numpy.ndarray | float,
         derivative of the sigmoid transfer function with respect to z.
     Raises:
-        TypeError: if z is not of type numpy.ndarray | int | float.
+        TypeError: if output is not of type numpy.ndarray | int | float.
 
     """
-    return a * (1 - a)
+    return output * (1 - output)
 
 def calculate_loss(input_count: int,
                    outputs: np.ndarray,
