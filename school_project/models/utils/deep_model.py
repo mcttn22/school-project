@@ -28,6 +28,7 @@ class FullyConnectedLayer():
         """
         self.input: np.ndarray
         self.z: np.ndarray
+        self.output: np.ndarray
         # Setup weights and biases
         self.weights: np.ndarray
         self.biases: np.ndarray
@@ -71,16 +72,16 @@ class FullyConnectedLayer():
         
         """
         if self.transfer_type == 'sigmoid':
-            weight_gradient: np.ndarray = np.dot(sigmoid_derivative(self.z) * loss_derivative, self.input.T)
-            bias_gradient: np.ndarray = np.sum(sigmoid_derivative(self.z) * loss_derivative)
+            weight_gradient: np.ndarray = np.dot(loss_derivative * sigmoid_derivative(self.output), self.input.T)
+            bias_gradient: np.ndarray = np.sum(loss_derivative * sigmoid_derivative(self.output))
 
-            loss_derivative = np.dot(self.weights.T, loss_derivative * sigmoid_derivative(self.z))
+            loss_derivative = np.dot(self.weights.T, loss_derivative * sigmoid_derivative(self.output))
         
         elif self.transfer_type == 'relu':
-            weight_gradient: np.ndarray = np.dot(relu_derivative(self.z) * loss_derivative, self.input.T)
-            bias_gradient: np.ndarray = np.sum(relu_derivative(self.z) * loss_derivative)
+            weight_gradient: np.ndarray = np.dot(loss_derivative * relu_derivative(self.output), self.input.T)
+            bias_gradient: np.ndarray = np.sum(loss_derivative * relu_derivative(self.output))
 
-            loss_derivative = np.dot(self.weights.T, loss_derivative * relu_derivative(self.z))
+            loss_derivative = np.dot(self.weights.T, loss_derivative * relu_derivative(self.output))
 
         # Update weights and biases
         self.weights -= self.learning_rate * weight_gradient
@@ -98,12 +99,12 @@ class FullyConnectedLayer():
 
         """
         self.input = inputs
-        self.z = np.dot(self.weights, self.input) + self.biases
+        z = np.dot(self.weights, self.input) + self.biases
         if self.transfer_type == 'sigmoid':
-            output: np.ndarray = sigmoid(self.z)
+            self.output = sigmoid(z)
         elif self.transfer_type == 'relu':
-            output: np.ndarray = relu(self.z)
-        return output
+            self.output = relu(z)
+        return self.output
 
 class AbstractDeepModel(ModelInterface):
     """ANN model with variable number of hidden layers"""
@@ -155,7 +156,7 @@ class AbstractDeepModel(ModelInterface):
         self.layers.append(FullyConnectedLayer(learning_rate=self.learning_rate,
                                                input_neuron_count=self.input_neuron_count,
                                                output_neuron_count=self.hidden_layers_shape[0],
-                                               transfer_type='relu'))
+                                               transfer_type='sigmoid'))
 
         # Add hidden layers
         for layer in range(len(self.hidden_layers_shape) - 1):
@@ -163,7 +164,7 @@ class AbstractDeepModel(ModelInterface):
                                    learning_rate=self.learning_rate,
                                    input_neuron_count=self.hidden_layers_shape[layer],
                                    output_neuron_count=self.hidden_layers_shape[layer + 1],
-                                   transfer_type='relu'))
+                                   transfer_type='sigmoid'))
         
         # Add output layer
         self.layers.append(FullyConnectedLayer(learning_rate=self.learning_rate,
@@ -178,7 +179,8 @@ class AbstractDeepModel(ModelInterface):
     def forward_propagation(self) -> np.ndarray:
         output = self.train_inputs
         for layer in self.layers:
-            output = layer.forward_propagation(inputs=output)
+            layer.forward_propagation(inputs=output)
+            output = layer.output
         return output
 
     def predict(self) -> None:
