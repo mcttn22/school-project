@@ -66,6 +66,41 @@ class ModelInterface():
         """
         raise NotImplementedError
 
+def relu(z: np.ndarray | int | float) -> np.ndarray | float:
+    """Transfer function, transform input to max number between 0 and z.
+
+    Args:
+        z (numpy.ndarray | int | float):
+        the numpy.ndarray | int | float to be transferred.
+    Returns:
+        numpy.ndarray | float,
+        with all values | the value transferred to max number between 0-z.
+    Raises:
+        TypeError: if z is not of type numpy.ndarray | int | float.
+
+    """
+    return np.maximum(0, z)
+
+def relu_derivative(z: np.ndarray | int | float) -> np.ndarray | float:
+    """Calculate derivative of ReLu transfer function with respect to z.
+
+    Args:
+        z (numpy.ndarray | int | float):
+        the numpy.ndarray | int | float differentiated with respect to.
+    Returns:
+        numpy.ndarray | float,
+        derivative of the ReLu transfer function with respect to z.
+    Raises:
+        TypeError: if z is not of type numpy.ndarray | int | float.
+
+    """
+    # Derivative of ReLu 0 for negative values of z
+    z[ z <= 0 ] = 0
+
+    # Derivate of ReLu is 1 for positive values of z
+    z[ z > 0] = 1
+    return z
+
 def sigmoid(z: np.ndarray | int | float) -> np.ndarray | float:
     """Transfer function, transform input to number between 0 and 1.
 
@@ -80,6 +115,21 @@ def sigmoid(z: np.ndarray | int | float) -> np.ndarray | float:
 
     """
     return 1 / (1 + np.exp(-z))
+
+def sigmoid_derivative(a: np.ndarray | int | float) -> np.ndarray | float:
+    """Calculate derivative of sigmoid Transfer function with respect to z.
+
+    Args:
+        a (numpy.ndarray | int | float):
+        the numpy.ndarray | int | float output of the sigmoid transfer function.
+    Returns:
+        numpy.ndarray | float,
+        derivative of the sigmoid transfer function with respect to z.
+    Raises:
+        TypeError: if z is not of type numpy.ndarray | int | float.
+
+    """
+    return a * (1 - a)
 
 def calculate_loss(input_count: int,
                    outputs: np.ndarray,

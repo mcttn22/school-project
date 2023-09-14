@@ -7,7 +7,7 @@ import numpy as np
 import tkinter as tk
 import tkinter.font as tkf
 
-from school_project.models.xor import ShallowModel
+from school_project.models.xor import DeepModel
             
 class ExperimentsFrame(tk.Frame):
     """Frame for experiments page."""
@@ -28,7 +28,7 @@ class ExperimentsFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup experiments frame variables
-        self.shallow_model: ShallowModel = ShallowModel()
+        self.deep_model: DeepModel = DeepModel()
         
         # Setup widgets
         self.menu_frame: tk.Frame = tk.Frame(master=self, bg='white')
@@ -52,11 +52,11 @@ class ExperimentsFrame(tk.Frame):
                                                        )
         if os.name == 'posix':
             self.model_theory_button.configure(command=lambda: os.system(
-                                   r'open docs/models/utils/shallow_model.pdf'
+                                   r'open docs/models/utils/deep_model.pdf'
                                    ))
         elif os.name == 'nt':
             self.model_theory_button.configure(command=lambda: os.system(
-                                      r'.\docs\models\utils\shallow_model.pdf'
+                                      r'.\docs\models\utils\deep_model.pdf'
                                       ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13,
@@ -72,20 +72,20 @@ class ExperimentsFrame(tk.Frame):
                                                       from_=0,
                                                       to=1,
                                                       resolution=0.01)
-        self.learning_rate_scale.set(value=self.shallow_model.learning_rate)
-        self.hidden_neuron_count_scale: tk.Scale = tk.Scale(
-                                             master=self.menu_frame,
-                                             bg='white',
-                                             orient='horizontal',
-                                             label="Number of Hidden Neurons",
-                                             length=185,
-                                             from_=1,
-                                             to=20,
-                                             resolution=1.0
-                                             )
-        self.hidden_neuron_count_scale.set(
-                                  value=self.shallow_model.hidden_neuron_count
-                                  )
+        self.learning_rate_scale.set(value=self.deep_model.learning_rate)
+        # self.hidden_neuron_count_scale: tk.Scale = tk.Scale(
+        #                                      master=self.menu_frame,
+        #                                      bg='white',
+        #                                      orient='horizontal',
+        #                                      label="Number of Hidden Neurons",
+        #                                      length=185,
+        #                                      from_=1,
+        #                                      to=20,
+        #                                      resolution=1.0
+        #                                      )
+        # self.hidden_neuron_count_scale.set(
+        #                           value=self.deep_model.hidden_neuron_count
+        #                           )
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
@@ -106,8 +106,8 @@ class ExperimentsFrame(tk.Frame):
         self.train_button.grid(row=2, column=3, pady=(10,0))
         self.learning_rate_scale.grid(row=3, column=1, padx=(0,5),
                                       pady=(10,0), sticky='e')
-        self.hidden_neuron_count_scale.grid(row=3, column=2, padx=(5,0),
-                                           pady=(10,0), sticky='w')
+        # self.hidden_neuron_count_scale.grid(row=3, column=2, padx=(5,0),
+        #                                    pady=(10,0), sticky='w')
         self.model_status_label.grid(row=4, column=0, columnspan=4,
                                      pady=(10,0))
         self.menu_frame.pack()
@@ -133,14 +133,14 @@ class ExperimentsFrame(tk.Frame):
             # Output example prediction results
             results: str = (
                       f"Prediction Accuracy: " +
-                      f"{round(self.shallow_model.test_prediction_accuracy)}%\n" +
-                      f"Number of Hidden Neurons: " +
-                      f"{self.shallow_model.hidden_neuron_count}\n"
+                      f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
+                      f"Network Shape: " +
+                      f"{','.join(f'{i}' for i in ([self.deep_model.input_neuron_count] + self.deep_model.hidden_layers_shape + [self.deep_model.output_neuron_count]))}\n"
                       )
-            for i in range(self.shallow_model.train_inputs.shape[1]):
-                results += f"{self.shallow_model.train_inputs[0][i]},"
-                results += f"{self.shallow_model.train_inputs[1][i]} = "
-                if np.squeeze(self.shallow_model.test_prediction)[i] >= 0.5:
+            for i in range(self.deep_model.train_inputs.shape[1]):
+                results += f"{self.deep_model.train_inputs[0][i]},"
+                results += f"{self.deep_model.train_inputs[1][i]} = "
+                if np.squeeze(self.deep_model.test_prediction)[i] >= 0.5:
                     results += "1\n"
                 else:
                     results += "0\n"
@@ -167,10 +167,10 @@ class ExperimentsFrame(tk.Frame):
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
             graph.set_title(f"Learning rate: " +
-                            f"{self.shallow_model.learning_rate}")
+                            f"{self.deep_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
-            graph.plot(np.squeeze(self.shallow_model.train_losses))
+            graph.plot(np.squeeze(self.deep_model.train_losses))
             self.loss_canvas.get_tk_widget().pack(side="left")
             
             # Start predicting thread
@@ -179,7 +179,7 @@ class ExperimentsFrame(tk.Frame):
                             text="Using trained weights and biases to predict"
                             )
             predict_thread: threading.Thread = threading.Thread(
-                                             target=self.shallow_model.predict
+                                             target=self.deep_model.predict
                                              )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
@@ -198,15 +198,15 @@ class ExperimentsFrame(tk.Frame):
         self.results_label.pack_forget()
         
         # Start training thread
-        self.shallow_model.learning_rate = self.learning_rate_scale.get()
-        self.shallow_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
-        self.shallow_model.init_model_values()
+        self.deep_model.learning_rate = self.learning_rate_scale.get()
+        # self.deep_model.hidden_neuron_count = self.hidden_neuron_count_scale.get()
+        self.deep_model.init_model_values()
         self.model_status_label.configure(
                                         text="Training weights and biases...",
                                         fg='red'
                                         )
         train_thread: threading.Thread = threading.Thread(
-                                              target=self.shallow_model.train,
+                                              target=self.deep_model.train,
                                               args=(50_000,)
                                               )
         train_thread.start()
