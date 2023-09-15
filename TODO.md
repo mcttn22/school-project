@@ -12,6 +12,7 @@
     - Setup default values for cat recognition
     - Create pre-trained weights with desktop (maybe with GPU), so that can load in and use on laptop (if computation is high)
       - Can store files with sqlite3 etc
+  - Try using GPUS to train on desktop (maybe via remote access)
   - Try giving option for more types of transfer functions (then can compare if wanted)
 - Add options menu vs train menu
 - Change hidden layer control to
