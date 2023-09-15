@@ -147,7 +147,9 @@ class NumberRecognitionFrame(tk.Frame):
             test_inputs = np.squeeze(self.deep_model.test_inputs).T
             self.image_figure.suptitle(
              "Prediction Accuracy: " +
-             f"{round(self.deep_model.test_prediction_accuracy)}%"
+             f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
+             f"Network Shape: " +
+             f"{','.join(self.deep_model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))
