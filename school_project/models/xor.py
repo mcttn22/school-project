@@ -7,8 +7,8 @@ class DeepModel(AbstractDeepModel):
       that trains to predict the output of a XOR gate with two inputs."""
     def __init__(self) -> None:
         """Initialise Model's Base class."""
-        super().__init__(hidden_layers_shape=[2],
-                         learning_rate=0.1)
+        super().__init__(hidden_layers_shape=[2, 2],
+                         learning_rate=1)
 
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:
