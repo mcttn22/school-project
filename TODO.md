@@ -4,6 +4,7 @@
   - Plan/Research
   - Use all theory behind projects (maths etc)
   - Interview end-user (Microsoft Form to AI person)
+  - Talk about terms (like logistic regression, exploding gradients, false minima)
 - Continue adding Deep Model
   - Document theory behind model
   - Try on images
@@ -11,7 +12,7 @@
     - Setup default values for cat recognition
     - Create pre-trained weights with desktop (maybe with GPU), so that can load in and use on laptop (if computation is high)
       - Can store files with sqlite3 etc
-  - Try using GPUS to train on desktop (maybe via remote access (website hosted on local host))
+  - Try using GPUS to train on desktop (maybe via remote access (desktop hosts server))
   - Try giving option for more types of transfer functions (then can compare if wanted)
 - Add options menu vs train menu
 - Change hidden layer control to
