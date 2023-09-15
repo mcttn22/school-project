@@ -43,7 +43,7 @@ class NumberRecognitionFrame(tk.Frame):
                                      text="An Image model trained on " +
                                      "recognising numbers from images."
                                     )
-        self.cat_recognition_theory_button: tk.Button = tk.Button(
+        self.number_recognition_theory_button: tk.Button = tk.Button(
                                           master=self.menu_frame, 
                                           width=26,
                                           height=1,
@@ -56,7 +56,7 @@ class NumberRecognitionFrame(tk.Frame):
                                           font=tkf.Font(size=12),
                                           text="View Model Theory")
         if os.name == 'posix':
-            self.cat_recognition_theory_button.configure(
+            self.number_recognition_theory_button.configure(
                                                     command=lambda: os.system(
                                  r'open docs/models/image_recognition/number.pdf'
                                  ))
@@ -64,7 +64,7 @@ class NumberRecognitionFrame(tk.Frame):
                                 r'open docs/models/utils/deep_model.pdf'
                                 ))
         elif os.name == 'nt':
-            self.cat_recognition_theory_button.configure(
+            self.number_recognition_theory_button.configure(
                                                     command=lambda: os.system(
                                       r'docs\models\image_recognition\number.pdf'
                                       ))
@@ -85,6 +85,15 @@ class NumberRecognitionFrame(tk.Frame):
                                                       to=1,
                                                       resolution=0.001)
         self.learning_rate_scale.set(value=self.deep_model.learning_rate)
+        self.hidden_layers_shape_label: tk.Label = tk.Label(master=self.menu_frame,
+                                                            bg='white',
+                                                            font=('Arial', 12),
+                                                            text="Enter the number of neurons in each\n" +
+                                                                  "hidden layer, separated by commas:")
+        self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self.menu_frame)
+        self.hidden_layers_shape_entry.insert(0, ",".join(
+                            f"{neuron_count}" for neuron_count in self.deep_model.hidden_layers_shape
+                            ))
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
@@ -101,15 +110,18 @@ class NumberRecognitionFrame(tk.Frame):
                                                     )
         
         # Pack widgets
-        self.title_label.grid(row=0, column=0, columnspan=3)
-        self.about_label.grid(row=1, column=0, columnspan=3, pady=(10, 0))
-        self.cat_recognition_theory_button.grid(row=2, column=1, pady=(10,0))
-        self.model_theory_button.grid(row=3, column=0, pady=(50, 0))
-        self.train_button.grid(row=3, column=2, pady=(50, 0))
-        self.learning_rate_scale.grid(row=4, column=0,
-                                      columnspan=3, pady=(10, 0))
-        self.model_status_label.grid(row=5, column=0,
-                                     columnspan=3, pady=(10, 0))
+        self.title_label.grid(row=0, column=0, columnspan=4)
+        self.about_label.grid(row=1, column=0, columnspan=4, pady=(10, 0))
+        self.number_recognition_theory_button.grid(row=2, column=0,
+                                                   columnspan=4, pady=(10,0))
+        self.model_theory_button.grid(row=3, column=0, pady=(10, 0))
+        self.train_button.grid(row=3, column=3, pady=(10, 0))
+        self.hidden_layers_shape_label.grid(row=4, column=2,
+                                            padx=(5,0), pady=(30,0))
+        self.learning_rate_scale.grid(row=5, column=1)
+        self.hidden_layers_shape_entry.grid(row=5, column=2, padx=(5,0))
+        self.model_status_label.grid(row=6, column=0,
+                                     columnspan=4, pady=(10, 0))
         self.menu_frame.pack()
         self.results_frame.pack(pady=(50,0))
         
@@ -189,6 +201,17 @@ class NumberRecognitionFrame(tk.Frame):
     def start_training(self) -> None:
         """Start training model in new thread."""
         self.train_button['state'] = 'disabled'
+
+        # Validate hidden layers shape input
+        hidden_layers_shape_input = self.hidden_layers_shape_entry.get().replace(' ', '').split(',')
+        for layer in hidden_layers_shape_input:
+            if not layer.isdigit():
+                self.model_status_label.configure(
+                                        text="Invalid hidden layers shape",
+                                        fg='red'
+                                        )
+                self.train_button['state'] = 'normal'
+                return
         
         # Reset canvases and figures
         self.loss_figure = Figure()
@@ -202,6 +225,8 @@ class NumberRecognitionFrame(tk.Frame):
         
         # Start training thread
         self.deep_model.learning_rate = self.learning_rate_scale.get()
+        self.deep_model.hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input]
+
         self.deep_model.init_model_values()
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
