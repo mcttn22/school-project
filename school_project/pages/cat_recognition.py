@@ -7,7 +7,7 @@ import numpy as np
 import tkinter as tk
 import tkinter.font as tkf
 
-from school_project.models.image_recognition.cat import PerceptronModel
+from school_project.models.image_recognition.cat import DeepModel
 
 class CatRecognitionFrame(tk.Frame):
     """Frame for Cat Recognition page."""
@@ -28,7 +28,7 @@ class CatRecognitionFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup image recognition frame variables
-        self.perceptron_model: PerceptronModel = PerceptronModel()
+        self.deep_model: DeepModel = DeepModel()
         
         # Setup widgets
         self.menu_frame: tk.Frame = tk.Frame(master=self, bg='white')
@@ -61,7 +61,7 @@ class CatRecognitionFrame(tk.Frame):
                                  r'open docs/models/image_recognition/cat.pdf'
                                  ))
             self.model_theory_button.configure(command=lambda: os.system(
-                                r'open docs/models/utils/perceptron_model.pdf'
+                                r'open docs/models/utils/deep_model.pdf'
                                 ))
         elif os.name == 'nt':
             self.cat_recognition_theory_button.configure(
@@ -69,7 +69,7 @@ class CatRecognitionFrame(tk.Frame):
                                       r'docs\models\image_recognition\cat.pdf'
                                       ))
             self.model_theory_button.configure(command=lambda: os.system(
-                                   r'.\docs\models\utils\perceptron_model.pdf'
+                                   r'.\docs\models\utils\deep_model.pdf'
                                    ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13, height=1,
@@ -84,7 +84,16 @@ class CatRecognitionFrame(tk.Frame):
                                                       from_=0,
                                                       to=0.037,
                                                       resolution=0.001)
-        self.learning_rate_scale.set(value=self.perceptron_model.learning_rate)
+        self.learning_rate_scale.set(value=self.deep_model.learning_rate)
+        self.hidden_layers_shape_label: tk.Label = tk.Label(master=self.menu_frame,
+                                                            bg='white',
+                                                            font=('Arial', 12),
+                                                            text="Enter the number of neurons in each\n" +
+                                                                  "hidden layer, separated by commas:")
+        self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self.menu_frame)
+        self.hidden_layers_shape_entry.insert(0, ",".join(
+                            f"{neuron_count}" for neuron_count in self.deep_model.hidden_layers_shape
+                            ))
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
@@ -101,15 +110,18 @@ class CatRecognitionFrame(tk.Frame):
                                                     )
         
         # Pack widgets
-        self.title_label.grid(row=0, column=0, columnspan=3)
-        self.about_label.grid(row=1, column=0, columnspan=3, pady=(10, 0))
-        self.cat_recognition_theory_button.grid(row=2, column=1, pady=(10,0))
-        self.model_theory_button.grid(row=3, column=0, pady=(50, 0))
-        self.train_button.grid(row=3, column=2, pady=(50, 0))
-        self.learning_rate_scale.grid(row=4, column=0,
-                                      columnspan=3, pady=(10, 0))
-        self.model_status_label.grid(row=5, column=0,
-                                     columnspan=3, pady=(10, 0))
+        self.title_label.grid(row=0, column=0, columnspan=4)
+        self.about_label.grid(row=1, column=0, columnspan=4, pady=(10, 0))
+        self.cat_recognition_theory_button.grid(row=2, column=0,
+                                                   columnspan=4, pady=(10,0))
+        self.model_theory_button.grid(row=3, column=0, pady=(10, 0))
+        self.train_button.grid(row=3, column=3, pady=(10, 0))
+        self.hidden_layers_shape_label.grid(row=4, column=2,
+                                            padx=(5,0), pady=(30,0))
+        self.learning_rate_scale.grid(row=5, column=1)
+        self.hidden_layers_shape_entry.grid(row=5, column=2, padx=(5,0))
+        self.model_status_label.grid(row=6, column=0,
+                                     columnspan=4, pady=(10, 0))
         self.menu_frame.pack()
         self.results_frame.pack(pady=(50,0))
         
@@ -133,23 +145,25 @@ class CatRecognitionFrame(tk.Frame):
             # Output example prediction results
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(self.perceptron_model.test_prediction.round() - self.perceptron_model.test_outputs)) * 100)}%"
+             f"{round(100 - np.mean(np.abs(self.deep_model.test_prediction.round() - self.deep_model.test_outputs)) * 100)}%\n" +
+             f"Network Shape: " +
+             f"{','.join(self.deep_model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
-            if np.squeeze(self.perceptron_model.test_prediction)[0] >= 0.5:
+            if np.squeeze(self.deep_model.test_prediction)[0] >= 0.5:
                 image1.set_title("Cat")
             else:
                 image1.set_title("Not a cat")
             image1.imshow(
-                     self.perceptron_model.test_inputs[:,0].reshape((64,64,3))
+                     self.deep_model.test_inputs[:,0].reshape((64,64,3))
                      )
             image2: Figure.axes = self.image_figure.add_subplot(122)
-            if np.squeeze(self.perceptron_model.test_prediction)[14] >= 0.5:
+            if np.squeeze(self.deep_model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
                 image2.set_title("Not a cat")
             image2.imshow(
-                    self.perceptron_model.test_inputs[:,14].reshape((64,64,3))
+                    self.deep_model.test_inputs[:,14].reshape((64,64,3))
                     )
             self.image_canvas.get_tk_widget().pack(side='right')
             
@@ -173,10 +187,10 @@ class CatRecognitionFrame(tk.Frame):
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
             graph.set_title("Learning rate: " +
-                            f"{self.perceptron_model.learning_rate}")
+                            f"{self.deep_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
-            graph.plot(np.squeeze(self.perceptron_model.train_losses))
+            graph.plot(np.squeeze(self.deep_model.train_losses))
             self.loss_canvas.get_tk_widget().pack(side='left')
             
             # Start predicting thread
@@ -185,7 +199,7 @@ class CatRecognitionFrame(tk.Frame):
                              fg='green'
                              )
             predict_thread: threading.Thread = threading.Thread(
-                                          target=self.perceptron_model.predict
+                                          target=self.deep_model.predict
                                           )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
@@ -195,6 +209,17 @@ class CatRecognitionFrame(tk.Frame):
     def start_training(self) -> None:
         """Start training model in new thread."""
         self.train_button['state'] = 'disabled'
+
+        # Validate hidden layers shape input
+        hidden_layers_shape_input = self.hidden_layers_shape_entry.get().replace(' ', '').split(',')
+        for layer in hidden_layers_shape_input:
+            if not layer.isdigit():
+                self.model_status_label.configure(
+                                        text="Invalid hidden layers shape",
+                                        fg='red'
+                                        )
+                self.train_button['state'] = 'normal'
+                return
         
         # Reset canvases and figures
         self.loss_figure = Figure()
@@ -207,12 +232,14 @@ class CatRecognitionFrame(tk.Frame):
                                               master=self.results_frame)
         
         # Start training thread
-        self.perceptron_model.learning_rate = self.learning_rate_scale.get()
-        self.perceptron_model.init_model_values()
+        self.deep_model.learning_rate = self.learning_rate_scale.get()
+        self.deep_model.hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input]
+
+        self.deep_model.init_model_values()
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
-                                           target=self.perceptron_model.train,
+                                           target=self.deep_model.train,
                                            args=(5_000,)
                                            )
         train_thread.start()
