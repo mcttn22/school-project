@@ -7,6 +7,7 @@
 - Continue adding Deep Model
   - Document theory behind model
   - Try on images
+    - If deep cat recognition doesn't work, just leave a perceptron
     - Increase number recognition training epochs (to improve from 94% accuracy at 50 epochs)
     - Setup default values for cat recognition
     - Create pre-trained weights with desktop (maybe with GPU), so that can load in and use on laptop (if computation is high)
