@@ -78,8 +78,10 @@ class ExperimentsFrame(tk.Frame):
                                                             font=('Arial', 12),
                                                             text="Enter the number of neurons in each\n" +
                                                                   "hidden layer, separated by commas:")
-        self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self.menu_frame,)
-        self.hidden_layers_shape_entry.insert(0, ",".join(f"{i}" for i in self.deep_model.hidden_layers_shape))
+        self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self.menu_frame)
+        self.hidden_layers_shape_entry.insert(0, ",".join(
+                            f"{neuron_count}" for neuron_count in self.deep_model.hidden_layers_shape
+                            ))
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
