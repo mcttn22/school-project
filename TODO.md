@@ -11,6 +11,11 @@
     - Setup default values for cat recognition
     - Create pre-trained weights with desktop (maybe with GPU), so that can load in and use on laptop (if computation is high)
   - Try giving option for more types of transfer functions (then can compare if wanted)
+- Add options menu vs train menu
+- Change hidden layer control to
+  - layers shape stored as array
+  - Display shape
+  - Buttons to add layer, with neuron count and transfer type (use vs don't use relu)
 - Add stop-training button?
 - Add epoch count control?
 - Add prediction correctness to MNIST model?
