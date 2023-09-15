@@ -17,6 +17,7 @@
   - layers shape stored as array
   - Display shape
   - Buttons to add layer, with neuron count and transfer type (use vs don't use relu)
+- Show training progress ?
 - Add stop-training button?
 - Add epoch count control?
 - Add prediction correctness to MNIST model?
