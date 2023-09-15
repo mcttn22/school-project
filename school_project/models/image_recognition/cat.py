@@ -1,16 +1,14 @@
 import h5py
 import numpy as np
 
-from school_project.models.utils.perceptron_model import (
-                                                       AbstractPerceptronModel
-                                                       )
+from school_project.models.utils.deep_model import AbstractDeepModel
 
-class PerceptronModel(AbstractPerceptronModel):
-    """ANN model with no hidden layers,
+class DeepModel(AbstractDeepModel):
+    """Deep ANN model
        that trains to predict if an image is a cat or not a cat."""
     def __init__(self) -> None:
         """Initialise Model's Base class."""
-        super().__init__(output_neuron_count=1, learning_rate=0.001)
+        super().__init__(hidden_layers_shape=[100], learning_rate=0.001)
     
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:
