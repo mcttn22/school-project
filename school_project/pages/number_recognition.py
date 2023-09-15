@@ -234,7 +234,7 @@ class NumberRecognitionFrame(tk.Frame):
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
                                            target=self.deep_model.train,
-                                           args=(50,)
+                                           args=(100,)
                                            )
         train_thread.start()
         self.manage_training(train_thread=train_thread)
