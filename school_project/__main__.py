@@ -124,7 +124,7 @@ def main() -> None:
     root.mainloop()
     
     # Stop models training when GUI closes
-    school_project.pages[1].perceptron_model.running = False
+    school_project.pages[1].deep_model.running = False
     school_project.pages[2].perceptron_model.running = False
     school_project.pages[3].deep_model.running = False
 

@@ -7,7 +7,7 @@ import numpy as np
 import tkinter as tk
 import tkinter.font as tkf
 
-from school_project.models.image_recognition.number import PerceptronModel
+from school_project.models.image_recognition.number import DeepModel
 
 class NumberRecognitionFrame(tk.Frame):
     """Frame for Number Recognition page."""
@@ -28,7 +28,7 @@ class NumberRecognitionFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup image recognition frame variables
-        self.perceptron_model: PerceptronModel = PerceptronModel()
+        self.deep_model: DeepModel = DeepModel()
         
         # Setup widgets
         self.menu_frame: tk.Frame = tk.Frame(master=self, bg='white')
@@ -61,7 +61,7 @@ class NumberRecognitionFrame(tk.Frame):
                                  r'open docs/models/image_recognition/number.pdf'
                                  ))
             self.model_theory_button.configure(command=lambda: os.system(
-                                r'open docs/models/utils/perceptron_model.pdf'
+                                r'open docs/models/utils/deep_model.pdf'
                                 ))
         elif os.name == 'nt':
             self.cat_recognition_theory_button.configure(
@@ -69,7 +69,7 @@ class NumberRecognitionFrame(tk.Frame):
                                       r'docs\models\image_recognition\number.pdf'
                                       ))
             self.model_theory_button.configure(command=lambda: os.system(
-                                   r'.\docs\models\utils\perceptron_model.pdf'
+                                   r'.\docs\models\utils\deep_model.pdf'
                                    ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13, height=1,
@@ -83,8 +83,8 @@ class NumberRecognitionFrame(tk.Frame):
                                                       length=185,
                                                       from_=0,
                                                       to=1,
-                                                      resolution=0.01)
-        self.learning_rate_scale.set(value=self.perceptron_model.learning_rate)
+                                                      resolution=0.001)
+        self.learning_rate_scale.set(value=self.deep_model.learning_rate)
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
                                                      font=('Arial', 15))
@@ -131,11 +131,11 @@ class NumberRecognitionFrame(tk.Frame):
         if not predict_thread.is_alive():
             
             # Output example prediction results
-            test_prediction = np.squeeze(self.perceptron_model.test_prediction).T.tolist()
-            test_inputs = np.squeeze(self.perceptron_model.test_inputs).T
+            test_prediction = np.squeeze(self.deep_model.test_prediction).T.tolist()
+            test_inputs = np.squeeze(self.deep_model.test_inputs).T
             self.image_figure.suptitle(
              "Prediction Accuracy: " +
-             f"{round(self.perceptron_model.test_prediction_accuracy)}%"
+             f"{round(self.deep_model.test_prediction_accuracy)}%"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))
@@ -167,10 +167,10 @@ class NumberRecognitionFrame(tk.Frame):
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
             graph.set_title("Learning rate: " +
-                            f"{self.perceptron_model.learning_rate}")
+                            f"{self.deep_model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
-            graph.plot(np.squeeze(self.perceptron_model.train_losses))
+            graph.plot(np.squeeze(self.deep_model.train_losses))
             self.loss_canvas.get_tk_widget().pack(side='left')
             
             # Start predicting thread
@@ -179,7 +179,7 @@ class NumberRecognitionFrame(tk.Frame):
                              fg='green'
                              )
             predict_thread: threading.Thread = threading.Thread(
-                                          target=self.perceptron_model.predict
+                                          target=self.deep_model.predict
                                           )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
@@ -201,13 +201,13 @@ class NumberRecognitionFrame(tk.Frame):
                                               master=self.results_frame)
         
         # Start training thread
-        self.perceptron_model.learning_rate = self.learning_rate_scale.get()
-        self.perceptron_model.init_model_values()
+        self.deep_model.learning_rate = self.learning_rate_scale.get()
+        self.deep_model.init_model_values()
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
-                                           target=self.perceptron_model.train,
-                                           args=(51,)
+                                           target=self.deep_model.train,
+                                           args=(50,)
                                            )
         train_thread.start()
         self.manage_training(train_thread=train_thread)

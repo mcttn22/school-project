@@ -53,10 +53,8 @@ class FullyConnectedLayer():
     def init_layer_values(self, input_neuron_count: int, 
                           output_neuron_count: int) -> None:
         """Initialise weights to randdom values and biases to 0s"""
-        self.weights = np.random.rand(output_neuron_count, input_neuron_count)
-        self.biases: np.ndarray = np.zeros(
-                                            shape=(output_neuron_count, 1)
-                                            )
+        self.weights = np.random.rand(output_neuron_count, input_neuron_count) - 0.5
+        self.biases: np.ndarray = np.zeros(shape=(output_neuron_count, 1))
 
     def back_propagation(self, dloss_doutput: np.ndarray) -> np.ndarray:
         """Adjust the weights and biases via gradient descent.

@@ -3,16 +3,16 @@ import gzip
 
 import numpy as np
 
-from school_project.models.utils.perceptron_model import (
-                                                       AbstractPerceptronModel
-                                                       )
+from school_project.models.utils.deep_model import (
+                                                    AbstractDeepModel
+                                                    )
 
-class PerceptronModel(AbstractPerceptronModel):
-    """ANN model with no hidden layers,
+class DeepModel(AbstractDeepModel):
+    """Deep ANN model
        that trains to predict Numbers from images."""
     def __init__(self) -> None:
         """Initialise Model's Base class."""
-        super().__init__(output_neuron_count=10, learning_rate=1.0)
+        super().__init__(hidden_layers_shape=[1000, 1000], learning_rate=0.1)
     
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:
