@@ -8,7 +8,7 @@ class DeepModel(AbstractDeepModel):
        that trains to predict if an image is a cat or not a cat."""
     def __init__(self) -> None:
         """Initialise Model's Base class."""
-        super().__init__(hidden_layers_shape=[100], learning_rate=0.001)
+        super().__init__(hidden_layers_shape=[1000, 1000], learning_rate=0.1)
     
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:
