@@ -11,3 +11,4 @@
     - Setup default values for cat recognition
     - Create pre-trained weights with desktop (maybe with GPU), so that can load in and use on laptop (if computation is high)
   - Try giving option for more types of transfer functions (then can compare if wanted)
+- Add stop-training button?
