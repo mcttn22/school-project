@@ -13,3 +13,4 @@
   - Try giving option for more types of transfer functions (then can compare if wanted)
 - Add stop-training button?
 - Add epoch count control?
+- Add prediction correctness to MNIST model?
