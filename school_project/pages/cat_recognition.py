@@ -82,7 +82,7 @@ class CatRecognitionFrame(tk.Frame):
                                                       label="Learning Rate",
                                                       length=185,
                                                       from_=0,
-                                                      to=1,
+                                                      to=0.1,
                                                       resolution=0.001)
         self.learning_rate_scale.set(value=self.deep_model.learning_rate)
         self.hidden_layers_shape_label: tk.Label = tk.Label(master=self.menu_frame,
