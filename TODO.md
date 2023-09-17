@@ -62,8 +62,10 @@
   - Setup default values
   - If deep cat recognition doesn't work, just leave as perceptron or remove?
 
+- Try using GPUs for calculations
+
 - Setup networking
-  - Setup server on desktop (Flask?)
+  - Setup server on desktop (Flask?) (Use public ip?)
     - Returns webpage with controls to train weights + predict on desktop's GPUs
       - Store trained weights in files with sqlite3 etc
   - Try giving option for more types of transfer functions (then can compare if wanted)
