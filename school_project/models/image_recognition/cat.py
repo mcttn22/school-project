@@ -1,5 +1,5 @@
 import h5py
-import numpy as np
+import cupy as cp
 
 from school_project.models.utils.deep_model import AbstractDeepModel
 
@@ -10,13 +10,13 @@ class DeepModel(AbstractDeepModel):
         """Initialise Model's Base class."""
         super().__init__(hidden_layers_shape=[1000, 1000], learning_rate=0.1)
     
-    def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
-                                     np.ndarray, np.ndarray]:
+    def load_datasets(self) -> tuple[cp.ndarray, cp.ndarray, 
+                                     cp.ndarray, cp.ndarray]:
         """Load image input and output datasets.
         
         Returns:
             tuple of image train_inputs, train_outputs,
-            test_inputs and test_outputs numpy.ndarrys.
+            test_inputs and test_outputs cupy.ndarrys.
         
         Raises:
             FileNotFoundError: if file does not exist.
@@ -36,12 +36,12 @@ class DeepModel(AbstractDeepModel):
         # Load input arrays,
         # containing the RGB values for each pixel in each 64x64 pixel image,
         # for 209 images
-        train_inputs: np.ndarray = np.array(train_dataset['train_set_x'][:])
-        test_inputs: np.ndarray = np.array(test_dataset['test_set_x'][:])
+        train_inputs: cp.ndarray = cp.array(train_dataset['train_set_x'][:])
+        test_inputs: cp.ndarray = cp.array(test_dataset['test_set_x'][:])
         
         # Load output arrays of 1s for cat and 0s for not cat
-        train_outputs: np.ndarray = np.array(train_dataset['train_set_y'][:])
-        test_outputs: np.ndarray = np.array(test_dataset['test_set_y'][:])
+        train_outputs: cp.ndarray = cp.array(train_dataset['train_set_y'][:])
+        test_outputs: cp.ndarray = cp.array(test_dataset['test_set_y'][:])
         
         # Reshape input arrays into 1 dimension (flatten),
         # then divide by 255 (RGB)

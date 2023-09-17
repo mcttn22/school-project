@@ -1,6 +1,7 @@
 import os
 import threading
 
+import cupy as cp
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
@@ -145,25 +146,25 @@ class CatRecognitionFrame(tk.Frame):
             # Output example prediction results
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(self.deep_model.test_prediction.round() - self.deep_model.test_outputs)) * 100)}%\n" +
+             f"{round(100 - np.mean(np.abs(cp.asnumpy(self.deep_model.test_prediction).round() - cp.asnumpy(self.deep_model.test_outputs))) * 100)}%\n" +
              f"Network Shape: " +
              f"{','.join(self.deep_model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
-            if np.squeeze(self.deep_model.test_prediction)[0] >= 0.5:
+            if cp.squeeze(self.deep_model.test_prediction)[0] >= 0.5:
                 image1.set_title("Cat")
             else:
                 image1.set_title("Not a cat")
             image1.imshow(
-                     self.deep_model.test_inputs[:,0].reshape((64,64,3))
+                     cp.asnumpy(self.deep_model.test_inputs)[:,0].reshape((64,64,3))
                      )
             image2: Figure.axes = self.image_figure.add_subplot(122)
-            if np.squeeze(self.deep_model.test_prediction)[14] >= 0.5:
+            if cp.squeeze(self.deep_model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
                 image2.set_title("Not a cat")
             image2.imshow(
-                    self.deep_model.test_inputs[:,14].reshape((64,64,3))
+                    cp.asnumpy(self.deep_model.test_inputs)[:,14].reshape((64,64,3))
                     )
             self.image_canvas.get_tk_widget().pack(side='right')
             
