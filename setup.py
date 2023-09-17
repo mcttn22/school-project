@@ -9,6 +9,7 @@ setup(
     author_email='maxcotton22@gmail.com',
     description='Year 13 Computer Science Programming Project',
     install_requires=[
+                      'cupy-cuda12x',
                       'h5py',
                       'matplotlib',
                       'numpy',

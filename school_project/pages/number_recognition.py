@@ -1,6 +1,7 @@
 import os
 import threading
 
+import cupy as cp
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
@@ -143,8 +144,8 @@ class NumberRecognitionFrame(tk.Frame):
         if not predict_thread.is_alive():
             
             # Output example prediction results
-            test_prediction = np.squeeze(self.deep_model.test_prediction).T.tolist()
-            test_inputs = np.squeeze(self.deep_model.test_inputs).T
+            test_prediction = cp.squeeze(self.deep_model.test_prediction).T.tolist()
+            test_inputs = np.squeeze(cp.asnumpy(self.deep_model.test_inputs)).T
             self.image_figure.suptitle(
              "Prediction Accuracy: " +
              f"{round(self.deep_model.test_prediction_accuracy)}%\n" +

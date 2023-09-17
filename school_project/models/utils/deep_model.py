@@ -1,4 +1,4 @@
-import numpy as np
+import cupy as cp
 
 from school_project.models.utils.tools import (
                                               ModelInterface,
@@ -26,13 +26,13 @@ class FullyConnectedLayer():
         """
         # Setup layer attributes
         self.transfer_type = transfer_type
-        self.input: np.ndarray
-        self.output: np.ndarray
+        self.input = None
+        self.output = None
 
         # Setup weights and biases
-        np.random.seed(2)  # Sets up pseudo random values for layer weight arrays
-        self.weights: np.ndarray
-        self.biases: np.ndarray
+        cp.random.seed(2)  # Sets up pseudo random values for layer weight arrays
+        self.weights = None
+        self.biases = None
         self.init_layer_values(
                                input_neuron_count=input_neuron_count,
                                output_neuron_count=output_neuron_count
@@ -53,17 +53,17 @@ class FullyConnectedLayer():
     def init_layer_values(self, input_neuron_count: int, 
                           output_neuron_count: int) -> None:
         """Initialise weights to randdom values and biases to 0s"""
-        self.weights = np.random.rand(output_neuron_count, input_neuron_count) - 0.5
-        self.biases: np.ndarray = np.zeros(shape=(output_neuron_count, 1))
+        self.weights = cp.random.rand(output_neuron_count, input_neuron_count) - 0.5
+        self.biases = cp.zeros(shape=(output_neuron_count, 1))
 
-    def back_propagation(self, dloss_doutput: np.ndarray) -> np.ndarray:
+    def back_propagation(self, dloss_doutput) -> cp.ndarray:
         """Adjust the weights and biases via gradient descent.
         
         Args:
-            dloss_doutput (numpy.ndarray): the derivative of the loss of the 
+            dloss_doutput (cupy.ndarray): the derivative of the loss of the 
             layer's output, with respect to the layer's output.
         Returns:
-            a numpy.ndarray derivative of the loss of the layer's input,
+            a cupy.ndarray derivative of the loss of the layer's input,
             with respect to the layer's input.
         Raises:
             ValueError:
@@ -73,12 +73,12 @@ class FullyConnectedLayer():
         
         """
         if self.transfer_type == 'sigmoid':
-            dloss_dz: np.ndarray = dloss_doutput * sigmoid_derivative(output=self.output)
+            dloss_dz = dloss_doutput * sigmoid_derivative(output=self.output)
 
-        dloss_dweights: np.ndarray = np.dot(dloss_dz, self.input.T)
-        dloss_dbiases: np.ndarray = np.sum(dloss_dz)
+        dloss_dweights = cp.dot(dloss_dz, self.input.T)
+        dloss_dbiases = cp.sum(dloss_dz)
         
-        dloss_dinput: np.ndarray = np.dot(self.weights.T, dloss_dz)
+        dloss_dinput = cp.dot(self.weights.T, dloss_dz)
 
         # Update weights and biases
         self.weights -= self.learning_rate * dloss_dweights
@@ -86,17 +86,17 @@ class FullyConnectedLayer():
 
         return dloss_dinput
 
-    def forward_propagation(self, inputs: np.ndarray) -> np.ndarray:
+    def forward_propagation(self, inputs) -> cp.ndarray:
         """Generate a layer output with the weights and biases.
         
         Args:
-            inputs (np.ndarray): the input values to the layer.
+            inputs (cp.ndarray): the input values to the layer.
         Returns:
-            a numpy.ndarray of the output values.
+            a cupy.ndarray of the output values.
 
         """
         self.input = inputs
-        z: np.ndarray = np.dot(self.weights, self.input) + self.biases
+        z = cp.dot(self.weights, self.input) + self.biases
         if self.transfer_type == 'sigmoid':
             self.output = sigmoid(z)
         return self.output
@@ -119,7 +119,7 @@ class AbstractDeepModel(ModelInterface):
         self.train_inputs, self.train_outputs,\
         self.test_inputs, self.test_outputs = self.load_datasets()
         self.train_losses: list[float]
-        self.test_prediction: np.ndarray
+        self.test_prediction = None
         self.test_prediction_accuracy: float
         
         # Setup model attributes
@@ -178,22 +178,22 @@ class AbstractDeepModel(ModelInterface):
                                 transfer_type='sigmoid'
                                 ))
 
-    def back_propagation(self, dloss_doutput: np.ndarray) -> None:
+    def back_propagation(self, dloss_doutput) -> None:
         """Train each layer's weights and biases.
         
         Args:
-            dloss_doutput (np.ndarray): the derivative of the loss of the 
+            dloss_doutput (cp.ndarray): the derivative of the loss of the 
             output layer's output, with respect to the output layer's output.
 
         """
         for layer in reversed(self.layers):
             dloss_doutput = layer.back_propagation(dloss_doutput=dloss_doutput)
 
-    def forward_propagation(self) -> np.ndarray:
+    def forward_propagation(self) -> cp.ndarray:
         """Generate a prediction with the layers.
         
         Returns:
-            a numpy.ndarray of the prediction values.
+            a cupy.ndarray of the prediction values.
 
         """
         output = self.train_inputs
@@ -235,5 +235,5 @@ class AbstractDeepModel(ModelInterface):
                                   outputs=self.train_outputs,
                                   prediction=prediction)
             self.train_losses.append(loss)
-            dloss_doutput: np.ndarray = -(1/self.input_count) * ((self.train_outputs - prediction)/(prediction * (1 - prediction)))
+            dloss_doutput = -(1/self.input_count) * ((self.train_outputs - prediction)/(prediction * (1 - prediction)))
             self.back_propagation(dloss_doutput=dloss_doutput)
