@@ -26,13 +26,13 @@ class FullyConnectedLayer():
         """
         # Setup layer attributes
         self.transfer_type = transfer_type
-        self.input = None
-        self.output = None
+        self.input: cp.ndarray
+        self.output: cp.ndarray
 
         # Setup weights and biases
         cp.random.seed(2)  # Sets up pseudo random values for layer weight arrays
-        self.weights = None
-        self.biases = None
+        self.weights: cp.ndarray
+        self.biases: cp.ndarray
         self.init_layer_values(
                                input_neuron_count=input_neuron_count,
                                output_neuron_count=output_neuron_count
@@ -119,7 +119,7 @@ class AbstractDeepModel(ModelInterface):
         self.train_inputs, self.train_outputs,\
         self.test_inputs, self.test_outputs = self.load_datasets()
         self.train_losses: list[float]
-        self.test_prediction = None
+        self.test_prediction: cp.ndarray
         self.test_prediction_accuracy: float
         
         # Setup model attributes
