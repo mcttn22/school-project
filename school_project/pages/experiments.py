@@ -135,9 +135,9 @@ class ExperimentsFrame(tk.Frame):
                       f"Network Shape: " +
                       f"{','.join(self.deep_model.layers_shape)}\n"
                       )
-            for i in range(self.deep_model.train_inputs.shape[1]):
-                results += f"{self.deep_model.train_inputs[0][i]},"
-                results += f"{self.deep_model.train_inputs[1][i]} = "
+            for i in range(self.deep_model.test_inputs.shape[1]):
+                results += f"{self.deep_model.test_inputs[0][i]},"
+                results += f"{self.deep_model.test_inputs[1][i]} = "
                 if np.squeeze(self.deep_model.test_prediction)[i] >= 0.5:
                     results += "1\n"
                 else:

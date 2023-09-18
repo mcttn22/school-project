@@ -145,7 +145,7 @@ class NumberRecognitionFrame(tk.Frame):
             
             # Output example prediction results
             test_prediction = cp.squeeze(self.deep_model.test_prediction).T.tolist()
-            test_inputs = np.squeeze(cp.asnumpy(self.deep_model.test_inputs)).T
+            test_inputs = cp.asnumpy(cp.squeeze(self.deep_model.test_inputs)).T
             self.image_figure.suptitle(
              "Prediction Accuracy: " +
              f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
