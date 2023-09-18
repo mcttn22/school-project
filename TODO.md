@@ -51,6 +51,8 @@
         - Cat recognition (note source)
   - Theory behind using GPU to train
     - Faster computation time needed as training takes long
+    - How GPU works / why good for this
+      - Cuda, Tensor~
   - Theory behind storing weights with sqlite3
   - Theory behind networking
     - Networking Diagrams
@@ -63,6 +65,7 @@
   - If deep cat recognition doesn't work, just leave as perceptron or remove?
 
 - Try using GPUs for calculations
+  - Note dependency for CUDA toolkit
 
 - Setup networking
   - Setup server on desktop (Flask?) (Use public ip?)
