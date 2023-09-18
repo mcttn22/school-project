@@ -65,7 +65,7 @@
   - If deep cat recognition doesn't work, just leave as perceptron or remove?
 
 - Try using GPUs for calculations
-  - Note dependency for CUDA toolkit
+  - Note dependency for CUDA toolkit, Nvidia graphics card of x+ gen, GPU drivers etc
   - If decide not to use networking, then maybe give option to just use CPU to train?
 
 - Setup networking
