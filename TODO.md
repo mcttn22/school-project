@@ -66,6 +66,7 @@
 
 - Try using GPUs for calculations
   - Note dependency for CUDA toolkit
+  - If decide not to use networking, then maybe give option to just use CPU to train?
 
 - Setup networking
   - Setup server on desktop (Flask?) (Use public ip?)
