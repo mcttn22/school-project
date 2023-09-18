@@ -61,9 +61,7 @@
     - UI diagrams
   - Remove 'docs/'
 
-- Setup Deep Model for cat recognintion
-  - Setup default values
-  - If deep cat recognition doesn't work, just leave as perceptron or remove?
+- Remove perceptron + shallow models?
 
 - Try using GPUs for calculations
   - Note dependency for CUDA toolkit, Nvidia graphics card of x+ gen, GPU drivers etc
@@ -76,4 +74,4 @@
   - Try giving option for more types of transfer functions (then can compare if wanted)
   - left=options, right=train,cancel training, training progress, epoch count control
 
-- Add prediction correctness to MNIST model?
+- Compare performance of model (how may need a better dataset etc)
