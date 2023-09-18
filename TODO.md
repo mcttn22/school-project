@@ -5,6 +5,7 @@
     - Project focus
       - Investigation into Image recognition from scratch
         - No 3rd party machine learning libraries
+        - Comparing accuracies
       - Where have I researched about it (IBM?)
       - Who is it for -> Interview with person in AI
     - What deep learning is (explains what project is investigating)
@@ -51,7 +52,7 @@
         - Cat recognition (note source)
   - Theory behind using GPU to train
     - Faster computation time needed as training takes long
-    - How GPU works / why good for this
+    - How GPU works / why good for this (compare with CPU computation time)
       - Cuda, Tensor~
   - Theory behind storing weights with sqlite3
   - Theory behind networking
