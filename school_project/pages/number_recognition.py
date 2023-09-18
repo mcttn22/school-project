@@ -147,8 +147,8 @@ class NumberRecognitionFrame(tk.Frame):
             test_prediction = cp.squeeze(self.deep_model.test_prediction).T.tolist()
             test_inputs = cp.asnumpy(cp.squeeze(self.deep_model.test_inputs)).T
             self.image_figure.suptitle(
-             "Prediction Accuracy: " +
-             f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
+             "Prediction Correctness: " +
+             f"{round(100 - np.mean(np.abs(cp.asnumpy(self.deep_model.test_prediction).round() - cp.asnumpy(self.deep_model.test_outputs))) * 100)}%\n" +
              f"Network Shape: " +
              f"{','.join(self.deep_model.layers_shape)}\n"
              )
