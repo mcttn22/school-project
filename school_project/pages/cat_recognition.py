@@ -241,7 +241,7 @@ class CatRecognitionFrame(tk.Frame):
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
                                            target=self.deep_model.train,
-                                           args=(10_000,)
+                                           args=(2_000,)
                                            )
         train_thread.start()
         self.manage_training(train_thread=train_thread)

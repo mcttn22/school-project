@@ -2,6 +2,8 @@ import cupy as cp
 
 from school_project.models.utils.tools import (
                                               ModelInterface,
+                                              relu,
+                                              relu_derivative,
                                               sigmoid,
                                               sigmoid_derivative,
                                               calculate_loss,
@@ -21,7 +23,7 @@ class FullyConnectedLayer():
             output_neuron_count (int):
             the number of output neurons into the layer.
             transfer_type (str): the transfer function type
-            ('sigmoid')
+            ('sigmoid' or 'relu')
 
         """
         # Setup layer attributes
@@ -74,6 +76,8 @@ class FullyConnectedLayer():
         """
         if self.transfer_type == 'sigmoid':
             dloss_dz = dloss_doutput * sigmoid_derivative(output=self.output)
+        elif self.transfer_type == 'relu':
+            dloss_dz = dloss_doutput * relu_derivative(output=self.output)
 
         dloss_dweights = cp.dot(dloss_dz, self.input.T)
         dloss_dbiases = cp.sum(dloss_dz)
@@ -99,6 +103,8 @@ class FullyConnectedLayer():
         z = cp.dot(self.weights, self.input) + self.biases
         if self.transfer_type == 'sigmoid':
             self.output = sigmoid(z)
+        elif self.transfer_type == 'relu':
+            self.output = relu(z)
         return self.output
 
 class AbstractDeepModel(ModelInterface):
@@ -158,7 +164,7 @@ class AbstractDeepModel(ModelInterface):
                                 learning_rate=self.learning_rate,
                                 input_neuron_count=self.input_neuron_count,
                                 output_neuron_count=self.hidden_layers_shape[0],
-                                transfer_type='sigmoid'
+                                transfer_type='relu'
                                 ))
 
         # Add hidden layers
@@ -167,7 +173,7 @@ class AbstractDeepModel(ModelInterface):
                         learning_rate=self.learning_rate,
                         input_neuron_count=self.hidden_layers_shape[layer],
                         output_neuron_count=self.hidden_layers_shape[layer + 1],
-                        transfer_type='sigmoid'
+                        transfer_type='relu'
                         ))
         
         # Add output layer

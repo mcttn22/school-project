@@ -67,6 +67,39 @@ class ModelInterface():
         """
         raise NotImplementedError
 
+def relu(z: cp.ndarray | int | float) -> cp.ndarray | float:
+    """Transfer function, transform input to max number between 0 and z.
+
+    Args:
+        z (cupy.ndarray | int | float):
+        the cupy.ndarray | int | float to be transferred.
+    Returns:
+        cupy.ndarray | float,
+        with all values | the value transferred to max number between 0-z.
+    Raises:
+        TypeError: if z is not of type cupy.ndarray | int | float.
+
+    """
+    return cp.maximum(0.1*z, 0)  # Divide by 10 to stop overflow errors
+
+def relu_derivative(output: cp.ndarray | int | float) -> cp.ndarray | float:
+    """Calculate derivative of ReLu Transfer function with respect to z.
+
+    Args:
+        output (cupy.ndarray | int | float):
+        the cupy.ndarray | int | float output of the ReLu transfer function.
+    Returns:
+        cupy.ndarray | float,
+        derivative of the ReLu transfer function with respect to z.
+    Raises:
+        TypeError: if output is not of type cupy.ndarray | int | float.
+
+    """
+    output[output <= 0] = 0
+    output[output > 0] = 1
+    
+    return output
+
 def sigmoid(z: cp.ndarray | int | float) -> cp.ndarray | float:
     """Transfer function, transform input to number between 0 and 1.
 
