@@ -217,7 +217,7 @@ class ExperimentsFrame(tk.Frame):
                                         )
         train_thread: threading.Thread = threading.Thread(
                                               target=self.deep_model.train,
-                                              args=(50_000,)
+                                              args=(1_500,)
                                               )
         train_thread.start()
         self.manage_training(train_thread=train_thread)
