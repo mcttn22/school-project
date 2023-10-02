@@ -28,6 +28,19 @@
   - Comparison of models
   - left=options, right=train
 
+- Ideas from interview
+  - Validation set
+    - Monitors how well network is predicting, to see when network becomes overtrained
+  - cifar-10 dataset
+  - Use sections of images for more inputs
+  - Browse through more of results
+    - Show images predicted correct
+    - Show images predicted wrong
+    - Show images where prediction is close between muliple classes
+  - Play around with size of training datasets
+    - Graph showing performance against increase in training data
+  - Maybe CNNs
+
 - Update README
 
 - Jupyter notebook for technical presentation?
