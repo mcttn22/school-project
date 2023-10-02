@@ -2,6 +2,7 @@
 
 - Finish analysis draft
   - Complete analysis interview
+  - Talk about more comparison (parameters, datasets, cpu vs gpu etc)
   - Update Matrice theory
   - Change multiply from * to x/. ?
   - Format images to correct sections
