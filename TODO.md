@@ -4,6 +4,7 @@
   - Complete analysis interview
   - Update Matrice theory
   - Change multiply from * to x/. ?
+  - Format images to correct sections
   - Submit to Teams
 
 - Add support for no hidden layers?
