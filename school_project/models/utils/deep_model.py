@@ -158,31 +158,43 @@ class AbstractDeepModel(ModelInterface):
     def init_model_values(self) -> None:
         """Initialise model layers"""
         self.layers = []
-
-        # Add input layer
-        self.layers.append(FullyConnectedLayer(
-                                learning_rate=self.learning_rate,
-                                input_neuron_count=self.input_neuron_count,
-                                output_neuron_count=self.hidden_layers_shape[0],
-                                transfer_type='relu'
-                                ))
-
-        # Add hidden layers
-        for layer in range(len(self.hidden_layers_shape) - 1):
-            self.layers.append(FullyConnectedLayer(
-                        learning_rate=self.learning_rate,
-                        input_neuron_count=self.hidden_layers_shape[layer],
-                        output_neuron_count=self.hidden_layers_shape[layer + 1],
-                        transfer_type='relu'
-                        ))
         
-        # Add output layer
-        self.layers.append(FullyConnectedLayer(
-                                learning_rate=self.learning_rate,
-                                input_neuron_count=self.hidden_layers_shape[-1],
-                                output_neuron_count=self.output_neuron_count,
-                                transfer_type='sigmoid'
-                                ))
+        # Check if setting up Deep Network
+        if len(self.hidden_layers_shape) > 0:
+
+            # Add input layer
+            self.layers.append(FullyConnectedLayer(
+                                    learning_rate=self.learning_rate,
+                                    input_neuron_count=self.input_neuron_count,
+                                    output_neuron_count=self.hidden_layers_shape[0],
+                                    transfer_type='relu'
+                                    ))
+
+            # Add hidden layers
+            for layer in range(len(self.hidden_layers_shape) - 1):
+                self.layers.append(FullyConnectedLayer(
+                            learning_rate=self.learning_rate,
+                            input_neuron_count=self.hidden_layers_shape[layer],
+                            output_neuron_count=self.hidden_layers_shape[layer + 1],
+                            transfer_type='relu'
+                            ))
+            
+            # Add output layer
+            self.layers.append(FullyConnectedLayer(
+                                    learning_rate=self.learning_rate,
+                                    input_neuron_count=self.hidden_layers_shape[-1],
+                                    output_neuron_count=self.output_neuron_count,
+                                    transfer_type='sigmoid'
+                                    ))
+
+        # Setup Perceptron Network
+        else:
+            self.layers.append(FullyConnectedLayer(
+                                    learning_rate=self.learning_rate,
+                                    input_neuron_count=self.input_neuron_count,
+                                    output_neuron_count=self.output_neuron_count,
+                                    transfer_type='sigmoid'
+                                    ))
 
     def back_propagation(self, dloss_doutput) -> None:
         """Train each layer's weights and biases.

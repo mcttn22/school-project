@@ -212,7 +212,7 @@ class CatRecognitionFrame(tk.Frame):
         self.train_button['state'] = 'disabled'
 
         # Validate hidden layers shape input
-        hidden_layers_shape_input = self.hidden_layers_shape_entry.get().replace(' ', '').split(',')
+        hidden_layers_shape_input = [layer for layer in self.hidden_layers_shape_entry.get().replace(' ', '').split(',') if layer != '']
         for layer in hidden_layers_shape_input:
             if not layer.isdigit():
                 self.model_status_label.configure(
