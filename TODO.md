@@ -8,13 +8,10 @@
   - Format images to correct sections
   - Submit to Teams
 
-- Add support for no hidden layers?
-  - Remove perceptron + shallow models?
+- Fix Cat recognition Perceptron Network overflow errors
 
 - Update MakeFile
 - Remove 'docs/'
-
-- Allow CPU to train and compare to GPU?
 
 - Allow weights to be saved in files with sqlite3?
   - Pretrained optimum?
