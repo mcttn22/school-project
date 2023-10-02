@@ -42,3 +42,5 @@
 - Update README
 
 - Jupyter notebook for technical presentation?
+
+- Note that Cat dataset has 50 test images (fewer needed for testing) and MNIST has 10,000
