@@ -44,34 +44,6 @@ class NumberRecognitionFrame(tk.Frame):
                                      text="An Image model trained on " +
                                      "recognising numbers from images."
                                     )
-        self.number_recognition_theory_button: tk.Button = tk.Button(
-                                          master=self.menu_frame, 
-                                          width=26,
-                                          height=1,
-                                          font=tkf.Font(size=12),
-                                          text="View Number Recognition Theory")
-        self.model_theory_button: tk.Button = tk.Button(
-                                          master=self.menu_frame, 
-                                          width=15,
-                                          height=1,
-                                          font=tkf.Font(size=12),
-                                          text="View Model Theory")
-        if os.name == 'posix':
-            self.number_recognition_theory_button.configure(
-                                                    command=lambda: os.system(
-                                 r'open docs/models/image_recognition/number.pdf'
-                                 ))
-            self.model_theory_button.configure(command=lambda: os.system(
-                                r'open docs/models/utils/deep_model.pdf'
-                                ))
-        elif os.name == 'nt':
-            self.number_recognition_theory_button.configure(
-                                                    command=lambda: os.system(
-                                      r'docs\models\image_recognition\number.pdf'
-                                      ))
-            self.model_theory_button.configure(command=lambda: os.system(
-                                   r'.\docs\models\utils\deep_model.pdf'
-                                   ))
         self.train_button: tk.Button = tk.Button(master=self.menu_frame,
                                                  width=13, height=1,
                                                  font=tkf.Font(size=12),
@@ -113,9 +85,6 @@ class NumberRecognitionFrame(tk.Frame):
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=4)
         self.about_label.grid(row=1, column=0, columnspan=4, pady=(10, 0))
-        self.number_recognition_theory_button.grid(row=2, column=0,
-                                                   columnspan=4, pady=(10,0))
-        self.model_theory_button.grid(row=3, column=0, pady=(10, 0))
         self.train_button.grid(row=3, column=3, pady=(10, 0))
         self.hidden_layers_shape_label.grid(row=4, column=2,
                                             padx=(5,0), pady=(30,0))

@@ -35,42 +35,10 @@ class AboutFrame(tk.Frame):
            "such as recognising number images.\n" +
            "- Max Cotton"
                                   )
-        self.theory_button: tk.Button = tk.Button(master=self,
-                                                  width=13,
-                                                  height=1,
-                                                  font=tkf.Font(size=12),
-                                                  text="View Theory")
-        if os.name == 'posix':
-            self.theory_button.configure(command=lambda: os.system(
-                                                    r'open docs/models/ann.pdf'
-                                                    ))
-        elif os.name == 'nt':
-            self.theory_button.configure(command=lambda: os.system(
-                                                         r'.\docs\models\ann.pdf'
-                                                         ))
-        self.theory_label: tk.Label = tk.Label(master=self,
-                                               bg='white',
-                                               font=('Arial', 14),
-                                               text=self.load_theory(),
-                                               justify='left')
         
         # Pack widgets
         self.title_label.pack()
         self.about_label.pack(pady=(10,0))
-        self.theory_button.pack(pady=(10,0))
-        self.theory_label.pack(pady=(10,0))
         
         # Setup frame attributes
         self.pack_propagate(False)
-
-    def load_theory(self) -> str:
-        """Load contents of 'docs/about.txt' file.
-        
-        Returns:
-            contents of 'docs/about.txt' file as a single string.
-        Raises:
-            FileNotFoundError: if file does not exist.
-
-        """
-        with open(file=r'docs/about.txt', mode='r') as file:
-            return ''.join(file.readlines())
