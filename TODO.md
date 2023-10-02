@@ -4,6 +4,7 @@
   - Complete analysis interview
   - Update Matrice theory
   - Change multiply from * to x/. ?
+  - Submit to Teams
 
 - Add support for no hidden layers?
   - Remove perceptron + shallow models?
