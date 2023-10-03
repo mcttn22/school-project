@@ -17,6 +17,7 @@
   - Pretrained optimum?
 
 - Update GUI
+  - See ui design image on phone
   - Options over model parameters
     - Transfer functions
     - Network shape
@@ -30,7 +31,7 @@
   - Validation set
     - Monitors how well network is predicting, to see when network becomes overtrained
   - cifar-10 dataset
-  - Use sections of images for more inputs
+  - Maybe use sections of images for more inputs
   - Browse through more of results
     - Show images predicted correct
     - Show images predicted wrong
