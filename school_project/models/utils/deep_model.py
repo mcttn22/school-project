@@ -27,18 +27,15 @@ class FullyConnectedLayer():
 
         """
         # Setup layer attributes
+        self.input_neuron_count = input_neuron_count
+        self.output_neuron_count = output_neuron_count
         self.transfer_type = transfer_type
         self.input: cp.ndarray
         self.output: cp.ndarray
 
         # Setup weights and biases
-        cp.random.seed(2)  # Sets up pseudo random values for layer weight arrays
         self.weights: cp.ndarray
         self.biases: cp.ndarray
-        self.init_layer_values(
-                               input_neuron_count=input_neuron_count,
-                               output_neuron_count=output_neuron_count
-                               )
         self.learning_rate = learning_rate
 
     def __repr__(self) -> str:
@@ -52,11 +49,16 @@ class FullyConnectedLayer():
         return (f"Weights: {self.weights.tolist()}\n" +
                 f"Biases: {self.biases.tolist()}\n")
 
-    def init_layer_values(self, input_neuron_count: int, 
-                          output_neuron_count: int) -> None:
-        """Initialise weights to randdom values and biases to 0s"""
-        self.weights = cp.random.rand(output_neuron_count, input_neuron_count) - 0.5
-        self.biases = cp.zeros(shape=(output_neuron_count, 1))
+    def init_layer_values_random(self) -> None:
+        """Initialise weights to random values and biases to 0s"""
+        cp.random.seed(2)  # Sets up pseudo random values for layer weight arrays
+        self.weights = cp.random.rand(self.output_neuron_count, self.input_neuron_count) - 0.5
+        self.biases = cp.zeros(shape=(self.output_neuron_count, 1))
+
+    def init_layer_values_zeros(self) -> None:
+        """Initialise weights to 0s and biases to 0s"""
+        self.weights = cp.zeros(shape=(self.output_neuron_count, self.input_neuron_count))
+        self.biases = cp.zeros(shape=(self.output_neuron_count, 1))
 
     def back_propagation(self, dloss_doutput) -> cp.ndarray:
         """Adjust the weights and biases via gradient descent.
@@ -187,6 +189,10 @@ class AbstractDeepModel(ModelInterface):
                                     transfer_type='sigmoid'
                                     ))
 
+            # Initialise Layer values to random values
+            for layer in self.layers:
+                layer.init_layer_values_random()
+
         # Setup Perceptron Network
         else:
             self.layers.append(FullyConnectedLayer(
@@ -195,6 +201,10 @@ class AbstractDeepModel(ModelInterface):
                                     output_neuron_count=self.output_neuron_count,
                                     transfer_type='sigmoid'
                                     ))
+
+            # Initialise Layer values to zeros
+            for layer in self.layers:
+                layer.init_layer_values_zeros()
 
     def back_propagation(self, dloss_doutput) -> None:
         """Train each layer's weights and biases.
