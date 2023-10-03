@@ -60,13 +60,13 @@ for input on what they would like to see in my project, these were their respons
     \item Develop a Graphical User Interface
     \begin{itemize}
         \item Provide controls for parameters of models
-        \item Display and compare the results each models' predictions
+        \item Display and compare the results each model's predictions
     \end{itemize}
 \end{itemize}
 
 \subsection{Theory behind Artificial Neural Networks}
 
-From an abstract perspective, Artificial Neural Networks are inspired by how the human mind works, by consisting of layers 'neurons' all interconnected via 
+From an abstract perspective, Artificial Neural Networks are inspired by how the human mind works, by consisting of layers of 'neurons' all interconnected via 
 different links, each with their own strength. By adjusting these links, Artificial Neural Networks can be trained to take in an input and give its best 
 prediction as an output.
 \vspace{5mm}
@@ -80,9 +80,10 @@ prediction as an output.
 \end{figure}
 
 I have focused on Feed-Forward Artificial Neural Networks, where values are entered to the input layer and passed forwards repetitively to the next layer until 
-reaching the output layer. Within this, I have learnt two types of Feed-Forward Artificial Neural Networks: Perceptron Artifical Neural Networks, that contain no 
-hidden layers and are best at learning more linear patterns and Multi-Layer Perceptron Artifical Neural Networks, that contain at least one hidden layer, as a result 
+reaching the output layer. Within this, I have learnt two types of Feed-Forward Artificial Neural Networks: Perceptron Artificial Neural Networks, that contain no 
+hidden layers and are best at learning more linear patterns and Multi-Layer Perceptron Artificial Neural Networks, that contain at least one hidden layer, as a result 
 increasing the non-linearity in the Artificial Neural Network and allowing it to learn more complex / non-linear problems.
+\vspace{5mm}
 
 Multi-Layer Perceptron Artificial Neural Networks consist of:
 
@@ -96,7 +97,8 @@ To implement an Artificial Neural Network, matrices are used to represent the la
 order to use matrices for this, the following basic theory must be known about them:
 
 \begin{itemize}
-    \item When working with two matrices, the number of columns of the 1st matrix must equal the number of rows of the 2nd matrix. And the result will have the same 
+    \item When Adding two matrices, both matrices must have the same number of rows and columns.
+    \item When multiplying two matrices, the number of columns of the 1st matrix must equal the number of rows of the 2nd matrix. And the result will have the same 
           number of rows as the 1st matrix, and the same number of columns as the 2nd matrix. This is important, as the output of one layer must be formatted correctly 
           to be used with the next layer.
     \item In order to multiply matrices, I take the 'dot product' of the matrices, which multiplies the row of one matrice with the column of the other, by multiplying 
@@ -106,12 +108,12 @@ order to use matrices for this, the following basic theory must be known about t
           rank 2)
 \end{itemize}
 
-I have focuesd on just using Fully-Connected layers, that will take in input values and apply the following calculations to produce an output of the layer:
+I have focused on just using Fully-Connected layers, that will take in input values and apply the following calculations to produce an output of the layer:
 
 \begin{itemize}
     \item An Activation function
     \begin{itemize}
-        \item This calculates the dot product of the input matix with a weight matrix, then sums the result with a bias matix
+        \item This calculates the dot product of the input matrix with a weight matrix, then sums the result with a bias matrix
     \end{itemize}
     \item A Transfer function
     \begin{itemize}
@@ -142,13 +144,14 @@ To train an Artificial Neural Network, the following processes will be carried o
               values it should have predicted. With this, I can calculate the Loss value of the prediction (how wrong the prediction is from the actual value).
         \item I then move back through the network and update the weights and biases via Gradient Descent:
         \begin{itemize}
-            \item Gradient Descent aims to reduce the Loss value of the prediction to a minimum, by subtracting the rate of change of Loss with respect to the weights
+            \item Gradient Descent aims to reduce the Loss value of the prediction to a minimum, by subtracting the rate of change of Loss with respect to the weights/
                   biases, multiplied with a learning rate, from the weights/biases.
             \item To calculate the rate of change of Loss with respect to the weights/biases, you must use the following calculus methods:
             \begin{itemize}
                 \item Partial Differentiation, in order to differentiate the multi-variable functions, by taking respect to one variable and treating the rest as 
                       constants.
-                \item The Chain Rule, where for $y = f(u)$ and $u = g(x)$, $\frac{\partial{y}}{\partial{x}} = \frac{\partial{y}}{\partial{u}} * \frac{\partial{u}}{\partial{x}}$
+                \item The Chain Rule, where for $y = f(u)$ and $u = g(x)$, 
+                      $\frac{\partial{y}}{\partial{x}} = \frac{\partial{y}}{\partial{u}} * \frac{\partial{u}}{\partial{x}}$
                 \item For a matrice of $f(x)$ values, the matrice of $\frac{\partial{f(x)}}{\partial{x}}$ values is known as the Jacobian matrix
             \end{itemize}
             \item This repetitive process will continue to reduce the Loss to a minimum, if the learning rate is set to an appropriate value
@@ -171,7 +174,7 @@ To train an Artificial Neural Network, the following processes will be carried o
 \subsection{Theory Behind Deep Artificial Neural Networks}
 \vspace{5mm}
 
-\subsubsection{Setup:}
+\subsubsection{Setup}
 
 \begin{figure}[h!]
 \centering
@@ -181,10 +184,10 @@ To train an Artificial Neural Network, the following processes will be carried o
 
 \begin{itemize}
     \item Where a layer takes the previous layer's output as its input X
-    \item Then it applies an Activation function to X to obtain Z, by taking the dot product of X with a weight matrix W, then sums the result with a bias matix B. At 
+    \item Then it applies an Activation function to X to obtain Z, by taking the dot product of X with a weight matrix W, then sums the result with a bias matrix B. At 
           first the weights are intialised to random values and the biases are set to zeros.
     \begin{itemize}
-        \item $Z = W . X + B$
+        \item $Z = W * X + B$
     \end{itemize}
     \item Then it applies a Transfer function to Z to obtain the layer's output
     \begin{itemize}
@@ -193,8 +196,8 @@ To train an Artificial Neural Network, the following processes will be carried o
         \begin{itemize}
             \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
         \end{itemize}
-        \item However, for the input layer and the hidden layers, another transfer function known as ReLu (Rectified Linear Unit) can be better suited as it produces a 
-              larger value of $\frac{\partial{L}}{\partial{W}}$ for Gradient Descent than Sigmoid, so updates at a quicker rate.
+        \item However, for the input layer and the hidden layers, another transfer function known as ReLu (Rectified Linear Unit) can be better suited as it produces 
+              largers values of $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ for Gradient Descent than Sigmoid, so updates at a quicker rate.
         \begin{itemize}
             \item Where $relu(Z) = max(0, Z)$
         \end{itemize}
@@ -211,7 +214,7 @@ To train an Artificial Neural Network, the following processes will be carried o
 
 \begin{itemize}
     \item First the Loss value L is calculated using the following Log-Loss function, which calculates the average difference between A and the value it should have 
-          predicted Y. The the average is found by summing the result of the Loss function for each value in the matrix A, then dividing by the number of predictions m, 
+          predicted Y. Then the average is found by summing the result of the Loss function for each value in the matrix A, then dividing by the number of predictions m, 
           resulting in a Loss value to show how well the network is performing.
     \begin{itemize}
         \item Where $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$ and "log()" is the natural logarithm
@@ -234,14 +237,14 @@ To train an Artificial Neural Network, the following processes will be carried o
         \item $\frac{\partial{L}}{\partial{A2}} = \frac{\partial{L}}{\partial{A3}} * \frac{\partial{A3}}{\partial{Z3}} * \frac{\partial{Z3}}{\partial{A2}}$
               \vspace{1mm}
               \newline
-              By using function 1, $\frac{\partial{Z3}}{\partial{A2}} = W3$
+              By using function 1, where A2 is X for the 3rd layer, $\frac{\partial{Z3}}{\partial{A2}} = W3$
               \vspace{1mm}
               \newline
               $=> \frac{\partial{L}}{\partial{A2}} =  \frac{\partial{L}}{\partial{A3}} * \frac{\partial{A3}}{\partial{Z3}} * W3$
         \item $\frac{\partial{L}}{\partial{W2}} = \frac{\partial{L}}{\partial{A2}} * \frac{\partial{A2}}{\partial{Z2}} * \frac{\partial{Z2}}{\partial{W2}}$
               \vspace{1mm}
               \newline
-              By using function 1, $\frac{\partial{Z2}}{\partial{W2}} = A1$
+              By using function 1, where A1 is x for the 2nd layer, $\frac{\partial{Z2}}{\partial{W2}} = A1$
               \vspace{1mm}
               \newline
               $=> \frac{\partial{L}}{\partial{W2}} = \frac{\partial{L}}{\partial{A2}} * \frac{\partial{A2}}{\partial{Z2}} * A1$
@@ -263,18 +266,18 @@ To train an Artificial Neural Network, the following processes will be carried o
     \item At the start of backpropagation, the rate of change of loss with respect to the output layers output has no previous layer's caluculations, so instead it can 
           be found with the derivative of the Log-Loss function, as shown in the following:
     \begin{itemize}
-        \item Using function 3, $\frac{\partial{L}}{\partial{A}} = (-\frac{1}{m})(\frac{Y-A}{A * (1-A)})$
+        \item Using function 4, $\frac{\partial{L}}{\partial{A}} = (-\frac{1}{m})(\frac{Y-A}{A * (1-A)})$
     \end{itemize}
 \end{itemize}
 
-\subsection{Theory behind training the Neural Networks}
+\subsection{Theory behind training the Artificial Neural Networks}
 
 Training an Artificial Neural Network's weights and biases to predict on a dataset, will create a trained model for that dataset, so that it can predict on future 
 images inputted. However, training Artificial Neural Networks can involve some problems such as Overfitting, where the trained model learns the patterns of the 
 training dataset too well, causing worse prediction on a different test dataset. This can occur when the training dataset does not cover enough situations of inputs 
 and the desired outputs (by being too small for example), if the model is trained for too many epochs on the poor dataset and having too many layers in the Neural 
 Network. Another problem is Underfitting, where the model has not learnt the patterns of the training dataset well enough, often when it has been trained for too few 
-epochs, or when the Neural Network is simple (too linear).
+epochs, or when the Neural Network is too simple (too linear).
 
 \subsubsection{Datasets}
 \vspace{5mm}
@@ -282,14 +285,14 @@ epochs, or when the Neural Network is simple (too linear).
 \begin{itemize}
     \item MNIST dataset
     \begin{itemize}
-        \item The MNIST dataset is a famouse dataset of images of handwritten digits from zero to ten, and is commonly used to test the performance of an Artificial 
+        \item The MNIST dataset is a famouse dataset of images of handwritten digits from zero to ten and is commonly used to test the performance of an Artificial 
               Neural Network.
         \item The dataset consists of 60,000 input images, made up from 28x28 pixels and each pixel has an RGB value from 0 to 255
         \item To format the images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrice of RGB values are 'flattened' into a 
-              1 dimensional array of values, where each element is also divided by 255 (the max RGB value) to a number between 0 and 1, to standardize the dataset.
+              1 dimensional matrix of values, where each element is also divided by 255 (the max RGB value) to a number between 0 and 1, to standardize the dataset.
         \item The output dataset is also loaded, where each output for each image is an array, where the index represents the number of the image, by having a 1 in the 
               index that matches the number represented and zeros for all other indexes.
-        \item To create a trained Artifical Neural Network model on this dataset, the model will require 10 output neurons (one for each digit), then by using the 
+        \item To create a trained Artificial Neural Network model on this dataset, the model will require 10 output neurons (one for each digit), then by using the 
               Sigmoid Transfer function to output a number between one and zero to each neuron, whichever neuron has the highest value is predicted. This is multi-class 
               classification, where the model must predict one of 10 classes (in this case, each class is one of the digits from zero to ten).
     \end{itemize}
@@ -300,7 +303,7 @@ epochs, or when the Neural Network is simple (too linear).
         \item To format the images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrice of RGB values are 'flattened' into a 
               1 dimensional array of values, where each element is also divided by 255 (the max RGB value) to a number between 0 and 1, to standardize the dataset.
         \item The output dataset is also loaded, and is reshaped into a 1 dimensional array of 1s and 0s, to store the output of each image (1 for cat, 0 for non cat)
-        \item To create a trained Artifical Neural Network model on this dataset, the model will require only 1 output neuron, then by using the Sigmoid Transfer 
+        \item To create a trained Artificial Neural Network model on this dataset, the model will require only 1 output neuron, then by using the Sigmoid Transfer 
               function to output a number between one and zero for the neuron, if the neuron's value is closer to 1 it predicts cat, otherwise it predicts not a cat. 
               This is binary classification, where the model must use logistic regression to predict whether it is a cat or not a cat.
     \end{itemize}
