@@ -1,8 +1,8 @@
 [![python](https://img.shields.io/badge/Python-3-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 
-# A-level Computer Science NEA Programming Project - Image Recognition from scratch
+# A-level Computer Science NEA Programming Project
 
-This project is an investigation into how Artificial Neural Networks (ANNs) work and their applications in Image Recognition, by documenting all theory behind the project and developing applications of the theory, that allow for experimentation via a GUI. The ANNs are created without the use of any 3rd party Machine Learning Libraries and I currently have been able to achieve a prediction accuracy of 95% on the MNIST dataset.
+This project is an investigation into how Artificial Neural Networks (ANNs) work and their applications in Image Recognition, by documenting all theory behind the project and developing applications of the theory, that allow for experimentation via a GUI. The ANNs are created without the use of any 3rd party Machine Learning Libraries and I currently have been able to achieve a prediction accuracy of TODO% on the MNIST dataset. The report for this project is also included in this repository.
 
 ## Installation
 
@@ -50,6 +50,9 @@ This project is an investigation into how Artificial Neural Networks (ANNs) work
      python3 setup.py install
      ```
 
+*Note: In order to use an Nvidia GPU for training the networks, the latest Nvdia drivers must be installed and the CUDA Toolkit must be installed from 
+<a href="https://developer.nvidia.com/cuda-downloads">here</a>.*
+
 ## Usage
 
 Run with:
@@ -84,7 +87,7 @@ Run Tests with:
   python3 -m unittest discover ./school_project/test/
   ```
 
-Compile PDFs with:
+Compile Project Report PDF with:
 ```
 make all
 ```
