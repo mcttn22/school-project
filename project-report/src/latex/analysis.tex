@@ -263,7 +263,7 @@ To train an Artificial Neural Network, the following processes will be carried o
         \item Where by using function 2, $\frac{\partial{A_{relu}}}{\partial{Z}} = 1$ when $Z >= 0$ otherwise $\frac{\partial{A_{relu}}}{\partial{Z}} = 0$
         \item Where by using function 3, $\frac{\partial{A_{sigmoid}}}{\partial{Z}} = A * (1 - A)$
     \end{itemize}
-    \item At the start of backpropagation, the rate of change of loss with respect to the output layers output has no previous layer's caluculations, so instead it can 
+    \item At the start of backpropagation, the rate of change of loss with respect to the output layer's output has no previous layer's caluculations, so instead it can 
           be found with the derivative of the Log-Loss function, as shown in the following:
     \begin{itemize}
         \item Using function 4, $\frac{\partial{L}}{\partial{A}} = (-\frac{1}{m})(\frac{Y-A}{A * (1-A)})$
