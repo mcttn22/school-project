@@ -51,7 +51,7 @@ class FullyConnectedLayer():
 
     def init_layer_values_random(self) -> None:
         """Initialise weights to random values and biases to 0s"""
-        np.random.seed(2)  # Sets up pseudo random values for layer weight arrays
+        np.random.seed(1)  # Sets up pseudo random values for layer weight arrays
         self.weights = np.random.rand(self.output_neuron_count, self.input_neuron_count) - 0.5
         self.biases = np.zeros(shape=(self.output_neuron_count, 1))
 
