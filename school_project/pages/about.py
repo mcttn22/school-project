@@ -1,7 +1,4 @@
-import os
-
 import tkinter as tk
-import tkinter.font as tkf
 
 class AboutFrame(tk.Frame):
     """Frame for about page."""
