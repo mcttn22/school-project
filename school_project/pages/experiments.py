@@ -1,4 +1,3 @@
-import os
 import threading
 
 from matplotlib.figure import Figure
@@ -7,7 +6,7 @@ import numpy as np
 import tkinter as tk
 import tkinter.font as tkf
 
-from school_project.models.xor import DeepModel
+from school_project.models.cpu.xor import Model as CPUModel
             
 class ExperimentsFrame(tk.Frame):
     """Frame for experiments page."""
@@ -28,7 +27,8 @@ class ExperimentsFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup experiments frame variables
-        self.deep_model: DeepModel = DeepModel()
+        self.model = None
+        self.use_gpu: bool = False
         
         # Setup widgets
         self.menu_frame: tk.Frame = tk.Frame(master=self, bg='white')
@@ -49,6 +49,13 @@ class ExperimentsFrame(tk.Frame):
                                                  font=tkf.Font(size=12),
                                                  text="Train Model",
                                                  command=self.start_training)
+        self.use_gpu_check_button_var: tk.BooleanVar = tk.BooleanVar()
+        self.use_gpu_check_button: tk.Checkbutton = tk.Checkbutton(
+                                                       master=self.menu_frame,
+                                                       width=13, height=1,
+                                                       font=tkf.Font(size=12),
+                                                       text="Use GPU",
+                                                       variable=self.use_gpu_check_button_var)
         self.learning_rate_scale: tk.Scale = tk.Scale(master=self.menu_frame,
                                                       bg='white',
                                                       orient='horizontal',
@@ -57,7 +64,7 @@ class ExperimentsFrame(tk.Frame):
                                                       from_=0,
                                                       to=1,
                                                       resolution=0.01)
-        self.learning_rate_scale.set(value=self.deep_model.learning_rate)
+        self.learning_rate_scale.set(value=0.1)
         self.hidden_layers_shape_label: tk.Label = tk.Label(master=self.menu_frame,
                                                             bg='white',
                                                             font=('Arial', 12),
@@ -65,7 +72,7 @@ class ExperimentsFrame(tk.Frame):
                                                                   "hidden layer, separated by commas:")
         self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self.menu_frame)
         self.hidden_layers_shape_entry.insert(0, ",".join(
-                            f"{neuron_count}" for neuron_count in self.deep_model.hidden_layers_shape
+                            f"{neuron_count}" for neuron_count in [100, 100]
                             ))
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
@@ -83,14 +90,15 @@ class ExperimentsFrame(tk.Frame):
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=4)
         self.about_label.grid(row=1, column=0, columnspan=4, pady=(10,0))
-        self.train_button.grid(row=2, column=3, pady=(10,0))
-        self.hidden_layers_shape_label.grid(row=3, column=2, padx=(5,0),
-                                           pady=(30,0))
-        self.learning_rate_scale.grid(row=4, column=1, 
+        self.train_button.grid(row=3, column=0, pady=(10,0))
+        self.use_gpu_check_button.grid(row=3, column=3, pady=(10, 0))
+        self.hidden_layers_shape_label.grid(row=4, column=2, 
+                                            padx=(5,0), pady=(30,0))
+        self.learning_rate_scale.grid(row=5, column=1, 
                                       padx=(0,5))
-        self.hidden_layers_shape_entry.grid(row=4, column=2, 
+        self.hidden_layers_shape_entry.grid(row=5, column=2, 
                                             padx=(5,0))
-        self.model_status_label.grid(row=5, column=0, columnspan=4,
+        self.model_status_label.grid(row=6, column=0, columnspan=4,
                                      pady=(10,0))
         self.menu_frame.pack()
         self.results_frame.pack(pady=(50,0))
@@ -115,14 +123,14 @@ class ExperimentsFrame(tk.Frame):
             # Output example prediction results
             results: str = (
                       f"Prediction Accuracy: " +
-                      f"{round(self.deep_model.test_prediction_accuracy)}%\n" +
+                      f"{round(self.model.test_prediction_accuracy)}%\n" +
                       f"Network Shape: " +
-                      f"{','.join(self.deep_model.layers_shape)}\n"
+                      f"{','.join(self.model.layers_shape)}\n"
                       )
-            for i in range(self.deep_model.test_inputs.shape[1]):
-                results += f"{self.deep_model.test_inputs[0][i]},"
-                results += f"{self.deep_model.test_inputs[1][i]} = "
-                if np.squeeze(self.deep_model.test_prediction)[i] >= 0.5:
+            for i in range(self.model.test_inputs.shape[1]):
+                results += f"{self.model.test_inputs[0][i]},"
+                results += f"{self.model.test_inputs[1][i]} = "
+                if np.squeeze(self.model.test_prediction)[i] >= 0.5:
                     results += "1\n"
                 else:
                     results += "0\n"
@@ -149,10 +157,10 @@ class ExperimentsFrame(tk.Frame):
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
             graph.set_title(f"Learning rate: " +
-                            f"{self.deep_model.learning_rate}")
+                            f"{self.model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
-            graph.plot(np.squeeze(self.deep_model.train_losses))
+            graph.plot(np.squeeze(self.model.train_losses))
             self.loss_canvas.get_tk_widget().pack(side="left")
             
             # Start predicting thread
@@ -161,7 +169,7 @@ class ExperimentsFrame(tk.Frame):
                             text="Using trained weights and biases to predict"
                             )
             predict_thread: threading.Thread = threading.Thread(
-                                             target=self.deep_model.predict
+                                             target=self.model.predict
                                              )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
@@ -172,12 +180,33 @@ class ExperimentsFrame(tk.Frame):
         """Start training model in new thread."""
         self.train_button['state'] = 'disabled'
 
+        self.use_gpu = self.use_gpu_check_button_var.get()
+
         # Validate hidden layers shape input
         hidden_layers_shape_input = [layer for layer in self.hidden_layers_shape_entry.get().replace(' ', '').split(',') if layer != '']
         for layer in hidden_layers_shape_input:
             if not layer.isdigit():
                 self.model_status_label.configure(
                                         text="Invalid hidden layers shape",
+                                        fg='red'
+                                        )
+                self.train_button['state'] = 'normal'
+                return
+
+        if not self.use_gpu:
+            self.model = CPUModel(hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                                  learning_rate=self.learning_rate_scale.get())
+
+        else:
+            try:
+            
+                from school_project.models.gpu.xor import Model as GPUModel
+
+                self.model = GPUModel(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                                    learning_rate = self.learning_rate_scale.get())
+            except ImportError as ie:
+                self.model_status_label.configure(
+                                        text="Failed to initialise GPU",
                                         fg='red'
                                         )
                 self.train_button['state'] = 'normal'
@@ -191,16 +220,12 @@ class ExperimentsFrame(tk.Frame):
         self.results_label.pack_forget()
         
         # Start training thread
-        self.deep_model.learning_rate = self.learning_rate_scale.get()
-        self.deep_model.hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input]
-
-        self.deep_model.init_model_values()
         self.model_status_label.configure(
                                         text="Training weights and biases...",
                                         fg='red'
                                         )
         train_thread: threading.Thread = threading.Thread(
-                                              target=self.deep_model.train,
+                                              target=self.model.train,
                                               args=(1_200,)
                                               )
         train_thread.start()

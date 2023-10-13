@@ -1,14 +1,12 @@
-import os
 import threading
 
-import cupy as cp
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import tkinter as tk
 import tkinter.font as tkf
 
-from school_project.models.image_recognition.number import DeepModel
+from school_project.models.cpu.image_recognition.number import Model as CPUModel
 
 class NumberRecognitionFrame(tk.Frame):
     """Frame for Number Recognition page."""
@@ -29,7 +27,8 @@ class NumberRecognitionFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup image recognition frame variables
-        self.deep_model: DeepModel = DeepModel()
+        self.model = None
+        self.use_gpu: bool = False
         
         # Setup widgets
         self.menu_frame: tk.Frame = tk.Frame(master=self, bg='white')
@@ -49,6 +48,13 @@ class NumberRecognitionFrame(tk.Frame):
                                                  font=tkf.Font(size=12),
                                                  text="Train Model",
                                                  command=self.start_training)
+        self.use_gpu_check_button_var: tk.BooleanVar = tk.BooleanVar()
+        self.use_gpu_check_button: tk.Checkbutton = tk.Checkbutton(
+                                                       master=self.menu_frame,
+                                                       width=13, height=1,
+                                                       font=tkf.Font(size=12),
+                                                       text="Use GPU",
+                                                       variable=self.use_gpu_check_button_var)
         self.learning_rate_scale: tk.Scale = tk.Scale(master=self.menu_frame,
                                                       bg='white',
                                                       orient='horizontal',
@@ -57,7 +63,7 @@ class NumberRecognitionFrame(tk.Frame):
                                                       from_=0,
                                                       to=1,
                                                       resolution=0.01)
-        self.learning_rate_scale.set(value=self.deep_model.learning_rate)
+        self.learning_rate_scale.set(value=0.1)
         self.hidden_layers_shape_label: tk.Label = tk.Label(master=self.menu_frame,
                                                             bg='white',
                                                             font=('Arial', 12),
@@ -65,7 +71,7 @@ class NumberRecognitionFrame(tk.Frame):
                                                                   "hidden layer, separated by commas:")
         self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self.menu_frame)
         self.hidden_layers_shape_entry.insert(0, ",".join(
-                            f"{neuron_count}" for neuron_count in self.deep_model.hidden_layers_shape
+                            f"{neuron_count}" for neuron_count in [1000, 1000]
                             ))
         self.model_status_label: tk.Label = tk.Label(master=self.menu_frame,
                                                      bg='white',
@@ -85,7 +91,8 @@ class NumberRecognitionFrame(tk.Frame):
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=4)
         self.about_label.grid(row=1, column=0, columnspan=4, pady=(10, 0))
-        self.train_button.grid(row=3, column=3, pady=(10, 0))
+        self.train_button.grid(row=3, column=0, pady=(10, 0))
+        self.use_gpu_check_button.grid(row=3, column=3, pady=(10, 0))
         self.hidden_layers_shape_label.grid(row=4, column=2,
                                             padx=(5,0), pady=(30,0))
         self.learning_rate_scale.grid(row=5, column=1)
@@ -110,16 +117,16 @@ class NumberRecognitionFrame(tk.Frame):
             TypeError: if predict_thread is not of type threading.Thread.
         
         """
-        if not predict_thread.is_alive():
-            
+        if not predict_thread.is_alive() and not self.use_gpu:
+
             # Output example prediction results
-            test_prediction = cp.squeeze(self.deep_model.test_prediction).T.tolist()
-            test_inputs = cp.asnumpy(cp.squeeze(self.deep_model.test_inputs)).T
+            test_prediction = np.squeeze(self.model.test_prediction).T.tolist()
+            test_inputs = np.squeeze(self.model.test_inputs).T
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(cp.asnumpy(self.deep_model.test_prediction).round() - cp.asnumpy(self.deep_model.test_outputs))) * 100)}%\n" +
+             f"{round(100 - np.mean(np.abs(self.model.test_prediction.round() - self.model.test_outputs)) * 100)}%\n" +
              f"Network Shape: " +
-             f"{','.join(self.deep_model.layers_shape)}\n"
+             f"{','.join(self.model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))
@@ -132,6 +139,32 @@ class NumberRecognitionFrame(tk.Frame):
             self.image_canvas.get_tk_widget().pack(side='right')
             
             self.train_button['state'] = 'normal'
+
+        elif not predict_thread.is_alive() and self.use_gpu:
+
+            import cupy as cp
+            
+            # Output example prediction results
+            test_prediction = cp.squeeze(self.model.test_prediction).T.tolist()
+            test_inputs = cp.asnumpy(cp.squeeze(self.model.test_inputs)).T
+            self.image_figure.suptitle(
+             "Prediction Correctness: " +
+             f"{round(100 - np.mean(np.abs(cp.asnumpy(self.model.test_prediction).round() - cp.asnumpy(self.model.test_outputs))) * 100)}%\n" +
+             f"Network Shape: " +
+             f"{','.join(self.model.layers_shape)}\n"
+             )
+            image1: Figure.axes = self.image_figure.add_subplot(121)
+            image1.set_title(test_prediction[0].index(max(test_prediction[0])))
+            image1.imshow(test_inputs[0].reshape((28,28)))
+
+            image2: Figure.axes = self.image_figure.add_subplot(122)
+            image2.set_title(test_prediction[14].index(max(test_prediction[14])))
+            image2.imshow(test_inputs[14].reshape((28,28)))
+
+            self.image_canvas.get_tk_widget().pack(side='right')
+            
+            self.train_button['state'] = 'normal'
+
         else:
             self.after(1_000, self.manage_predicting, predict_thread)
 
@@ -151,10 +184,10 @@ class NumberRecognitionFrame(tk.Frame):
             # Plot losses of model training
             graph: Figure.axes = self.loss_figure.add_subplot(111)
             graph.set_title("Learning rate: " +
-                            f"{self.deep_model.learning_rate}")
+                            f"{self.model.learning_rate}")
             graph.set_xlabel("Epochs")
             graph.set_ylabel("Loss Value")
-            graph.plot(np.squeeze(self.deep_model.train_losses))
+            graph.plot(np.squeeze(self.model.train_losses))
             self.loss_canvas.get_tk_widget().pack(side='left')
             
             # Start predicting thread
@@ -163,7 +196,7 @@ class NumberRecognitionFrame(tk.Frame):
                              fg='green'
                              )
             predict_thread: threading.Thread = threading.Thread(
-                                          target=self.deep_model.predict
+                                          target=self.model.predict
                                           )
             predict_thread.start()
             self.manage_predicting(predict_thread=predict_thread)
@@ -174,12 +207,33 @@ class NumberRecognitionFrame(tk.Frame):
         """Start training model in new thread."""
         self.train_button['state'] = 'disabled'
 
+        self.use_gpu = self.use_gpu_check_button_var.get()
+
         # Validate hidden layers shape input
         hidden_layers_shape_input = [layer for layer in self.hidden_layers_shape_entry.get().replace(' ', '').split(',') if layer != '']
         for layer in hidden_layers_shape_input:
             if not layer.isdigit():
                 self.model_status_label.configure(
                                         text="Invalid hidden layers shape",
+                                        fg='red'
+                                        )
+                self.train_button['state'] = 'normal'
+                return
+
+        if not self.use_gpu:
+            self.model = CPUModel(hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                                  learning_rate=self.learning_rate_scale.get())
+
+        else:
+            try:
+            
+                from school_project.models.gpu.image_recognition.number import Model as GPUModel
+
+                self.model = GPUModel(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                                    learning_rate = self.learning_rate_scale.get())
+            except ImportError as ie:
+                self.model_status_label.configure(
+                                        text="Failed to initialise GPU",
                                         fg='red'
                                         )
                 self.train_button['state'] = 'normal'
@@ -196,14 +250,10 @@ class NumberRecognitionFrame(tk.Frame):
                                               master=self.results_frame)
         
         # Start training thread
-        self.deep_model.learning_rate = self.learning_rate_scale.get()
-        self.deep_model.hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input]
-
-        self.deep_model.init_model_values()
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
         train_thread: threading.Thread = threading.Thread(
-                                           target=self.deep_model.train,
+                                           target=self.model.train,
                                            args=(150,)
                                            )
         train_thread.start()
