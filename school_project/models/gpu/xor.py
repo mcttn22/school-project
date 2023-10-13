@@ -5,7 +5,8 @@ from school_project.models.gpu.utils.model import AbstractModel
 class Model(AbstractModel):
     """ANN model that trains to predict the output of a XOR gate with two 
        inputs."""
-    def __init__(self, hidden_layers_shape: list[int], learning_rate: float) -> None:
+    def __init__(self, hidden_layers_shape: list[int],
+                 learning_rate: float) -> None:
         """Initialise Model's Base class.
 
         Args:

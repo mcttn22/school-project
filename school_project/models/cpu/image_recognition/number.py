@@ -9,7 +9,8 @@ from school_project.models.cpu.utils.model import (
 
 class Model(AbstractModel):
     """ANN model that trains to predict Numbers from images."""
-    def __init__(self, hidden_layers_shape: list[int], learning_rate: float) -> None:
+    def __init__(self, hidden_layers_shape: list[int],
+                 learning_rate: float) -> None:
         """Initialise Model's Base class.
 
         Args:
@@ -18,7 +19,8 @@ class Model(AbstractModel):
             learning_rate (float): the learning rate of the model.
         
         """
-        super().__init__(hidden_layers_shape=hidden_layers_shape, learning_rate=learning_rate)
+        super().__init__(hidden_layers_shape=hidden_layers_shape,
+                         learning_rate=learning_rate)
     
     def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
                                      np.ndarray, np.ndarray]:
