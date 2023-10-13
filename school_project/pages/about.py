@@ -19,19 +19,20 @@ class AboutFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup widgets
-        self.title_label: tk.Label = tk.Label(master=self, bg='white',
-                                             font=('Arial', 20), text="About")
+        self.title_label: tk.Label = tk.Label(
+                      master=self, bg='white',
+                      font=('Arial', 20), 
+                      text="A-level Computer Science NEA Programming Project"
+                      )
         self.about_label: tk.Label = tk.Label(
            master=self,
            bg='white',
            font=('Arial', 14),
-           text="A-level Computer Science NEA Programming Project, " +
-           "on developing Image Recognition from scratch " +
-           "with Artificial Neural Networks,\n" +
-           "then applying the models to problems, " +
-           "such as recognising number images.\n" +
-           "- Max Cotton"
-                                  )
+           text="An investigation into how Artificial Neural Networks work, " +
+           "the effects of their hyper-parameters and their applications " +
+           "in Image Recognition.\n\n" +
+           " - Max Cotton"
+           )
         
         # Pack widgets
         self.title_label.pack()
