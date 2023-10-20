@@ -1,0 +1,17 @@
+{
+    "mnist": {
+        "maxLearningRate": 0.1,
+        "hiddenLayersShape": [1000, 1000],
+        "epochCount": 150
+    },
+    "cat": {
+        "maxLearningRate": 0.3,
+        "hiddenLayersShape": [100, 100],
+        "epochCount": 3500
+    },
+    "xor": {
+        "maxLearningRate": 0.1,
+        "hiddenLayersShape": [100, 100],
+        "epochCount": 1200
+    }
+}
