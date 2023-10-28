@@ -5,7 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import tkinter as tk
 
-class TestMNISTFrame(tk.Frame):  # TODO: Check results
+class TestMNISTFrame(tk.Frame):
     """Frame for Testing MNIST page."""
     def __init__(self, root: tk.Tk, width: int,
                  height: int, use_gpu: bool, model: object) -> None:
@@ -132,11 +132,11 @@ class TestCatRecognitionFrame(tk.Frame):
                                                     )
         
         # Pack widgets
-        self.model_status_label.pack()
+        self.model_status_label.pack(pady=(30,0))
 
         # Start test thread
         self.model_status_label.configure(
-                        text="Testing trained model",
+                        text="Testing trained model...",
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(
@@ -199,7 +199,7 @@ class TestCatRecognitionFrame(tk.Frame):
                     )
             self.image_canvas.get_tk_widget().pack()
 
-class TestXORFrame(tk.Frame):  # TODO: Check results
+class TestXORFrame(tk.Frame):
     """Frame for Testing XOR page."""
     def __init__(self, root: tk.Tk, width: int, height: int, model: object) -> None:
         """Initialise test XOR frame widgets.
@@ -230,11 +230,11 @@ class TestXORFrame(tk.Frame):  # TODO: Check results
                                                 font=('Arial', 20))
         
         # Pack widgets
-        self.model_status_label.pack()
+        self.model_status_label.pack(pady=(30,0))
 
         # Start test thread
         self.model_status_label.configure(
-                        text="Testing trained model",
+                        text="Testing trained model...",
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(

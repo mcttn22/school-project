@@ -68,12 +68,26 @@ class SchoolProjectFrame(tk.Frame):
                                             width=self.WIDTH, 
                                             height=self.HEIGHT,
                                             bg='white')
+        self.title_label: tk.Frame = tk.Label(
+                       master=self.home_frame, bg='white',
+                       font=('Arial', 20), 
+                       text="A-level Computer Science NEA Programming Project"
+                       )
+        self.about_label: tk.Label = tk.Label(
+           master=self.home_frame,
+           bg='white',
+           font=('Arial', 14),
+           text="An investigation into how Artificial Neural Networks work, " +
+           "the effects of their hyper-parameters and their applications " +
+           "in Image Recognition.\n\n" +
+           " - Max Cotton"
+           )
         self.create_model_menu_label: tk.Label = tk.Label(
                                            master=self.home_frame,
                                            bg='white',
                                            font=('Arial', 14),
-                                           text="Create New Model for one " +
-                                            "one of the following datasets."
+                                           text="Create a new model for one " +
+                                            "of the following datasets:"
                                             )
         self.create_model_dataset_option_menu_var: tk.StringVar = tk.StringVar(
                                                        master=self.home_frame,
@@ -97,7 +111,7 @@ class SchoolProjectFrame(tk.Frame):
                                            master=self.home_frame,
                                            bg='white',
                                            font=('Arial', 14),
-                                           text="Load Pretrained Models:"
+                                           text="Load pre-trained Models:"
                                             )
         self.load_model_option_menu_value: tk.StringVar = tk.StringVar(
                                                        master=self.home_frame
@@ -116,12 +130,14 @@ class SchoolProjectFrame(tk.Frame):
               )
         
         # Grid home frame widgets
-        self.create_model_menu_label.grid(row=0, column=0)
-        self.create_model_dataset_option_menu.grid(row=1, column=0)
-        self.create_model_button.grid(row=2, column=0)
-        self.load_model_menu_label.grid(row=0, column=1, padx=(20,0))
-        self.load_model_option_menu.grid(row=1, column=1, padx=(20,0))
-        self.load_model_button.grid(row=2, column=1, padx=(20,0))
+        self.title_label.grid(row=0, column=0, columnspan=2, pady=(10,0))
+        self.about_label.grid(row=1, column=0, columnspan=2, pady=(10,50))
+        self.create_model_menu_label.grid(row=2, column=0)
+        self.create_model_dataset_option_menu.grid(row=3, column=0, pady=10)
+        self.create_model_button.grid(row=4, column=0)
+        self.load_model_menu_label.grid(row=2, column=1, padx=(20,0))
+        self.load_model_option_menu.grid(row=3, column=1, padx=(20,0), pady=10)
+        self.load_model_button.grid(row=4, column=1, padx=(20,0))
 
         self.home_frame.pack()
         
@@ -190,7 +206,7 @@ class SchoolProjectFrame(tk.Frame):
             self.training_frame.training_progress_label.pack_forget()
             self.training_frame.plot_losses()
             self.stop_training_button.pack_forget()
-            self.test_button.pack()
+            self.test_button.pack(pady=(30,0))
         else:
             self.training_frame.training_progress_label.configure(text=self.model.training_progress)
             self.after(100, self.manage_training, train_thread)

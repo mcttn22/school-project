@@ -38,6 +38,12 @@ class HyperParameterFrame(tk.Frame):
                                               bg='white',
                                               font=('Arial', 20),
                                               text=dataset)
+        self.about_label: tk.Label = tk.Label(
+                             master=self,
+                             bg='white',
+                             font=('Arial', 14),
+                             text=self.default_hyper_parameters['description']
+                             )
         self.learning_rate_scale: tk.Scale = tk.Scale(master=self,
                                                       bg='white',
                                                       orient='horizontal',
@@ -89,20 +95,21 @@ class HyperParameterFrame(tk.Frame):
         
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=3)
-        self.learning_rate_scale.grid(row=1, column=0, pady=(50,0))
-        self.epoch_count_scale.grid(row=2, column=0, pady=(30,0))
-        self.hidden_layers_shape_label.grid(row=1, column=1,
+        self.about_label.grid(row=1, column=0, columnspan=3)
+        self.learning_rate_scale.grid(row=2, column=0, pady=(50,0))
+        self.epoch_count_scale.grid(row=3, column=0, pady=(30,0))
+        self.hidden_layers_shape_label.grid(row=2, column=1,
                                             padx=30, pady=(50,0))
-        self.hidden_layers_shape_entry.grid(row=2, column=1, padx=30)
-        self.use_relu_check_button.grid(row=1, column=2, pady=(30, 0))
-        self.use_gpu_check_button.grid(row=2, column=2, pady=(30, 0))
-        self.model_status_label.grid(row=3, column=0,
+        self.hidden_layers_shape_entry.grid(row=3, column=1, padx=30)
+        self.use_relu_check_button.grid(row=2, column=2, pady=(30, 0))
+        self.use_gpu_check_button.grid(row=3, column=2, pady=(30, 0))
+        self.model_status_label.grid(row=4, column=0,
                                      columnspan=3, pady=50)
         
     def load_default_hyper_parameters(self, dataset: str) -> dict[
-                                                       str, 
-                                                       int | list[int] | float
-                                                       ]:
+                                                 str, 
+                                                 str | int | list[int] | float
+                                                 ]:
         """Load the dataset's default hyper-parameters from the json file.
            
            Args:
@@ -201,11 +208,11 @@ class TrainingFrame(tk.Frame):
                                                     )
         
         # Pack widgets
-        self.model_status_label.pack()
+        self.model_status_label.pack(pady=(30,0))
         self.training_progress_label.pack(pady=30)
         
         # Start training thread
-        self.model_status_label.configure(text="Training weights and bias...",
+        self.model_status_label.configure(text="Training weights and biases...",
                                           fg='red')
         self.train_thread: threading.Thread = threading.Thread(
                                                        target=self.model.train,
