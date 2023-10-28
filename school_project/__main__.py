@@ -68,7 +68,10 @@ class SchoolProjectFrame(tk.Frame):
                                            text="Create New Model for one " +
                                             "one of the following datasets."
                                             )
-        self.create_model_dataset_option_menu_var: tk.StringVar = tk.StringVar(master=self.home_frame)
+        self.create_model_dataset_option_menu_var: tk.StringVar = tk.StringVar(
+                                                       master=self.home_frame,
+                                                       value="MNIST"
+                                                       )
         self.create_model_dataset_option_menu: tk.OptionMenu = tk.OptionMenu(
                                     self.home_frame,
                                     self.create_model_dataset_option_menu_var,
