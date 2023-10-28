@@ -5,15 +5,18 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import tkinter as tk
 
-class TestMNISTFrame(tk.Frame): #TODO
-    """Frame for Cat Recognition page."""
-    def __init__(self, root: tk.Tk, width: int, height: int, use_gpu: bool, model) -> None:
-        """Initialise image recognition frame widgets.
+class TestMNISTFrame(tk.Frame):  # TODO: Check results
+    """Frame for Testing MNIST page."""
+    def __init__(self, root: tk.Tk, width: int,
+                 height: int, use_gpu: bool, model: object) -> None:
+        """Initialise test MNIST frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            use_gpu (bool): True or False whether the GPU should be used.
+            model (object): The Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
@@ -23,8 +26,8 @@ class TestMNISTFrame(tk.Frame): #TODO
         self.WIDTH = width
         self.HEIGHT = height
         
-        # Setup image recognition frame variables
-        self.use_gpu: bool = use_gpu
+        # Setup test MNIST frame variables
+        self.use_gpu = use_gpu
         self.model = model
         
         # Setup widgets
@@ -39,11 +42,8 @@ class TestMNISTFrame(tk.Frame): #TODO
         
         # Pack widgets
         self.model_status_label.pack()
-        
-        # Setup frame attributes
-        self.pack_propagate(False)
 
-        # Start predicting thread
+        # Start test thread
         self.model_status_label.configure(
                         text="Testing trained model",
                         fg='green'
@@ -53,10 +53,9 @@ class TestMNISTFrame(tk.Frame): #TODO
                                     )
         self.test_thread.start()
 
-    def plot_results(self):
+    def plot_results(self) -> None:
+        """Plot results of Model test."""
         if not self.use_gpu:
-
-            # Output example prediction results
             test_prediction = np.squeeze(self.model.test_prediction).T.tolist()
             test_inputs = np.squeeze(self.model.test_inputs).T
             self.image_figure.suptitle(
@@ -73,15 +72,12 @@ class TestMNISTFrame(tk.Frame): #TODO
             image2.set_title(test_prediction[14].index(max(test_prediction[14])))
             image2.imshow(test_inputs[14].reshape((28,28)))
 
-            self.image_canvas.get_tk_widget().pack(side='right')
-            
-            self.train_button['state'] = 'normal'
+            self.image_canvas.get_tk_widget().pack()
 
         elif self.use_gpu:
 
             import cupy as cp
             
-            # Output example prediction results
             test_prediction = cp.squeeze(self.model.test_prediction).T.tolist()
             test_inputs = cp.asnumpy(cp.squeeze(self.model.test_inputs)).T
             self.image_figure.suptitle(
@@ -98,17 +94,20 @@ class TestMNISTFrame(tk.Frame): #TODO
             image2.set_title(test_prediction[14].index(max(test_prediction[14])))
             image2.imshow(test_inputs[14].reshape((28,28)))
 
-            self.image_canvas.get_tk_widget().pack(side='right')
+            self.image_canvas.get_tk_widget().pack()
 
 class TestCatRecognitionFrame(tk.Frame):
-    """Frame for Cat Recognition page."""
-    def __init__(self, root: tk.Tk, width: int, height: int, use_gpu: bool, model) -> None:
-        """Initialise image recognition frame widgets.
+    """Frame for Testing Cat Recognition page."""
+    def __init__(self, root: tk.Tk, width: int,
+                 height: int, use_gpu: bool, model: object) -> None:
+        """Initialise test cat recognition frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            use_gpu (bool): True or False whether the GPU should be used.
+            model (object): the Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
@@ -119,7 +118,7 @@ class TestCatRecognitionFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup image recognition frame variables
-        self.use_gpu: bool = use_gpu
+        self.use_gpu = use_gpu
         self.model = model
         
         # Setup widgets
@@ -134,9 +133,6 @@ class TestCatRecognitionFrame(tk.Frame):
         
         # Pack widgets
         self.model_status_label.pack()
-        
-        # Setup frame attributes
-        self.pack_propagate(False)
 
         # Start predicting thread
         self.model_status_label.configure(
@@ -148,10 +144,9 @@ class TestCatRecognitionFrame(tk.Frame):
                                     )
         self.test_thread.start()
 
-    def plot_results(self):
+    def plot_results(self) -> None:
+        """Plot results of Model test"""
         if not self.use_gpu:
-            
-            # Output example prediction results
             self.image_figure.suptitle(
              "Prediction Correctness: " +
              f"{round(100 - np.mean(np.abs(self.model.test_prediction.round() - self.model.test_outputs)) * 100)}%\n" +
@@ -174,15 +169,12 @@ class TestCatRecognitionFrame(tk.Frame):
             image2.imshow(
                     self.model.test_inputs[:,14].reshape((64,64,3))
                     )
-            self.image_canvas.get_tk_widget().pack(side='right')
-            
-            self.train_button['state'] = 'normal'
+            self.image_canvas.get_tk_widget().pack()
         
         elif self.use_gpu:
 
             import cupy as cp
             
-            # Output example prediction results
             self.image_figure.suptitle(
              "Prediction Correctness: " +
              f"{round(100 - np.mean(np.abs(cp.asnumpy(self.model.test_prediction).round() - cp.asnumpy(self.model.test_outputs))) * 100)}%\n" +
@@ -205,17 +197,18 @@ class TestCatRecognitionFrame(tk.Frame):
             image2.imshow(
                     cp.asnumpy(self.model.test_inputs)[:,14].reshape((64,64,3))
                     )
-            self.image_canvas.get_tk_widget().pack(side='right')
+            self.image_canvas.get_tk_widget().pack()
 
-class TestXORFrame(tk.Frame): #TODO
-    """Frame for Cat Recognition page."""
-    def __init__(self, root: tk.Tk, width: int, height: int, model) -> None:
-        """Initialise image recognition frame widgets.
+class TestXORFrame(tk.Frame):  # TODO: Check results
+    """Frame for Testing XOR page."""
+    def __init__(self, root: tk.Tk, width: int, height: int, model: object) -> None:
+        """Initialise test XOR frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            model (object): the Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
@@ -238,9 +231,6 @@ class TestXORFrame(tk.Frame): #TODO
         
         # Pack widgets
         self.model_status_label.pack()
-        
-        # Setup frame attributes
-        self.pack_propagate(False)
 
         # Start predicting thread
         self.model_status_label.configure(
@@ -253,7 +243,7 @@ class TestXORFrame(tk.Frame): #TODO
         self.test_thread.start()
 
     def plot_results(self):
-        # Output example prediction results
+        """Plot results of Model test."""
         results: str = (
                     f"Prediction Accuracy: " +
                     f"{round(self.model.test_prediction_accuracy)}%\n" +
