@@ -49,7 +49,7 @@ class TestMNISTFrame(tk.Frame):  # TODO: Check results
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(
-                                    target=self.model.predict
+                                    target=self.model.test
                                     )
         self.test_thread.start()
 
@@ -134,13 +134,13 @@ class TestCatRecognitionFrame(tk.Frame):
         # Pack widgets
         self.model_status_label.pack()
 
-        # Start predicting thread
+        # Start test thread
         self.model_status_label.configure(
                         text="Testing trained model",
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(
-                                    target=self.model.predict
+                                    target=self.model.test
                                     )
         self.test_thread.start()
 
@@ -232,13 +232,13 @@ class TestXORFrame(tk.Frame):  # TODO: Check results
         # Pack widgets
         self.model_status_label.pack()
 
-        # Start predicting thread
+        # Start test thread
         self.model_status_label.configure(
                         text="Testing trained model",
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(
-                                    target=self.model.predict
+                                    target=self.model.test
                                     )
         self.test_thread.start()
 

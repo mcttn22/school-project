@@ -46,8 +46,8 @@ class ModelInterface():
         """
         raise NotImplementedError
 
-    def predict(self) -> None:
-        """Use trained weights and bias/biases to predict.
+    def test(self) -> None:
+        """Test trained weights and bias/biases.
            
         Raises:
             NotImplementedError: if this method is not implemented.

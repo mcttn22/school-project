@@ -226,8 +226,8 @@ class AbstractModel(ModelInterface):
             output = layer.forward_propagation(inputs=output)
         return output
 
-    def predict(self) -> None:
-        """Use layers' trained weights and biases to predict."""
+    def test(self) -> None:
+        """Test the layers' trained weights and biases."""
         output = self.test_inputs
         for layer in self.layers:
             output = layer.forward_propagation(inputs=output)
