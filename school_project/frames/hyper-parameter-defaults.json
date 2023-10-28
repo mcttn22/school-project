@@ -1,15 +1,15 @@
 {
-    "mnist": {
+    "MNIST": {
         "maxLearningRate": 1,
         "hiddenLayersShape": [1000, 1000],
         "epochCount": 150
     },
-    "cat": {
+    "Cat Recognition": {
         "maxLearningRate": 0.3,
         "hiddenLayersShape": [100, 100],
         "epochCount": 3500
     },
-    "xor": {
+    "XOR": {
         "maxLearningRate": 1,
         "hiddenLayersShape": [100, 100],
         "epochCount": 1200
