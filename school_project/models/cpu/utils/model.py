@@ -113,14 +113,13 @@ class AbstractModel(ModelInterface):
     """ANN model with variable number of hidden layers"""
     def __init__(self, hidden_layers_shape: list[int],
                        learning_rate: float,
-                       epoch_count: int) -> None:
+                       use_relu: bool) -> None:
         """Initialise model values.
 
         Args:
             hidden_layers_shape (list[int]):
             list of the number of neurons in each hidden layer.
             learning_rate (float): the learning rate of the model.
-            epoch_count (int): the number of training epochs.
         
         """
         # Setup model data
@@ -145,8 +144,7 @@ class AbstractModel(ModelInterface):
         # Setup model values
         self.layers: list[FullyConnectedLayer] = []
         self.learning_rate = learning_rate
-        self.epoch_count = epoch_count
-        self.init_model_values()
+        self.init_model_values(use_relu=use_relu)
 
     def __repr__(self) -> str:
         """Read current state of model.
@@ -159,27 +157,52 @@ class AbstractModel(ModelInterface):
         return (f"Layers Shape: {','.join(self.layers_shape)}\n" +
                 f"Learning Rate: {self.learning_rate}")
 
-    def init_model_values(self) -> None:
-        """Initialise model layers"""
+    def init_model_values(self, use_relu: bool) -> None:
+        """Initialise model layers
+        
+           Args:
+               use_relu (bool): True or False whether the ReLu Transfer 
+               function should be used.
+        
+        """
         # Check if setting up Deep Network
         if len(self.hidden_layers_shape) > 0:
+            if use_relu:
 
-            # Add input layer
-            self.layers.append(FullyConnectedLayer(
-                                    learning_rate=self.learning_rate,
-                                    input_neuron_count=self.input_neuron_count,
-                                    output_neuron_count=self.hidden_layers_shape[0],
-                                    transfer_type='relu'
-                                    ))
-
-            # Add hidden layers
-            for layer in range(len(self.hidden_layers_shape) - 1):
+                # Add input layer
                 self.layers.append(FullyConnectedLayer(
-                            learning_rate=self.learning_rate,
-                            input_neuron_count=self.hidden_layers_shape[layer],
-                            output_neuron_count=self.hidden_layers_shape[layer + 1],
-                            transfer_type='relu'
-                            ))
+                                        learning_rate=self.learning_rate,
+                                        input_neuron_count=self.input_neuron_count,
+                                        output_neuron_count=self.hidden_layers_shape[0],
+                                        transfer_type='relu'
+                                        ))
+
+                # Add hidden layers
+                for layer in range(len(self.hidden_layers_shape) - 1):
+                    self.layers.append(FullyConnectedLayer(
+                                learning_rate=self.learning_rate,
+                                input_neuron_count=self.hidden_layers_shape[layer],
+                                output_neuron_count=self.hidden_layers_shape[layer + 1],
+                                transfer_type='relu'
+                                ))
+            else:
+
+                # Add input layer
+                self.layers.append(FullyConnectedLayer(
+                                        learning_rate=self.learning_rate,
+                                        input_neuron_count=self.input_neuron_count,
+                                        output_neuron_count=self.hidden_layers_shape[0],
+                                        transfer_type='sigmoid'
+                                        ))
+
+                # Add hidden layers
+                for layer in range(len(self.hidden_layers_shape) - 1):
+                    self.layers.append(FullyConnectedLayer(
+                                learning_rate=self.learning_rate,
+                                input_neuron_count=self.hidden_layers_shape[layer],
+                                output_neuron_count=self.hidden_layers_shape[layer + 1],
+                                transfer_type='sigmoid'
+                                ))
             
             # Add output layer
             self.layers.append(FullyConnectedLayer(
@@ -242,15 +265,20 @@ class AbstractModel(ModelInterface):
                                               outputs=self.test_outputs
                                               )
 
-    def train(self) -> None:
-        """Train layers' weights and biases."""
+    def train(self, epoch_count: int) -> None:
+        """Train layers' weights and biases.
+        
+           Args:
+               epoch_count (int): the number of training epochs.
+
+        """
         self.layers_shape = [f'{layer}' for layer in (
                             [self.input_neuron_count] + 
                             self.hidden_layers_shape + 
                             [self.output_neuron_count]
                             )]
         self.train_losses = []
-        for epoch in range(self.epoch_count):
+        for epoch in range(epoch_count):
             if not self.running:
                 break
             prediction = self.forward_propagation()

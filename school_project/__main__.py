@@ -161,8 +161,11 @@ class SchoolProjectFrame(tk.Frame):
         self.hyper_parameter_frame.pack_forget()
         self.train_button.pack_forget()
         self.training_frame = TrainingFrame(
-                                         root=self, width=self.WIDTH, 
-                                         height=self.HEIGHT, model=self.model
+                                         root=self,
+                                         width=self.WIDTH, 
+                                         height=self.HEIGHT,
+                                         model=self.model,
+                                         epoch_count=self.hyper_parameter_frame.epoch_count_scale.get()
                                          )
         self.training_frame.pack()
         self.stop_training_button.pack()

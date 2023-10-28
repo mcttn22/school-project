@@ -67,6 +67,14 @@ class HyperParameterFrame(tk.Frame):
         self.hidden_layers_shape_entry.insert(0, ",".join(
                            f"{neuron_count}" for neuron_count in self.default_hyper_parameters['hiddenLayersShape']
                            ))
+        self.use_relu_check_button_var: tk.BooleanVar = tk.BooleanVar()
+        self.use_relu_check_button: tk.Checkbutton = tk.Checkbutton(
+                                        master=self,
+                                        width=13, height=1,
+                                        font=tkf.Font(size=12),
+                                        text="Use ReLu",
+                                        variable=self.use_relu_check_button_var
+                                                       )
         self.use_gpu_check_button_var: tk.BooleanVar = tk.BooleanVar()
         self.use_gpu_check_button: tk.Checkbutton = tk.Checkbutton(
                                         master=self,
@@ -86,6 +94,7 @@ class HyperParameterFrame(tk.Frame):
         self.hidden_layers_shape_label.grid(row=1, column=1,
                                             padx=30, pady=(50,0))
         self.hidden_layers_shape_entry.grid(row=2, column=1, padx=30)
+        self.use_relu_check_button.grid(row=1, column=2, pady=(30, 0))
         self.use_gpu_check_button.grid(row=2, column=2, pady=(30, 0))
         self.model_status_label.grid(row=3, column=0,
                                      columnspan=3, pady=50)
@@ -133,7 +142,7 @@ class HyperParameterFrame(tk.Frame):
                 from school_project.models.cpu.xor import Model
             model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
                           learning_rate = self.learning_rate_scale.get(),
-                          epoch_count = self.epoch_count_scale.get())
+                          use_relu = self.use_relu_check_button_var.get())
 
         else:
             try:
@@ -145,7 +154,7 @@ class HyperParameterFrame(tk.Frame):
                     from school_project.models.gpu.xor import Model
                 model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
                               learning_rate = self.learning_rate_scale.get(),
-                              epoch_count = self.epoch_count_scale.get())
+                              use_relu = self.use_relu_check_button_var.get())
             except ImportError as ie:
                 self.model_status_label.configure(
                                         text="Failed to initialise GPU",
@@ -156,7 +165,8 @@ class HyperParameterFrame(tk.Frame):
         
 class TrainingFrame(tk.Frame):
     """Frame for training page."""
-    def __init__(self, root: tk.Tk, width: int, height: int, model: object) -> None:
+    def __init__(self, root: tk.Tk, width: int,
+                 height: int, model: object, epoch_count: int) -> None:
         """Initialise training frame widgets.
         
         Args:
@@ -164,6 +174,7 @@ class TrainingFrame(tk.Frame):
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
             model (object): the Model object to be trained.
+            epoch_count (int): the number of training epochs.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
@@ -193,7 +204,8 @@ class TrainingFrame(tk.Frame):
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
         self.train_thread: threading.Thread = threading.Thread(
-                                                       target=self.model.train
+                                                       target=self.model.train,
+                                                       args=(epoch_count,)
                                                        )
         self.train_thread.start()
 
