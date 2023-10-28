@@ -1,1 +1,1 @@
-__all__ = ['image_recognition', 'utils', 'xor']
+__all__ = ['utils', 'cat_recognition', 'mnist', 'xor']
