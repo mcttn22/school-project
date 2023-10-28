@@ -191,6 +191,9 @@ class TrainingFrame(tk.Frame):
         self.model_status_label: tk.Label = tk.Label(master=self,
                                                      bg='white',
                                                      font=('Arial', 15))
+        self.training_progress_label: tk.Label = tk.Label(master=self,
+                                                     bg='white',
+                                                     font=('Arial', 15))
         self.loss_figure: Figure = Figure()
         self.loss_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(
                                                     figure=self.loss_figure,
@@ -199,6 +202,7 @@ class TrainingFrame(tk.Frame):
         
         # Pack widgets
         self.model_status_label.pack()
+        self.training_progress_label.pack()
         
         # Start training thread
         self.model_status_label.configure(text="Training weights and bias...",

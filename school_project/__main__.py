@@ -187,11 +187,13 @@ class SchoolProjectFrame(tk.Frame):
 
         """
         if not train_thread.is_alive():
+            self.training_frame.training_progress_label.pack_forget()
             self.training_frame.plot_losses()
             self.stop_training_button.pack_forget()
             self.test_button.pack()
         else:
-            self.after(1_000, self.manage_training, train_thread)
+            self.training_frame.training_progress_label.configure(text=self.model.training_progress)
+            self.after(100, self.manage_training, train_thread)
 
     def load_test_frame(self) -> None:
         """Unpack trainig frame, pack test frame for the dataset

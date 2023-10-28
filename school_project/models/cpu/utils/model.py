@@ -128,6 +128,7 @@ class AbstractModel(ModelInterface):
         self.train_losses: list[float]
         self.test_prediction: np.ndarray
         self.test_prediction_accuracy: float
+        self.training_progress: str = ""
         
         # Setup model attributes
         self.running: bool = True
@@ -281,6 +282,7 @@ class AbstractModel(ModelInterface):
         for epoch in range(epoch_count):
             if not self.running:
                 break
+            self.training_progress = f"Epoch {epoch} / {epoch_count}"
             prediction = self.forward_propagation()
             loss = calculate_loss(input_count=self.input_count,
                                   outputs=self.train_outputs,
