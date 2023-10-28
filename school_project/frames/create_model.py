@@ -1,3 +1,4 @@
+import json
 import threading
 
 from matplotlib.figure import Figure
@@ -27,9 +28,10 @@ class HyperParameterFrame(tk.Frame):
         self.WIDTH = width
         self.HEIGHT = height
         
-        # Setup hyperparameter frame variables
+        # Setup hyper-parameter frame variables
         self.dataset = dataset
         self.use_gpu: bool
+        self.default_hyper_parameters = self.load_default_hyper_parameters(dataset=dataset)
         
         # Setup widgets
         self.title_label: tk.Label = tk.Label(master=self,
@@ -50,7 +52,7 @@ class HyperParameterFrame(tk.Frame):
                                                       label="Learning Rate",
                                                       length=185,
                                                       from_=0,
-                                                      to=0.3,
+                                                      to=self.default_hyper_parameters['maxLearningRate'],
                                                       resolution=0.01)
         self.learning_rate_scale.set(value=0.1)
         self.hidden_layers_shape_label: tk.Label = tk.Label(
@@ -62,7 +64,7 @@ class HyperParameterFrame(tk.Frame):
                                 )
         self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self)
         self.hidden_layers_shape_entry.insert(0, ",".join(
-                           f"{neuron_count}" for neuron_count in [100, 100]
+                           f"{neuron_count}" for neuron_count in self.default_hyper_parameters['hiddenLayersShape']
                            ))
         self.model_status_label: tk.Label = tk.Label(master=self,
                                                      bg='white',
@@ -77,6 +79,21 @@ class HyperParameterFrame(tk.Frame):
         self.hidden_layers_shape_entry.grid(row=5, column=2, padx=(5,0))
         self.model_status_label.grid(row=6, column=0,
                                      columnspan=4, pady=(10, 0))
+        
+    def load_default_hyper_parameters(self, dataset: str) -> dict[
+                                                       str, 
+                                                       int | list[int] | float
+                                                       ]:
+        """Load the dataset's default hyper-parameters from the json file.
+           
+           Args:
+               dataset (str): the name of the dataset to load hyper-parameters
+               for. ('MNIST', 'Cat Recognition' or 'XOR')
+            Returns:
+                a dictionary of default hyper-parameter values.
+        """
+        with open('school_project/frames/hyper-parameter-defaults.json') as f:
+            return json.load(f)[dataset]
     
     def create_model(self) -> object:
         """Create and return a Model using the hyper-parameters set.
@@ -134,7 +151,7 @@ class TrainingFrame(tk.Frame):
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
-            model: (object): the Model object to be trained.
+            model (object): the Model object to be trained.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
@@ -165,7 +182,7 @@ class TrainingFrame(tk.Frame):
                                           fg='red')
         self.train_thread: threading.Thread = threading.Thread(
                                            target=self.model.train,
-                                           args=(3_500,)
+                                           args=(3_500,)  # TODO: Add epoch count scale
                                            )
         self.train_thread.start()
 
