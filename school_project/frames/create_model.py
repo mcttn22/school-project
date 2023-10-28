@@ -38,14 +38,6 @@ class HyperParameterFrame(tk.Frame):
                                               bg='white',
                                               font=('Arial', 20),
                                               text=dataset)
-        self.use_gpu_check_button_var: tk.BooleanVar = tk.BooleanVar()
-        self.use_gpu_check_button: tk.Checkbutton = tk.Checkbutton(
-                                        master=self,
-                                        width=13, height=1,
-                                        font=tkf.Font(size=12),
-                                        text="Use GPU",
-                                        variable=self.use_gpu_check_button_var
-                                                       )
         self.learning_rate_scale: tk.Scale = tk.Scale(master=self,
                                                       bg='white',
                                                       orient='horizontal',
@@ -55,6 +47,15 @@ class HyperParameterFrame(tk.Frame):
                                                       to=self.default_hyper_parameters['maxLearningRate'],
                                                       resolution=0.01)
         self.learning_rate_scale.set(value=0.1)
+        self.epoch_count_scale: tk.Scale = tk.Scale(master=self,
+                                                      bg='white',
+                                                      orient='horizontal',
+                                                      label="Epoch Count",
+                                                      length=185,
+                                                      from_=0,
+                                                      to=10_000,
+                                                      resolution=100)
+        self.epoch_count_scale.set(value=self.default_hyper_parameters['epochCount'])
         self.hidden_layers_shape_label: tk.Label = tk.Label(
                                 master=self,
                                 bg='white',
@@ -66,19 +67,28 @@ class HyperParameterFrame(tk.Frame):
         self.hidden_layers_shape_entry.insert(0, ",".join(
                            f"{neuron_count}" for neuron_count in self.default_hyper_parameters['hiddenLayersShape']
                            ))
+        self.use_gpu_check_button_var: tk.BooleanVar = tk.BooleanVar()
+        self.use_gpu_check_button: tk.Checkbutton = tk.Checkbutton(
+                                        master=self,
+                                        width=13, height=1,
+                                        font=tkf.Font(size=12),
+                                        text="Use GPU",
+                                        variable=self.use_gpu_check_button_var
+                                                       )
         self.model_status_label: tk.Label = tk.Label(master=self,
                                                      bg='white',
                                                      font=('Arial', 15))
         
         # Pack widgets
-        self.title_label.grid(row=0, column=0, columnspan=4)
-        self.use_gpu_check_button.grid(row=3, column=3, pady=(10, 0))
-        self.hidden_layers_shape_label.grid(row=4, column=2,
-                                            padx=(5,0), pady=(30,0))
-        self.learning_rate_scale.grid(row=5, column=1)
-        self.hidden_layers_shape_entry.grid(row=5, column=2, padx=(5,0))
-        self.model_status_label.grid(row=6, column=0,
-                                     columnspan=4, pady=(10, 0))
+        self.title_label.grid(row=0, column=0, columnspan=3)
+        self.learning_rate_scale.grid(row=1, column=0, pady=(50,0))
+        self.epoch_count_scale.grid(row=2, column=0, pady=(30,0))
+        self.hidden_layers_shape_label.grid(row=1, column=1,
+                                            padx=30, pady=(50,0))
+        self.hidden_layers_shape_entry.grid(row=2, column=1, padx=30)
+        self.use_gpu_check_button.grid(row=2, column=2, pady=(30, 0))
+        self.model_status_label.grid(row=3, column=0,
+                                     columnspan=3, pady=50)
         
     def load_default_hyper_parameters(self, dataset: str) -> dict[
                                                        str, 
@@ -122,7 +132,8 @@ class HyperParameterFrame(tk.Frame):
             elif self.dataset == "XOR":
                 from school_project.models.cpu.xor import Model
             model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
-                                  learning_rate = self.learning_rate_scale.get())
+                          learning_rate = self.learning_rate_scale.get(),
+                          epoch_count = self.epoch_count_scale.get())
 
         else:
             try:
@@ -133,7 +144,8 @@ class HyperParameterFrame(tk.Frame):
                 elif self.dataset == "XOR":
                     from school_project.models.gpu.xor import Model
                 model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
-                                    learning_rate = self.learning_rate_scale.get())
+                              learning_rate = self.learning_rate_scale.get(),
+                              epoch_count = self.epoch_count_scale.get())
             except ImportError as ie:
                 self.model_status_label.configure(
                                         text="Failed to initialise GPU",
@@ -181,9 +193,8 @@ class TrainingFrame(tk.Frame):
         self.model_status_label.configure(text="Training weights and bias...",
                                           fg='red')
         self.train_thread: threading.Thread = threading.Thread(
-                                           target=self.model.train,
-                                           args=(3_500,)  # TODO: Add epoch count scale
-                                           )
+                                                       target=self.model.train
+                                                       )
         self.train_thread.start()
 
     def plot_losses(self) -> None:

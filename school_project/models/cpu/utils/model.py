@@ -112,13 +112,15 @@ class FullyConnectedLayer():
 class AbstractModel(ModelInterface):
     """ANN model with variable number of hidden layers"""
     def __init__(self, hidden_layers_shape: list[int],
-                       learning_rate: float) -> None:
+                       learning_rate: float,
+                       epoch_count: int) -> None:
         """Initialise model values.
 
         Args:
             hidden_layers_shape (list[int]):
             list of the number of neurons in each hidden layer.
             learning_rate (float): the learning rate of the model.
+            epoch_count (int): the number of training epochs.
         
         """
         # Setup model data
@@ -143,6 +145,7 @@ class AbstractModel(ModelInterface):
         # Setup model values
         self.layers: list[FullyConnectedLayer] = []
         self.learning_rate = learning_rate
+        self.epoch_count = epoch_count
         self.init_model_values()
 
     def __repr__(self) -> str:
@@ -239,20 +242,15 @@ class AbstractModel(ModelInterface):
                                               outputs=self.test_outputs
                                               )
 
-    def train(self, epochs: int) -> None:
-        """Train layers' weights and biases.
-        
-        Args:
-            epochs (int): the number of forward and back propagations to do.
-        
-        """
+    def train(self) -> None:
+        """Train layers' weights and biases."""
         self.layers_shape = [f'{layer}' for layer in (
                             [self.input_neuron_count] + 
                             self.hidden_layers_shape + 
                             [self.output_neuron_count]
                             )]
         self.train_losses = []
-        for epoch in range(epochs):
+        for epoch in range(self.epoch_count):
             if not self.running:
                 break
             prediction = self.forward_propagation()
