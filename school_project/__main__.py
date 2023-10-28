@@ -31,7 +31,7 @@ class SchoolProjectFrame(tk.Frame):
         self.hyper_parameter_frame: HyperParameterFrame
         self.training_frame: TrainingFrame
         self.test_frame: TestMNISTFrame | TestCatRecognitionFrame | TestXORFrame
-        self.model: object
+        self.model = None
 
         # Setup school project frame widgets
         self.train_button: tk.Button = tk.Button(
@@ -235,7 +235,8 @@ def main() -> None:
     root.mainloop()
     
     # Stop model training when GUI closes
-    school_project.model.running = False
+    if school_project.model != None:
+        school_project.model.running = False
 
 if __name__ == "__main__":
     main()
