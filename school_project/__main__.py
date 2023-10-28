@@ -216,7 +216,7 @@ class SchoolProjectFrame(tk.Frame):
         
         Args:
             test_thread (threading.Thread):
-            the thread running the model's predict() method. TODO predict to test
+            the thread running the model's predict() method.
         Raises:
             TypeError: if test_thread is not of type threading.Thread.
         
