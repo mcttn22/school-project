@@ -1,1 +1,1 @@
-__all__ = ['test_utils']
+__all__ = ['cpu', 'gpu']

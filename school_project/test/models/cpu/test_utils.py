@@ -1,5 +1,5 @@
 import unittest
-from school_project.models.utils import tools
+from school_project.models.cpu.utils import tools
 
 class TestTools(unittest.TestCase):
     def __init__(self, *args, **kwargs):
