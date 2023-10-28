@@ -67,7 +67,7 @@ class HyperParameterFrame(tk.Frame):
         self.hidden_layers_shape_entry.insert(0, ",".join(
                            f"{neuron_count}" for neuron_count in self.default_hyper_parameters['hiddenLayersShape']
                            ))
-        self.use_relu_check_button_var: tk.BooleanVar = tk.BooleanVar()
+        self.use_relu_check_button_var: tk.BooleanVar = tk.BooleanVar(value=True)
         self.use_relu_check_button: tk.Checkbutton = tk.Checkbutton(
                                         master=self,
                                         width=13, height=1,
