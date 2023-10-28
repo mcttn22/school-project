@@ -43,7 +43,7 @@ class SchoolProjectFrame(tk.Frame):
               )
         self.stop_training_button: tk.Button = tk.Button(
               master=self,
-              width=13, height=1,
+              width=15, height=1,
               font=tkf.Font(size=12),
               text="Stop Training Model",
               command=self.stop_training

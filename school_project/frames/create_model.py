@@ -202,7 +202,7 @@ class TrainingFrame(tk.Frame):
         
         # Pack widgets
         self.model_status_label.pack()
-        self.training_progress_label.pack()
+        self.training_progress_label.pack(pady=30)
         
         # Start training thread
         self.model_status_label.configure(text="Training weights and bias...",
