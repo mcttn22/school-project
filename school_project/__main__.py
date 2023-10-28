@@ -41,6 +41,13 @@ class SchoolProjectFrame(tk.Frame):
               text="Train Model",
               command=self.load_training_frame
               )
+        self.stop_training_button: tk.Button = tk.Button(
+              master=self,
+              width=13, height=1,
+              font=tkf.Font(size=12),
+              text="Stop Training Model",
+              command=self.stop_training
+              )
         self.test_button: tk.Button = tk.Button(
               master=self,
               width=13, height=1,
@@ -158,7 +165,12 @@ class SchoolProjectFrame(tk.Frame):
                                          height=self.HEIGHT, model=self.model
                                          )
         self.training_frame.pack()
+        self.stop_training_button.pack()
         self.manage_training(train_thread=self.training_frame.train_thread)
+
+    def stop_training(self) -> None:
+        """Stop model training."""
+        self.model.running = False
 
     def manage_training(self, train_thread: threading.Thread) -> None:
         """Wait for model training thread to finish,
@@ -173,6 +185,7 @@ class SchoolProjectFrame(tk.Frame):
         """
         if not train_thread.is_alive():
             self.training_frame.plot_losses()
+            self.stop_training_button.pack_forget()
             self.test_button.pack()
         else:
             self.after(1_000, self.manage_training, train_thread)
