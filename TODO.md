@@ -7,28 +7,8 @@
   - Format images to correct sections
   - Submit to Teams
 
-- Fix Cat recognition Perceptron Network overflow errors
-
-- Update MakeFile
-- Remove 'docs/'
-
 - Allow weights to be saved in files with sqlite3? (save numpy arrays in an array to a file with np.save, then store the location of the file and the model parameters under an ID with sqlite3) (user gives name to model)
   - Pretrained optimum?
-
-- Update GUI
-  - Add loading datasets / model info to UI?
-  - See ui design image on phone X
-  - Options over model parameters
-    - Transfer functions
-    - Network shape
-    - Epoch count
-  - Cancel training button?
-  - Training progress display
-  - Comparison of models
-  - left=options, right=train
-  - Same page structure, but add load button, then train (continue with loaded weights) vs test button
-  - Add -> Load new object (have to for new load_dataset method), with initialisation parameters (Size of training data (for load_dataset method), ANN type (Perceptron, Deep with relu + shape, validate option + how often + more)) -> Test -> Results -> Save with name (Stop training button)
-  - Load -> Show name options -> Choose option -> Test model -> Show results, option to delete custom ?
 
 - Ideas from interview
   - Allow model to be saved
@@ -48,7 +28,7 @@
 
 - Maybe give option to continue training pretrained model
 
-- Update README + setup.py version
+- Update setup.py version
 
 - Jupyter notebook for technical presentation?
 
