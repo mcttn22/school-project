@@ -34,6 +34,13 @@ class SchoolProjectFrame(tk.Frame):
         self.model = None
 
         # Setup school project frame widgets
+        self.exit_hyper_parameter_frame_button: tk.Button = tk.Button(
+              master=self,
+              width=13, height=1,
+              font=tkf.Font(size=12),
+              text="Exit",
+              command=self.exit_hyper_parameter_frame
+              )
         self.train_button: tk.Button = tk.Button(
               master=self,
               width=13, height=1,
@@ -146,7 +153,7 @@ class SchoolProjectFrame(tk.Frame):
         self.pack_propagate(flag=False)
 
     def load_hyper_parameter_frame(self) -> None:
-        """Unpack home frame and pack hyper parameter frame"""
+        """Unpack home frame and pack hyper-parameter frame."""
         self.home_frame.pack_forget()
         self.hyper_parameter_frame = HyperParameterFrame(
                      root=self,
@@ -156,10 +163,17 @@ class SchoolProjectFrame(tk.Frame):
                      )
         self.hyper_parameter_frame.pack()
         self.train_button.pack()
+        self.exit_hyper_parameter_frame_button.pack(pady=(10,0))
         
+    def exit_hyper_parameter_frame(self) -> None:
+        """Unpack hyper-parameter frame and pack home frame."""
+        self.hyper_parameter_frame.pack_forget()
+        self.train_button.pack_forget()
+        self.exit_hyper_parameter_frame_button.pack_forget()
+        self.home_frame.pack()
 
     def load_pretrained_model_options(self) -> list[str]:  # TODO
-        """Not Implemented"""
+        """Not Implemented."""
         return ["Not Implemented"]
     
     def test_loaded_model(self):  # TODO
@@ -176,6 +190,7 @@ class SchoolProjectFrame(tk.Frame):
             return
         self.hyper_parameter_frame.pack_forget()
         self.train_button.pack_forget()
+        self.exit_hyper_parameter_frame_button.pack_forget()
         self.training_frame = TrainingFrame(
                                          root=self,
                                          width=self.WIDTH, 
