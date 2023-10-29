@@ -275,7 +275,7 @@ class SchoolProjectFrame(tk.Frame):
         """
         if not test_thread.is_alive():
             self.test_frame.plot_results(model=self.model)
-            self.model = None
+            self.model = None  # Free up trained Model from memory
             self.exit_button.pack()
         else:
             self.after(1_000, self.manage_testing, test_thread)
