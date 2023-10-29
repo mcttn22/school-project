@@ -191,9 +191,6 @@ class TrainingFrame(tk.Frame):
         self.WIDTH = width
         self.HEIGHT = height
         
-        # Setup training frame variables
-        self.model = model
-        
         # Setup widgets
         self.model_status_label: tk.Label = tk.Label(master=self,
                                                      bg='white',
@@ -215,17 +212,22 @@ class TrainingFrame(tk.Frame):
         self.model_status_label.configure(text="Training weights and biases...",
                                           fg='red')
         self.train_thread: threading.Thread = threading.Thread(
-                                                       target=self.model.train,
+                                                       target=model.train,
                                                        args=(epoch_count,)
                                                        )
         self.train_thread.start()
 
-    def plot_losses(self) -> None:
-        """Plot losses of Model training."""
+    def plot_losses(self, model: object) -> None:
+        """Plot losses of Model training.
+        
+           Args:
+               model (object): the Model object thats been trained.
+        
+        """
         graph: Figure.axes = self.loss_figure.add_subplot(111)
         graph.set_title("Learning rate: " +
-                        f"{self.model.learning_rate}")
+                        f"{model.learning_rate}")
         graph.set_xlabel("Epochs")
         graph.set_ylabel("Loss Value")
-        graph.plot(np.squeeze(self.model.train_losses))
+        graph.plot(np.squeeze(model.train_losses))
         self.loss_canvas.get_tk_widget().pack()

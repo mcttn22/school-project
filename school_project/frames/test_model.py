@@ -28,7 +28,6 @@ class TestMNISTFrame(tk.Frame):
         
         # Setup test MNIST frame variables
         self.use_gpu = use_gpu
-        self.model = model
         
         # Setup widgets
         self.model_status_label: tk.Label = tk.Label(master=self,
@@ -49,20 +48,25 @@ class TestMNISTFrame(tk.Frame):
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(
-                                    target=self.model.test
+                                    target=model.test
                                     )
         self.test_thread.start()
 
-    def plot_results(self) -> None:
-        """Plot results of Model test."""
+    def plot_results(self, model: object) -> None:
+        """Plot results of Model test.
+        
+           Args:
+               model (object): the Model object thats been tested.
+        
+        """
         if not self.use_gpu:
-            test_prediction = np.squeeze(self.model.test_prediction).T.tolist()
-            test_inputs = np.squeeze(self.model.test_inputs).T
+            test_prediction = np.squeeze(model.test_prediction).T.tolist()
+            test_inputs = np.squeeze(model.test_inputs).T
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(self.model.test_prediction.round() - self.model.test_outputs)) * 100)}%\n" +
+             f"{round(100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100)}%\n" +
              f"Network Shape: " +
-             f"{','.join(self.model.layers_shape)}\n"
+             f"{','.join(model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))
@@ -78,13 +82,13 @@ class TestMNISTFrame(tk.Frame):
 
             import cupy as cp
             
-            test_prediction = cp.squeeze(self.model.test_prediction).T.tolist()
-            test_inputs = cp.asnumpy(cp.squeeze(self.model.test_inputs)).T
+            test_prediction = cp.squeeze(model.test_prediction).T.tolist()
+            test_inputs = cp.asnumpy(cp.squeeze(model.test_inputs)).T
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(cp.asnumpy(self.model.test_prediction).round() - cp.asnumpy(self.model.test_outputs))) * 100)}%\n" +
+             f"{round(100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100)}%\n" +
              f"Network Shape: " +
-             f"{','.join(self.model.layers_shape)}\n"
+             f"{','.join(model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))
@@ -119,7 +123,6 @@ class TestCatRecognitionFrame(tk.Frame):
         
         # Setup image recognition frame variables
         self.use_gpu = use_gpu
-        self.model = model
         
         # Setup widgets
         self.model_status_label: tk.Label = tk.Label(master=self,
@@ -140,34 +143,39 @@ class TestCatRecognitionFrame(tk.Frame):
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(
-                                    target=self.model.test
+                                    target=model.test
                                     )
         self.test_thread.start()
 
-    def plot_results(self) -> None:
-        """Plot results of Model test"""
+    def plot_results(self, model: object) -> None:
+        """Plot results of Model test
+        
+           Args:
+               model (object): the Model object thats been tested.
+        
+        """
         if not self.use_gpu:
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(self.model.test_prediction.round() - self.model.test_outputs)) * 100)}%\n" +
+             f"{round(100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100)}%\n" +
              f"Network Shape: " +
-             f"{','.join(self.model.layers_shape)}\n"
+             f"{','.join(model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
-            if np.squeeze(self.model.test_prediction)[0] >= 0.5:
+            if np.squeeze(model.test_prediction)[0] >= 0.5:
                 image1.set_title("Cat")
             else:
                 image1.set_title("Not a cat")
             image1.imshow(
-                     self.model.test_inputs[:,0].reshape((64,64,3))
+                     model.test_inputs[:,0].reshape((64,64,3))
                      )
             image2: Figure.axes = self.image_figure.add_subplot(122)
-            if np.squeeze(self.model.test_prediction)[14] >= 0.5:
+            if np.squeeze(model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
                 image2.set_title("Not a cat")
             image2.imshow(
-                    self.model.test_inputs[:,14].reshape((64,64,3))
+                    model.test_inputs[:,14].reshape((64,64,3))
                     )
             self.image_canvas.get_tk_widget().pack()
         
@@ -177,25 +185,25 @@ class TestCatRecognitionFrame(tk.Frame):
             
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(cp.asnumpy(self.model.test_prediction).round() - cp.asnumpy(self.model.test_outputs))) * 100)}%\n" +
+             f"{round(100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100)}%\n" +
              f"Network Shape: " +
-             f"{','.join(self.model.layers_shape)}\n"
+             f"{','.join(model.layers_shape)}\n"
              )
             image1: Figure.axes = self.image_figure.add_subplot(121)
-            if cp.squeeze(self.model.test_prediction)[0] >= 0.5:
+            if cp.squeeze(model.test_prediction)[0] >= 0.5:
                 image1.set_title("Cat")
             else:
                 image1.set_title("Not a cat")
             image1.imshow(
-                     cp.asnumpy(self.model.test_inputs)[:,0].reshape((64,64,3))
+                     cp.asnumpy(model.test_inputs)[:,0].reshape((64,64,3))
                      )
             image2: Figure.axes = self.image_figure.add_subplot(122)
-            if cp.squeeze(self.model.test_prediction)[14] >= 0.5:
+            if cp.squeeze(model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
                 image2.set_title("Not a cat")
             image2.imshow(
-                    cp.asnumpy(self.model.test_inputs)[:,14].reshape((64,64,3))
+                    cp.asnumpy(model.test_inputs)[:,14].reshape((64,64,3))
                     )
             self.image_canvas.get_tk_widget().pack()
 
@@ -218,9 +226,6 @@ class TestXORFrame(tk.Frame):
         self.WIDTH = width
         self.HEIGHT = height
         
-        # Setup image recognition frame variables
-        self.model = model
-        
         # Setup widgets
         self.model_status_label: tk.Label = tk.Label(master=self,
                                                      bg='white',
@@ -238,22 +243,27 @@ class TestXORFrame(tk.Frame):
                         fg='green'
                         )
         self.test_thread: threading.Thread = threading.Thread(
-                                    target=self.model.test
+                                    target=model.test
                                     )
         self.test_thread.start()
 
-    def plot_results(self):
-        """Plot results of Model test."""
+    def plot_results(self, model: object):
+        """Plot results of Model test.
+        
+           Args:
+               model (object): the Model object thats been tested.
+        
+        """
         results: str = (
                     f"Prediction Accuracy: " +
-                    f"{round(self.model.test_prediction_accuracy)}%\n" +
+                    f"{round(model.test_prediction_accuracy)}%\n" +
                     f"Network Shape: " +
-                    f"{','.join(self.model.layers_shape)}\n"
+                    f"{','.join(model.layers_shape)}\n"
                     )
-        for i in range(self.model.test_inputs.shape[1]):
-            results += f"{self.model.test_inputs[0][i]},"
-            results += f"{self.model.test_inputs[1][i]} = "
-            if np.squeeze(self.model.test_prediction)[i] >= 0.5:
+        for i in range(model.test_inputs.shape[1]):
+            results += f"{model.test_inputs[0][i]},"
+            results += f"{model.test_inputs[1][i]} = "
+            if np.squeeze(model.test_prediction)[i] >= 0.5:
                 results += "1\n"
             else:
                 results += "0\n"

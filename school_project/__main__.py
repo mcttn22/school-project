@@ -219,7 +219,7 @@ class SchoolProjectFrame(tk.Frame):
         """
         if not train_thread.is_alive():
             self.training_frame.training_progress_label.pack_forget()
-            self.training_frame.plot_losses()
+            self.training_frame.plot_losses(model=self.model)
             self.stop_training_button.pack_forget()
             self.test_button.pack(pady=(30,0))
         else:
@@ -274,7 +274,8 @@ class SchoolProjectFrame(tk.Frame):
         
         """
         if not test_thread.is_alive():
-            self.test_frame.plot_results()
+            self.test_frame.plot_results(model=self.model)
+            self.model = None
             self.exit_button.pack()
         else:
             self.after(1_000, self.manage_testing, test_thread)
