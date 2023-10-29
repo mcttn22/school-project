@@ -7,9 +7,6 @@
   - Format images to correct sections
   - Submit to Teams
 
-- Allow weights to be saved in files with sqlite3? (save numpy arrays in an array to a file with np.save, then store the location of the file and the model parameters under an ID with sqlite3) (user gives name to model)
-  - Pretrained optimum?
-
 - Ideas from interview
   - Allow model to be saved
   - Talk about vanishing gradient (and ReLu vs sigmoid for this)
@@ -25,6 +22,12 @@
   - Maybe cifar-10 dataset
   - Maybe use sections of images for more inputs
   - Maybe CNNs
+
+- Allow weights to be saved in files with sqlite3? (save numpy arrays in an array to a file with np.save, then store the location of the file and the model parameters under an ID with sqlite3) (user gives name to model)
+  - Pretrained optimum?
+
+- Add time taken to train
+- Maybe use test_frame interface
 
 - Maybe give option to continue training pretrained model
 
