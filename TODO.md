@@ -23,6 +23,8 @@
   - Maybe use sections of images for more inputs
   - Maybe CNNs
 
+- Start design draft
+
 - Allow weights to be saved in files with sqlite3? (save numpy arrays in an array to a file with np.save, then store the location of the file and the model parameters under an ID with sqlite3) (user gives name to model)
   - Pretrained optimum?
 
