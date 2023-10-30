@@ -3,7 +3,7 @@ import numpy as np
 
 from school_project.models.cpu.utils.model import AbstractModel
 
-class Model(AbstractModel):
+class CatRecognitionModel(AbstractModel):
     """ANN model that trains to predict if an image is a cat or not a cat."""
     def __init__(self, hidden_layers_shape: list[int],
                  learning_rate: float,

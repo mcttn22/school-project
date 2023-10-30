@@ -7,7 +7,7 @@ from school_project.models.cpu.utils.model import (
                                                     AbstractModel
                                                     )
 
-class Model(AbstractModel):
+class MNISTModel(AbstractModel):
     """ANN model that trains to predict Numbers from images."""
     def __init__(self, hidden_layers_shape: list[int],
                  learning_rate: float,

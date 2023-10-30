@@ -3,7 +3,7 @@ import cupy as cp
 
 from school_project.models.gpu.utils.model import AbstractModel
 
-class Model(AbstractModel):
+class CatRecognitionModel(AbstractModel):
     """ANN model that trains to predict if an image is a cat or not a cat."""
     def __init__(self, hidden_layers_shape: list[int],
                  learning_rate: float,

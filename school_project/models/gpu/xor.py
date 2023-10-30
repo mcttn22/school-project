@@ -2,7 +2,7 @@ import cupy as cp
 
 from school_project.models.gpu.utils.model import AbstractModel
 
-class Model(AbstractModel):
+class XORModel(AbstractModel):
     """ANN model that trains to predict the output of a XOR gate with two 
        inputs."""
     def __init__(self, hidden_layers_shape: list[int],

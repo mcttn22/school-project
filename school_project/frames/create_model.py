@@ -142,11 +142,11 @@ class HyperParameterFrame(tk.Frame):
         # Create Model
         if not self.use_gpu:
             if self.dataset == "MNIST":
-                from school_project.models.cpu.mnist import Model
+                from school_project.models.cpu.mnist import MNISTModel as Model
             elif self.dataset == "Cat Recognition":
-                from school_project.models.cpu.cat_recognition import Model
+                from school_project.models.cpu.cat_recognition import CatRecognitionModel as Model
             elif self.dataset == "XOR":
-                from school_project.models.cpu.xor import Model
+                from school_project.models.cpu.xor import XORModel as Model
             model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
                           learning_rate = self.learning_rate_scale.get(),
                           use_relu = self.use_relu_check_button_var.get())
@@ -154,11 +154,11 @@ class HyperParameterFrame(tk.Frame):
         else:
             try:
                 if self.dataset == "MNIST":
-                    from school_project.models.gpu.mnist import Model
+                    from school_project.models.gpu.mnist import MNISTModel as Model
                 elif self.dataset == "Cat Recognition":
-                    from school_project.models.gpu.cat_recognition import Model
+                    from school_project.models.gpu.cat_recognition import CatRecognitionModel as Model
                 elif self.dataset == "XOR":
-                    from school_project.models.gpu.xor import Model
+                    from school_project.models.gpu.xor import XORModel as Model
                 model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
                               learning_rate = self.learning_rate_scale.get(),
                               use_relu = self.use_relu_check_button_var.get())
