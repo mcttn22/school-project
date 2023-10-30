@@ -28,9 +28,6 @@
 - Allow weights to be saved in files with sqlite3? (save numpy arrays in an array to a file with np.save, then store the location of the file and the model parameters under an ID with sqlite3) (user gives name to model)
   - Pretrained optimum?
 
-- Add time taken to train
-- Maybe use test_frame interface
-
 - Maybe give option to continue training pretrained model
 
 - Update setup.py version
