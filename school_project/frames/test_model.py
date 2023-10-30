@@ -45,7 +45,7 @@ class TestMNISTFrame(tk.Frame):
         # Start test thread
         self.model_status_label.configure(
                         text="Testing trained model",
-                        fg='green'
+                        fg='red'
                         )
         self.test_thread: threading.Thread = threading.Thread(
                                     target=model.test
@@ -59,6 +59,10 @@ class TestMNISTFrame(tk.Frame):
                model (object): the Model object thats been tested.
         
         """
+        self.model_status_label.configure(
+                        text="Testing Results:",
+                        fg='green'
+                        )
         if not self.use_gpu:
             test_prediction = np.squeeze(model.test_prediction).T.tolist()
             test_inputs = np.squeeze(model.test_inputs).T
@@ -140,7 +144,7 @@ class TestCatRecognitionFrame(tk.Frame):
         # Start test thread
         self.model_status_label.configure(
                         text="Testing trained model...",
-                        fg='green'
+                        fg='red'
                         )
         self.test_thread: threading.Thread = threading.Thread(
                                     target=model.test
@@ -154,6 +158,10 @@ class TestCatRecognitionFrame(tk.Frame):
                model (object): the Model object thats been tested.
         
         """
+        self.model_status_label.configure(
+                        text="Testing Results:",
+                        fg='green'
+                        )
         if not self.use_gpu:
             self.image_figure.suptitle(
              "Prediction Correctness: " +
@@ -240,7 +248,7 @@ class TestXORFrame(tk.Frame):
         # Start test thread
         self.model_status_label.configure(
                         text="Testing trained model...",
-                        fg='green'
+                        fg='red'
                         )
         self.test_thread: threading.Thread = threading.Thread(
                                     target=model.test
@@ -254,6 +262,10 @@ class TestXORFrame(tk.Frame):
                model (object): the Model object thats been tested.
         
         """
+        self.model_status_label.configure(
+                        text="Testing Results:",
+                        fg='green'
+                        )
         results: str = (
                     f"Prediction Accuracy: " +
                     f"{round(model.test_prediction_accuracy)}%\n" +
