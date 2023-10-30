@@ -1,3 +1,5 @@
+import time
+
 import cupy as cp
 
 from school_project.models.gpu.utils.tools import (
@@ -133,6 +135,7 @@ class AbstractModel (ModelInterface):
         self.test_prediction: cp.ndarray
         self.test_prediction_accuracy: float
         self.training_progress: str = ""
+        self.training_time: float
         
         # Setup model attributes
         self.running: bool = True
@@ -283,6 +286,7 @@ class AbstractModel (ModelInterface):
                             [self.output_neuron_count]
                             )]
         self.train_losses = []
+        training_start_time = time.time()
         for epoch in range(epoch_count):
             if not self.running:
                 break
@@ -294,3 +298,5 @@ class AbstractModel (ModelInterface):
             self.train_losses.append(loss)
             dloss_doutput = -(1/self.input_count) * ((self.train_outputs - prediction)/(prediction * (1 - prediction)))
             self.back_propagation(dloss_doutput=dloss_doutput)
+        self.training_time = round(number=time.time() - training_start_time,
+                                   ndigits=2)

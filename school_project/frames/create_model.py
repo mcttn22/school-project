@@ -224,6 +224,10 @@ class TrainingFrame(tk.Frame):
                model (object): the Model object thats been trained.
         
         """
+        self.model_status_label.configure(
+                 text=f"Weights and biases trained in {model.training_time}s",
+                 fg='green'
+                 )
         graph: Figure.axes = self.loss_figure.add_subplot(111)
         graph.set_title("Learning rate: " +
                         f"{model.learning_rate}")
