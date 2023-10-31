@@ -1,0 +1,93 @@
+\documentclass[./project-report/src/latex/project-report.tex]{subfiles}
+
+\begin{document}
+
+\maketitle
+
+\section{Design}  % Use SysML
+
+\subsection{Introduction}
+
+The following design focuses have been made for the project:
+
+\begin{itemize}
+    \item The program will support multiple platforms to run on, including Windows and Linux.
+    \item The program will use python3 as its main programming language.
+    \item I will use an object-orientated approach to the project
+    \item I will give and option to use either a Graphics card or a CPU to train the Artificial Neural Networks
+\end{itemize}
+
+I will also be using SysML for designing the following diagrams.
+
+\subsection{System Architecture}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{./project-report/src/images/system-architecture-diagram.png}
+\end{figure}
+
+\pagebreak
+
+\subsection{Class Diagrams}
+
+\subsubsection{UI Class Diagram}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{./project-report/src/images/ui-class-diagram.png}
+\end{figure}
+
+\subsubsection{Model Class Diagram}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{./project-report/src/images/model-class-diagram.png}
+\end{figure}
+
+\subsection{System Flow chart}  % Use General Flow diagrams (Activity)
+
+- The general flow of the program TODO
+
+\subsection{Algorithms}
+
+Refer to Analysis for the algorithms behind the Artificial Neural Networks
+
+\subsection{Data Structures}
+
+I will use the following data structures in the program:
+
+\begin{itemize}
+    \item Matrices to represent the layers and allow for a varied number of neurons in each layer. To represent the Matrices I will use both numpy arrays and cupy 
+          arrays.
+    \item Dictionaries for loading the default hyper-parameter values from a JSON file.
+\end{itemize}
+
+\subsection{File Structure}
+
+I will use the following file structures to store necessary data for the program:
+
+\begin{itemize}
+    \item A JSON file for storing the default hyper-parameters for creating a new model for each dataset.
+    \item I will store the image dataset files in a 'datasets' directory. The dataset files will either be a compressed archive file (such as .pkl.gz files) or of the 
+          Hierarchical Data Format (such as .h5) for storing large datasets with fast retrieval.
+    \item I will save a pretrained model TODO
+\end{itemize}
+
+\subsection{Database Design}
+
+- TODO
+
+\subsection{Queries}
+
+- TODO
+
+\subsection{HCI}
+
+- Labeled screenshots of UI TODO
+
+\subsection{Hardware Design}
+
+To allow for faster training of an Artificial Neural Network, I will give the option to use a Graphics Card to train the Artificial Neural Network if available. 
+I will also give the option to load pretrained weights to run on less computationaly powerfull hardware using just the CPU as standard.
+
+\end{document}
