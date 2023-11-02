@@ -113,14 +113,17 @@ class FullyConnectedLayer():
 
 class AbstractModel (ModelInterface):
     """ANN model with variable number of hidden layers"""
-    def __init__(self, hidden_layers_shape: list[int],
-                       learning_rate: float,
-                       use_relu: bool) -> None:
+    def __init__(self,
+                 hidden_layers_shape: list[int],
+                 train_dataset_size: int,
+                 learning_rate: float,
+                 use_relu: bool) -> None:
         """Initialise model values.
 
         Args:
             hidden_layers_shape (list[int]):
             list of the number of neurons in each hidden layer.
+            train_dataset_size (int): the number of train dataset inputs to use.
             output_neuron_count (int):
             the number of output neurons in the model.
             learning_rate (float): the learning rate of the model.
@@ -130,7 +133,9 @@ class AbstractModel (ModelInterface):
         """
         # Setup model data
         self.train_inputs, self.train_outputs,\
-        self.test_inputs, self.test_outputs = self.load_datasets()
+        self.test_inputs, self.test_outputs = self.load_datasets(
+                                         train_dataset_size=train_dataset_size
+                                         )
         self.train_losses: list[float]
         self.test_prediction: cp.ndarray
         self.test_prediction_accuracy: float

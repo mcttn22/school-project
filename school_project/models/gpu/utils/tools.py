@@ -12,10 +12,12 @@ class ModelInterface():
         """
         raise NotImplementedError
 
-    def load_datasets() -> tuple[cp.ndarray, cp.ndarray, 
+    def load_datasets(self, train_dataset_size: int) -> tuple[cp.ndarray, cp.ndarray, 
                                      cp.ndarray, cp.ndarray]:
         """Load input and output datasets.
         
+        Args:
+            train_dataset_size (int): the number of train dataset inputs to use.
         Returns:
             tuple of train_inputs, train_outputs,
             test_inputs and test_outputs.

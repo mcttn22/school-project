@@ -10,6 +10,7 @@ from school_project.models.cpu.utils.model import (
 class MNISTModel(AbstractModel):
     """ANN model that trains to predict Numbers from images."""
     def __init__(self, hidden_layers_shape: list[int],
+                 train_dataset_size: int,
                  learning_rate: float,
                  use_relu: bool) -> None:
         """Initialise Model's Base class.
@@ -17,19 +18,22 @@ class MNISTModel(AbstractModel):
         Args:
             hidden_layers_shape (list[int]):
             list of the number of neurons in each hidden layer.
+            train_dataset_size (int): the number of train dataset inputs to use.
             learning_rate (float): the learning rate of the model.
             use_relu (bool): True or False whether the ReLu Transfer function 
             should be used.
         
         """
         super().__init__(hidden_layers_shape=hidden_layers_shape,
+                         train_dataset_size=train_dataset_size,
                          learning_rate=learning_rate,
                          use_relu=use_relu)
     
-    def load_datasets(self) -> tuple[np.ndarray, np.ndarray, 
-                                     np.ndarray, np.ndarray]:
+    def load_datasets(self, train_dataset_size: int) -> tuple[np.ndarray, np.ndarray, 
+                                                              np.ndarray, np.ndarray]:
         """Load image input and output datasets.
-        
+        Args:
+            train_dataset_size (int): the number of dataset inputs to use.
         Returns:
             tuple of image train_inputs, train_outputs,
             test_inputs and test_outputs numpy.ndarrys.
@@ -57,5 +61,9 @@ class MNISTModel(AbstractModel):
         # with a one at the matching index of an array of zeros
         train_outputs = np.eye(np.max(train_outputs) + 1)[train_outputs].T
         test_outputs = np.eye(np.max(test_outputs) + 1)[test_outputs].T
+
+        # Reduce train datasets' sizes to train_dataset_size
+        train_inputs = (train_inputs.T[:train_dataset_size]).T
+        train_outputs = (train_outputs.T[:train_dataset_size]).T
 
         return train_inputs, train_outputs, test_inputs, test_outputs

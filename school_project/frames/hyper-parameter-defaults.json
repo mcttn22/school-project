@@ -1,20 +1,26 @@
 {
     "MNIST": {
         "description": "An Image model trained on recognising numbers from images.",
-        "maxLearningRate": 1,
+        "epochCount": 150,
         "hiddenLayersShape": [1000, 1000],
-        "epochCount": 150
+        "minTrainDatasetSize": 1,
+        "maxTrainDatasetSize": 60000,
+        "maxLearningRate": 1
     },
     "Cat Recognition": {
         "description": "An Image model trained on recognising if an image is a cat or not.",
-        "maxLearningRate": 0.3,
+        "epochCount": 3500,
         "hiddenLayersShape": [100, 100],
-        "epochCount": 3500
+        "minTrainDatasetSize": 1,
+        "maxTrainDatasetSize": 209,
+        "maxLearningRate": 0.3
     },
     "XOR": {
         "description": "For experimenting with Artificial Neural Networks, a XOR gate model has been used for its lesser computation time.",
-        "maxLearningRate": 1,
+        "epochCount": 1200,
         "hiddenLayersShape": [100, 100],
-        "epochCount": 1200
+        "minTrainDatasetSize":  2,
+        "maxTrainDatasetSize": 4,
+        "maxLearningRate": 1
     }
 }

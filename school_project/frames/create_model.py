@@ -62,6 +62,15 @@ class HyperParameterFrame(tk.Frame):
                                                       to=10_000,
                                                       resolution=100)
         self.epoch_count_scale.set(value=self.default_hyper_parameters['epochCount'])
+        self.train_dataset_size_scale: tk.Scale = tk.Scale(master=self,
+                                                      bg='white',
+                                                      orient='horizontal',
+                                                      label="Train Dataset Size",
+                                                      length=185,
+                                                      from_=self.default_hyper_parameters['minTrainDatasetSize'],
+                                                      to=self.default_hyper_parameters['maxTrainDatasetSize'],
+                                                      resolution=1)
+        self.train_dataset_size_scale.set(value=self.default_hyper_parameters['maxTrainDatasetSize'])
         self.hidden_layers_shape_label: tk.Label = tk.Label(
                                 master=self,
                                 bg='white',
@@ -98,12 +107,13 @@ class HyperParameterFrame(tk.Frame):
         self.about_label.grid(row=1, column=0, columnspan=3)
         self.learning_rate_scale.grid(row=2, column=0, pady=(50,0))
         self.epoch_count_scale.grid(row=3, column=0, pady=(30,0))
+        self.train_dataset_size_scale.grid(row=4, column=0, pady=(30,0))
         self.hidden_layers_shape_label.grid(row=2, column=1,
                                             padx=30, pady=(50,0))
         self.hidden_layers_shape_entry.grid(row=3, column=1, padx=30)
         self.use_relu_check_button.grid(row=2, column=2, pady=(30, 0))
         self.use_gpu_check_button.grid(row=3, column=2, pady=(30, 0))
-        self.model_status_label.grid(row=4, column=0,
+        self.model_status_label.grid(row=5, column=0,
                                      columnspan=3, pady=50)
         
     def load_default_hyper_parameters(self, dataset: str) -> dict[
@@ -148,6 +158,7 @@ class HyperParameterFrame(tk.Frame):
             elif self.dataset == "XOR":
                 from school_project.models.cpu.xor import XORModel as Model
             model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                          train_dataset_size = self.train_dataset_size_scale.get(),
                           learning_rate = self.learning_rate_scale.get(),
                           use_relu = self.use_relu_check_button_var.get())
 
@@ -160,6 +171,7 @@ class HyperParameterFrame(tk.Frame):
                 elif self.dataset == "XOR":
                     from school_project.models.gpu.xor import XORModel as Model
                 model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                              train_dataset_size = self.train_dataset_size_scale.get(),
                               learning_rate = self.learning_rate_scale.get(),
                               use_relu = self.use_relu_check_button_var.get())
             except ImportError as ie:
