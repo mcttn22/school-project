@@ -299,6 +299,8 @@ class AbstractModel(ModelInterface):
                                   outputs=self.train_outputs,
                                   prediction=prediction)
             self.train_losses.append(loss)
+            if not self.running:
+                break
             dloss_doutput = -(1/self.input_count) * ((self.train_outputs - prediction)/(prediction * (1 - prediction)))
             self.back_propagation(dloss_doutput=dloss_doutput)
         self.training_time = round(number=time.time() - training_start_time,
