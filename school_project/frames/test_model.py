@@ -68,7 +68,7 @@ class TestMNISTFrame(tk.Frame):
             test_inputs = np.squeeze(model.test_inputs).T
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100)}%\n" +
+             f"{round(number=100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
@@ -90,7 +90,7 @@ class TestMNISTFrame(tk.Frame):
             test_inputs = cp.asnumpy(cp.squeeze(model.test_inputs)).T
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100)}%\n" +
+             f"{round(number=100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
@@ -165,7 +165,7 @@ class TestCatRecognitionFrame(tk.Frame):
         if not self.use_gpu:
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100)}%\n" +
+             f"{round(number=100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
@@ -193,7 +193,7 @@ class TestCatRecognitionFrame(tk.Frame):
             
             self.image_figure.suptitle(
              "Prediction Correctness: " +
-             f"{round(100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100)}%\n" +
+             f"{round(number=100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
@@ -268,7 +268,7 @@ class TestXORFrame(tk.Frame):
                         )
         results: str = (
                     f"Prediction Accuracy: " +
-                    f"{round(model.test_prediction_accuracy)}%\n" +
+                    f"{round(number=model.test_prediction_accuracy, ndigits=1)}%\n" +
                     f"Network Shape: " +
                     f"{','.join(model.layers_shape)}\n"
                     )
