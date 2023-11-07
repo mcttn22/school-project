@@ -1,5 +1,7 @@
 ### Todo
 
+- Add encapsulation
+
 - Finish analysis draft
   - Complete analysis interview
   - Talk about more comparison (parameters, datasets etc)
@@ -27,6 +29,8 @@
 
 - Allow weights to be saved in files with sqlite3? (save numpy arrays in an array to a file with np.save, then store the location of the file and the model parameters under an ID with sqlite3) (user gives name to model)
   - Pretrained optimum?
+  - Load frame for dataset (chosen on homepage) -> select name from drop down menu, when selected shows all parameters
+  - Generate and export methods in model class
 
 - Maybe give option to continue training pretrained model
 
