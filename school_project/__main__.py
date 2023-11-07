@@ -5,6 +5,7 @@ import tkinter.font as tkf
 
 from school_project.frames.create_model import (HyperParameterFrame,
                                                 TrainingFrame)
+from school_project.frames.load_model import LoadModelFrame
 from school_project.frames.test_model import (TestMNISTFrame,
                                               TestCatRecognitionFrame, 
                                               TestXORFrame)
@@ -30,6 +31,7 @@ class SchoolProjectFrame(tk.Frame):
         # Setup school project frame variables
         self.hyper_parameter_frame: HyperParameterFrame
         self.training_frame: TrainingFrame
+        self.load_model_frame: LoadModelFrame
         self.test_frame: TestMNISTFrame | TestCatRecognitionFrame | TestXORFrame
         self.model = None
 
@@ -41,12 +43,19 @@ class SchoolProjectFrame(tk.Frame):
               text="Exit",
               command=self.exit_hyper_parameter_frame
               )
+        self.exit_load_model_frame_button: tk.Button = tk.Button(
+              master=self,
+              width=13, height=1,
+              font=tkf.Font(size=12),
+              text="Exit",
+              command=self.exit_load_model_frame
+              )
         self.train_button: tk.Button = tk.Button(
               master=self,
               width=13, height=1,
               font=tkf.Font(size=12),
               text="Train Model",
-              command=self.load_training_frame
+              command=self.enter_training_frame
               )
         self.stop_training_button: tk.Button = tk.Button(
               master=self,
@@ -55,19 +64,26 @@ class SchoolProjectFrame(tk.Frame):
               text="Stop Training Model",
               command=self.stop_training
               )
-        self.test_button: tk.Button = tk.Button(
+        self.test_created_model_button: tk.Button = tk.Button(
               master=self,
               width=13, height=1,
               font=tkf.Font(size=12),
               text="Test Model",
-              command=self.load_test_frame
+              command=self.test_created_model
+              )
+        self.test_loaded_model_button: tk.Button = tk.Button(
+              master=self,
+              width=13, height=1,
+              font=tkf.Font(size=12),
+              text="Test Model",
+              command=self.test_loaded_model
               )
         self.exit_button: tk.Button = tk.Button(
               master=self,
               width=13, height=1,
               font=tkf.Font(size=12),
               text="Exit",
-              command=self.load_home_frame
+              command=self.enter_home_frame
               )
 
         # Setup home frame
@@ -89,62 +105,47 @@ class SchoolProjectFrame(tk.Frame):
            "in Image Recognition.\n\n" +
            " - Max Cotton"
            )
-        self.create_model_menu_label: tk.Label = tk.Label(
-                                           master=self.home_frame,
-                                           bg='white',
-                                           font=('Arial', 14),
-                                           text="Create a new model for one " +
-                                            "of the following datasets:"
-                                            )
-        self.create_model_dataset_option_menu_var: tk.StringVar = tk.StringVar(
+        self.model_menu_label: tk.Label = tk.Label(
+                                          master=self.home_frame,
+                                          bg='white',
+                                          font=('Arial', 14),
+                                          text="Create a new model " +
+                                          "or load a pre-trained model "
+                                          "for one of the following datasets:"
+                                          )
+        self.dataset_option_menu_var: tk.StringVar = tk.StringVar(
                                                        master=self.home_frame,
                                                        value="MNIST"
                                                        )
-        self.create_model_dataset_option_menu: tk.OptionMenu = tk.OptionMenu(
-                                    self.home_frame,
-                                    self.create_model_dataset_option_menu_var,
-                                    "MNIST",
-                                    "Cat Recognition",
-                                    "XOR"
-                                    )
+        self.dataset_option_menu: tk.OptionMenu = tk.OptionMenu(
+                                                 self.home_frame,
+                                                 self.dataset_option_menu_var,
+                                                 "MNIST",
+                                                 "Cat Recognition",
+                                                 "XOR"
+                                                 )
         self.create_model_button: tk.Button = tk.Button(
               master=self.home_frame,
               width=13, height=1,
               font=tkf.Font(size=12),
               text="Create Model",
-              command=self.load_hyper_parameter_frame
+              command=self.enter_hyper_parameter_frame
               )
-        self.load_model_menu_label: tk.Label = tk.Label(
-                                           master=self.home_frame,
-                                           bg='white',
-                                           font=('Arial', 14),
-                                           text="Load pre-trained Models:"
-                                            )
-        self.load_model_option_menu_value: tk.StringVar = tk.StringVar(
-                                                       master=self.home_frame
-                                                       )
-        self.load_model_option_menu: tk.OptionMenu = tk.OptionMenu(
-                                         self.home_frame,
-                                         self.load_model_option_menu_value,
-                                         *self.load_pretrained_model_options()
-                                         )
         self.load_model_button: tk.Button = tk.Button(
               master=self.home_frame,
               width=13, height=1,
               font=tkf.Font(size=12),
               text="Load Model",
-              command=self.test_loaded_model
+              command=self.enter_load_model_frame
               )
         
         # Grid home frame widgets
-        self.title_label.grid(row=0, column=0, columnspan=2, pady=(10,0))
-        self.about_label.grid(row=1, column=0, columnspan=2, pady=(10,50))
-        self.create_model_menu_label.grid(row=2, column=0)
-        self.create_model_dataset_option_menu.grid(row=3, column=0, pady=10)
-        self.create_model_button.grid(row=4, column=0)
-        self.load_model_menu_label.grid(row=2, column=1, padx=(20,0))
-        self.load_model_option_menu.grid(row=3, column=1, padx=(20,0), pady=10)
-        self.load_model_button.grid(row=4, column=1, padx=(20,0))
+        self.title_label.grid(row=0, column=0, columnspan=4, pady=(10,0))
+        self.about_label.grid(row=1, column=0, columnspan=4, pady=(10,50))
+        self.model_menu_label.grid(row=2, column=0, columnspan=4)
+        self.dataset_option_menu.grid(row=3, column=0, columnspan=4, pady=30)
+        self.create_model_button.grid(row=4, column=1)
+        self.load_model_button.grid(row=4, column=2)
 
         self.home_frame.pack()
         
@@ -152,18 +153,31 @@ class SchoolProjectFrame(tk.Frame):
         self.grid_propagate(flag=False)
         self.pack_propagate(flag=False)
 
-    def load_hyper_parameter_frame(self) -> None:
+    def enter_hyper_parameter_frame(self) -> None:
         """Unpack home frame and pack hyper-parameter frame."""
         self.home_frame.pack_forget()
         self.hyper_parameter_frame = HyperParameterFrame(
-                     root=self,
-                     width=self.WIDTH,
-                     height=self.HEIGHT,
-                     dataset=self.create_model_dataset_option_menu_var.get()
-                     )
+                    root=self,
+                    width=self.WIDTH,
+                    height=self.HEIGHT,
+                    dataset=self.dataset_option_menu_var.get()
+                    )
         self.hyper_parameter_frame.pack()
         self.train_button.pack()
         self.exit_hyper_parameter_frame_button.pack(pady=(10,0))
+
+    def enter_load_model_frame(self) -> None:
+        """Unpack home frame and pack load model frame."""
+        self.home_frame.pack_forget()
+        self.load_model_frame = LoadModelFrame(
+                        root=self,
+                        width=self.WIDTH,
+                        height=self.HEIGHT,
+                        dataset=self.dataset_option_menu_var.get()
+                        )
+        self.load_model_frame.pack()
+        self.test_loaded_model_button.pack()
+        self.exit_load_model_frame_button.pack(pady=(10,0))
         
     def exit_hyper_parameter_frame(self) -> None:
         """Unpack hyper-parameter frame and pack home frame."""
@@ -172,14 +186,14 @@ class SchoolProjectFrame(tk.Frame):
         self.exit_hyper_parameter_frame_button.pack_forget()
         self.home_frame.pack()
 
-    def load_pretrained_model_options(self) -> list[str]:  # TODO
-        """Not Implemented."""
-        return ["Not Implemented"]
-    
-    def test_loaded_model(self):  # TODO
-        """Not Implemented"""
+    def exit_load_model_frame(self) -> None:
+        """Unpack load model frame and pack home frame."""
+        self.load_model_frame.pack_forget()
+        self.test_loaded_model_button.pack_forget()
+        self.exit_load_model_frame_button.pack_forget()
+        self.home_frame.pack()
 
-    def load_training_frame(self) -> None:
+    def enter_training_frame(self) -> None:
         """Load untrained model from hyper parameter frame,
            unpack hyper-parameter frame, pack training frame
            and begin managing the training thread.
@@ -221,54 +235,82 @@ class SchoolProjectFrame(tk.Frame):
             self.training_frame.training_progress_label.pack_forget()
             self.training_frame.plot_losses(model=self.model)
             self.stop_training_button.pack_forget()
-            self.test_button.pack(pady=(30,0))
+            self.test_created_model_button.pack(pady=(30,0))
         else:
             self.training_frame.training_progress_label.configure(text=self.model.training_progress)
             self.after(100, self.manage_training, train_thread)
 
-    def load_test_frame(self) -> None:
-        """Unpack trainig frame, pack test frame for the dataset
-           and begin managing the test thread.
-        """
+    def test_created_model(self) -> None:
+        """Unpack training frame, pack test frame for the dataset
+           and begin managing the test thread."""
         self.training_frame.pack_forget()
-        self.test_button.pack_forget()
+        self.test_created_model_button.pack_forget()
         if self.hyper_parameter_frame.dataset == "MNIST":
             self.test_frame = TestMNISTFrame( 
-                                   root=self,
-                                   width=self.WIDTH,
-                                   height=self.HEIGHT,
-                                   use_gpu=self.hyper_parameter_frame.use_gpu,
-                                   model=self.model
-                                   )
+                                root=self,
+                                width=self.WIDTH,
+                                height=self.HEIGHT,
+                                use_gpu=self.hyper_parameter_frame.use_gpu,
+                                model=self.model
+                                )
         elif self.hyper_parameter_frame.dataset == "Cat Recognition":
             self.test_frame = TestCatRecognitionFrame(
-                                 root=self,
-                                 width=self.WIDTH, 
-                                 height=self.HEIGHT,
-                                 use_gpu=self.hyper_parameter_frame.use_gpu,
-                                 model=self.model
-                                 )
+                                root=self,
+                                width=self.WIDTH, 
+                                height=self.HEIGHT,
+                                use_gpu=self.hyper_parameter_frame.use_gpu,
+                                model=self.model
+                                )
         elif self.hyper_parameter_frame.dataset == "XOR":
             self.test_frame = TestXORFrame(
-                     root=self, width=self.WIDTH,
-                     height=self.HEIGHT, model=self.model
-                     )
+                    root=self, width=self.WIDTH,
+                    height=self.HEIGHT, model=self.model
+                    )
         self.test_frame.pack()
-        self.manage_testing(test_thread=self.test_frame.test_thread)
+        self.manage_testing(test_thread=self.test_frame.test_thread, save_model=True)
 
-    def load_home_frame(self) -> None:
-        """Unpack test frame and pack home frame."""
-        self.test_frame.pack_forget()
-        self.exit_button.pack_forget()
-        self.home_frame.pack()
+    def test_loaded_model(self) -> None:
+        """Unpack load model frame, pack test frame for the dataset
+           and begin managing the test thread."""
+        try:
+            self.model = self.load_model_frame.load_model()
+        except (ValueError, ImportError) as e:
+            return
+        self.load_model_frame.pack_forget()
+        self.test_loaded_model_button.pack_forget()
+        if self.hyper_parameter_frame.dataset == "MNIST":
+            self.test_frame = TestMNISTFrame( 
+                                root=self,
+                                width=self.WIDTH,
+                                height=self.HEIGHT,
+                                use_gpu=self.load_model_frame.use_gpu,
+                                model=self.model
+                                )
+        elif self.hyper_parameter_frame.dataset == "Cat Recognition":
+            self.test_frame = TestCatRecognitionFrame(
+                                root=self,
+                                width=self.WIDTH, 
+                                height=self.HEIGHT,
+                                use_gpu=self.load_model_frame.use_gpu,
+                                model=self.model
+                                )
+        elif self.hyper_parameter_frame.dataset == "XOR":
+            self.test_frame = TestXORFrame(
+                    root=self, width=self.WIDTH,
+                    height=self.HEIGHT, model=self.model
+                    )
+        self.test_frame.pack()
+        self.manage_testing(test_thread=self.test_frame.test_thread, save_model=False)
 
-    def manage_testing(self, test_thread: threading.Thread) -> None:
+    def manage_testing(self, test_thread: threading.Thread, save_model: bool) -> None:
         """Wait for model test thread to finish,
            then plot results on test frame.
         
         Args:
             test_thread (threading.Thread):
             the thread running the model's predict() method.
+            save_model (bool): True or False whether the model should have 
+            the option to be saved.
         Raises:
             TypeError: if test_thread is not of type threading.Thread.
         
@@ -276,9 +318,17 @@ class SchoolProjectFrame(tk.Frame):
         if not test_thread.is_alive():
             self.test_frame.plot_results(model=self.model)
             self.model = None  # Free up trained Model from memory
+            if save_model:
+                self.test_frame.save_model_button.pack()
             self.exit_button.pack()
         else:
-            self.after(1_000, self.manage_testing, test_thread)
+            self.after(1_000, self.manage_testing, test_thread, save_model)
+
+    def enter_home_frame(self) -> None:
+        """Unpack test frame and pack home frame."""
+        self.test_frame.pack_forget()
+        self.exit_button.pack_forget()
+        self.home_frame.pack()
         
 def main() -> None:
     """Entrypoint of project."""
