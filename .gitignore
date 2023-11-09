@@ -3,3 +3,6 @@ __pycache__/
 
 # Packaging
 *.egg-info
+
+# Database file
+school_project/pretrained_models.db
