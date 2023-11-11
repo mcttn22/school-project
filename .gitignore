@@ -6,3 +6,6 @@ __pycache__/
 
 # Database file
 school_project/pretrained_models.db
+
+# Exported models
+school_project/exported-models/

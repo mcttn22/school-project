@@ -66,6 +66,16 @@ class ModelInterface():
         
         """
         raise NotImplementedError
+    
+    def export(self, file_location: str) -> None:
+        """Export the model by saving the weights then biases of each layer to 
+           a .npz file with a given file location.
+
+           Args:
+               file_location (str): the file location to export the model to.
+
+        """
+        raise NotImplementedError
 
 def relu(z: np.ndarray | int | float) -> np.ndarray | float:
     """Transfer function, transform input to max number between 0 and z.

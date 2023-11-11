@@ -305,3 +305,17 @@ class AbstractModel(ModelInterface):
             self.back_propagation(dloss_doutput=dloss_doutput)
         self.training_time = round(number=time.time() - training_start_time,
                                    ndigits=2)
+        
+    def export(self, file_location: str) -> None:
+        """Export the model by saving the weights then biases of each layer to 
+           a .npz file with a given file location.
+
+           Args:
+               file_location (str): the file location to export the model to.
+
+        """
+        exported_model: list[np.ndarray] = []
+        for layer in self.layers:
+            exported_model.append(layer.weights)
+            exported_model.append(layer.biases)
+        np.savez(file_location, *exported_model)

@@ -1,5 +1,7 @@
 import threading
+import uuid
 
+import sqlite3
 import tkinter as tk
 import tkinter.font as tkf
 
@@ -33,7 +35,12 @@ class SchoolProjectFrame(tk.Frame):
         self.training_frame: TrainingFrame
         self.load_model_frame: LoadModelFrame
         self.test_frame: TestMNISTFrame | TestCatRecognitionFrame | TestXORFrame
+        self.connection, self.cursor = self.setup_database()
         self.model = None
+
+        # Record if the model should be saved after testing,
+        # as only newly created models should be given the option to be saved.
+        self.saving_model: bool
 
         # Setup school project frame widgets
         self.exit_hyper_parameter_frame_button: tk.Button = tk.Button(
@@ -77,6 +84,22 @@ class SchoolProjectFrame(tk.Frame):
               font=tkf.Font(size=12),
               text="Test Model",
               command=self.test_loaded_model
+              )
+        self.save_model_label: tk.Label = tk.Label(
+                                  master=self,
+                                  text="Enter a name for your trained model:",
+                                  bg='white',
+                                  font=('Arial', 15)
+                                  )
+        self.save_model_name_entry: tk.Entry = tk.Entry(master=self,
+                                                        width=13)
+        self.save_model_button: tk.Button = tk.Button(
+              master=self,
+              width=13,
+              height=1,
+              font=tkf.Font(size=12),
+              text="Save Model",
+              command=self.save_model
               )
         self.exit_button: tk.Button = tk.Button(
               master=self,
@@ -152,6 +175,25 @@ class SchoolProjectFrame(tk.Frame):
         # Setup frame attributes
         self.grid_propagate(flag=False)
         self.pack_propagate(flag=False)
+
+    def setup_database(self) -> tuple[sqlite3.Connection, sqlite3.Cursor]:
+        """Create a connection to the pretrained_models database file and 
+           setup base table if needed.
+           
+           Returns:
+               a tuple of the database connection and the cursor for it.
+        
+        """
+        connection = sqlite3.connect('school_project/pretrained_models.db')
+        cursor = connection.cursor()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Pretrained_Models
+        (Model_Name TEXT PRIMARY KEY,
+        Dataset_Name TEXT,
+        File_Location TEXT,
+        Use_ReLu INTEGER)
+        """)
+        return (connection, cursor)
 
     def enter_hyper_parameter_frame(self) -> None:
         """Unpack home frame and pack hyper-parameter frame."""
@@ -243,6 +285,7 @@ class SchoolProjectFrame(tk.Frame):
     def test_created_model(self) -> None:
         """Unpack training frame, pack test frame for the dataset
            and begin managing the test thread."""
+        self.saving_model = True
         self.training_frame.pack_forget()
         self.test_created_model_button.pack_forget()
         if self.hyper_parameter_frame.dataset == "MNIST":
@@ -267,11 +310,12 @@ class SchoolProjectFrame(tk.Frame):
                     height=self.HEIGHT, model=self.model
                     )
         self.test_frame.pack()
-        self.manage_testing(test_thread=self.test_frame.test_thread, save_model=True)
+        self.manage_testing(test_thread=self.test_frame.test_thread)
 
     def test_loaded_model(self) -> None:
         """Unpack load model frame, pack test frame for the dataset
            and begin managing the test thread."""
+        self.saving_model = False
         try:
             self.model = self.load_model_frame.load_model()
         except (ValueError, ImportError) as e:
@@ -300,33 +344,57 @@ class SchoolProjectFrame(tk.Frame):
                     height=self.HEIGHT, model=self.model
                     )
         self.test_frame.pack()
-        self.manage_testing(test_thread=self.test_frame.test_thread, save_model=False)
+        self.manage_testing(test_thread=self.test_frame.test_thread)
 
-    def manage_testing(self, test_thread: threading.Thread, save_model: bool) -> None:
+    def manage_testing(self, test_thread: threading.Thread) -> None:
         """Wait for model test thread to finish,
            then plot results on test frame.
         
         Args:
             test_thread (threading.Thread):
             the thread running the model's predict() method.
-            save_model (bool): True or False whether the model should have 
-            the option to be saved.
         Raises:
             TypeError: if test_thread is not of type threading.Thread.
         
         """
         if not test_thread.is_alive():
             self.test_frame.plot_results(model=self.model)
-            self.model = None  # Free up trained Model from memory
-            if save_model:
-                self.test_frame.save_model_button.pack()
-            self.exit_button.pack()
+            if self.saving_model:
+                self.save_model_label.pack(pady=(30,0))
+                self.save_model_name_entry.pack(pady=10)
+                self.save_model_button.pack()
+            self.exit_button.pack(pady=(20,0))
         else:
-            self.after(1_000, self.manage_testing, test_thread, save_model)
+            self.after(1_000, self.manage_testing, test_thread)
+
+    def save_model(self) -> None:
+        """Export the model, save the model information to the database, then 
+           enter the home frame."""
+        # Export model to random hex file name
+        file_location = f"school_project/exported-models/{uuid.uuid4().hex}.npz"
+        self.model.export(file_location=file_location)
+
+        # Save the model information to the database
+        params = (self.save_model_name_entry.get(), self.dataset_option_menu_var.get(), 
+                  file_location, self.hyper_parameter_frame.use_relu_check_button_var.get())
+        sql = """
+        INSERT INTO Pretrained_Models (Model_Name, Dataset_Name, File_Location, Use_ReLu)
+        VALUES(?, ?, ?, ?)
+        """
+        self.cursor.execute(sql, params)
+        self.connection.commit()
+
+        self.enter_home_frame()
 
     def enter_home_frame(self) -> None:
         """Unpack test frame and pack home frame."""
+        self.model = None  # Free up trained Model from memory
         self.test_frame.pack_forget()
+        if self.saving_model:
+            self.save_model_label.pack_forget()
+            self.save_model_name_entry.delete(0, tk.END)  # Clear entry's text
+            self.save_model_name_entry.pack_forget()
+            self.save_model_button.pack_forget()
         self.exit_button.pack_forget()
         self.home_frame.pack()
         

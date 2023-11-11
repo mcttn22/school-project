@@ -3,9 +3,7 @@ import threading
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
-import sqlite3
 import tkinter as tk
-import tkinter.font as tkf
 
 class TestMNISTFrame(tk.Frame):
     """Frame for Testing MNIST page."""
@@ -40,13 +38,6 @@ class TestMNISTFrame(tk.Frame):
                                                     figure=self.image_figure,
                                                     master=self
                                                     )
-        self.save_model_button: tk.Button = tk.Button(
-              master=self,
-              width=13, height=1,
-              font=tkf.Font(size=12),
-              text="Save Model",
-              command=self.save_model
-              )
         
         # Pack widgets
         self.model_status_label.pack()
@@ -113,10 +104,6 @@ class TestMNISTFrame(tk.Frame):
 
             self.image_canvas.get_tk_widget().pack()
 
-    def save_model(self) -> None:
-        """Save the model's weights and biases to the database."""
-        raise NotImplementedError
-
 class TestCatRecognitionFrame(tk.Frame):
     """Frame for Testing Cat Recognition page."""
     def __init__(self, root: tk.Tk, width: int,
@@ -150,13 +137,6 @@ class TestCatRecognitionFrame(tk.Frame):
                                                     figure=self.image_figure,
                                                     master=self
                                                     )
-        self.save_model_button: tk.Button = tk.Button(
-              master=self,
-              width=13, height=1,
-              font=tkf.Font(size=12),
-              text="Save Model",
-              command=self.save_model
-              )
         
         # Pack widgets
         self.model_status_label.pack(pady=(30,0))
@@ -235,10 +215,6 @@ class TestCatRecognitionFrame(tk.Frame):
                     )
             self.image_canvas.get_tk_widget().pack()
 
-    def save_model(self) -> None:
-        """Save the model's weights and biases to the database."""
-        raise NotImplementedError
-
 class TestXORFrame(tk.Frame):
     """Frame for Testing XOR page."""
     def __init__(self, root: tk.Tk, width: int, height: int, model: object) -> None:
@@ -265,13 +241,6 @@ class TestXORFrame(tk.Frame):
         self.results_label: tk.Label = tk.Label(master=self,
                                                 bg='white',
                                                 font=('Arial', 20))
-        self.save_model_button: tk.Button = tk.Button(
-              master=self,
-              width=13, height=1,
-              font=tkf.Font(size=12),
-              text="Save Model",
-              command=self.save_model
-              )
         
         # Pack widgets
         self.model_status_label.pack(pady=(30,0))
@@ -312,7 +281,3 @@ class TestXORFrame(tk.Frame):
                 results += "0\n"
         self.results_label.configure(text=results)
         self.results_label.pack()
-
-    def save_model(self) -> None:
-        """Save the model's weights and biases to the database."""
-        raise NotImplementedError
