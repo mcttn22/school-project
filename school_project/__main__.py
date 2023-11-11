@@ -378,7 +378,7 @@ class SchoolProjectFrame(tk.Frame):
         params = (self.save_model_name_entry.get(), self.dataset_option_menu_var.get(), 
                   file_location, self.hyper_parameter_frame.use_relu_check_button_var.get())
         sql = """
-        INSERT INTO Pretrained_Models (Model_Name, Dataset_Name, File_Location, Use_ReLu)
+        INSERT OR REPLACE INTO Pretrained_Models (Model_Name, Dataset_Name, File_Location, Use_ReLu)
         VALUES(?, ?, ?, ?)
         """
         self.cursor.execute(sql, params)
