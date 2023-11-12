@@ -144,16 +144,16 @@ class AbstractModel (ModelInterface):
         self.training_time: float
         
         # Setup model attributes
-        self.running: bool = True
+        self.running = True
         self.input_neuron_count: int = self.train_inputs.shape[0]
         self.input_count: int = self.train_inputs.shape[1]
         self.hidden_layers_shape = hidden_layers_shape
         self.output_neuron_count: int = self.train_outputs.shape[0]
-        self.layers_shape: list[chr] = [f'{layer}' for layer in (
-                                                    [self.input_neuron_count] + 
-                                                    self.hidden_layers_shape + 
-                                                    [self.output_neuron_count]
-                                                    )]
+        self.layers_shape = [f'{layer}' for layer in (
+                            [self.input_neuron_count] + 
+                            self.hidden_layers_shape + 
+                            [self.output_neuron_count]
+                            )]
         self.use_relu = use_relu
         
         # Setup model values

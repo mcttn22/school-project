@@ -31,76 +31,86 @@ class HyperParameterFrame(tk.Frame):
         # Setup hyper-parameter frame variables
         self.dataset = dataset
         self.use_gpu: bool
-        self.default_hyper_parameters = self.load_default_hyper_parameters(dataset=dataset)
+        self.default_hyper_parameters = self.load_default_hyper_parameters(
+                                                               dataset=dataset
+                                                               )
         
         # Setup widgets
-        self.title_label: tk.Label = tk.Label(master=self,
-                                              bg='white',
-                                              font=('Arial', 20),
-                                              text=dataset)
-        self.about_label: tk.Label = tk.Label(
+        self.title_label = tk.Label(master=self,
+                                    bg='white',
+                                    font=('Arial', 20),
+                                    text=dataset)
+        self.about_label = tk.Label(
                              master=self,
                              bg='white',
                              font=('Arial', 14),
                              text=self.default_hyper_parameters['description']
                              )
-        self.learning_rate_scale: tk.Scale = tk.Scale(master=self,
-                                                      bg='white',
-                                                      orient='horizontal',
-                                                      label="Learning Rate",
-                                                      length=185,
-                                                      from_=0,
-                                                      to=self.default_hyper_parameters['maxLearningRate'],
-                                                      resolution=0.01)
+        self.learning_rate_scale = tk.Scale(
+                          master=self,
+                          bg='white',
+                          orient='horizontal',
+                          label="Learning Rate",
+                          length=185,
+                          from_=0,
+                          to=self.default_hyper_parameters['maxLearningRate'],
+                          resolution=0.01
+                          )
         self.learning_rate_scale.set(value=0.1)
-        self.epoch_count_scale: tk.Scale = tk.Scale(master=self,
-                                                      bg='white',
-                                                      orient='horizontal',
-                                                      label="Epoch Count",
-                                                      length=185,
-                                                      from_=0,
-                                                      to=10_000,
-                                                      resolution=100)
-        self.epoch_count_scale.set(value=self.default_hyper_parameters['epochCount'])
-        self.train_dataset_size_scale: tk.Scale = tk.Scale(master=self,
-                                                      bg='white',
-                                                      orient='horizontal',
-                                                      label="Train Dataset Size",
-                                                      length=185,
-                                                      from_=self.default_hyper_parameters['minTrainDatasetSize'],
-                                                      to=self.default_hyper_parameters['maxTrainDatasetSize'],
-                                                      resolution=1)
-        self.train_dataset_size_scale.set(value=self.default_hyper_parameters['maxTrainDatasetSize'])
-        self.hidden_layers_shape_label: tk.Label = tk.Label(
+        self.epoch_count_scale = tk.Scale(master=self,
+                                          bg='white',
+                                          orient='horizontal',
+                                          label="Epoch Count",
+                                          length=185,
+                                          from_=0,
+                                          to=10_000,
+                                          resolution=100)
+        self.epoch_count_scale.set(
+                             value=self.default_hyper_parameters['epochCount']
+                             )
+        self.train_dataset_size_scale = tk.Scale(
+                   master=self,
+                   bg='white',
+                   orient='horizontal',
+                   label="Train Dataset Size",
+                   length=185,
+                   from_=self.default_hyper_parameters['minTrainDatasetSize'],
+                   to=self.default_hyper_parameters['maxTrainDatasetSize'],
+                   resolution=1
+                   )
+        self.train_dataset_size_scale.set(
+                    value=self.default_hyper_parameters['maxTrainDatasetSize']
+                    )
+        self.hidden_layers_shape_label = tk.Label(
                                 master=self,
                                 bg='white',
                                 font=('Arial', 12),
                                 text="Enter the number of neurons in each\n" +
                                         "hidden layer, separated by commas:"
                                 )
-        self.hidden_layers_shape_entry: tk.Entry = tk.Entry(master=self)
+        self.hidden_layers_shape_entry = tk.Entry(master=self)
         self.hidden_layers_shape_entry.insert(0, ",".join(
-                           f"{neuron_count}" for neuron_count in self.default_hyper_parameters['hiddenLayersShape']
-                           ))
-        self.use_relu_check_button_var: tk.BooleanVar = tk.BooleanVar(value=True)
-        self.use_relu_check_button: tk.Checkbutton = tk.Checkbutton(
+            f"{neuron_count}" for neuron_count in self.default_hyper_parameters['hiddenLayersShape']
+            ))
+        self.use_relu_check_button_var = tk.BooleanVar(value=True)
+        self.use_relu_check_button = tk.Checkbutton(
                                         master=self,
                                         width=13, height=1,
                                         font=tkf.Font(size=12),
                                         text="Use ReLu",
                                         variable=self.use_relu_check_button_var
                                                        )
-        self.use_gpu_check_button_var: tk.BooleanVar = tk.BooleanVar()
-        self.use_gpu_check_button: tk.Checkbutton = tk.Checkbutton(
+        self.use_gpu_check_button_var = tk.BooleanVar()
+        self.use_gpu_check_button = tk.Checkbutton(
                                         master=self,
                                         width=13, height=1,
                                         font=tkf.Font(size=12),
                                         text="Use GPU",
                                         variable=self.use_gpu_check_button_var
                                                        )
-        self.model_status_label: tk.Label = tk.Label(master=self,
-                                                     bg='white',
-                                                     font=('Arial', 15))
+        self.model_status_label = tk.Label(master=self,
+                                           bg='white',
+                                           font=('Arial', 15))
         
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=3)
@@ -206,29 +216,31 @@ class TrainingFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup widgets
-        self.model_status_label: tk.Label = tk.Label(master=self,
-                                                     bg='white',
-                                                     font=('Arial', 15))
-        self.training_progress_label: tk.Label = tk.Label(master=self,
-                                                     bg='white',
-                                                     font=('Arial', 15))
+        self.model_status_label = tk.Label(master=self,
+                                           bg='white',
+                                           font=('Arial', 15))
+        self.training_progress_label = tk.Label(master=self,
+                                                bg='white',
+                                                font=('Arial', 15))
         self.loss_figure: Figure = Figure()
         self.loss_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(
-                                                    figure=self.loss_figure,
-                                                    master=self
-                                                    )
+                                                      figure=self.loss_figure,
+                                                      master=self
+                                                      )
         
         # Pack widgets
         self.model_status_label.pack(pady=(30,0))
         self.training_progress_label.pack(pady=30)
         
         # Start training thread
-        self.model_status_label.configure(text="Training weights and biases...",
-                                          fg='red')
+        self.model_status_label.configure(
+                                        text="Training weights and biases...",
+                                        fg='red'
+                                        )
         self.train_thread: threading.Thread = threading.Thread(
-                                                       target=model.train,
-                                                       args=(epoch_count,)
-                                                       )
+                                                           target=model.train,
+                                                           args=(epoch_count,)
+                                                           )
         self.train_thread.start()
 
     def plot_losses(self, model: object) -> None:

@@ -30,26 +30,20 @@ class TestMNISTFrame(tk.Frame):
         self.use_gpu = use_gpu
         
         # Setup widgets
-        self.model_status_label: tk.Label = tk.Label(master=self,
-                                                     bg='white',
-                                                     font=('Arial', 15))
-        self.image_figure: Figure = Figure()
-        self.image_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(
-                                                    figure=self.image_figure,
-                                                    master=self
-                                                    )
+        self.model_status_label = tk.Label(master=self,
+                                          bg='white',
+                                          font=('Arial', 15))
+        self.image_figure = Figure()
+        self.image_canvas = FigureCanvasTkAgg(figure=self.image_figure,
+                                              master=self)
         
         # Pack widgets
         self.model_status_label.pack()
 
         # Start test thread
-        self.model_status_label.configure(
-                        text="Testing trained model",
-                        fg='red'
-                        )
-        self.test_thread: threading.Thread = threading.Thread(
-                                    target=model.test
-                                    )
+        self.model_status_label.configure(text="Testing trained model",
+                                          fg='red')
+        self.test_thread = threading.Thread(target=model.test)
         self.test_thread.start()
 
     def plot_results(self, model: object) -> None:
@@ -59,10 +53,7 @@ class TestMNISTFrame(tk.Frame):
                model (object): the Model object thats been tested.
         
         """
-        self.model_status_label.configure(
-                        text="Testing Results:",
-                        fg='green'
-                        )
+        self.model_status_label.configure(text="Testing Results:", fg='green')
         if not self.use_gpu:
             test_prediction = np.squeeze(model.test_prediction).T.tolist()
             test_inputs = np.squeeze(model.test_inputs).T
@@ -72,11 +63,11 @@ class TestMNISTFrame(tk.Frame):
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1: Figure.axes = self.image_figure.add_subplot(121)
+            image1 = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))
             image1.imshow(test_inputs[0].reshape((28,28)))
 
-            image2: Figure.axes = self.image_figure.add_subplot(122)
+            image2 = self.image_figure.add_subplot(122)
             image2.set_title(test_prediction[14].index(max(test_prediction[14])))
             image2.imshow(test_inputs[14].reshape((28,28)))
 
@@ -94,11 +85,11 @@ class TestMNISTFrame(tk.Frame):
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1: Figure.axes = self.image_figure.add_subplot(121)
+            image1 = self.image_figure.add_subplot(121)
             image1.set_title(test_prediction[0].index(max(test_prediction[0])))
             image1.imshow(test_inputs[0].reshape((28,28)))
 
-            image2: Figure.axes = self.image_figure.add_subplot(122)
+            image2 = self.image_figure.add_subplot(122)
             image2.set_title(test_prediction[14].index(max(test_prediction[14])))
             image2.imshow(test_inputs[14].reshape((28,28)))
 
@@ -129,26 +120,20 @@ class TestCatRecognitionFrame(tk.Frame):
         self.use_gpu = use_gpu
         
         # Setup widgets
-        self.model_status_label: tk.Label = tk.Label(master=self,
-                                                     bg='white',
-                                                     font=('Arial', 15))
-        self.image_figure: Figure = Figure()
-        self.image_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(
-                                                    figure=self.image_figure,
-                                                    master=self
-                                                    )
+        self.model_status_label = tk.Label(master=self,
+                                          bg='white',
+                                          font=('Arial', 15))
+        self.image_figure = Figure()
+        self.image_canvas = FigureCanvasTkAgg(figure=self.image_figure,
+                                              master=self)
         
         # Pack widgets
         self.model_status_label.pack(pady=(30,0))
 
         # Start test thread
-        self.model_status_label.configure(
-                        text="Testing trained model...",
-                        fg='red'
-                        )
-        self.test_thread: threading.Thread = threading.Thread(
-                                    target=model.test
-                                    )
+        self.model_status_label.configure(text="Testing trained model...",
+                                          fg='red')
+        self.test_thread = threading.Thread(target=model.test)
         self.test_thread.start()
 
     def plot_results(self, model: object) -> None:
@@ -158,10 +143,7 @@ class TestCatRecognitionFrame(tk.Frame):
                model (object): the Model object thats been tested.
         
         """
-        self.model_status_label.configure(
-                        text="Testing Results:",
-                        fg='green'
-                        )
+        self.model_status_label.configure(text="Testing Results:", fg='green')
         if not self.use_gpu:
             self.image_figure.suptitle(
              "Prediction Correctness: " +
@@ -169,7 +151,7 @@ class TestCatRecognitionFrame(tk.Frame):
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1: Figure.axes = self.image_figure.add_subplot(121)
+            image1 = self.image_figure.add_subplot(121)
             if np.squeeze(model.test_prediction)[0] >= 0.5:
                 image1.set_title("Cat")
             else:
@@ -177,7 +159,7 @@ class TestCatRecognitionFrame(tk.Frame):
             image1.imshow(
                      model.test_inputs[:,0].reshape((64,64,3))
                      )
-            image2: Figure.axes = self.image_figure.add_subplot(122)
+            image2 = self.image_figure.add_subplot(122)
             if np.squeeze(model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
@@ -197,7 +179,7 @@ class TestCatRecognitionFrame(tk.Frame):
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1: Figure.axes = self.image_figure.add_subplot(121)
+            image1 = self.image_figure.add_subplot(121)
             if cp.squeeze(model.test_prediction)[0] >= 0.5:
                 image1.set_title("Cat")
             else:
@@ -205,7 +187,7 @@ class TestCatRecognitionFrame(tk.Frame):
             image1.imshow(
                      cp.asnumpy(model.test_inputs)[:,0].reshape((64,64,3))
                      )
-            image2: Figure.axes = self.image_figure.add_subplot(122)
+            image2 = self.image_figure.add_subplot(122)
             if cp.squeeze(model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
@@ -235,24 +217,20 @@ class TestXORFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup widgets
-        self.model_status_label: tk.Label = tk.Label(master=self,
-                                                     bg='white',
-                                                     font=('Arial', 15))
-        self.results_label: tk.Label = tk.Label(master=self,
-                                                bg='white',
-                                                font=('Arial', 20))
+        self.model_status_label = tk.Label(master=self,
+                                           bg='white',
+                                           font=('Arial', 15))
+        self.results_label = tk.Label(master=self,
+                                      bg='white',
+                                      font=('Arial', 20))
         
         # Pack widgets
         self.model_status_label.pack(pady=(30,0))
 
         # Start test thread
-        self.model_status_label.configure(
-                        text="Testing trained model...",
-                        fg='red'
-                        )
-        self.test_thread: threading.Thread = threading.Thread(
-                                    target=model.test
-                                    )
+        self.model_status_label.configure(text="Testing trained model...",
+                                          fg='red')
+        self.test_thread = threading.Thread(target=model.test)
         self.test_thread.start()
 
     def plot_results(self, model: object):
@@ -262,10 +240,7 @@ class TestXORFrame(tk.Frame):
                model (object): the Model object thats been tested.
         
         """
-        self.model_status_label.configure(
-                        text="Testing Results:",
-                        fg='green'
-                        )
+        self.model_status_label.configure(text="Testing Results:", fg='green')
         results: str = (
                     f"Prediction Accuracy: " +
                     f"{round(number=model.test_prediction_accuracy, ndigits=1)}%\n" +
