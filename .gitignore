@@ -5,4 +5,4 @@ __pycache__/
 *.egg-info
 
 # Database file
-school_project/pretrained_models.db
+school_project/saved_models.db

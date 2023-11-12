@@ -154,11 +154,11 @@ class AbstractModel (ModelInterface):
                                                     self.hidden_layers_shape + 
                                                     [self.output_neuron_count]
                                                     )]
+        self.use_relu = use_relu
         
         # Setup model values
         self.layers: list[FullyConnectedLayer] = []
         self.learning_rate = learning_rate
-        self.init_model_values(use_relu=use_relu)
 
     def __repr__(self) -> str:
         """Read current state of model.
@@ -171,17 +171,11 @@ class AbstractModel (ModelInterface):
         return (f"Layers Shape: {','.join(self.layers_shape)}\n" +
                 f"Learning Rate: {self.learning_rate}")
 
-    def init_model_values(self, use_relu: bool) -> None:
-        """Initialise model layers
-        
-           Args:
-               use_relu (bool): True or False whether the ReLu Transfer 
-               function should be used.
-
-        """
+    def setup_layers(self) -> None:
+        """Setup model layers"""
         # Check if setting up Deep Network
         if len(self.hidden_layers_shape) > 0:
-            if use_relu:
+            if self.use_relu:
 
                 # Add input layer
                 self.layers.append(FullyConnectedLayer(
@@ -242,6 +236,45 @@ class AbstractModel (ModelInterface):
             # Initialise Layer values to zeros
             for layer in self.layers:
                 layer.init_layer_values_zeros()
+
+    def init_random_values(self) -> None:
+        """Initialise model layers"""
+        self.setup_layers()
+
+        # Check if setting up Deep Network
+        if len(self.hidden_layers_shape) > 0:
+
+            # Initialise Layer values to random values
+            for layer in self.layers:
+                layer.init_layer_values_random()
+        
+        # Setup Perceptron Network
+        else:
+
+            # Initialise Layer values to zeros
+            for layer in self.layers:
+                layer.init_layer_values_zeros()
+
+    def load_model_values(self, file_location: str) -> None:
+        """Load weights and bias/biases from .npz file.
+        
+        Args:
+            file_location (str): the location of the file to load from.
+        Raises:
+            NotImplementedError: if this method is not implemented.
+
+        """
+        self.setup_layers()
+
+        data: dict = np.load(file=file_location)
+
+        # Initialise Layer values
+        i = 0
+        keys = list(data.keys())
+        for layer in self.layers:
+            layer.weights = data[keys[i]]
+            layer.biases = data[keys[i + 1]]
+            i += 2
 
     def back_propagation(self, dloss_doutput) -> None:
         """Train each layer's weights and biases.
@@ -309,16 +342,16 @@ class AbstractModel (ModelInterface):
         self.training_time = round(number=time.time() - training_start_time,
                                    ndigits=2)
         
-    def export(self, file_location: str) -> None:
-        """Export the model by saving the weights then biases of each layer to 
+    def save_model_values(self, file_location: str) -> None:
+        """Save the model by saving the weights then biases of each layer to 
             a .npz file with a given file location.
 
             Args:
-                file_location (str): the file location to export the model to.
+                file_location (str): the file location to save the model to.
 
         """
-        exported_model: list[np.ndarray] = []
+        saved_model: list[np.ndarray] = []
         for layer in self.layers:
-            exported_model.append(cp.asnumpy(layer.weights))
-            exported_model.append(cp.asnumpy(layer.biases))
-        np.savez(file_location, *exported_model)
+            saved_model.append(cp.asnumpy(layer.weights))
+            saved_model.append(cp.asnumpy(layer.biases))
+        np.savez(file_location, *saved_model)

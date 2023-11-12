@@ -97,7 +97,7 @@ class LoadModelFrame(tk.Frame):
                 a list of the model options.
         """
         sql = """
-        SELECT Model_Name FROM Pretrained_Models WHERE Dataset_Name = ?
+        SELECT Model_Name FROM Saved_Models WHERE Dataset_Name = ?
         """
         parameters = (self.dataset,)
         self.cursor.execute(sql, parameters)
@@ -116,4 +116,48 @@ class LoadModelFrame(tk.Frame):
                a Model object.
                
         """
-        raise NotImplementedError
+        self.use_gpu = self.use_gpu_check_button_var.get()
+
+        # Query data of selected saved model from database
+        sql = """
+        SELECT * FROM Saved_Models WHERE Dataset_Name = ? AND Model_Name = ?
+        """
+        parameters = (self.dataset, self.model_option_menu_var.get())
+        self.cursor.execute(sql, parameters)
+        data = self.cursor.fetchall()[0]
+        hidden_layers_shape_input = [layer for layer in data[2].replace(' ', '').split(',') if layer != '']
+
+        # Create Model
+        if not self.use_gpu:
+            if self.dataset == "MNIST":
+                from school_project.models.cpu.mnist import MNISTModel as Model
+            elif self.dataset == "Cat Recognition":
+                from school_project.models.cpu.cat_recognition import CatRecognitionModel as Model
+            elif self.dataset == "XOR":
+                from school_project.models.cpu.xor import XORModel as Model
+            model = Model(hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                          train_dataset_size=data[4],
+                          learning_rate=data[5],
+                          use_relu=data[6])
+            model.load_model_values(file_location=data[1])
+
+        else:
+            try:
+                if self.dataset == "MNIST":
+                    from school_project.models.gpu.mnist import MNISTModel as Model
+                elif self.dataset == "Cat Recognition":
+                    from school_project.models.gpu.cat_recognition import CatRecognitionModel as Model
+                elif self.dataset == "XOR":
+                    from school_project.models.gpu.xor import XORModel as Model
+                model = Model(hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                              train_dataset_size=data[4],
+                              learning_rate=data[5],
+                              use_relu=data[6])
+                model.load_model_values(file_location=data[1])
+            except ImportError as ie:
+                self.model_status_label.configure(
+                                        text="Failed to initialise GPU",
+                                        fg='red'
+                                        )
+                raise ImportError
+        return model

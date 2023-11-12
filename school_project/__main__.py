@@ -185,14 +185,17 @@ class SchoolProjectFrame(tk.Frame):
         
         """
         connection = sqlite3.connect(
-                                database='school_project/pretrained_models.db'
+                                database='school_project/saved_models.db'
                                 )
         cursor = connection.cursor()
         cursor.execute("""
-        CREATE TABLE IF NOT EXISTS Pretrained_Models
-        (Model_Name TEXT PRIMARY KEY,
-        Dataset_Name TEXT,
+        CREATE TABLE IF NOT EXISTS Saved_Models
+        (Dataset_Name TEXT,
         File_Location TEXT,
+        Hidden_Layers_Shape TEXT,
+        Model_Name TEXT,
+        Train_Dataset_Size INTEGER,
+        Learning_Rate FLOAT,
         Use_ReLu INTEGER)
         """)
         return (connection, cursor)
@@ -330,8 +333,9 @@ class SchoolProjectFrame(tk.Frame):
         except (ValueError, ImportError) as e:
             return
         self.load_model_frame.pack_forget()
+        self.exit_load_model_frame_button.pack_forget()
         self.test_loaded_model_button.pack_forget()
-        if self.hyper_parameter_frame.dataset == "MNIST":
+        if self.load_model_frame.dataset == "MNIST":
             self.test_frame = TestMNISTFrame( 
                                 root=self,
                                 width=self.WIDTH,
@@ -339,7 +343,7 @@ class SchoolProjectFrame(tk.Frame):
                                 use_gpu=self.load_model_frame.use_gpu,
                                 model=self.model
                                 )
-        elif self.hyper_parameter_frame.dataset == "Cat Recognition":
+        elif self.load_model_frame.dataset == "Cat Recognition":
             self.test_frame = TestCatRecognitionFrame(
                                 root=self,
                                 width=self.WIDTH, 
@@ -347,7 +351,7 @@ class SchoolProjectFrame(tk.Frame):
                                 use_gpu=self.load_model_frame.use_gpu,
                                 model=self.model
                                 )
-        elif self.hyper_parameter_frame.dataset == "XOR":
+        elif self.load_model_frame.dataset == "XOR":
             self.test_frame = TestXORFrame(
                     root=self, width=self.WIDTH,
                     height=self.HEIGHT, model=self.model
@@ -380,18 +384,21 @@ class SchoolProjectFrame(tk.Frame):
         """Export the model, save the model information to the database, then 
            enter the home frame."""
         # Export model to random hex file name
-        file_location = f"school_project/exported-models/{uuid.uuid4().hex}.npz"
-        self.model.export(file_location=file_location)
+        file_location = f"school_project/saved-models/{uuid.uuid4().hex}.npz"
+        self.model.save_model_values(file_location=file_location)
 
         # Save the model information to the database
         sql = """
-        INSERT OR REPLACE INTO Pretrained_Models (Model_Name, Dataset_Name, File_Location, Use_ReLu)
-        VALUES(?, ?, ?, ?)
+        INSERT OR REPLACE INTO Saved_Models (Dataset_Name, File_Location, Hidden_Layers_Shape, Model_Name, Train_Dataset_Size, Learning_Rate, Use_ReLu)
+        VALUES(?, ?, ?, ?, ?, ?, ?)
         """
         parameters = (
-                    self.save_model_name_entry.get(),
                     self.dataset_option_menu_var.get(), 
                     file_location,
+                    self.hyper_parameter_frame.hidden_layers_shape_entry.get(),
+                    self.save_model_name_entry.get(),
+                    self.hyper_parameter_frame.train_dataset_size_scale.get(),
+                    self.hyper_parameter_frame.learning_rate_scale.get(),
                     self.hyper_parameter_frame.use_relu_check_button_var.get()
                     )
         self.cursor.execute(sql, parameters)

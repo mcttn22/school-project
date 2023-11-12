@@ -2,9 +2,20 @@ import numpy as np
 
 class ModelInterface():
     """Interface for ANN models."""
-    def init_model_values(self) -> None:
+    def init_random_values(self) -> None:
         """Initialise weights and bias/biases.
         
+        Raises:
+            NotImplementedError: if this method is not implemented.
+
+        """
+        raise NotImplementedError
+    
+    def load_model_values(self, file_location: str) -> None:
+        """Load weights and bias/biases from .npz file.
+        
+        Args:
+            file_location (str): the location of the file to load from.
         Raises:
             NotImplementedError: if this method is not implemented.
 
@@ -67,12 +78,12 @@ class ModelInterface():
         """
         raise NotImplementedError
     
-    def export(self, file_location: str) -> None:
-        """Export the model by saving the weights then biases of each layer to 
+    def save_model_values(self, file_location: str) -> None:
+        """Save the model by saving the weights then biases of each layer to 
            a .npz file with a given file location.
 
            Args:
-               file_location (str): the file location to export the model to.
+               file_location (str): the file location to save the model to.
 
         """
         raise NotImplementedError

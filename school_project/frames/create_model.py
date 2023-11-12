@@ -161,6 +161,7 @@ class HyperParameterFrame(tk.Frame):
                           train_dataset_size = self.train_dataset_size_scale.get(),
                           learning_rate = self.learning_rate_scale.get(),
                           use_relu = self.use_relu_check_button_var.get())
+            model.init_random_values()
 
         else:
             try:
@@ -174,6 +175,7 @@ class HyperParameterFrame(tk.Frame):
                               train_dataset_size = self.train_dataset_size_scale.get(),
                               learning_rate = self.learning_rate_scale.get(),
                               use_relu = self.use_relu_check_button_var.get())
+                model.init_random_values()
             except ImportError as ie:
                 self.model_status_label.configure(
                                         text="Failed to initialise GPU",

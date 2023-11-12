@@ -2,6 +2,7 @@
 
 - Add encapsulation
 - Test save model on GPU
+- Unnecessary type hinting?
 
 - Finish analysis draft
   - Complete analysis interview
