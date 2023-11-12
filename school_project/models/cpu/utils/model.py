@@ -12,7 +12,7 @@ from school_project.models.cpu.utils.tools import (
                                               calculate_prediction_accuracy
                                               )
 
-class FullyConnectedLayer():
+class _FullyConnectedLayer():
     "Fully connected layer for Deep ANNs"
     def __init__(self, learning_rate: float, input_neuron_count: int,
                  output_neuron_count: int, transfer_type: str) -> None:
@@ -154,7 +154,7 @@ class AbstractModel(ModelInterface):
         self.use_relu = use_relu
         
         # Setup model values
-        self.layers: list[FullyConnectedLayer] = []
+        self.layers: list[_FullyConnectedLayer] = []
         self.learning_rate = learning_rate
 
     def __repr__(self) -> str:
@@ -175,7 +175,7 @@ class AbstractModel(ModelInterface):
             if self.use_relu:
 
                 # Add input layer
-                self.layers.append(FullyConnectedLayer(
+                self.layers.append(_FullyConnectedLayer(
                                         learning_rate=self.learning_rate,
                                         input_neuron_count=self.input_neuron_count,
                                         output_neuron_count=self.hidden_layers_shape[0],
@@ -184,7 +184,7 @@ class AbstractModel(ModelInterface):
 
                 # Add hidden layers
                 for layer in range(len(self.hidden_layers_shape) - 1):
-                    self.layers.append(FullyConnectedLayer(
+                    self.layers.append(_FullyConnectedLayer(
                                 learning_rate=self.learning_rate,
                                 input_neuron_count=self.hidden_layers_shape[layer],
                                 output_neuron_count=self.hidden_layers_shape[layer + 1],
@@ -193,7 +193,7 @@ class AbstractModel(ModelInterface):
             else:
 
                 # Add input layer
-                self.layers.append(FullyConnectedLayer(
+                self.layers.append(_FullyConnectedLayer(
                                         learning_rate=self.learning_rate,
                                         input_neuron_count=self.input_neuron_count,
                                         output_neuron_count=self.hidden_layers_shape[0],
@@ -202,7 +202,7 @@ class AbstractModel(ModelInterface):
 
                 # Add hidden layers
                 for layer in range(len(self.hidden_layers_shape) - 1):
-                    self.layers.append(FullyConnectedLayer(
+                    self.layers.append(_FullyConnectedLayer(
                                 learning_rate=self.learning_rate,
                                 input_neuron_count=self.hidden_layers_shape[layer],
                                 output_neuron_count=self.hidden_layers_shape[layer + 1],
@@ -210,7 +210,7 @@ class AbstractModel(ModelInterface):
                                 ))
             
             # Add output layer
-            self.layers.append(FullyConnectedLayer(
+            self.layers.append(_FullyConnectedLayer(
                                     learning_rate=self.learning_rate,
                                     input_neuron_count=self.hidden_layers_shape[-1],
                                     output_neuron_count=self.output_neuron_count,
@@ -223,7 +223,7 @@ class AbstractModel(ModelInterface):
 
         # Setup Perceptron Network
         else:
-            self.layers.append(FullyConnectedLayer(
+            self.layers.append(_FullyConnectedLayer(
                                     learning_rate=self.learning_rate,
                                     input_neuron_count=self.input_neuron_count,
                                     output_neuron_count=self.output_neuron_count,
