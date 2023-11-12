@@ -263,7 +263,7 @@ class AbstractModel(ModelInterface):
         """
         self.setup_layers()
 
-        data: dict = np.load(file=file_location)
+        data: dict[str, np.ndarray] = np.load(file=file_location)
 
         # Initialise Layer values
         i = 0

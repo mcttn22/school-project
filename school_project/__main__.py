@@ -325,8 +325,8 @@ class SchoolProjectFrame(tk.Frame):
         self.manage_testing(test_thread=self.test_frame.test_thread)
 
     def test_loaded_model(self) -> None:
-        """Unpack load model frame, pack test frame for the dataset
-           and begin managing the test thread."""
+        """Load saved model from load model frame, unpack load model frame, 
+           pack test frame for the dataset and begin managing the test thread."""
         self.saving_model = False
         try:
             self.model = self.load_model_frame.load_model()
