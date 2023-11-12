@@ -1,8 +1,8 @@
 ### Todo
 
 - Add encapsulation
-- Test save and load model on GPU
-- Unnecessary type hinting? / Check PEP8 for new save and load model additions 
+- Unnecessary type hinting?
+- Update results pages
 
 - Finish analysis draft
   - Complete analysis interview
@@ -29,11 +29,6 @@
 
 - Start design draft
   - Update Class diagram (load_model frame etc)
-
-- Allow weights to be saved in files with sqlite3? (save numpy arrays in an array to a file with np.save, then store the location of the file and the model parameters under an ID with sqlite3) (user gives name to model)
-  - Load frame for dataset (chosen on homepage) -> select name from drop down menu, when selected shows all parameters
-  - Generate and export methods in model class
-  - Pretrained optimum? - Leave for now
 
 - Maybe give option to continue training pretrained model
 
