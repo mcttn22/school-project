@@ -156,17 +156,13 @@ class TestCatRecognitionFrame(tk.Frame):
                 image1.set_title("Cat")
             else:
                 image1.set_title("Not a cat")
-            image1.imshow(
-                     model.test_inputs[:,0].reshape((64,64,3))
-                     )
+            image1.imshow(model.test_inputs[:,0].reshape((64,64,3)))
             image2 = self.image_figure.add_subplot(122)
             if np.squeeze(model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
                 image2.set_title("Not a cat")
-            image2.imshow(
-                    model.test_inputs[:,14].reshape((64,64,3))
-                    )
+            image2.imshow(model.test_inputs[:,14].reshape((64,64,3)))
             self.image_canvas.get_tk_widget().pack()
         
         elif self.use_gpu:
@@ -185,16 +181,16 @@ class TestCatRecognitionFrame(tk.Frame):
             else:
                 image1.set_title("Not a cat")
             image1.imshow(
-                     cp.asnumpy(model.test_inputs)[:,0].reshape((64,64,3))
-                     )
+                        cp.asnumpy(model.test_inputs)[:,0].reshape((64,64,3))
+                        )
             image2 = self.image_figure.add_subplot(122)
             if cp.squeeze(model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
             else:
                 image2.set_title("Not a cat")
             image2.imshow(
-                    cp.asnumpy(model.test_inputs)[:,14].reshape((64,64,3))
-                    )
+                        cp.asnumpy(model.test_inputs)[:,14].reshape((64,64,3))
+                        )
             self.image_canvas.get_tk_widget().pack()
 
 class TestXORFrame(tk.Frame):
