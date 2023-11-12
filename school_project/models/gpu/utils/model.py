@@ -272,8 +272,8 @@ class AbstractModel (ModelInterface):
         i = 0
         keys = list(data.keys())
         for layer in self.layers:
-            layer.weights = data[keys[i]]
-            layer.biases = data[keys[i + 1]]
+            layer.weights = cp.array(data[keys[i]])
+            layer.biases = cp.array(data[keys[i + 1]])
             i += 2
 
     def back_propagation(self, dloss_doutput) -> None:
