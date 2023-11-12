@@ -1,8 +1,8 @@
 ### Todo
 
 - Add encapsulation
-- Test save model on GPU
-- Unnecessary type hinting?
+- Test save and load model on GPU
+- Unnecessary type hinting? / Check PEP8 for new save and load model additions 
 
 - Finish analysis draft
   - Complete analysis interview
