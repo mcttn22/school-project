@@ -1,16 +1,20 @@
 import sqlite3
 import tkinter as tk
+import tkinter.font as tkf
 
 class LoadModelFrame(tk.Frame):
     """Frame for load model page."""
     def __init__(self, root: tk.Tk, width: int, 
-                 height: int, dataset: str) -> None:
+                 height: int, connection: sqlite3.Connection,
+                 cursor: sqlite3.Cursor, dataset: str) -> None:
         """Initialise load model frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            connection (sqlite3.Connection): the database connection object.
+            cursor (sqlite3.Cursor): the database cursor object.
             dataset (str): the name of the dataset to use
             ('MNIST', 'Cat Recognition' or 'XOR')
         Raises:
@@ -23,9 +27,11 @@ class LoadModelFrame(tk.Frame):
         self.HEIGHT = height
         
         # Setup load model frame variables
+        self.connection = connection
+        self.cursor = cursor
         self.dataset = dataset
         self.use_gpu: bool
-        self.model_options = self.load_model_options(dataset=dataset)
+        self.model_options = self.load_model_options()
         
         # Setup widgets
         self.title_label: tk.Label = tk.Label(master=self,
@@ -33,41 +39,81 @@ class LoadModelFrame(tk.Frame):
                                               font=('Arial', 20),
                                               text=dataset)
         self.about_label: tk.Label = tk.Label(
-                             master=self,
-                             bg='white',
-                             font=('Arial', 14),
-                             text=f"Load a pretrained model for the {dataset} dataset."
-                             )
-        self.model_option_menu_var: tk.StringVar = tk.StringVar(
-                                                       master=self
-                                                       )
-        self.model_option_menu: tk.OptionMenu = tk.OptionMenu(
-                                                 self,
-                                                 self.model_option_menu_var,
-                                                 *self.load_model_options(dataset=dataset)
-                                                 )
+                    master=self,
+                    bg='white',
+                    font=('Arial', 14),
+                    text=f"Load a pretrained model for the {dataset} dataset."
+                    )
         self.model_status_label: tk.Label = tk.Label(master=self,
                                                      bg='white',
                                                      font=('Arial', 15))
         
+        # Don't give loaded model options if no models have been saved for the 
+        # dataset.
+        if len(self.model_options) > 0:
+            self.model_option_menu_label: tk.Label = tk.Label(
+                                                master=self,
+                                                bg='white',
+                                                font=('Arial', 14),
+                                                text="Select a model to load:"
+                                                )
+            self.model_option_menu_var: tk.StringVar = tk.StringVar(
+                                                    master=self,
+                                                    value=self.model_options[0]
+                                                        )
+            self.model_option_menu: tk.OptionMenu = tk.OptionMenu(
+                                                    self,
+                                                    self.model_option_menu_var,
+                                                    *self.model_options
+                                                    )
+            self.use_gpu_check_button_var: tk.BooleanVar = tk.BooleanVar()
+            self.use_gpu_check_button: tk.Checkbutton = tk.Checkbutton(
+                                            master=self,
+                                            width=7, height=1,
+                                            font=tkf.Font(size=12),
+                                            text="Use GPU",
+                                            variable=self.use_gpu_check_button_var
+                                                        )
+        else:
+            self.model_status_label.configure(
+                                     text='No saved models for this dataset.',
+                                     fg='red'
+                                     )
+        
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=3)
         self.about_label.grid(row=1, column=0, columnspan=3)
-        self.model_option_menu.grid(row=2, column=1)
-        self.model_status_label.grid(row=3, column=0,
+        if len(self.model_options) > 0:  # Check if options should be given
+            self.model_option_menu_label.grid(row=2, column=0, pady=(20,0))
+            self.use_gpu_check_button.grid(row=2, column=2, rowspan=2, pady=(20,0))
+            self.model_option_menu.grid(row=3, column=0, pady=(10,0))
+        self.model_status_label.grid(row=4, column=0,
                                      columnspan=3, pady=50)
         
-    def load_model_options(self, dataset: str) -> list[str]:
+    def load_model_options(self) -> list[str]:
         """Load the model options from the database.
            
-           Args:
-               dataset (str): the name of the dataset to load load models
-               for. ('MNIST', 'Cat Recognition' or 'XOR')
-            Returns:
+           Returns:
                 a list of the model options.
         """
-        raise NotImplementedError
+        sql = """
+        SELECT Model_Name FROM Pretrained_Models WHERE Dataset_Name = ?
+        """
+        parameters = (self.dataset,)
+        self.cursor.execute(sql, parameters)
+
+        # Save the string value contained within the tuple of each row
+        model_options = []
+        for model_option in self.cursor.fetchall():
+            model_options.append(model_option[0])
+
+        return model_options
         
-    def load_model(self):
-        """Create model using saved weights and biases."""
+    def load_model(self) -> object:
+        """Create model using saved weights and biases.
+        
+           Returns:
+               a Model object.
+               
+        """
         raise NotImplementedError

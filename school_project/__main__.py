@@ -184,7 +184,9 @@ class SchoolProjectFrame(tk.Frame):
                a tuple of the database connection and the cursor for it.
         
         """
-        connection = sqlite3.connect('school_project/pretrained_models.db')
+        connection = sqlite3.connect(
+                                database='school_project/pretrained_models.db'
+                                )
         cursor = connection.cursor()
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS Pretrained_Models
@@ -215,10 +217,17 @@ class SchoolProjectFrame(tk.Frame):
                         root=self,
                         width=self.WIDTH,
                         height=self.HEIGHT,
+                        connection=self.connection,
+                        cursor=self.cursor,
                         dataset=self.dataset_option_menu_var.get()
                         )
         self.load_model_frame.pack()
-        self.test_loaded_model_button.pack()
+
+        # Don't give option to test loaded model if no models have been saved 
+        # for the dataset.
+        if len(self.load_model_frame.model_options) > 0:
+            self.test_loaded_model_button.pack()
+        
         self.exit_load_model_frame_button.pack(pady=(10,0))
         
     def exit_hyper_parameter_frame(self) -> None:
@@ -375,13 +384,17 @@ class SchoolProjectFrame(tk.Frame):
         self.model.export(file_location=file_location)
 
         # Save the model information to the database
-        params = (self.save_model_name_entry.get(), self.dataset_option_menu_var.get(), 
-                  file_location, self.hyper_parameter_frame.use_relu_check_button_var.get())
         sql = """
         INSERT OR REPLACE INTO Pretrained_Models (Model_Name, Dataset_Name, File_Location, Use_ReLu)
         VALUES(?, ?, ?, ?)
         """
-        self.cursor.execute(sql, params)
+        parameters = (
+                    self.save_model_name_entry.get(),
+                    self.dataset_option_menu_var.get(), 
+                    file_location,
+                    self.hyper_parameter_frame.use_relu_check_button_var.get()
+                    )
+        self.cursor.execute(sql, parameters)
         self.connection.commit()
 
         self.enter_home_frame()
