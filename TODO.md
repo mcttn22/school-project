@@ -30,6 +30,7 @@
 - Start design draft
   - Update Class diagram (load_model frame etc)
 
+- Maybe save optimum models
 - Maybe give option to continue training pretrained model
 
 - Update setup.py version
