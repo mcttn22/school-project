@@ -1,7 +1,5 @@
 ### Todo
 
-- Add encapsulation
-- Unnecessary type hinting?
 - Update results pages
 
 - Finish analysis draft
