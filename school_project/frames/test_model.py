@@ -181,8 +181,8 @@ class TestCatRecognitionFrame(tk.Frame):
             else:
                 image1.set_title("Not a cat")
             image1.imshow(
-                        cp.asnumpy(model.test_inputs)[:,0].reshape((64,64,3))
-                        )
+                         cp.asnumpy(model.test_inputs)[:,0].reshape((64,64,3))
+                         )
             image2 = self.image_figure.add_subplot(122)
             if cp.squeeze(model.test_prediction)[14] >= 0.5:
                 image2.set_title("Cat")
@@ -237,12 +237,12 @@ class TestXORFrame(tk.Frame):
         
         """
         self.model_status_label.configure(text="Testing Results:", fg='green')
-        results: str = (
-                    f"Prediction Accuracy: " +
-                    f"{round(number=model.test_prediction_accuracy, ndigits=1)}%\n" +
-                    f"Network Shape: " +
-                    f"{','.join(model.layers_shape)}\n"
-                    )
+        results = (
+             f"Prediction Accuracy: " +
+             f"{round(number=model.test_prediction_accuracy, ndigits=1)}%\n" +
+             f"Network Shape: " +
+             f"{','.join(model.layers_shape)}\n"
+             )
         for i in range(model.test_inputs.shape[1]):
             results += f"{model.test_inputs[0][i]},"
             results += f"{model.test_inputs[1][i]} = "
