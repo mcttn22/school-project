@@ -37,3 +37,4 @@
 - Jupyter notebook for technical presentation?
 
 - Note that Cat dataset has 50 test images (fewer needed for testing) and MNIST has 10,000
+- Note that tkinter manage method is an example of recursion for report?
