@@ -1,6 +1,6 @@
 ### Todo
 
-- Update results pages
+- Update results pages + Check GPU versions
 
 - Finish analysis draft
   - Complete analysis interview
