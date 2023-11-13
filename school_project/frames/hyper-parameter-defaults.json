@@ -17,7 +17,7 @@
     },
     "XOR": {
         "description": "For experimenting with Artificial Neural Networks, a XOR gate model has been used for its lesser computation time.",
-        "epochCount": 1200,
+        "epochCount": 4700,
         "hiddenLayersShape": [100, 100],
         "minTrainDatasetSize":  2,
         "maxTrainDatasetSize": 4,
