@@ -1,7 +1,8 @@
 ### Todo
 
-- Update results pages + Check GPU versions
+- Give option to delete rows from database?
 - Show what model should have predicted on results page for incorrect predictions
+- Check code structure
 
 - Finish analysis draft
   - Complete analysis interview
