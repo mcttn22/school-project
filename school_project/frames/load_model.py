@@ -96,11 +96,9 @@ class LoadModelFrame(tk.Frame):
            Returns:
                 a list of the model options.
         """
-        sql = """
-        SELECT Model_Name FROM Saved_Models WHERE Dataset_Name = ?
-        """
-        parameters = (self.dataset,)
-        self.cursor.execute(sql, parameters)
+        self.cursor.execute(f"""
+        SELECT Model_Name FROM {self.dataset.replace(" ", "_")}
+        """)
 
         # Save the string value contained within the tuple of each row
         model_options = []
@@ -119,10 +117,10 @@ class LoadModelFrame(tk.Frame):
         self.use_gpu = self.use_gpu_check_button_var.get()
 
         # Query data of selected saved model from database
-        sql = """
-        SELECT * FROM Saved_Models WHERE Dataset_Name = ? AND Model_Name = ?
+        sql = f"""
+        SELECT * FROM {self.dataset.replace(" ", "_")} WHERE Model_Name = ?
         """
-        parameters = (self.dataset, self.model_option_menu_var.get())
+        parameters = (self.model_option_menu_var.get(),)
         self.cursor.execute(sql, parameters)
         data = self.cursor.fetchall()[0]
         hidden_layers_shape_input = [layer for layer in data[2].replace(' ', '').split(',') if layer != '']
@@ -137,9 +135,9 @@ class LoadModelFrame(tk.Frame):
                 from school_project.models.cpu.xor import XORModel as Model
             model = Model(
                 hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
-                train_dataset_size=data[4],
-                learning_rate=data[5],
-                use_relu=data[6]
+                train_dataset_size=data[3],
+                learning_rate=data[4],
+                use_relu=data[5]
                 )
             model.load_model_values(file_location=data[1])
 
@@ -153,9 +151,9 @@ class LoadModelFrame(tk.Frame):
                     from school_project.models.gpu.xor import XORModel as Model
                 model = Model(
                     hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
-                    train_dataset_size=data[4],
-                    learning_rate=data[5],
-                    use_relu=data[6]
+                    train_dataset_size=data[3],
+                    learning_rate=data[4],
+                    use_relu=data[5]
                     )
                 model.load_model_values(file_location=data[1])
             except ImportError as ie:

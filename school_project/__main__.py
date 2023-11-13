@@ -164,7 +164,7 @@ class SchoolProjectFrame(tk.Frame):
 
     def setup_database(self) -> tuple[sqlite3.Connection, sqlite3.Cursor]:
         """Create a connection to the pretrained_models database file and 
-           setup base table if needed.
+           setup base table for each dataset if needed.
            
            Returns:
                a tuple of the database connection and the cursor for it.
@@ -175,11 +175,28 @@ class SchoolProjectFrame(tk.Frame):
                                 )
         cursor = connection.cursor()
         cursor.execute("""
-        CREATE TABLE IF NOT EXISTS Saved_Models
-        (Dataset_Name TEXT,
+        CREATE TABLE IF NOT EXISTS MNIST
+        (Model_Name TEXT PRIMARY KEY,
         File_Location TEXT,
         Hidden_Layers_Shape TEXT,
-        Model_Name TEXT,
+        Train_Dataset_Size INTEGER,
+        Learning_Rate FLOAT,
+        Use_ReLu INTEGER)
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Cat_Recognition
+        (Model_Name TEXT PRIMARY KEY,
+        File_Location TEXT,
+        Hidden_Layers_Shape TEXT,
+        Train_Dataset_Size INTEGER,
+        Learning_Rate FLOAT,
+        Use_ReLu INTEGER)
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS XOR
+        (Model_Name TEXT PRIMARY KEY,
+        File_Location TEXT,
+        Hidden_Layers_Shape TEXT,
         Train_Dataset_Size INTEGER,
         Learning_Rate FLOAT,
         Use_ReLu INTEGER)
@@ -372,16 +389,15 @@ class SchoolProjectFrame(tk.Frame):
         self.model.save_model_values(file_location=file_location)
 
         # Save the model information to the database
-        sql = """
-        INSERT OR REPLACE INTO Saved_Models 
-        (Dataset_Name, File_Location, Hidden_Layers_Shape, Model_Name, Train_Dataset_Size, Learning_Rate, Use_ReLu)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        sql = f"""
+        INSERT OR REPLACE INTO {self.dataset_option_menu_var.get().replace(" ", "_")}
+        (Model_Name, File_Location, Hidden_Layers_Shape, Train_Dataset_Size, Learning_Rate, Use_ReLu)
+        VALUES (?, ?, ?, ?, ?, ?)
         """
         parameters = (
-                    self.dataset_option_menu_var.get(), 
+                    self.save_model_name_entry.get(),
                     file_location,
                     self.hyper_parameter_frame.hidden_layers_shape_entry.get(),
-                    self.save_model_name_entry.get(),
                     self.hyper_parameter_frame.train_dataset_size_scale.get(),
                     self.hyper_parameter_frame.learning_rate_scale.get(),
                     self.hyper_parameter_frame.use_relu_check_button_var.get()
