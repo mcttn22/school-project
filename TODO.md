@@ -1,6 +1,6 @@
 ### Todo
 
-- Give option to delete rows from database?
+- Fix conflicting model names issue, by giving option to delete saved models from the database and their .npz file
 - Show what model should have predicted on results page for incorrect predictions
 - Check code structure
 
