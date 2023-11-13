@@ -29,16 +29,27 @@ class TestMNISTFrame(tk.Frame):
         # Setup test MNIST frame variables
         self.use_gpu = use_gpu
         
-        # Setup widgets
+         # Setup widgets
         self.model_status_label = tk.Label(master=self,
-                                          bg='white',
-                                          font=('Arial', 15))
-        self.image_figure = Figure()
-        self.image_canvas = FigureCanvasTkAgg(figure=self.image_figure,
-                                              master=self)
+                                           bg='white',
+                                           font=('Arial', 15))
+        self.results_label = tk.Label(master=self,
+                                      bg='white',
+                                      font=('Arial', 15))
+        self.correct_prediction_figure = Figure()
+        self.correct_prediction_canvas = FigureCanvasTkAgg(
+                                        figure=self.correct_prediction_figure,
+                                        master=self
+                                        )
+        self.incorrect_prediction_figure = Figure()
+        self.incorrect_prediction_canvas = FigureCanvasTkAgg(
+                                      figure=self.incorrect_prediction_figure,
+                                      master=self
+                                      )
         
-        # Pack widgets
-        self.model_status_label.pack()
+        # Grid widgets
+        self.model_status_label.grid(row=0, columnspan=3, pady=(30,0))
+        self.results_label.grid(row=1, columnspan=3)
 
         # Start test thread
         self.model_status_label.configure(text="Testing trained model",
@@ -55,45 +66,63 @@ class TestMNISTFrame(tk.Frame):
         """
         self.model_status_label.configure(text="Testing Results:", fg='green')
         if not self.use_gpu:
-            test_prediction = np.squeeze(model.test_prediction).T.tolist()
-            test_inputs = np.squeeze(model.test_inputs).T
-            self.image_figure.suptitle(
-             "Prediction Correctness: " +
+            self.results_label.configure(
+             text="Prediction Correctness: " +
              f"{round(number=100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1 = self.image_figure.add_subplot(121)
-            image1.set_title(test_prediction[0].index(max(test_prediction[0])))
-            image1.imshow(test_inputs[0].reshape((28,28)))
-
-            image2 = self.image_figure.add_subplot(122)
-            image2.set_title(test_prediction[14].index(max(test_prediction[14])))
-            image2.imshow(test_inputs[14].reshape((28,28)))
-
-            self.image_canvas.get_tk_widget().pack()
+            
+            test_inputs = np.squeeze(model.test_inputs).T
+            test_outputs = np.squeeze(model.test_outputs).T.tolist()
+            test_prediction = np.squeeze(model.test_prediction).T.tolist()
 
         elif self.use_gpu:
 
             import cupy as cp
             
-            test_prediction = cp.squeeze(model.test_prediction).T.tolist()
-            test_inputs = cp.asnumpy(cp.squeeze(model.test_inputs)).T
-            self.image_figure.suptitle(
-             "Prediction Correctness: " +
+            self.results_label.configure(
+             text="Prediction Correctness: " +
              f"{round(number=100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1 = self.image_figure.add_subplot(121)
-            image1.set_title(test_prediction[0].index(max(test_prediction[0])))
-            image1.imshow(test_inputs[0].reshape((28,28)))
+            
+            test_inputs = cp.asnumpy(cp.squeeze(model.test_inputs)).T
+            test_outputs = cp.asnumpy(cp.squeeze(model.test_outputs)).T.tolist()
+            test_prediction = cp.squeeze(model.test_prediction).T.tolist()
+            
+        # Setup incorrect prediction figure
+        self.incorrect_prediction_figure.suptitle("Incorrect predictions:")
+        image_count = 0
+        for i in range(len(test_prediction)):
+            if test_prediction[i].index(max(test_prediction[i])) != test_outputs[i].index(max(test_outputs[i])):
+                if image_count == 2:
+                    break
+                elif image_count == 0:
+                    image = self.incorrect_prediction_figure.add_subplot(121)
+                elif image_count == 1:
+                    image = self.incorrect_prediction_figure.add_subplot(122)
+                image.set_title(test_prediction[i].index(max(test_prediction[i])))
+                image.imshow(test_inputs[i].reshape((28,28)))
+                image_count += 1
+        self.incorrect_prediction_canvas.get_tk_widget().grid(row=3, column=0)
 
-            image2 = self.image_figure.add_subplot(122)
-            image2.set_title(test_prediction[14].index(max(test_prediction[14])))
-            image2.imshow(test_inputs[14].reshape((28,28)))
-
-            self.image_canvas.get_tk_widget().pack()
+        # Setup correct prediction figure
+        self.correct_prediction_figure.suptitle("Correct predictions:")
+        image_count = 0
+        for i in range(len(test_prediction)):
+            if test_prediction[i].index(max(test_prediction[i])) == test_outputs[i].index(max(test_outputs[i])):
+                if image_count == 2:
+                    break
+                elif image_count == 0:
+                    image = self.correct_prediction_figure.add_subplot(121)
+                elif image_count == 1:
+                    image = self.correct_prediction_figure.add_subplot(122)
+                image.set_title(test_prediction[i].index(max(test_prediction[i])))
+                image.imshow(test_inputs[i].reshape((28,28)))
+                image_count += 1
+        self.correct_prediction_canvas.get_tk_widget().grid(row=3, column=2)
 
 class TestCatRecognitionFrame(tk.Frame):
     """Frame for Testing Cat Recognition page."""
@@ -121,14 +150,25 @@ class TestCatRecognitionFrame(tk.Frame):
         
         # Setup widgets
         self.model_status_label = tk.Label(master=self,
-                                          bg='white',
-                                          font=('Arial', 15))
-        self.image_figure = Figure()
-        self.image_canvas = FigureCanvasTkAgg(figure=self.image_figure,
-                                              master=self)
+                                           bg='white',
+                                           font=('Arial', 15))
+        self.results_label = tk.Label(master=self,
+                                      bg='white',
+                                      font=('Arial', 15))
+        self.correct_prediction_figure = Figure()
+        self.correct_prediction_canvas = FigureCanvasTkAgg(
+                                        figure=self.correct_prediction_figure,
+                                        master=self
+                                        )
+        self.incorrect_prediction_figure = Figure()
+        self.incorrect_prediction_canvas = FigureCanvasTkAgg(
+                                      figure=self.incorrect_prediction_figure,
+                                      master=self
+                                      )
         
-        # Pack widgets
-        self.model_status_label.pack(pady=(30,0))
+        # Grid widgets
+        self.model_status_label.grid(row=0, columnspan=3, pady=(30,0))
+        self.results_label.grid(row=1, columnspan=3)
 
         # Start test thread
         self.model_status_label.configure(text="Testing trained model...",
@@ -145,53 +185,69 @@ class TestCatRecognitionFrame(tk.Frame):
         """
         self.model_status_label.configure(text="Testing Results:", fg='green')
         if not self.use_gpu:
-            self.image_figure.suptitle(
-             "Prediction Correctness: " +
+            self.results_label.configure(
+             text="Prediction Correctness: " +
              f"{round(number=100 - np.mean(np.abs(model.test_prediction.round() - model.test_outputs)) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1 = self.image_figure.add_subplot(121)
-            if np.squeeze(model.test_prediction)[0] >= 0.5:
-                image1.set_title("Cat")
-            else:
-                image1.set_title("Not a cat")
-            image1.imshow(model.test_inputs[:,0].reshape((64,64,3)))
-            image2 = self.image_figure.add_subplot(122)
-            if np.squeeze(model.test_prediction)[14] >= 0.5:
-                image2.set_title("Cat")
-            else:
-                image2.set_title("Not a cat")
-            image2.imshow(model.test_inputs[:,14].reshape((64,64,3)))
-            self.image_canvas.get_tk_widget().pack()
+            
+            test_inputs = model.test_inputs
+            test_outputs = np.squeeze(model.test_outputs)
+            test_prediction = np.squeeze(model.test_prediction.round())
         
         elif self.use_gpu:
 
             import cupy as cp
             
-            self.image_figure.suptitle(
-             "Prediction Correctness: " +
+            self.results_label.configure(
+             text="Prediction Correctness: " +
              f"{round(number=100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            image1 = self.image_figure.add_subplot(121)
-            if cp.squeeze(model.test_prediction)[0] >= 0.5:
-                image1.set_title("Cat")
-            else:
-                image1.set_title("Not a cat")
-            image1.imshow(
-                         cp.asnumpy(model.test_inputs)[:,0].reshape((64,64,3))
-                         )
-            image2 = self.image_figure.add_subplot(122)
-            if cp.squeeze(model.test_prediction)[14] >= 0.5:
-                image2.set_title("Cat")
-            else:
-                image2.set_title("Not a cat")
-            image2.imshow(
-                        cp.asnumpy(model.test_inputs)[:,14].reshape((64,64,3))
-                        )
-            self.image_canvas.get_tk_widget().pack()
+            
+            test_inputs = cp.asnumpy(model.test_inputs)
+            test_outputs = cp.asnumpy(cp.squeeze(model.test_outputs))
+            test_prediction = cp.asnumpy(cp.squeeze(model.test_prediction)).round()
+
+        # Setup incorrect prediction figure
+        self.incorrect_prediction_figure.suptitle("Incorrect predictions:")
+        image_count = 0
+        for i in range(len(test_prediction)):
+            if test_prediction[i] != test_outputs[i]:
+                if image_count == 2:
+                    break
+                elif image_count == 0:
+                    image = self.incorrect_prediction_figure.add_subplot(121)
+                elif image_count == 1:
+                    image = self.incorrect_prediction_figure.add_subplot(122)
+                if test_prediction[i] == 1:
+                    image.set_title("Cat")
+                else:
+                    image.set_title("Not a cat")
+                image.imshow(test_inputs[:,i].reshape((64,64,3)))
+                image_count += 1
+        self.incorrect_prediction_canvas.get_tk_widget().grid(row=3, column=0)
+
+        # Setup correct prediction figure
+        self.correct_prediction_figure.suptitle("Correct predictions:")
+        image_count = 0
+        for i in range(len(test_prediction)):
+            if test_prediction[i] == test_outputs[i]:
+                if image_count == 2:
+                    break
+                elif image_count == 0:
+                    image = self.correct_prediction_figure.add_subplot(121)
+                elif image_count == 1:
+                    image = self.correct_prediction_figure.add_subplot(122)
+                if test_prediction[i] == 1:
+                    image.set_title("Cat")
+                else:
+                    image.set_title("Not a cat")
+                image.imshow(test_inputs[:,i].reshape((64,64,3)))
+                image_count += 1
+        self.correct_prediction_canvas.get_tk_widget().grid(row=3, column=2)
 
 class TestXORFrame(tk.Frame):
     """Frame for Testing XOR page."""
