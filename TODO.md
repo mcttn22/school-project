@@ -1,6 +1,7 @@
 ### Todo
 
 - Update results pages + Check GPU versions
+- Show what model should have predicted on results page for incorrect predictions
 
 - Finish analysis draft
   - Complete analysis interview
