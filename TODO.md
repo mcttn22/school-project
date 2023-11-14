@@ -1,6 +1,6 @@
 ### Todo
 
-- Fix conflicting model names issue, by giving option to delete saved models from the database and their .npz file
+- Replace sql f-strings with '?'s ?
 - Show what model should have predicted on results page for incorrect predictions
 - Check code structure
 
