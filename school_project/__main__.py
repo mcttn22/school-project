@@ -1,3 +1,4 @@
+import os
 import threading
 import uuid
 
@@ -83,6 +84,13 @@ class SchoolProjectFrame(tk.Frame):
                                                 font=tkf.Font(size=12),
                                                 text="Test Model",
                                                 command=self.test_loaded_model
+                                                )
+        self.delete_loaded_model_button = tk.Button(
+                                                master=self,
+                                                width=13, height=1,
+                                                font=tkf.Font(size=12),
+                                                text="Delete Model",
+                                                command=self.delete_loaded_model
                                                 )
         self.save_model_label = tk.Label(
                                   master=self,
@@ -233,8 +241,9 @@ class SchoolProjectFrame(tk.Frame):
         # for the dataset.
         if len(self.load_model_frame.model_options) > 0:
             self.test_loaded_model_button.pack()
+            self.delete_loaded_model_button.pack(pady=(5,0))
         
-        self.exit_load_model_frame_button.pack(pady=(10,0))
+        self.exit_load_model_frame_button.pack(pady=(30,0))
         
     def exit_hyper_parameter_frame(self) -> None:
         """Unpack hyper-parameter frame and pack home frame."""
@@ -247,6 +256,7 @@ class SchoolProjectFrame(tk.Frame):
         """Unpack load model frame and pack home frame."""
         self.load_model_frame.pack_forget()
         self.test_loaded_model_button.pack_forget()
+        self.delete_loaded_model_button.pack_forget()
         self.exit_load_model_frame_button.pack_forget()
         self.home_frame.pack()
 
@@ -336,8 +346,9 @@ class SchoolProjectFrame(tk.Frame):
         except (ValueError, ImportError) as e:
             return
         self.load_model_frame.pack_forget()
-        self.exit_load_model_frame_button.pack_forget()
         self.test_loaded_model_button.pack_forget()
+        self.delete_loaded_model_button.pack_forget()
+        self.exit_load_model_frame_button.pack_forget()
         if self.load_model_frame.dataset == "MNIST":
             self.test_frame = TestMNISTFrame( 
                                         root=self,
@@ -388,9 +399,21 @@ class SchoolProjectFrame(tk.Frame):
         file_location = f"school_project/saved-models/{uuid.uuid4().hex}.npz"
         self.model.save_model_values(file_location=file_location)
 
+        # Check if model name has already been taken
+        self.cursor.execute(f"""
+        SELECT Model_Name FROM {self.dataset_option_menu_var.get().replace(" ", "_")}
+        """)
+        for model_name in self.cursor.fetchall():
+            if model_name[0] == self.save_model_name_entry.get():
+                self.test_frame.model_status_label.configure(
+                                                       text="Model name taken",
+                                                       fg='red'
+                                                       )
+                return
+
         # Save the model information to the database
         sql = f"""
-        INSERT OR REPLACE INTO {self.dataset_option_menu_var.get().replace(" ", "_")}
+        INSERT INTO {self.dataset_option_menu_var.get().replace(" ", "_")}
         (Model_Name, File_Location, Hidden_Layers_Shape, Train_Dataset_Size, Learning_Rate, Use_ReLu)
         VALUES (?, ?, ?, ?, ?, ?)
         """
@@ -406,6 +429,27 @@ class SchoolProjectFrame(tk.Frame):
         self.connection.commit()
 
         self.enter_home_frame()
+
+    def delete_loaded_model(self) -> None:
+        """Delete saved model file and model data from the database."""
+        dataset = self.dataset_option_menu_var.get().replace(" ", "_")
+        model_name = self.load_model_frame.model_option_menu_var.get()
+
+        # Delete saved model
+        sql = f"""SELECT * FROM {dataset} WHERE Model_Name = ?"""
+        parameters = (model_name,)
+        self.cursor.execute(sql, parameters)
+        os.remove(self.cursor.fetchall()[0][1])
+
+        # Remove model data from database
+        sql = f"""DELETE FROM {dataset} WHERE Model_Name = ?"""
+        parameters = (model_name,)
+        self.cursor.execute(sql, parameters)
+        self.connection.commit()
+
+        # Reload load model frame with new options
+        self.exit_load_model_frame()
+        self.enter_load_model_frame()
 
     def enter_home_frame(self) -> None:
         """Unpack test frame and pack home frame."""
