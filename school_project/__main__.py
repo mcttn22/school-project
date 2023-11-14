@@ -382,9 +382,9 @@ class SchoolProjectFrame(tk.Frame):
             self.after(1_000, self.manage_testing, test_thread)
 
     def save_model(self) -> None:
-        """Export the model, save the model information to the database, then 
+        """Save the model, save the model information to the database, then 
            enter the home frame."""
-        # Export model to random hex file name
+        # Save model to random hex file name
         file_location = f"school_project/saved-models/{uuid.uuid4().hex}.npz"
         self.model.save_model_values(file_location=file_location)
 
