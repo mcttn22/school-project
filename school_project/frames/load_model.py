@@ -84,9 +84,9 @@ class LoadModelFrame(tk.Frame):
         self.title_label.grid(row=0, column=0, columnspan=3)
         self.about_label.grid(row=1, column=0, columnspan=3)
         if len(self.model_options) > 0:  # Check if options should be given
-            self.model_option_menu_label.grid(row=2, column=0, padx=(0,1), pady=(20,0))
-            self.use_gpu_check_button.grid(row=2, column=2, rowspan=2, pady=(20,0))
-            self.model_option_menu.grid(row=3, column=0, padx=(0,1), pady=(10,0))
+            self.model_option_menu_label.grid(row=2, column=0, padx=(0,30), pady=(30,0))
+            self.use_gpu_check_button.grid(row=2, column=2, rowspan=2, pady=(30,0))
+            self.model_option_menu.grid(row=3, column=0, padx=(0,30), pady=(10,0))
         self.model_status_label.grid(row=4, column=0,
                                      columnspan=3, pady=50)
         

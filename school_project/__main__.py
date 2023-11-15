@@ -243,7 +243,7 @@ class SchoolProjectFrame(tk.Frame):
             self.test_loaded_model_button.pack()
             self.delete_loaded_model_button.pack(pady=(5,0))
         
-        self.exit_load_model_frame_button.pack(pady=(30,0))
+        self.exit_load_model_frame_button.pack(pady=(5,0))
         
     def exit_hyper_parameter_frame(self) -> None:
         """Unpack hyper-parameter frame and pack home frame."""
