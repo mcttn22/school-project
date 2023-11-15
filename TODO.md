@@ -2,6 +2,7 @@
 
 - Make UI nicer ~
 - Check code structure
+- Ability to add external .npz file ~
 
 - Finish analysis draft
   - Complete analysis interview
