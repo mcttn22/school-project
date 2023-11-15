@@ -1,7 +1,6 @@
 ### Todo
 
-- Replace sql f-strings with '?'s ?
-- Show what model should have predicted on results page for incorrect predictions
+- Make UI nicer ~
 - Check code structure
 
 - Finish analysis draft
