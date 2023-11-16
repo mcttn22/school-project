@@ -484,8 +484,8 @@ class SchoolProjectFrame(tk.Frame):
 def main() -> None:
     """Entrypoint of project."""
     root = tk.Tk()
-    school_project = SchoolProjectFrame(root=root, width=1465,
-                                        height=890, bg='white')
+    school_project = SchoolProjectFrame(root=root, width=1280,
+                                        height=835, bg='white')
     school_project.pack(side='top', fill='both', expand=True)
     root.mainloop()
     
