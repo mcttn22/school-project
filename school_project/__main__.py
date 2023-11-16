@@ -400,11 +400,13 @@ class SchoolProjectFrame(tk.Frame):
         self.model.save_model_values(file_location=file_location)
 
         # Check if model name has already been taken
+        dataset = self.dataset_option_menu_var.get().replace(" ", "_")
+        model_name = self.save_model_name_entry.get()
         self.cursor.execute(f"""
-        SELECT Model_Name FROM {self.dataset_option_menu_var.get().replace(" ", "_")}
+        SELECT Model_Name FROM {dataset}
         """)
-        for model_name in self.cursor.fetchall():
-            if model_name[0] == self.save_model_name_entry.get():
+        for saved_model_name in self.cursor.fetchall():
+            if saved_model_name[0] == model_name:
                 self.test_frame.model_status_label.configure(
                                                        text="Model name taken",
                                                        fg='red'
@@ -413,12 +415,12 @@ class SchoolProjectFrame(tk.Frame):
 
         # Save the model information to the database
         sql = f"""
-        INSERT INTO {self.dataset_option_menu_var.get().replace(" ", "_")}
+        INSERT INTO {dataset}
         (Model_Name, File_Location, Hidden_Layers_Shape, Train_Dataset_Size, Learning_Rate, Use_ReLu)
         VALUES (?, ?, ?, ?, ?, ?)
         """
         parameters = (
-                    self.save_model_name_entry.get(),
+                    model_name,
                     file_location,
                     self.hyper_parameter_frame.hidden_layers_shape_entry.get(),
                     self.hyper_parameter_frame.train_dataset_size_scale.get(),
