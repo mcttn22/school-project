@@ -68,11 +68,15 @@ class SchoolProjectFrame(tk.Frame):
                                       font=tkf.Font(size=12),
                                       text="Train Model",
                                       command=self.enter_training_frame)
-        self.stop_training_button = tk.Button(master=self,
-                                              width=15, height=1,
-                                              font=tkf.Font(size=12),
-                                              text="Stop Training Model",
-                                              command=self.stop_training)
+        self.stop_training_button = tk.Button(
+                                        master=self,
+                                        width=15, height=1,
+                                        font=tkf.Font(size=12),
+                                        text="Stop Training Model",
+                                        command=lambda: self.model.set_running(
+                                                                   value=False
+                                                                   )
+                                        )
         self.test_created_model_button = tk.Button(
                                                master=self,
                                                width=13, height=1,
@@ -289,10 +293,6 @@ class SchoolProjectFrame(tk.Frame):
         self.stop_training_button.pack()
         self.manage_training(train_thread=self.training_frame.train_thread)
 
-    def stop_training(self) -> None:
-        """Stop model training."""
-        self.model.running = False
-
     def manage_training(self, train_thread: threading.Thread) -> None:
         """Wait for model training thread to finish,
            then plot training losses on training frame.
@@ -491,7 +491,7 @@ def main() -> None:
     
     # Stop model training when GUI closes
     if school_project.model != None:
-        school_project.model.running = False
+        school_project.model.set_running(value=False)
 
 if __name__ == "__main__":
     main()
