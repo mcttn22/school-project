@@ -1,9 +1,11 @@
 ### Todo
 
-- Make UI nicer ~
+- Make UI nicer ~ (use customtkinter?)
+- Use get,set methods (with private variables)
 - Check code structure
 - Results should show incorrect and correct prediction of BOTH non-cat and cat pictures (currently just shows whatever the first two correct/incorrect)
 - Ability to add external .npz file ~
+- Use linked list for layers?
 
 - Finish analysis draft
   - Complete analysis interview
@@ -40,3 +42,4 @@
 
 - Note that Cat dataset has 50 test images (fewer needed for testing) and MNIST has 10,000
 - Note that tkinter manage method is an example of recursion for report?
+- Note: Mention time complexity in report + speed times of saving + loading, why cat acc low ?
