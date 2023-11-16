@@ -53,6 +53,8 @@ class TestMNISTFrame(tk.Frame):
         # Grid widgets
         self.model_status_label.grid(row=0, columnspan=3, pady=(30,0))
         self.results_label.grid(row=1, columnspan=3)
+        self.incorrect_prediction_canvas.get_tk_widget().grid(row=2, column=0)
+        self.correct_prediction_canvas.get_tk_widget().grid(row=2, column=2)
 
         # Start test thread
         self.model_status_label.configure(text="Testing trained model",
@@ -109,7 +111,6 @@ class TestMNISTFrame(tk.Frame):
                 image.set_title(test_prediction[i].index(max(test_prediction[i])))
                 image.imshow(test_inputs[i].reshape((28,28)))
                 image_count += 1
-        self.incorrect_prediction_canvas.get_tk_widget().grid(row=3, column=0)
 
         # Setup correct prediction figure
         self.correct_prediction_figure.suptitle("Correct predictions:")
@@ -125,7 +126,6 @@ class TestMNISTFrame(tk.Frame):
                 image.set_title(test_prediction[i].index(max(test_prediction[i])))
                 image.imshow(test_inputs[i].reshape((28,28)))
                 image_count += 1
-        self.correct_prediction_canvas.get_tk_widget().grid(row=3, column=2)
 
 class TestCatRecognitionFrame(tk.Frame):
     """Frame for Testing Cat Recognition page."""
@@ -175,6 +175,8 @@ class TestCatRecognitionFrame(tk.Frame):
         # Grid widgets
         self.model_status_label.grid(row=0, columnspan=3, pady=(30,0))
         self.results_label.grid(row=1, columnspan=3)
+        self.incorrect_prediction_canvas.get_tk_widget().grid(row=2, column=0)
+        self.correct_prediction_canvas.get_tk_widget().grid(row=2, column=2)
 
         # Start test thread
         self.model_status_label.configure(text="Testing trained model...",
@@ -234,7 +236,6 @@ class TestCatRecognitionFrame(tk.Frame):
                     image.set_title("Not a cat")
                 image.imshow(test_inputs[:,i].reshape((64,64,3)))
                 image_count += 1
-        self.incorrect_prediction_canvas.get_tk_widget().grid(row=3, column=0)
 
         # Setup correct prediction figure
         self.correct_prediction_figure.suptitle("Correct predictions:")
@@ -253,7 +254,6 @@ class TestCatRecognitionFrame(tk.Frame):
                     image.set_title("Not a cat")
                 image.imshow(test_inputs[:,i].reshape((64,64,3)))
                 image_count += 1
-        self.correct_prediction_canvas.get_tk_widget().grid(row=3, column=2)
 
 class TestXORFrame(tk.Frame):
     """Frame for Testing XOR page."""
