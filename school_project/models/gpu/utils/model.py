@@ -144,7 +144,7 @@ class AbstractModel (ModelInterface):
         self.training_time: float
         
         # Setup model attributes
-        self.running = True
+        self.__running = True
         self.input_neuron_count: int = self.train_inputs.shape[0]
         self.input_count: int = self.train_inputs.shape[1]
         self.hidden_layers_shape = hidden_layers_shape
@@ -170,6 +170,9 @@ class AbstractModel (ModelInterface):
         """
         return (f"Layers Shape: {','.join(self.layers_shape)}\n" +
                 f"Learning Rate: {self.learning_rate}")
+    
+    def set_running(self, value:bool):
+        self.__running = value
 
     def setup_layers(self) -> None:
         """Setup model layers"""
@@ -327,7 +330,7 @@ class AbstractModel (ModelInterface):
         self.train_losses = []
         training_start_time = time.time()
         for epoch in range(epoch_count):
-            if not self.running:
+            if not self.__running:
                 break
             self.training_progress = f"Epoch {epoch} / {epoch_count}"
             prediction = self.forward_propagation()
@@ -335,7 +338,7 @@ class AbstractModel (ModelInterface):
                                   outputs=self.train_outputs,
                                   prediction=prediction)
             self.train_losses.append(loss)
-            if not self.running:
+            if not self.__running:
                 break
             dloss_doutput = -(1/self.input_count) * ((self.train_outputs - prediction)/(prediction * (1 - prediction)))
             self.back_propagation(dloss_doutput=dloss_doutput)
