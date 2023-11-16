@@ -10,23 +10,25 @@ import tkinter.font as tkf
 class HyperParameterFrame(tk.Frame):
     """Frame for hyper-parameter page."""
     def __init__(self, root: tk.Tk, width: int, 
-                 height: int, dataset: str) -> None:
+                 height: int, bg: str, dataset: str) -> None:
         """Initialise hyper-parameter frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            bg (str): the hex value or name of the frame's background colour.
             dataset (str): the name of the dataset to use
             ('MNIST', 'Cat Recognition' or 'XOR')
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white')
+        super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
+        self.BG = bg
         
         # Setup hyper-parameter frame variables
         self.dataset = dataset
@@ -37,18 +39,18 @@ class HyperParameterFrame(tk.Frame):
         
         # Setup widgets
         self.title_label = tk.Label(master=self,
-                                    bg='white',
+                                    bg=self.BG,
                                     font=('Arial', 20),
                                     text=dataset)
         self.about_label = tk.Label(
                              master=self,
-                             bg='white',
+                             bg=self.BG,
                              font=('Arial', 14),
                              text=self.default_hyper_parameters['description']
                              )
         self.learning_rate_scale = tk.Scale(
                           master=self,
-                          bg='white',
+                          bg=self.BG,
                           orient='horizontal',
                           label="Learning Rate",
                           length=185,
@@ -58,7 +60,7 @@ class HyperParameterFrame(tk.Frame):
                           )
         self.learning_rate_scale.set(value=0.1)
         self.epoch_count_scale = tk.Scale(master=self,
-                                          bg='white',
+                                          bg=self.BG,
                                           orient='horizontal',
                                           label="Epoch Count",
                                           length=185,
@@ -70,7 +72,7 @@ class HyperParameterFrame(tk.Frame):
                              )
         self.train_dataset_size_scale = tk.Scale(
                    master=self,
-                   bg='white',
+                   bg=self.BG,
                    orient='horizontal',
                    label="Train Dataset Size",
                    length=185,
@@ -83,7 +85,7 @@ class HyperParameterFrame(tk.Frame):
                     )
         self.hidden_layers_shape_label = tk.Label(
                                 master=self,
-                                bg='white',
+                                bg=self.BG,
                                 font=('Arial', 12),
                                 text="Enter the number of neurons in each\n" +
                                         "hidden layer, separated by commas:"
@@ -109,7 +111,7 @@ class HyperParameterFrame(tk.Frame):
                                         variable=self.use_gpu_check_button_var
                                                        )
         self.model_status_label = tk.Label(master=self,
-                                           bg='white',
+                                           bg=self.BG,
                                            font=('Arial', 15))
         
         # Pack widgets
@@ -197,30 +199,33 @@ class HyperParameterFrame(tk.Frame):
 class TrainingFrame(tk.Frame):
     """Frame for training page."""
     def __init__(self, root: tk.Tk, width: int,
-                 height: int, model: object, epoch_count: int) -> None:
+                 height: int, bg: str,
+                 model: object, epoch_count: int) -> None:
         """Initialise training frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            bg (str): the hex value or name of the frame's background colour.
             model (object): the Model object to be trained.
             epoch_count (int): the number of training epochs.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white')
+        super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
+        self.BG = bg
         
         # Setup widgets
         self.model_status_label = tk.Label(master=self,
-                                           bg='white',
+                                           bg=self.BG,
                                            font=('Arial', 15))
         self.training_progress_label = tk.Label(master=self,
-                                                bg='white',
+                                                bg=self.BG,
                                                 font=('Arial', 15))
         self.loss_figure: Figure = Figure()
         self.loss_canvas: FigureCanvasTkAgg = FigureCanvasTkAgg(

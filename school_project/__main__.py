@@ -15,21 +15,23 @@ from school_project.frames.test_model import (TestMNISTFrame,
 
 class SchoolProjectFrame(tk.Frame):
     """Main frame of school project."""
-    def __init__(self, root: tk.Tk, width: int, height: int) -> None:
+    def __init__(self, root: tk.Tk, width: int, height: int, bg: str) -> None:
         """Initialise school project pages.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            bg (str): the hex value or name of the frame's background colour.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white')
+        super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root.title("School Project")
         self.WIDTH = width
         self.HEIGHT = height
+        self.BG = bg
         
         # Setup school project frame variables
         self.hyper_parameter_frame: HyperParameterFrame
@@ -95,7 +97,7 @@ class SchoolProjectFrame(tk.Frame):
         self.save_model_label = tk.Label(
                                   master=self,
                                   text="Enter a name for your trained model:",
-                                  bg='white',
+                                  bg=self.BG,
                                   font=('Arial', 15)
                                   )
         self.save_model_name_entry = tk.Entry(master=self, width=13)
@@ -115,15 +117,16 @@ class SchoolProjectFrame(tk.Frame):
         self.home_frame = tk.Frame(master=self, 
                                    width=self.WIDTH, 
                                    height=self.HEIGHT,
-                                   bg='white')
+                                   bg=self.BG)
         self.title_label = tk.Label(
-                       master=self.home_frame, bg='white',
+                       master=self.home_frame,
+                       bg=self.BG,
                        font=('Arial', 20), 
                        text="A-level Computer Science NEA Programming Project"
                        )
         self.about_label = tk.Label(
            master=self.home_frame,
-           bg='white',
+           bg=self.BG,
            font=('Arial', 14),
            text="An investigation into how Artificial Neural Networks work, " +
            "the effects of their hyper-parameters and their applications " +
@@ -131,7 +134,7 @@ class SchoolProjectFrame(tk.Frame):
            " - Max Cotton"
            )
         self.model_menu_label = tk.Label(master=self.home_frame,
-                                         bg='white',
+                                         bg=self.BG,
                                          font=('Arial', 14),
                                          text="Create a new model " +
                                          "or load a pre-trained model "
@@ -218,6 +221,7 @@ class SchoolProjectFrame(tk.Frame):
                                     root=self,
                                     width=self.WIDTH,
                                     height=self.HEIGHT,
+                                    bg=self.BG,
                                     dataset=self.dataset_option_menu_var.get()
                                     )
         self.hyper_parameter_frame.pack()
@@ -231,6 +235,7 @@ class SchoolProjectFrame(tk.Frame):
                                     root=self,
                                     width=self.WIDTH,
                                     height=self.HEIGHT,
+                                    bg=self.BG,
                                     connection=self.connection,
                                     cursor=self.cursor,
                                     dataset=self.dataset_option_menu_var.get()
@@ -276,6 +281,7 @@ class SchoolProjectFrame(tk.Frame):
                 root=self,
                 width=self.WIDTH, 
                 height=self.HEIGHT,
+                bg=self.BG,
                 model=self.model,
                 epoch_count=self.hyper_parameter_frame.epoch_count_scale.get()
                 )
@@ -320,6 +326,7 @@ class SchoolProjectFrame(tk.Frame):
                                    root=self,
                                    width=self.WIDTH,
                                    height=self.HEIGHT,
+                                   bg=self.BG,
                                    use_gpu=self.hyper_parameter_frame.use_gpu,
                                    model=self.model
                                    )
@@ -328,12 +335,16 @@ class SchoolProjectFrame(tk.Frame):
                                    root=self,
                                    width=self.WIDTH, 
                                    height=self.HEIGHT,
+                                   bg=self.BG,
                                    use_gpu=self.hyper_parameter_frame.use_gpu,
                                    model=self.model
                                    )
         elif self.hyper_parameter_frame.dataset == "XOR":
-            self.test_frame = TestXORFrame(root=self, width=self.WIDTH,
-                                           height=self.HEIGHT, model=self.model)
+            self.test_frame = TestXORFrame(root=self,
+                                           width=self.WIDTH,
+                                           height=self.HEIGHT,
+                                           bg=self.BG,
+                                           model=self.model)
         self.test_frame.pack()
         self.manage_testing(test_thread=self.test_frame.test_thread)
 
@@ -354,20 +365,25 @@ class SchoolProjectFrame(tk.Frame):
                                         root=self,
                                         width=self.WIDTH,
                                         height=self.HEIGHT,
+                                        bg=self.BG,
                                         use_gpu=self.load_model_frame.use_gpu,
                                         model=self.model
                                         )
         elif self.load_model_frame.dataset == "Cat Recognition":
             self.test_frame = TestCatRecognitionFrame(
                                         root=self,
-                                        width=self.WIDTH, 
+                                        width=self.WIDTH,
                                         height=self.HEIGHT,
+                                        bg=self.BG,
                                         use_gpu=self.load_model_frame.use_gpu,
                                         model=self.model
                                         )
         elif self.load_model_frame.dataset == "XOR":
-            self.test_frame = TestXORFrame(root=self, width=self.WIDTH,
-                                           height=self.HEIGHT, model=self.model)
+            self.test_frame = TestXORFrame(root=self,
+                                           width=self.WIDTH,
+                                           height=self.HEIGHT,
+                                           bg=self.BG,
+                                           model=self.model)
         self.test_frame.pack()
         self.manage_testing(test_thread=self.test_frame.test_thread)
 
@@ -468,7 +484,8 @@ class SchoolProjectFrame(tk.Frame):
 def main() -> None:
     """Entrypoint of project."""
     root = tk.Tk()
-    school_project = SchoolProjectFrame(root=root, width=1465, height=890)
+    school_project = SchoolProjectFrame(root=root, width=1465,
+                                        height=890, bg='white')
     school_project.pack(side='top', fill='both', expand=True)
     root.mainloop()
     

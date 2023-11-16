@@ -4,8 +4,9 @@ import tkinter.font as tkf
 
 class LoadModelFrame(tk.Frame):
     """Frame for load model page."""
-    def __init__(self, root: tk.Tk, width: int, 
-                 height: int, connection: sqlite3.Connection,
+    def __init__(self, root: tk.Tk,
+                 width: int, height: int, 
+                 bg: str, connection: sqlite3.Connection,
                  cursor: sqlite3.Cursor, dataset: str) -> None:
         """Initialise load model frame widgets.
         
@@ -13,6 +14,7 @@ class LoadModelFrame(tk.Frame):
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            bg (str): the hex value or name of the frame's background colour.
             connection (sqlite3.Connection): the database connection object.
             cursor (sqlite3.Cursor): the database cursor object.
             dataset (str): the name of the dataset to use
@@ -21,10 +23,11 @@ class LoadModelFrame(tk.Frame):
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white')
+        super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
+        self.BG = bg
         
         # Setup load model frame variables
         self.connection = connection
@@ -35,17 +38,17 @@ class LoadModelFrame(tk.Frame):
         
         # Setup widgets
         self.title_label = tk.Label(master=self,
-                                    bg='white',
+                                    bg=self.BG,
                                     font=('Arial', 20),
                                     text=dataset)
         self.about_label = tk.Label(
                     master=self,
-                    bg='white',
+                    bg=self.BG,
                     font=('Arial', 14),
                     text=f"Load a pretrained model for the {dataset} dataset."
                     )
         self.model_status_label = tk.Label(master=self,
-                                           bg='white',
+                                           bg=self.BG,
                                            font=('Arial', 15))
         
         # Don't give loaded model options if no models have been saved for the 
@@ -53,7 +56,7 @@ class LoadModelFrame(tk.Frame):
         if len(self.model_options) > 0:
             self.model_option_menu_label = tk.Label(
                                                 master=self,
-                                                bg='white',
+                                                bg=self.BG,
                                                 font=('Arial', 14),
                                                 text="Select a model to load or delete:"
                                                 )

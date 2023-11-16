@@ -8,33 +8,36 @@ import tkinter as tk
 class TestMNISTFrame(tk.Frame):
     """Frame for Testing MNIST page."""
     def __init__(self, root: tk.Tk, width: int,
-                 height: int, use_gpu: bool, model: object) -> None:
+                 height: int, bg: str,
+                 use_gpu: bool, model: object) -> None:
         """Initialise test MNIST frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            bg (str): the hex value or name of the frame's background colour.
             use_gpu (bool): True or False whether the GPU should be used.
             model (object): The Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white')
+        super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
+        self.BG = bg
         
         # Setup test MNIST frame variables
         self.use_gpu = use_gpu
         
          # Setup widgets
         self.model_status_label = tk.Label(master=self,
-                                           bg='white',
+                                           bg=self.BG,
                                            font=('Arial', 15))
         self.results_label = tk.Label(master=self,
-                                      bg='white',
+                                      bg=self.BG,
                                       font=('Arial', 15))
         self.correct_prediction_figure = Figure()
         self.correct_prediction_canvas = FigureCanvasTkAgg(
@@ -127,33 +130,36 @@ class TestMNISTFrame(tk.Frame):
 class TestCatRecognitionFrame(tk.Frame):
     """Frame for Testing Cat Recognition page."""
     def __init__(self, root: tk.Tk, width: int,
-                 height: int, use_gpu: bool, model: object) -> None:
+                 height: int, bg: str,
+                 use_gpu: bool, model: object) -> None:
         """Initialise test cat recognition frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            bg (str): the hex value or name of the frame's background colour.
             use_gpu (bool): True or False whether the GPU should be used.
             model (object): the Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white')
+        super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
+        self.BG = bg
         
         # Setup image recognition frame variables
         self.use_gpu = use_gpu
         
         # Setup widgets
         self.model_status_label = tk.Label(master=self,
-                                           bg='white',
+                                           bg=self.BG,
                                            font=('Arial', 15))
         self.results_label = tk.Label(master=self,
-                                      bg='white',
+                                      bg=self.BG,
                                       font=('Arial', 15))
         self.correct_prediction_figure = Figure()
         self.correct_prediction_canvas = FigureCanvasTkAgg(
@@ -251,29 +257,32 @@ class TestCatRecognitionFrame(tk.Frame):
 
 class TestXORFrame(tk.Frame):
     """Frame for Testing XOR page."""
-    def __init__(self, root: tk.Tk, width: int, height: int, model: object) -> None:
+    def __init__(self, root: tk.Tk, width: int,
+                 height: int, bg: str, model: object) -> None:
         """Initialise test XOR frame widgets.
         
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
             height (int): the pixel height of the frame.
+            bg (str): the hex value or name of the frame's background colour.
             model (object): the Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
         
         """
-        super().__init__(master=root, width=width, height=height, bg='white')
+        super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
+        self.BG = bg
         
         # Setup widgets
         self.model_status_label = tk.Label(master=self,
-                                           bg='white',
+                                           bg=self.BG,
                                            font=('Arial', 15))
         self.results_label = tk.Label(master=self,
-                                      bg='white',
+                                      bg=self.BG,
                                       font=('Arial', 20))
         
         # Pack widgets
