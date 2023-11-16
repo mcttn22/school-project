@@ -2,6 +2,7 @@
 
 - Make UI nicer ~
 - Check code structure
+- Results should show incorrect and correct prediction of BOTH non-cat and cat pictures (currently just shows whatever the first two correct/incorrect)
 - Ability to add external .npz file ~
 
 - Finish analysis draft
