@@ -88,10 +88,11 @@ class _FullyConnectedLayer():
             (incorrect shape)
         
         """
-        if self.transfer_type == 'sigmoid':
-            dloss_dz = dloss_doutput * sigmoid_derivative(output=self.output)
-        elif self.transfer_type == 'relu':
-            dloss_dz = dloss_doutput * relu_derivative(output=self.output)
+        match self.transfer_type:
+            case 'sigmoid':
+                dloss_dz = dloss_doutput * sigmoid_derivative(output=self.output)
+            case 'relu':
+                dloss_dz = dloss_doutput * relu_derivative(output=self.output)
 
         dloss_dweights = np.dot(dloss_dz, self.input.T)
         dloss_dbiases = np.sum(dloss_dz)
