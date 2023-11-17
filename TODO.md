@@ -1,6 +1,7 @@
 ### Todo
 
 - Add match case ? (Model if on transfer_type)
+- Check linked list for GPU works
 
 - Make UI nicer ~ (use customtkinter?)
 - Check code structure
