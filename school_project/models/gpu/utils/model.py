@@ -13,8 +13,16 @@ from school_project.models.gpu.utils.tools import (
                                               calculate_prediction_accuracy
                                               )
 
+class _Layers():
+    """Manages linked list of layers."""
+    def __init__(self):
+        """Initialise linked list."""
+        self.head = None
+        self.tail = None
+
 class _FullyConnectedLayer():
-    "Fully connected layer for Deep ANNs"
+    """Fully connected layer for Deep ANNs, 
+       represented as a node of a Doubly linked list."""
     def __init__(self, learning_rate: float, input_neuron_count: int,
                  output_neuron_count: int, transfer_type: str) -> None:
         """Initialise layer values.
@@ -30,6 +38,8 @@ class _FullyConnectedLayer():
 
         """
         # Setup layer attributes
+        self.previous_layer = None
+        self.next_layer = None
         self.input_neuron_count = input_neuron_count
         self.output_neuron_count = output_neuron_count
         self.transfer_type = transfer_type
@@ -157,7 +167,7 @@ class AbstractModel (ModelInterface):
         self.use_relu = use_relu
         
         # Setup model values
-        self.layers: list[_FullyConnectedLayer] = []
+        self.layers = _Layers()
         self.learning_rate = learning_rate
 
     def __repr__(self) -> str:
@@ -181,64 +191,65 @@ class AbstractModel (ModelInterface):
             if self.use_relu:
 
                 # Add input layer
-                self.layers.append(_FullyConnectedLayer(
+                self.layers.head = _FullyConnectedLayer(
                                         learning_rate=self.learning_rate,
                                         input_neuron_count=self.input_neuron_count,
                                         output_neuron_count=self.hidden_layers_shape[0],
                                         transfer_type='relu'
-                                        ))
+                                        )
+                current_layer = self.layers.head
 
                 # Add hidden layers
                 for layer in range(len(self.hidden_layers_shape) - 1):
-                    self.layers.append(_FullyConnectedLayer(
+                    current_layer.next_layer = (_FullyConnectedLayer(
                                 learning_rate=self.learning_rate,
                                 input_neuron_count=self.hidden_layers_shape[layer],
                                 output_neuron_count=self.hidden_layers_shape[layer + 1],
                                 transfer_type='relu'
                                 ))
+                    current_layer.next_layer.previous_layer = current_layer
+                    current_layer = current_layer.next_layer
             else:
 
                 # Add input layer
-                self.layers.append(_FullyConnectedLayer(
+                self.layers.head = (_FullyConnectedLayer(
                                         learning_rate=self.learning_rate,
                                         input_neuron_count=self.input_neuron_count,
                                         output_neuron_count=self.hidden_layers_shape[0],
                                         transfer_type='sigmoid'
                                         ))
+                current_layer = self.layers.head
 
                 # Add hidden layers
                 for layer in range(len(self.hidden_layers_shape) - 1):
-                    self.layers.append(_FullyConnectedLayer(
+                    current_layer.next_layer = _FullyConnectedLayer(
                                 learning_rate=self.learning_rate,
                                 input_neuron_count=self.hidden_layers_shape[layer],
                                 output_neuron_count=self.hidden_layers_shape[layer + 1],
                                 transfer_type='sigmoid'
-                                ))
+                                )
+                    current_layer.next_layer.previous_layer = current_layer
+                    current_layer = current_layer.next_layer
             
             # Add output layer
-            self.layers.append(_FullyConnectedLayer(
+            current_layer.next_layer = _FullyConnectedLayer(
                                     learning_rate=self.learning_rate,
                                     input_neuron_count=self.hidden_layers_shape[-1],
                                     output_neuron_count=self.output_neuron_count,
                                     transfer_type='sigmoid'
-                                    ))
-
-            # Initialise Layer values to random values
-            for layer in self.layers:
-                layer.init_layer_values_random()
+                                    )
+            current_layer.next_layer.previous_layer = current_layer
+            self.layers.tail = current_layer.next_layer
 
         # Setup Perceptron Network
         else:
-            self.layers.append(_FullyConnectedLayer(
+            self.layers.head = _FullyConnectedLayer(
                                     learning_rate=self.learning_rate,
                                     input_neuron_count=self.input_neuron_count,
                                     output_neuron_count=self.output_neuron_count,
                                     transfer_type='sigmoid'
-                                    ))
-
-            # Initialise Layer values to zeros
-            for layer in self.layers:
-                layer.init_layer_values_zeros()
+                                    )
+            self.layers.tail = self.layers.head
 
     def init_random_values(self) -> None:
         """Initialise model layers"""
@@ -248,15 +259,25 @@ class AbstractModel (ModelInterface):
         if len(self.hidden_layers_shape) > 0:
 
             # Initialise Layer values to random values
-            for layer in self.layers:
-                layer.init_layer_values_random()
+            current_layer = self.layers.head
+            while True:
+                current_layer.init_layer_values_random()
+                if current_layer.next_layer != None:
+                    current_layer = current_layer.next_layer
+                else:
+                    break
         
         # Setup Perceptron Network
         else:
 
             # Initialise Layer values to zeros
-            for layer in self.layers:
-                layer.init_layer_values_zeros()
+            current_layer = self.layers.head
+            while True:
+                current_layer.init_layer_values_zeros()
+                if current_layer.next != None:
+                    current_layer = current_layer.next
+                else:
+                    break
 
     def load_model_values(self, file_location: str) -> None:
         """Load weights and bias/biases from .npz file.
@@ -274,10 +295,15 @@ class AbstractModel (ModelInterface):
         # Initialise Layer values
         i = 0
         keys = list(data.keys())
-        for layer in self.layers:
-            layer.weights = cp.array(data[keys[i]])
-            layer.biases = cp.array(data[keys[i + 1]])
+        current_layer = self.layers.head
+        while True:
+            current_layer.weights = cp.array(data[keys[i]])
+            current_layer.biases = cp.array(data[keys[i + 1]])
             i += 2
+            if current_layer.next_layer != None:
+                current_layer = current_layer.next_layer
+            else:
+                break
 
     def back_propagation(self, dloss_doutput) -> None:
         """Train each layer's weights and biases.
@@ -287,8 +313,13 @@ class AbstractModel (ModelInterface):
             output layer's output, with respect to the output layer's output.
 
         """
-        for layer in reversed(self.layers):
-            dloss_doutput = layer.back_propagation(dloss_doutput=dloss_doutput)
+        current_layer = self.layers.tail
+        while True:
+            dloss_doutput = current_layer.back_propagation(dloss_doutput=dloss_doutput)
+            if current_layer.previous_layer != None:
+                current_layer = current_layer.previous_layer
+            else:
+                break
 
     def forward_propagation(self) -> cp.ndarray:
         """Generate a prediction with the layers.
@@ -298,15 +329,25 @@ class AbstractModel (ModelInterface):
 
         """
         output = self.train_inputs
-        for layer in self.layers:
-            output = layer.forward_propagation(inputs=output)
+        current_layer = self.layers.head
+        while True:
+            output = current_layer.forward_propagation(inputs=output)
+            if current_layer.next_layer != None:
+                current_layer = current_layer.next_layer
+            else:
+                break
         return output
 
     def test(self) -> None:
         """Test the layers' trained weights and biases."""
         output = self.test_inputs
-        for layer in self.layers:
-            output = layer.forward_propagation(inputs=output)
+        current_layer = self.layers.head
+        while True:
+            output = current_layer.forward_propagation(inputs=output)
+            if current_layer.next_layer != None:
+                current_layer = current_layer.next_layer
+            else:
+                break
         self.test_prediction = output
         
         # Calculate performance of model
@@ -354,7 +395,12 @@ class AbstractModel (ModelInterface):
 
         """
         saved_model: list[np.ndarray] = []
-        for layer in self.layers:
-            saved_model.append(cp.asnumpy(layer.weights))
-            saved_model.append(cp.asnumpy(layer.biases))
+        current_layer = self.layers.head
+        while True:
+            saved_model.append(cp.asnumpy(current_layer.weights))
+            saved_model.append(cp.asnumpy(current_layer.biases))
+            if current_layer.next_layer != None:
+                current_layer = current_layer.next_layer
+            else:
+                break
         np.savez(file_location, *saved_model)
