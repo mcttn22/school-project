@@ -1,11 +1,11 @@
 ### Todo
 
+- Add match case ? (Model if on transfer_type)
+
 - Make UI nicer ~ (use customtkinter?)
-- Use get,set methods (with private variables)
 - Check code structure
 - Results should show incorrect and correct prediction of BOTH non-cat and cat pictures (currently just shows whatever the first two correct/incorrect)
 - Ability to add external .npz file ~
-- Use linked list for layers?
 
 - Finish analysis draft
   - Complete analysis interview
