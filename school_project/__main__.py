@@ -1,10 +1,9 @@
 import os
-import threading
-import uuid
-
 import sqlite3
+import threading
 import tkinter as tk
 import tkinter.font as tkf
+import uuid
 
 from school_project.frames.create_model import (HyperParameterFrame,
                                                 TrainingFrame)

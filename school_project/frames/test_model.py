@@ -1,9 +1,9 @@
 import threading
+import tkinter as tk
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
-import tkinter as tk
 
 class TestMNISTFrame(tk.Frame):
     """Frame for Testing MNIST page."""

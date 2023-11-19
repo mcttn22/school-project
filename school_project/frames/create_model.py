@@ -1,11 +1,11 @@
 import json
 import threading
+import tkinter as tk
+import tkinter.font as tkf
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
-import tkinter as tk
-import tkinter.font as tkf
 
 class HyperParameterFrame(tk.Frame):
     """Frame for hyper-parameter page."""
