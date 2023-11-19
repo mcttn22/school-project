@@ -1,7 +1,5 @@
 ### Todo
 
-- Check linked list for GPU works
-
 - Make UI nicer ~ (use customtkinter?)
 - Check code structure
 - Results should show incorrect and correct prediction of BOTH non-cat and cat pictures (currently just shows whatever the first two correct/incorrect)
