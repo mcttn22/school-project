@@ -176,7 +176,8 @@ class SchoolProjectFrame(tk.Frame):
         self.grid_propagate(flag=False)
         self.pack_propagate(flag=False)
 
-    def setup_database(self) -> tuple[sqlite3.Connection, sqlite3.Cursor]:
+    @staticmethod
+    def setup_database() -> tuple[sqlite3.Connection, sqlite3.Cursor]:
         """Create a connection to the pretrained_models database file and 
            setup base table for each dataset if needed.
            
