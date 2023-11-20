@@ -2,8 +2,12 @@ import numpy as np
 
 class ModelInterface():
     """Interface for ANN models."""
-    def init_random_values(self) -> None:
-        """Initialise weights and bias/biases.
+    def _setup_layers(setup_values: callable) -> None:
+        """Setup model layers"""
+        raise NotImplementedError
+
+    def create_model_values(self) -> None:
+        """Create weights and bias/biases
         
         Raises:
             NotImplementedError: if this method is not implemented.

@@ -182,77 +182,81 @@ class AbstractModel(ModelInterface):
     def set_running(self, value:bool):
         self.__running = value
 
-    def setup_layers(self) -> None:
+    def _setup_layers(setup_values: callable) -> None:
         """Setup model layers"""
-        # Check if setting up Deep Network
-        if len(self.hidden_layers_shape) > 0:
-            if self.use_relu:
+        def decorator(self):
+            # Check if setting up Deep Network
+            if len(self.hidden_layers_shape) > 0:
+                if self.use_relu:
 
-                # Add input layer
-                self.layers.head = _FullyConnectedLayer(
+                    # Add input layer
+                    self.layers.head = _FullyConnectedLayer(
+                                            learning_rate=self.learning_rate,
+                                            input_neuron_count=self.input_neuron_count,
+                                            output_neuron_count=self.hidden_layers_shape[0],
+                                            transfer_type='relu'
+                                            )
+                    current_layer = self.layers.head
+
+                    # Add hidden layers
+                    for layer in range(len(self.hidden_layers_shape) - 1):
+                        current_layer.next_layer = _FullyConnectedLayer(
+                                    learning_rate=self.learning_rate,
+                                    input_neuron_count=self.hidden_layers_shape[layer],
+                                    output_neuron_count=self.hidden_layers_shape[layer + 1],
+                                    transfer_type='relu'
+                                    )
+                        current_layer.next_layer.previous_layer = current_layer
+                        current_layer = current_layer.next_layer
+                else:
+
+                    # Add input layer
+                    self.layers.head = _FullyConnectedLayer(
+                                            learning_rate=self.learning_rate,
+                                            input_neuron_count=self.input_neuron_count,
+                                            output_neuron_count=self.hidden_layers_shape[0],
+                                            transfer_type='sigmoid'
+                                            )
+                    current_layer = self.layers.head
+
+                    # Add hidden layers
+                    for layer in range(len(self.hidden_layers_shape) - 1):
+                        current_layer.next_layer = _FullyConnectedLayer(
+                                    learning_rate=self.learning_rate,
+                                    input_neuron_count=self.hidden_layers_shape[layer],
+                                    output_neuron_count=self.hidden_layers_shape[layer + 1],
+                                    transfer_type='sigmoid'
+                                    )
+                        current_layer.next_layer.previous_layer = current_layer
+                        current_layer = current_layer.next_layer
+                
+                # Add output layer
+                current_layer.next_layer = _FullyConnectedLayer(
                                         learning_rate=self.learning_rate,
-                                        input_neuron_count=self.input_neuron_count,
-                                        output_neuron_count=self.hidden_layers_shape[0],
-                                        transfer_type='relu'
-                                        )
-                current_layer = self.layers.head
-
-                # Add hidden layers
-                for layer in range(len(self.hidden_layers_shape) - 1):
-                    current_layer.next_layer = _FullyConnectedLayer(
-                                learning_rate=self.learning_rate,
-                                input_neuron_count=self.hidden_layers_shape[layer],
-                                output_neuron_count=self.hidden_layers_shape[layer + 1],
-                                transfer_type='relu'
-                                )
-                    current_layer.next_layer.previous_layer = current_layer
-                    current_layer = current_layer.next_layer
-            else:
-
-                # Add input layer
-                self.layers.head = _FullyConnectedLayer(
-                                        learning_rate=self.learning_rate,
-                                        input_neuron_count=self.input_neuron_count,
-                                        output_neuron_count=self.hidden_layers_shape[0],
+                                        input_neuron_count=self.hidden_layers_shape[-1],
+                                        output_neuron_count=self.output_neuron_count,
                                         transfer_type='sigmoid'
                                         )
-                current_layer = self.layers.head
+                current_layer.next_layer.previous_layer = current_layer
+                self.layers.tail = current_layer.next_layer
 
-                # Add hidden layers
-                for layer in range(len(self.hidden_layers_shape) - 1):
-                    current_layer.next_layer = _FullyConnectedLayer(
-                                learning_rate=self.learning_rate,
-                                input_neuron_count=self.hidden_layers_shape[layer],
-                                output_neuron_count=self.hidden_layers_shape[layer + 1],
-                                transfer_type='sigmoid'
-                                )
-                    current_layer.next_layer.previous_layer = current_layer
-                    current_layer = current_layer.next_layer
+            # Setup Perceptron Network
+            else:
+                self.layers.head = _FullyConnectedLayer(
+                                        learning_rate=self.learning_rate,
+                                        input_neuron_count=self.input_neuron_count,
+                                        output_neuron_count=self.output_neuron_count,
+                                        transfer_type='sigmoid'
+                                        )
+                self.layers.tail = self.layers.head
             
-            # Add output layer
-            current_layer.next_layer = _FullyConnectedLayer(
-                                    learning_rate=self.learning_rate,
-                                    input_neuron_count=self.hidden_layers_shape[-1],
-                                    output_neuron_count=self.output_neuron_count,
-                                    transfer_type='sigmoid'
-                                    )
-            current_layer.next_layer.previous_layer = current_layer
-            self.layers.tail = current_layer.next_layer
+            setup_values(self)
 
-        # Setup Perceptron Network
-        else:
-            self.layers.head = _FullyConnectedLayer(
-                                    learning_rate=self.learning_rate,
-                                    input_neuron_count=self.input_neuron_count,
-                                    output_neuron_count=self.output_neuron_count,
-                                    transfer_type='sigmoid'
-                                    )
-            self.layers.tail = self.layers.head
+        return decorator
 
-    def init_random_values(self) -> None:
-        """Initialise model layers"""
-        self.setup_layers()
-
+    @_setup_layers
+    def create_model_values(self) -> None:
+        """Create weights and bias/biases"""
         # Check if setting up Deep Network
         if len(self.hidden_layers_shape) > 0:
 
@@ -277,6 +281,7 @@ class AbstractModel(ModelInterface):
                 else:
                     break
 
+    @_setup_layers
     def load_model_values(self, file_location: str) -> None:
         """Load weights and bias/biases from .npz file.
         
@@ -286,8 +291,6 @@ class AbstractModel(ModelInterface):
             NotImplementedError: if this method is not implemented.
 
         """
-        self.setup_layers()
-
         data: dict[str, np.ndarray] = np.load(file=file_location)
 
         # Initialise Layer values
