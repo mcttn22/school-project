@@ -19,6 +19,26 @@ class _Layers():
         self.head = None
         self.tail = None
 
+    def __iter__(self):
+        """Iterate forward through the network."""
+        current_layer = self.head
+        while True:
+            yield current_layer
+            if current_layer.next_layer != None:
+                current_layer = current_layer.next_layer
+            else:
+                break
+
+    def __reversed__(self):
+        """Iterate back through the network."""
+        current_layer = self.tail
+        while True:
+            yield current_layer
+            if current_layer.previous_layer != None:
+                current_layer = current_layer.previous_layer
+            else:
+                break
+
 class _FullyConnectedLayer():
     """Fully connected layer for Deep ANNs, 
        represented as a node of a Doubly linked list."""
@@ -261,25 +281,15 @@ class AbstractModel(ModelInterface):
         if len(self.hidden_layers_shape) > 0:
 
             # Initialise Layer values to random values
-            current_layer = self.layers.head
-            while True:
-                current_layer.init_layer_values_random()
-                if current_layer.next_layer != None:
-                    current_layer = current_layer.next_layer
-                else:
-                    break
+            for layer in self.layers:
+                layer.init_layer_values_random()
         
         # Setup Perceptron Network
         else:
 
             # Initialise Layer values to zeros
-            current_layer = self.layers.head
-            while True:
-                current_layer.init_layer_values_zeros()
-                if current_layer.next != None:
-                    current_layer = current_layer.next
-                else:
-                    break
+            for layer in self.layers:
+                layer.init_layer_values_zeros()
 
     @_setup_layers
     def load_model_values(self, file_location: str) -> None:
@@ -296,15 +306,10 @@ class AbstractModel(ModelInterface):
         # Initialise Layer values
         i = 0
         keys = list(data.keys())
-        current_layer = self.layers.head
-        while True:
-            current_layer.weights = data[keys[i]]
-            current_layer.biases = data[keys[i + 1]]
+        for layer in self.layers:
+            layer.weights = data[keys[i]]
+            layer.biases = data[keys[i + 1]]
             i += 2
-            if current_layer.next_layer != None:
-                current_layer = current_layer.next_layer
-            else:
-                break
 
     def back_propagation(self, dloss_doutput) -> None:
         """Train each layer's weights and biases.
@@ -314,13 +319,8 @@ class AbstractModel(ModelInterface):
             output layer's output, with respect to the output layer's output.
 
         """
-        current_layer = self.layers.tail
-        while True:
-            dloss_doutput = current_layer.back_propagation(dloss_doutput=dloss_doutput)
-            if current_layer.previous_layer != None:
-                current_layer = current_layer.previous_layer
-            else:
-                break
+        for layer in reversed(self.layers):
+            dloss_doutput = layer.back_propagation(dloss_doutput=dloss_doutput)
 
     def forward_propagation(self) -> np.ndarray:
         """Generate a prediction with the layers.
@@ -330,25 +330,15 @@ class AbstractModel(ModelInterface):
 
         """
         output = self.train_inputs
-        current_layer = self.layers.head
-        while True:
-            output = current_layer.forward_propagation(inputs=output)
-            if current_layer.next_layer != None:
-                current_layer = current_layer.next_layer
-            else:
-                break
+        for layer in self.layers:
+            output = layer.forward_propagation(inputs=output)
         return output
 
     def test(self) -> None:
         """Test the layers' trained weights and biases."""
         output = self.test_inputs
-        current_layer = self.layers.head
-        while True:
-            output = current_layer.forward_propagation(inputs=output)
-            if current_layer.next_layer != None:
-                current_layer = current_layer.next_layer
-            else:
-                break
+        for layer in self.layers:
+            output = layer.forward_propagation(inputs=output)
         self.test_prediction = output
         
         # Calculate performance of model
@@ -396,12 +386,7 @@ class AbstractModel(ModelInterface):
 
         """
         saved_model: list[np.ndarray] = []
-        current_layer = self.layers.head
-        while True:
-            saved_model.append(current_layer.weights)
-            saved_model.append(current_layer.biases)
-            if current_layer.next_layer != None:
-                current_layer = current_layer.next_layer
-            else:
-                break
+        for layer in self.layers:
+            saved_model.append(layer.weights)
+            saved_model.append(layer.biases)
         np.savez(file_location, *saved_model)
