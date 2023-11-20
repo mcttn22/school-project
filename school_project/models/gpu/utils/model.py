@@ -187,7 +187,7 @@ class AbstractModel (ModelInterface):
 
     def _setup_layers(setup_values: callable) -> None:
         """Setup model layers"""
-        def decorator(self):
+        def decorator(self, *args, **kwargs):
             # Check if setting up Deep Network
             if len(self.hidden_layers_shape) > 0:
                 if self.use_relu:
@@ -253,7 +253,7 @@ class AbstractModel (ModelInterface):
                                         )
                 self.layers.tail = self.layers.head
 
-            setup_values(self)
+            setup_values(self, *args, **kwargs)
 
         return decorator
 
