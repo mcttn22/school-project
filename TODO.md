@@ -1,6 +1,7 @@
 ### Todo
 
-- Test GPU model decorators
+- Test GPU model decorators and __iter__ and __reversed__ methods
+- Change linked list traversal to __iter__ method with yield etc?
 
 - Make UI nicer ~ (use customtkinter?)
 - Check code structure
