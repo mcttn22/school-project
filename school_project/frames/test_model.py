@@ -1,3 +1,4 @@
+import random
 import threading
 import tkinter as tk
 
@@ -82,6 +83,14 @@ class TestMNISTFrame(tk.Frame):
             test_outputs = np.squeeze(model.test_outputs).T.tolist()
             test_prediction = np.squeeze(model.test_prediction).T.tolist()
 
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # whilst maintaining order between them
+            test_data = list(zip(test_inputs,
+                                 test_outputs,
+                                 test_prediction))
+            random.shuffle(test_data)
+            test_inputs, test_outputs, test_prediction = zip(*test_data)
+
         elif self.use_gpu:
 
             import cupy as cp
@@ -96,6 +105,14 @@ class TestMNISTFrame(tk.Frame):
             test_inputs = cp.asnumpy(cp.squeeze(model.test_inputs)).T
             test_outputs = cp.asnumpy(cp.squeeze(model.test_outputs)).T.tolist()
             test_prediction = cp.squeeze(model.test_prediction).T.tolist()
+
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # whilst maintaining order between them
+            test_data = list(zip(test_inputs,
+                                 test_outputs,
+                                 test_prediction))
+            random.shuffle(test_data)
+            test_inputs, test_outputs, test_prediction = zip(*test_data)
             
         # Setup incorrect prediction figure
         self.incorrect_prediction_figure.suptitle("Incorrect predictions:")
@@ -199,10 +216,17 @@ class TestCatRecognitionFrame(tk.Frame):
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            
-            test_inputs = model.test_inputs
-            test_outputs = np.squeeze(model.test_outputs)
-            test_prediction = np.squeeze(model.test_prediction.round())
+
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # whilst maintaining order between them
+            test_data = list(zip(model.test_inputs.T,
+                                 np.squeeze(model.test_outputs).T.tolist(),
+                                 np.squeeze(model.test_prediction.round()).T.tolist()))
+            random.shuffle(test_data)
+            (test_inputs,
+             test_outputs,
+             test_prediction) = map(lambda arr: np.array(arr).T,
+                                    zip(*test_data))
         
         elif self.use_gpu:
 
@@ -214,10 +238,17 @@ class TestCatRecognitionFrame(tk.Frame):
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            
-            test_inputs = cp.asnumpy(model.test_inputs)
-            test_outputs = cp.asnumpy(cp.squeeze(model.test_outputs))
-            test_prediction = cp.asnumpy(cp.squeeze(model.test_prediction)).round()
+
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # whilst maintaining order between them
+            test_data = list(zip(cp.asnumpy(model.test_inputs).T,
+                                 cp.asnumpy(cp.squeeze(model.test_outputs)).T.tolist(),
+                                 cp.asnumpy(cp.squeeze(model.test_prediction)).round().T.tolist()))
+            random.shuffle(test_data)
+            (test_inputs,
+             test_outputs,
+             test_prediction) = map(lambda arr: np.array(arr).T,
+                                    zip(*test_data))
 
         # Setup incorrect prediction figure
         self.incorrect_prediction_figure.suptitle("Incorrect predictions:")
