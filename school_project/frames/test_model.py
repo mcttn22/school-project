@@ -125,7 +125,8 @@ class TestMNISTFrame(tk.Frame):
                     image = self.incorrect_prediction_figure.add_subplot(121)
                 elif image_count == 1:
                     image = self.incorrect_prediction_figure.add_subplot(122)
-                image.set_title(test_prediction[i].index(max(test_prediction[i])))
+                image.set_title(f"Predicted: {test_prediction[i].index(max(test_prediction[i]))}\n" +
+                                f"Should have predicted: {test_outputs[i].index(max(test_outputs[i]))}")
                 image.imshow(test_inputs[i].reshape((28,28)))
                 image_count += 1
 
@@ -140,7 +141,7 @@ class TestMNISTFrame(tk.Frame):
                     image = self.correct_prediction_figure.add_subplot(121)
                 elif image_count == 1:
                     image = self.correct_prediction_figure.add_subplot(122)
-                image.set_title(test_prediction[i].index(max(test_prediction[i])))
+                image.set_title(f"Predicted: {test_prediction[i].index(max(test_prediction[i]))}")
                 image.imshow(test_inputs[i].reshape((28,28)))
                 image_count += 1
 
@@ -261,10 +262,7 @@ class TestCatRecognitionFrame(tk.Frame):
                     image = self.incorrect_prediction_figure.add_subplot(121)
                 elif image_count == 1:
                     image = self.incorrect_prediction_figure.add_subplot(122)
-                if test_prediction[i] == 1:
-                    image.set_title("Cat")
-                else:
-                    image.set_title("Not a cat")
+                image.set_title(f"Predicted: {'Cat' if test_prediction[i] == 1 else 'Not a cat'}\n")
                 image.imshow(test_inputs[:,i].reshape((64,64,3)))
                 image_count += 1
 
@@ -279,10 +277,7 @@ class TestCatRecognitionFrame(tk.Frame):
                     image = self.correct_prediction_figure.add_subplot(121)
                 elif image_count == 1:
                     image = self.correct_prediction_figure.add_subplot(122)
-                if test_prediction[i] == 1:
-                    image.set_title("Cat")
-                else:
-                    image.set_title("Not a cat")
+                image.set_title(f"Predicted: {'Cat' if test_prediction[i] == 1 else 'Not a cat'}\n")
                 image.imshow(test_inputs[:,i].reshape((64,64,3)))
                 image_count += 1
 
