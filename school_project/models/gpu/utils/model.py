@@ -118,6 +118,8 @@ class _FullyConnectedLayer():
         dloss_dweights = cp.dot(dloss_dz, self.input.T)
         dloss_dbiases = cp.sum(dloss_dz)
         
+        assert dloss_dweights.shape == self.weights.shape
+        
         dloss_dinput = cp.dot(self.weights.T, dloss_dz)
 
         # Update weights and biases

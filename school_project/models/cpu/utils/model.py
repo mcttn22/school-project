@@ -117,6 +117,8 @@ class _FullyConnectedLayer():
         dloss_dweights = np.dot(dloss_dz, self.input.T)
         dloss_dbiases = np.sum(dloss_dz)
         
+        assert dloss_dweights.shape == self.weights.shape
+        
         dloss_dinput = np.dot(self.weights.T, dloss_dz)
 
         # Update weights and biases
