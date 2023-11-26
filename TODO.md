@@ -1,11 +1,7 @@
 ### Todo
 
-- Test GPU model decorators and __iter__ and __reversed__ methods
-
+- More tests? (Add asserts?)
 - Make UI nicer ~ (use customtkinter?)
-- Check code structure
-- Results should show incorrect and correct prediction of BOTH non-cat and cat pictures (currently just shows whatever the first two correct/incorrect)
-- Ability to add external .npz file ~
 
 - Finish analysis draft
   - Complete analysis interview
@@ -35,6 +31,7 @@
 
 - Maybe save optimum models
 - Maybe give option to continue training pretrained model
+- Maybe add ability to add external .npz file
 
 - Update setup.py version
 
