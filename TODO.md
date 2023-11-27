@@ -1,5 +1,6 @@
 ### Todo
 
+- Memory Leak issue
 - More tests? (Add asserts?)
 - Make UI nicer ~ (use customtkinter?)
 
