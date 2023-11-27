@@ -11,7 +11,7 @@ This project is an investigation into how Artificial Neural Networks (ANNs) work
    - ```
      git clone https://github.com/mcttn22/school-project.git
      ```
-   - Or by downloading as a Zip file
+   - Or by downloading as a ZIP file
 
 </br>
 
