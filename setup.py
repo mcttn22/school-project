@@ -13,5 +13,6 @@ setup(
                       'h5py',
                       'matplotlib',
                       'numpy',
+                      'pympler'
     ],
 )

@@ -1,4 +1,9 @@
 import os
+
+# Setup object tracker
+from pympler.tracker import SummaryTracker
+summary_tracker = SummaryTracker()
+
 import sqlite3
 import threading
 import tkinter as tk
@@ -480,6 +485,8 @@ class SchoolProjectFrame(tk.Frame):
             self.save_model_button.pack_forget()
         self.exit_button.pack_forget()
         self.home_frame.pack()
+        summary_tracker.create_summary()  # Object summary seems to reduce
+                                          # memory leak greatly BUG
         
 def main() -> None:
     """Entrypoint of project."""
