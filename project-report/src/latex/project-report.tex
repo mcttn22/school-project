@@ -1,13 +1,19 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage[cache=false]{minted}
 \usepackage{subfiles}
 \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+\setminted[python]{
+  frame=lines,
+  fontsize=\footnotesize,
+  linenos
 }
 
 \title{Computer Science NEA Report
@@ -24,5 +30,6 @@
 
 \subfile{./project-report/src/latex/analysis.tex}
 \subfile{./project-report/src/latex/design.tex}
+\subfile{./project-report/src/latex/technical-solution.tex}
 
 \end{document}
