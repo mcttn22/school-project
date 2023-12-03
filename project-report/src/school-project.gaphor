@@ -616,9 +616,9 @@
 <reflist>
 <ref refid="42288e72-7761-11ee-9a99-0de34f9e3679"/>
 <ref refid="4ff427af-7761-11ee-9d18-0de34f9e3679"/>
-<ref refid="55b70561-7761-11ee-be22-0de34f9e3679"/>
 <ref refid="5fbd238d-7761-11ee-8a5c-0de34f9e3679"/>
 <ref refid="5afa9d6e-7761-11ee-bcd7-0de34f9e3679"/>
+<ref refid="55b70561-7761-11ee-be22-0de34f9e3679"/>
 <ref refid="d6fd07e5-9224-11ee-ab04-033a74521513"/>
 </reflist>
 </ownedAttribute>
@@ -3712,5 +3712,11 @@
 <type>
 <ref refid="ba7aa765-9224-11ee-9182-033a74521513"/>
 </type>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
 </Property>
 </gaphor>
