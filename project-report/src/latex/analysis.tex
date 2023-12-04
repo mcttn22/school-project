@@ -17,28 +17,49 @@ research, and develop Neural Networks from first principles without the use of a
 Networks in Image Recognition, by creating trained models and will allow for experimentation of the hyper-parameters of each model to allow for comparisons between each 
 model's performances, via a Graphical User Interface.
 
-\subsection{Interview TODO}
+\subsection{Interview}
 
 In order to gain a better foundation for my investigation, I presented my prototype code and interviewed the head of Artificial Intelligence at Cambridge Consultants 
 for input on what they would like to see in my project, these were their responses:
 
-% Use google doc file of qs: https://docs.google.com/document/d/1MSs9SgjwUlr1W7BxxdZpIRznUuNuIyaS5UOmbiFvLD8/edit?usp=sharing_eip_m&ts=656b5d2e
-
-% Notes:
-% - ReLu stops vanishing gradients
-% - Progress bar
-% - Save a trained network to load later
-% - Transfer functions
-% - Browse through more of results
-%   - Show images predicted correct
-%   - Show images predicted wrong
-% - Play around with size of training dataset
-%   - Graph showing performance against increase in training data
-
 \begin{itemize}
-    \item Q:""
+    \item Q:"Are there any good resources you would recommend for learning the theory behind how Artificial Neural Networks work?"
+    
+          A:"There are lots of usefull free resources on the internet to use. I particullarly like the platform 'Medium' which offers many scientific articles 
+             as well as more obvious resources such as IBMs'."
+    \item Q:"What do you think would be a good goal for my project?"
 
-          A:""
+          A:"I think it would be great to aim for applying the Neural Networks on Image Recognition for some famous datasets. For you, I would recommend 
+             the MNIST dataset as a goal."
+    \item Q:"What features of the Artificial Neural Networks would you like to be able to experiment with?"
+
+          A:"I'd like to be able to experiment with the number of layers and the number of neurons in each layer, and then be able to see how these changes effect 
+             the performance of the model. I can see that you've utilised the Sigmoid transfer function and I would recommend having the option to test alternatives 
+              such as the ReLu transfer function, which will help stop issues such as a vanishing gradient."
+    \item Q:"What are some practical constraints of AI?"
+
+          A:"Training AI models can require a large amount of computing power, also large datasets are needed for training models to a high accuracy which can be hard 
+             to obtain."
+    \item Q:"What would you say increases the computing power required the most?"
+
+          A:"The number of layers and neurons in each layer will have the greatest effect on the computing power required. This is another reason why I recommend adding 
+             the ReLu transfer function as it updates the values of the weights and biases faster than the Sigmoid transfer function."
+    \item Q:"Do you think I should explore other computer architectures for training the models?"
+
+          A:"Yes, it would be great to add support for using graphics cards for training models, as this would be a vast improvement in training time compared to using 
+             just CPU power."
+    \item Q:"I am also creating a user interface for the program, what hyper-parameters would you like to be able to control through this?"
+
+          A:"It would be nice to control the transfer functions used, as well as the general hyper-parameters of the model. I also think you could add a progress tracker 
+             to be displayed during training for the user."
+    \item Q:"How do you think I should measure the performance of models?"
+
+          A:"You should show the accuracy of the model's predictions, as well as example incorrect and correct prediction results for the trained model. Additionally, 
+             you could compare how the size of the training dataset effects the performance of the model after training, to see if a larger dataset would seem 
+             beneficial."
+    \item Q:"Are there any other features you would like add?"
+
+          A:"Yes, it would be nice to be able to save a model after training and have the option to load in a trained model for testing."
 \end{itemize}
 
 \subsection{Project Objectives}
@@ -158,6 +179,8 @@ To train an Artificial Neural Network, the following processes will be carried o
             \begin{itemize}
                 \item Finding a false local minimum rather than the global minimum of the function
                 \item Having an 'Exploding Gradient', where the gradient value grows exponentially to the point of overflow errors
+                \item Having a 'Vanishing Gradient', where the gradient value decreases to a very small value or zero, resulting in a lack of updating values during 
+                      training.
             \end{itemize}
         \end{itemize}
     \end{itemize}
