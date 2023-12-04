@@ -104,17 +104,13 @@ Here are some example queries for interacting with the database:
     \begin{minted}{sql}
     SELECT Name FROM Models WHERE Dataset=?;
     \end{minted}
-    \item I can query the ID of a saved model for a dataset with:
-    \begin{minted}{sql}
-    SELECT ID FROM Models WHERE Dataset=? AND Name=?;
-    \end{minted}
     \item I can query the file location of a saved model with:
     \begin{minted}{sql}
-    SELECT File_Location FROM Model_Features WHERE ID=?;
+    SELECT File_Location FROM Models WHERE Dataset=? AND Name=?;
     \end{minted}
     \item I can query the features of a saved model with:
     \begin{minted}{sql}
-    SELECT * FROM Model_Features WHERE ID=?;
+    SELECT * FROM Models WHERE Dataset=? AND Name=?;
     \end{minted}
 \end{itemize}
 
