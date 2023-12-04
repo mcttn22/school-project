@@ -13,8 +13,8 @@ The following design focuses have been made for the project:
 \begin{itemize}
     \item The program will support multiple platforms to run on, including Windows and Linux.
     \item The program will use python3 as its main programming language.
-    \item I will use an object-orientated approach to the project
-    \item I will give an option to use either a Graphics card or a CPU to train the Artificial Neural Networks
+    \item I will take an object-orientated approach to the project.
+    \item I will give an option to use either a Graphics Card or a CPU to train the Artificial Neural Networks.
 \end{itemize}
 
 I will also be using SysML for designing the following diagrams.
@@ -55,16 +55,20 @@ I will also be using SysML for designing the following diagrams.
 
 \subsection{Algorithms}
 
-Refer to Analysis for the algorithms behind the Artificial Neural Networks
+Refer to Analysis for the algorithms behind the Artificial Neural Networks.
 
 \subsection{Data Structures}
 
 I will use the following data structures in the program:
 
 \begin{itemize}
+    \item Standard arrays for storing data contiguously, for example storing the shape of the Artificial Neural Network's layers.
+    \item Tuples where tuple unpacking is usefull, such as returning multiple values from methods.
+    \item Dictionaries for loading the default hyper-parameter values from a JSON file.
     \item Matrices to represent the layers and allow for a varied number of neurons in each layer. To represent the Matrices I will use both numpy arrays and cupy 
           arrays.
-    \item Dictionaries for loading the default hyper-parameter values from a JSON file.
+    \item A Doubly linked list to represent the Artificial Neural Network, where each node is a layer of the network. This will allow me to traverse both forwards and 
+          backwards through the network, as well as storing the first and last layer to start forward and backward propagation respectively.
 \end{itemize}
 
 \subsection{File Structure}
