@@ -181,7 +181,7 @@ class SchoolProjectFrame(tk.Frame):
     @staticmethod
     def setup_database() -> tuple[sqlite3.Connection, sqlite3.Cursor]:
         """Create a connection to the pretrained_models database file and 
-           setup base tables if needed.
+           setup base table if needed.
            
            Returns:
                a tuple of the database connection and the cursor for it.
@@ -191,23 +191,16 @@ class SchoolProjectFrame(tk.Frame):
                                 database='school_project/saved_models.db'
                                 )
         cursor = connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON")
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS Models
         (ID INTEGER PRIMARY KEY,
         Dataset TEXT,
-        Name TEXT)
-        """)
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS Model_Features
-        (ID INTEGER PRIMARY KEY,
         File_Location TEXT,
         Hidden_Layers_Shape TEXT,
-        Train_Dataset_Size INTEGER,
         Learning_Rate FLOAT,
-        Use_ReLu INTEGER,
-        FOREIGN KEY (ID) REFERENCES
-        Models (ID) on DELETE CASCADE)
+        Name TEXT,
+        Train_Dataset_Size INTEGER,
+        Use_ReLu INTEGER)
         """)
         return (connection, cursor)
 
@@ -427,22 +420,16 @@ class SchoolProjectFrame(tk.Frame):
         # Save the model information to the database
         sql = """
         INSERT INTO Models
-        (Dataset, Name)
-        VALUES (?, ?)
-        """
-        parameters = (dataset, model_name)
-        self.cursor.execute(sql, parameters)
-
-        sql = """
-        INSERT INTO Model_Features
-        (File_Location, Hidden_Layers_Shape, Train_Dataset_Size, Learning_Rate, Use_ReLu)
-        VALUES (?, ?, ?, ?, ?)
+        (Dataset, File_Location, Hidden_Layers_Shape, Learning_Rate, Name, Train_Dataset_Size, Use_ReLu)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         """
         parameters = (
+                    dataset,
                     file_location,
                     self.hyper_parameter_frame.hidden_layers_shape_entry.get(),
-                    self.hyper_parameter_frame.train_dataset_size_scale.get(),
                     self.hyper_parameter_frame.learning_rate_scale.get(),
+                    model_name,
+                    self.hyper_parameter_frame.train_dataset_size_scale.get(),
                     self.hyper_parameter_frame.use_relu_check_button_var.get()
                     )
         self.cursor.execute(sql, parameters)
@@ -455,23 +442,15 @@ class SchoolProjectFrame(tk.Frame):
         dataset = self.dataset_option_menu_var.get().replace(" ", "_")
         model_name = self.load_model_frame.model_option_menu_var.get()
 
-        # Query ID of saved model to delete
-        sql = """
-        SELECT ID FROM Models WHERE Dataset=? AND Name=?
-        """
-        parameters = (dataset, model_name)
-        self.cursor.execute(sql, parameters)
-        model_id: int = self.cursor.fetchone()[0]
-
         # Delete saved model
-        sql = f"""SELECT File_Location FROM Model_Features WHERE ID=?"""
-        parameters = (model_id,)
+        sql = f"""SELECT File_Location FROM Models WHERE Dataset=? AND Name=?"""
+        parameters = (dataset, model_name)
         self.cursor.execute(sql, parameters)
         os.remove(self.cursor.fetchone()[0])
 
         # Remove model data from database
-        sql = """DELETE FROM Models WHERE ID=?"""
-        parameters = (model_id,)
+        sql = """DELETE FROM Models WHERE Dataset=? AND Name=?"""
+        parameters = (dataset, model_name)
         self.cursor.execute(sql, parameters)
         self.connection.commit()
 
