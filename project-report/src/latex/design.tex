@@ -75,12 +75,14 @@ I will use the following file structures to store necessary data for the program
     \item A JSON file for storing the default hyper-parameters for creating a new model for each dataset.
     \item I will store the image dataset files in a 'datasets' directory. The dataset files will either be a compressed archive file (such as .pkl.gz files) or of the 
           Hierarchical Data Format (such as .h5) for storing large datasets with fast retrieval.
-    \item I will save a pretrained model TODO
+    \item I will save the weights and biases of saved models as numpy arrays in .npz files (a zipped archive file format) in a 'saved-models' directory, due to 
+          their compatibility with the numpy library.
 \end{itemize}
 
 \subsection{Database Design}
 
-I will use the following Relational database design for saving models:
+I will use the following Relational database design for saving models, where the dataset, name and features of the saved model (including the location of the 
+saved models' weights and biases and the saved models' hyper-parameters) are saved:
 
 \begin{figure}[h!]
 \centering
