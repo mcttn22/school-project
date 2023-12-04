@@ -121,19 +121,11 @@ class LoadModelFrame(tk.Frame):
         """
         self.use_gpu = self.use_gpu_check_button_var.get()
 
-        # Query ID of saved model to load
-        sql = """
-        SELECT ID FROM Models WHERE Dataset=? AND Name=?
-        """
-        parameters = (self.dataset.replace(" ", "_"), self.model_option_menu_var.get())
-        self.cursor.execute(sql, parameters)
-        model_id: int = self.cursor.fetchone()[0]
-
         # Query data of selected saved model from database
         sql = """
-        SELECT * FROM Model_Features WHERE ID=?
+        SELECT * FROM Model_Features WHERE ID=(SELECT ID FROM Models WHERE Dataset=? AND Name=?)
         """
-        parameters = (model_id,)
+        parameters = (self.dataset.replace(" ", "_"), self.model_option_menu_var.get())
         self.cursor.execute(sql, parameters)
         data = self.cursor.fetchone()
         hidden_layers_shape_input = [layer for layer in data[2].replace(' ', '').split(',') if layer != '']
