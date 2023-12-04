@@ -99,9 +99,11 @@ class LoadModelFrame(tk.Frame):
            Returns:
                 a list of the model options.
         """
-        self.cursor.execute(f"""
-        SELECT Model_Name FROM {self.dataset.replace(" ", "_")}
-        """)
+        sql = f"""
+        SELECT Name FROM Models WHERE Dataset=?
+        """
+        parameters = (self.dataset.replace(" ", "_"),)
+        self.cursor.execute(sql, parameters)
 
         # Save the string value contained within the tuple of each row
         model_options = []
@@ -119,13 +121,21 @@ class LoadModelFrame(tk.Frame):
         """
         self.use_gpu = self.use_gpu_check_button_var.get()
 
-        # Query data of selected saved model from database
-        sql = f"""
-        SELECT * FROM {self.dataset.replace(" ", "_")} WHERE Model_Name = ?
+        # Query ID of saved model to load
+        sql = """
+        SELECT ID FROM Models WHERE Dataset=? AND Name=?
         """
-        parameters = (self.model_option_menu_var.get(),)
+        parameters = (self.dataset.replace(" ", "_"), self.model_option_menu_var.get())
         self.cursor.execute(sql, parameters)
-        data = self.cursor.fetchall()[0]
+        model_id: int = self.cursor.fetchone()[0]
+
+        # Query data of selected saved model from database
+        sql = """
+        SELECT * FROM Model_Features WHERE ID=?
+        """
+        parameters = (model_id,)
+        self.cursor.execute(sql, parameters)
+        data = self.cursor.fetchone()
         hidden_layers_shape_input = [layer for layer in data[2].replace(' ', '').split(',') if layer != '']
 
         # Create Model
