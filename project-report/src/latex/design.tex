@@ -87,7 +87,26 @@ I will use the following Relational database design for saving models:
 \includegraphics[width=1\textwidth]{./project-report/src/images/database-design.png}
 \end{figure}
 
-\subsection{Queries TODO}
+\subsection{Queries}
+
+\begin{itemize}
+    \item I can query the names of all saved models for a dataset with:
+    \begin{minted}{sql}
+    SELECT Name FROM Models WHERE Dataset=?;
+    \end{minted}
+    \item I can query the ID of a saved model for a dataset with:
+    \begin{minted}{sql}
+    SELECT ID FROM Models WHERE Dataset=? AND Name=?;
+    \end{minted}
+    \item I can query the file location of a saved model with:
+    \begin{minted}{sql}
+    SELECT File_Location FROM Model_Features WHERE ID=?;
+    \end{minted}
+    \item I can query the features of a saved model with:
+    \begin{minted}{sql}
+    SELECT * FROM Model_Features WHERE ID=?;
+    \end{minted}
+\end{itemize}
 
 \subsection{Human-Computer Interaction TODO}
 
