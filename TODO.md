@@ -4,13 +4,6 @@
 - More tests? (Add asserts?)
 - Make UI nicer ~ (use customtkinter?)
 
-- Finish analysis draft
-  - Complete analysis interview
-  - Talk about more comparison (parameters, datasets etc)
-  - Update Matrice theory
-  - Format images to correct sections
-  - Submit to Teams
-
 - Ideas from interview
   - Allow model to be saved
   - Talk about vanishing gradient (and ReLu vs sigmoid for this)
@@ -28,7 +21,9 @@
   - Maybe CNNs
 
 - Start design draft
-  - Update Class diagram (load_model frame etc)
+  - Maybe add attributes and methods to class diagrams
+
+- Display train-dataset-size - accuracy graph for testing? etc
 
 - Maybe save optimum models
 - Maybe give option to continue training pretrained model
