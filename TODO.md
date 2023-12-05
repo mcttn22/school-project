@@ -20,8 +20,9 @@
   - Maybe use sections of images for more inputs
   - Maybe CNNs
 
-- Start design draft
+- Finish design draft
   - Maybe add attributes and methods to class diagrams
+  - HCI
 
 - Display train-dataset-size - accuracy graph for testing? etc
 
