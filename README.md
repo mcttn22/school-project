@@ -1,3 +1,4 @@
+[![tests](https://github.com/mcttn22/school-project/actions/workflows/tests.yml/badge.svg)](https://github.com/mcttn22/school-project/actions/workflows/tests.yml)
 [![python](https://img.shields.io/badge/Python-3-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 
 # A-level Computer Science NEA Programming Project
