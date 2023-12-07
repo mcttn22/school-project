@@ -1,39 +1,34 @@
 ### Todo
 
-- Memory Leak issue
-- More tests? (Add asserts?)
-- Make UI nicer ~ (use customtkinter?)
+- Code
+  - More tests
+    - assert shape of network (correct number of layers and neurons in each layer (size of output is correct for next layer's input))
+      - assert shape matches shape set with ui
+      - assert n rows of first matrix = n columns of second matrix or whatever
+    - assert each layer's transfer function
+    - assert learning rate of each layer is the same
+    - assert train dataset size
+    - assert derivative weights/biases = weights/biases shape (+ remove assert in implementation)
+    - test derivative functions
+  - Make UI nicer? (Use customtkinter?)
+  - Memory Leak issue
+  - Maybe
+    - Save optimum models
+    - Give option to continue training pretrained model
+    - Add ability to add external .npz file
 
-- Ideas from interview
-  - Allow model to be saved
-  - Talk about vanishing gradient (and ReLu vs sigmoid for this)
-  - Validation set (can use test-dataset for now)
-    - Monitors how well network is predicting, to see when network becomes overtrained
-  - Browse through more of results
-    - Show images predicted correct
-    - Show images predicted wrong
-    - Show images where prediction is close between muliple classes
-  - Play around with size of training datasets
-    - Graph showing performance against increase in training data
-  - Add new focuses to analysis
-  - Maybe cifar-10 dataset
-  - Maybe use sections of images for more inputs
-  - Maybe CNNs
-
-- Finish design draft
-  - Maybe add attributes and methods to class diagrams
-  - HCI
-
-- Display train-dataset-size - accuracy graph for testing? etc
-
-- Maybe save optimum models
-- Maybe give option to continue training pretrained model
-- Maybe add ability to add external .npz file
+- Report
+  - Finish design draft
+    - Maybe add attributes and methods to class diagrams
+    - HCI
+  - Technical solution
+    - Maybe use Jupyter notebook
+    - Tkinter manage method is an example of recursion?
+  - Testing
+    - Display train-dataset-size - accuracy graph for testing? etc
+  - Mention time complexity in report, speed times of saving and loading, and why cat accuracy is low
 
 - Update setup.py version
 
-- Jupyter notebook for technical presentation?
-
-- Note that Cat dataset has 50 test images (fewer needed for testing) and MNIST has 10,000
-- Note that tkinter manage method is an example of recursion for report?
-- Note: Mention time complexity in report + speed times of saving + loading, why cat acc low ?
+- Notes
+  - Cat dataset has 50 test images (fewer needed for testing) and MNIST has 10,000
