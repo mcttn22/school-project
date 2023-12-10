@@ -128,7 +128,7 @@ class LoadModelFrame(tk.Frame):
         parameters = (self.dataset.replace(" ", "_"), self.model_option_menu_var.get())
         self.cursor.execute(sql, parameters)
         data = self.cursor.fetchone()
-        hidden_layers_shape_input = [layer for layer in data[2].replace(' ', '').split(',') if layer != '']
+        hidden_layers_shape_input = [layer for layer in data[3].replace(' ', '').split(',') if layer != '']
 
         # Create Model
         if not self.use_gpu:
@@ -140,11 +140,11 @@ class LoadModelFrame(tk.Frame):
                 from school_project.models.cpu.xor import XORModel as Model
             model = Model(
                 hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
-                train_dataset_size=data[5],
-                learning_rate=data[3],
-                use_relu=data[6]
+                train_dataset_size=data[6],
+                learning_rate=data[4],
+                use_relu=data[7]
                 )
-            model.load_model_values(file_location=data[1])
+            model.load_model_values(file_location=data[2])
 
         else:
             try:
@@ -156,11 +156,11 @@ class LoadModelFrame(tk.Frame):
                     from school_project.models.gpu.xor import XORModel as Model
                 model = Model(
                     hidden_layers_shape=[int(neuron_count) for neuron_count in hidden_layers_shape_input],
-                    train_dataset_size=data[5],
-                    learning_rate=data[3],
-                    use_relu=data[6]
+                    train_dataset_size=data[6],
+                    learning_rate=data[4],
+                    use_relu=data[7]
                     )
-                model.load_model_values(file_location=data[1])
+                model.load_model_values(file_location=data[2])
             except ImportError as ie:
                 self.model_status_label.configure(
                                               text="Failed to initialise GPU",
