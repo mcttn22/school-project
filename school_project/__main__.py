@@ -397,9 +397,18 @@ class SchoolProjectFrame(tk.Frame):
     def save_model(self) -> None:
         """Save the model, save the model information to the database, then 
            enter the home frame."""
+        model_name = self.save_model_name_entry.get()
+
+        # Check if model name is empty
+        if model_name == '':
+            self.test_frame.model_status_label.configure(
+                                           text="Model name can not be blank",
+                                           fg='red'
+                                           )
+            return
+
         # Check if model name has already been taken
         dataset = self.dataset_option_menu_var.get().replace(" ", "_")
-        model_name = self.save_model_name_entry.get()
         sql = """
         SELECT Name FROM Models WHERE Dataset=?
         """
