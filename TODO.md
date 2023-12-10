@@ -1,15 +1,6 @@
 ### Todo
 
 - Code
-  - More tests
-    - assert shape of network (correct number of layers and neurons in each layer (size of output is correct for next layer's input))
-      - assert shape matches shape set with ui
-      - assert n rows of first matrix = n columns of second matrix or whatever
-    - assert each layer's transfer function
-    - assert learning rate of each layer is the same
-    - assert train dataset size
-    - assert derivative weights/biases = weights/biases shape (+ remove assert in implementation)
-    - test derivative functions
   - Make UI nicer? (Use customtkinter?)
   - Memory Leak issue
   - Maybe
