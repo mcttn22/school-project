@@ -111,7 +111,8 @@ To implement an Artificial Neural Network, matrices are used to represent the la
 order to use matrices for this, the following basic theory must be known about them:
 
 \begin{itemize}
-    \item When Adding two matrices, both matrices must have the same number of rows and columns.
+    \item When Adding two matrices, both matrices must have the same number of rows and columns. Or one of the matrices can have the same number of rows but only one 
+          column, then be added by element-wise addition where each element is added to all of the elements of the other matrix in the same row.
     \item When multiplying two matrices, the number of columns of the 1st matrix must equal the number of rows of the 2nd matrix. And the result will have the same 
           number of rows as the 1st matrix, and the same number of columns as the 2nd matrix. This is important, as the output of one layer must be formatted correctly 
           to be used with the next layer.
