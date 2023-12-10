@@ -28,7 +28,10 @@ class ModelInterface():
 
     def load_datasets(self, train_dataset_size: int) -> tuple[np.ndarray, np.ndarray,
                                                               np.ndarray, np.ndarray]:
-        """Load input and output datasets.
+        """Load input and output datasets. For the input dataset, each column 
+           should represent a piece of data and each row should store the values 
+           of the piece of data.
+           
         Args:
             train_dataset_size (int): the number of train dataset inputs to use.
         Returns:
