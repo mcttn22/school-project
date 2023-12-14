@@ -95,6 +95,13 @@ saved models' weights and biases and the saved models' hyper-parameters) are sav
 \includegraphics[width=1\textwidth]{./project-report/src/images/database-design.png}
 \end{figure}
 
+\begin{itemize}
+    \item I will also use the following unique constraint, so that each dataset can not have more than one model with the same name:
+    \begin{minted}{sql}
+    UNIQUE (Dataset, Name)
+    \end{minted}
+\end{itemize}
+
 \subsection{Queries}
 
 Here are some example queries for interacting with the database:
