@@ -10,15 +10,16 @@
 
 \subsubsection{File Structure}
 
-I used the following file structure to organise the code for the project, where school\_project is the package and is constructed of two main modules:
+I used the following file structure to organise the code for the project, where school\_project is the main package and is constructed of two main subpackages:
 
 \begin{itemize}
-    \item The models module, which is a self-contained module for creating trained Artificial Neural Network models.
-    \item The frames module, which consists of tkinter frames for the User Interface.
+    \item The models package, which is a self-contained package for creating trained Artificial Neural Network models.
+    \item The frames package, which consists of tkinter frames for the User Interface.
 \end{itemize}
 
-Each module within the school\_project package contains a \_\_init\_\_.py file, which allows the package to be installed to a virtual environment so that the modules of the package 
-can be imported from the installed package. I have omitted the source code for this report, which included a Makefile for its compilation.
+Each package within the school\_project package contains a \_\_init\_\_.py file, which allows the school\_project package to be installed to a virtual environment 
+so that the modules of the package can be imported from the installed package. I have omitted the source code for this report, which included a Makefile for its 
+compilation.
 
 \pagebreak
 
@@ -70,5 +71,44 @@ To optimise the use of Git and GitHub, I have used the following files:
 \subsubsection{Organisation}
 
 I also utilise a TODO.md file for keeping track of what features and/or bugs need to be worked on.
+
+\subsection{models package}
+
+This package is a self-contained package for creating trained Artificial Neural Networks and can either be used for a CPU or a GPU, as well as containing the test 
+and training data for all three datasets in a datasets directory. Whilst both the cpu and gpu subpackage are similar in functionality, the cpu subpackage uses NumPy 
+for matrices whereas the gpu subpackage utilise NumPy and another library CuPy which requires a GPU to be utilised for operations with the matrices. For that reason 
+it is only worth showing the code for the cpu subpackage. % TODO: Decide if this should remain true
+
+Both the cpu and gpu subpackage contain a utils subpackage that provides the tools for creating Artificial Neural Networks, and three modules that are the implementation 
+of Artificial Neural Networks for each dataset.
+
+\subsubsection{utils subpackage}
+
+The utils subpackage consists of a tools.py module that provides a ModelInterface class and helper functions for the model.py module, that contains an AbstractModel 
+class that implements every method from the ModelInterface except for the load\_dataset method.
+
+\begin{itemize}
+    \item tools.py module:
+        \inputminted{python}{./school_project/models/cpu/utils/tools.py}
+    \item model.py module:
+        \inputminted{python}{./school_project/models/cpu/utils/model.py}
+\end{itemize}
+
+\subsubsection{Artificial Neural Network implementations}
+
+The following three modules implement the AbstractModel class from the above model.py module from the utils subpackage, on the three datasets.
+
+\begin{itemize}
+    \item cat\_recognition.py module:
+        \inputminted{python}{./school_project/models/cpu/cat_recognition.py}
+    \item mnist.py module:
+        \inputminted{python}{./school_project/models/cpu/mnist.py}
+    \item xor.py module
+        \inputminted{python}{./school_project/models/cpu/xor.py}
+\end{itemize}
+
+\subsection{frames package}
+
+\subsection{\_\_main\_\_.py}
 
 \end{document}
