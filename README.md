@@ -1,4 +1,4 @@
-[comment]: <> (The following lines generate badges showing the current status of the automated testing (Passing or Failing) and a Python3 badge correspondingly.)
+<!-- The following lines generate badges showing the current status of the automated testing (Passing or Failing) and a Python3 badge correspondingly.) -->
 [![tests](https://github.com/mcttn22/school-project/actions/workflows/tests.yml/badge.svg)](https://github.com/mcttn22/school-project/actions/workflows/tests.yml)
 [![python](https://img.shields.io/badge/Python-3-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 
