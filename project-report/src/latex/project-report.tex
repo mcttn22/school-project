@@ -3,12 +3,19 @@
 \usepackage{hyperref}
 \usepackage[cache=false]{minted}
 \usepackage{subfiles}
+\usepackage{verbatim}
 \hypersetup{
   colorlinks,
   citecolor=black,
   filecolor=black,
   linkcolor=black,
   urlcolor=black
+}
+\setminted[markdown]{
+  frame=lines,
+  fontsize=\footnotesize,
+  linenos,
+  breaklines
 }
 \setminted[python]{
   frame=lines,
@@ -17,6 +24,11 @@
 }
 \setminted[sql]{
   fontsize=\footnotesize
+}
+\setminted[text]{
+  frame=lines,
+  fontsize=\footnotesize,
+  linenos
 }
 
 \title{Computer Science NEA Report
