@@ -109,6 +109,22 @@ The following three modules implement the AbstractModel class from the above mod
 
 \subsection{frames package}
 
-\subsection{\_\_main\_\_.py}
+I decided to use tkinter for the User Interface and the frames package consists of tkinter frames to be loaded onto the main window when needed. The package also 
+includes a hyper-parameter-defaults.json file, which stores optimum default values for the hyper-parameters to be set to.
+
+\begin{itemize}
+    \item hyper-parameter-defaults.json file contents:
+        \inputminted{json}{./school_project/frames/hyper-parameter-defaults.json}
+    \item create\_model.py module:
+        \inputminted{python}{./school_project/frames/create_model.py}
+    \item load\_model.py module:
+        \inputminted{python}{./school_project/frames/load_model.py}
+    % TODO: Should test_model.py be here on in test section?
+\end{itemize}
+
+\subsection{\_\_main\_\_.py module}
+
+This module is the entrypoint to the project and loads the main window of the User Interface:
+\inputminted{python}{./school_project/__main__.py}
 
 \end{document}
