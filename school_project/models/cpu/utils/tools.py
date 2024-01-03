@@ -1,11 +1,15 @@
+from abc import ABC, abstractmethod
+
 import numpy as np
 
-class ModelInterface():
+class ModelInterface(ABC):
     """Interface for ANN models."""
+    @abstractmethod
     def _setup_layers(setup_values: callable) -> None:
         """Setup model layers"""
         raise NotImplementedError
 
+    @abstractmethod
     def create_model_values(self) -> None:
         """Create weights and bias/biases
         
@@ -14,7 +18,8 @@ class ModelInterface():
 
         """
         raise NotImplementedError
-    
+
+    @abstractmethod
     def load_model_values(self, file_location: str) -> None:
         """Load weights and bias/biases from .npz file.
         
@@ -26,6 +31,7 @@ class ModelInterface():
         """
         raise NotImplementedError
 
+    @abstractmethod
     def load_datasets(self, train_dataset_size: int) -> tuple[np.ndarray, np.ndarray,
                                                               np.ndarray, np.ndarray]:
         """Load input and output datasets. For the input dataset, each column 
@@ -43,6 +49,7 @@ class ModelInterface():
         """
         raise NotImplementedError
 
+    @abstractmethod
     def back_propagation(self, prediction: np.ndarray) -> None:
         """Adjust the weights and bias/biases via gradient descent.
         
@@ -54,6 +61,7 @@ class ModelInterface():
         """
         raise NotImplementedError
 
+    @abstractmethod
     def forward_propagation(self) -> np.ndarray:
         """Generate a prediction with the weights and bias/biases.
         
@@ -65,6 +73,7 @@ class ModelInterface():
         """
         raise NotImplementedError
 
+    @abstractmethod
     def test(self) -> None:
         """Test trained weights and bias/biases.
            
@@ -74,6 +83,7 @@ class ModelInterface():
         """
         raise NotImplementedError
 
+    @abstractmethod
     def train(self, epochs: int) -> None:
         """Train weights and bias/biases.
         
@@ -84,7 +94,8 @@ class ModelInterface():
         
         """
         raise NotImplementedError
-    
+
+    @abstractmethod
     def save_model_values(self, file_location: str) -> None:
         """Save the model by saving the weights then biases of each layer to 
            a .npz file with a given file location.
