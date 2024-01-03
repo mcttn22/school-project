@@ -10,11 +10,14 @@
 
 - Report
   - Finish design draft
+    - See emailed NEA guide on algorithms (ANN, linked list, recursive)
+    - Talk about github
+      - Features (automated testing (then show actual tests in test section), readme (mention here then show implementation in technical solution?), installing project and dependencies, gitignore?, license?)
+      - commits + branches
+    - Add file structure of all files
     - Maybe add attributes and methods to class diagrams
     - HCI
   - Technical solution
-    - Talk about github
-      - Features (automated testing, readme, installing project and dependencies, gitignore?, license?)
     - Maybe use Jupyter notebook
     - Tkinter manage method is an example of recursion?
   - Testing
