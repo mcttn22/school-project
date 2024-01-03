@@ -299,8 +299,6 @@ class AbstractModel(ModelInterface):
         
         Args:
             file_location (str): the location of the file to load from.
-        Raises:
-            NotImplementedError: if this method is not implemented.
 
         """
         data: dict[str, np.ndarray] = np.load(file=file_location)
