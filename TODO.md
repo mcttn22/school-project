@@ -1,6 +1,7 @@
 ### Todo
 
 - Code
+  - Is dataset / does it need to be normalised, or need NOT NULL specification?
   - Make UI nicer? (Use customtkinter?)
   - Memory Leak issue
   - Maybe
