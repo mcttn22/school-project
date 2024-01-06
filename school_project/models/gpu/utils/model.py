@@ -17,12 +17,12 @@ from .tools import (
 
 class _Layers():
     """Manages linked list of layers."""
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialise linked list."""
         self.head = None
         self.tail = None
 
-    def __iter__(self):
+    def __iter__(self) -> None:
         """Iterate forward through the network."""
         current_layer = self.head
         while True:
@@ -32,7 +32,7 @@ class _Layers():
             else:
                 break
 
-    def __reversed__(self):
+    def __reversed__(self) -> None:
         """Iterate back through the network."""
         current_layer = self.tail
         while True:
@@ -206,12 +206,25 @@ class AbstractModel (ModelInterface):
         return (f"Layers Shape: {','.join(self.layers_shape)}\n" +
                 f"Learning Rate: {self.learning_rate}")
     
-    def set_running(self, value:bool):
+    def set_running(self, value: bool) -> None:
+        """Set the running attribute to the given value.
+        
+        Args:
+            value (bool): the value to set the running attribute to.
+        
+        """
         self.__running = value
 
     def _setup_layers(setup_values: callable) -> None:
-        """Setup model layers"""
-        def decorator(self, *args, **kwargs):
+        """Decorator that sets up model layers and sets up values of each layer 
+           with the method given.
+        
+        Args:
+            setup_values (callable): the method that sets up the values of each 
+            layer.
+
+        """
+        def decorator(self, *args, **kwargs) -> None:
             # Check if setting up Deep Network
             if len(self.hidden_layers_shape) > 0:
                 if self.use_relu:

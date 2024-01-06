@@ -8,7 +8,16 @@ class ModelInterface(ABC):
     """Interface for ANN models."""
     @abstractmethod
     def _setup_layers(setup_values: callable) -> None:
-        """Setup model layers"""
+        """Decorator that sets up model layers and sets up values of each layer 
+           with the method given.
+        
+        Args:
+            setup_values (callable): the method that sets up the values of each 
+            layer.
+        Raises:
+            NotImplementedError: if this method is not implemented.
+
+        """
         raise NotImplementedError
 
     @abstractmethod
