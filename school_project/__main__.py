@@ -9,12 +9,9 @@ import uuid
 
 import pympler.tracker as tracker
 
-from school_project.frames.create_model import (HyperParameterFrame,
-                                                TrainingFrame)
-from school_project.frames.load_model import LoadModelFrame
-from school_project.frames.test_model import (TestMNISTFrame,
-                                              TestCatRecognitionFrame, 
-                                              TestXORFrame)
+from school_project.frames import (HyperParameterFrame, TrainingFrame, 
+                                   LoadModelFrame, TestMNISTFrame, 
+                                   TestCatRecognitionFrame, TestXORFrame)
 
 class SchoolProjectFrame(tk.Frame):
     """Main frame of school project."""
