@@ -1,16 +1,18 @@
+"""Provides an abstract class for Artificial Neural Network models."""
+
 import time
 
 import numpy as np
 
-from school_project.models.cpu.utils.tools import (
-                                              ModelInterface,
-                                              relu,
-                                              relu_derivative,
-                                              sigmoid,
-                                              sigmoid_derivative,
-                                              calculate_loss,
-                                              calculate_prediction_accuracy
-                                              )
+from .tools import (
+                    ModelInterface,
+                    relu,
+                    relu_derivative,
+                    sigmoid,
+                    sigmoid_derivative,
+                    calculate_loss,
+                    calculate_prediction_accuracy
+                    )
 
 class _Layers():
     """Manages linked list of layers."""

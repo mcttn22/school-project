@@ -1,11 +1,11 @@
+"""Implementation of Artificial Neural Network model on MNIST dataset."""
+
 import pickle
 import gzip
 
 import numpy as np
 
-from school_project.models.cpu.utils.model import (
-                                                    AbstractModel
-                                                    )
+from .utils.model import AbstractModel
 
 class MNISTModel(AbstractModel):
     """ANN model that trains to predict Numbers from images."""

@@ -1,7 +1,9 @@
+"""Implementation of Artificial Neural Network model on Cat Recognition dataset."""
+
 import h5py
 import cupy as cp
 
-from school_project.models.gpu.utils.model import AbstractModel
+from .utils.model import AbstractModel
 
 class CatRecognitionModel(AbstractModel):
     """ANN model that trains to predict if an image is a cat or not a cat."""

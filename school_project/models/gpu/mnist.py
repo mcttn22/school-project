@@ -1,9 +1,11 @@
+"""Implementation of Artificial Neural Network model on MNIST dataset."""
+
 import pickle
 import gzip
 
 import cupy as cp
 
-from school_project.models.gpu.utils.model import (
+from .utils.model import (
                                                     AbstractModel
                                                     )
 

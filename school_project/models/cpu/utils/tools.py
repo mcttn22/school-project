@@ -1,3 +1,5 @@
+"""Helper functions and ModelInterface class for model module."""
+
 from abc import ABC, abstractmethod
 
 import numpy as np

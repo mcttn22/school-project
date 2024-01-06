@@ -1,6 +1,8 @@
+"""Implementation of Artificial Neural Network model on XOR dataset."""
+
 import numpy as np
 
-from school_project.models.cpu.utils.model import AbstractModel
+from .utils.model import AbstractModel
 
 class XORModel(AbstractModel):
     """ANN model that trains to predict the output of a XOR gate with two 

@@ -1,3 +1,5 @@
+"""Tkinter frames for testing a saved Artificial Neural Network model."""
+
 import random
 import threading
 import tkinter as tk

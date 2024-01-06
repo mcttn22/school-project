@@ -1,3 +1,5 @@
+"""The entrypoint of A-level Computer Science NEA Programming Project."""
+
 import os
 import sqlite3
 import threading
@@ -485,14 +487,14 @@ class SchoolProjectFrame(tk.Frame):
 def main() -> None:
     """Entrypoint of project."""
     root = tk.Tk()
-    school_project = SchoolProjectFrame(root=root, width=1280,
+    school_project_frame = SchoolProjectFrame(root=root, width=1280,
                                         height=835, bg='white')
-    school_project.pack(side='top', fill='both', expand=True)
+    school_project_frame.pack(side='top', fill='both', expand=True)
     root.mainloop()
     
     # Stop model training when GUI closes
-    if school_project.model != None:
-        school_project.model.set_running(value=False)
+    if school_project_frame.model != None:
+        school_project_frame.model.set_running(value=False)
 
 if __name__ == "__main__":
     summary_tracker = tracker.SummaryTracker()  # Setup object tracker

@@ -1,3 +1,5 @@
+"""Tkinter frames for creating an Artificial Neural Network model."""
+
 import json
 import threading
 import tkinter as tk

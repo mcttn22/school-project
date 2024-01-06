@@ -1,3 +1,5 @@
+"""Tkinter frames for loading a saved Artificial Neural Network Model."""
+
 import sqlite3
 import tkinter as tk
 import tkinter.font as tkf
