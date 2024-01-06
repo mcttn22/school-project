@@ -24,7 +24,7 @@ compilation.
 \pagebreak
 
 \begin{footnotesize}
-\verbatiminput{|"git ls-tree -r --name-only HEAD | grep -v -E 'project-report/|Makefile' | tree --fromfile --charset=ascii"}  % TODO: Could include project-report and Makefile
+\verbatiminput{|"git ls-tree -r --name-only HEAD | grep -v -E 'project-report/|Makefile' | tree --fromfile --charset=ascii"}
 \end{footnotesize}
 
 \subsubsection{Dependencies}
@@ -77,7 +77,7 @@ I also utilise a TODO.md file for keeping track of what features and/or bugs nee
 This package is a self-contained package for creating trained Artificial Neural Networks and can either be used for a CPU or a GPU, as well as containing the test 
 and training data for all three datasets in a datasets directory. Whilst both the cpu and gpu subpackage are similar in functionality, the cpu subpackage uses NumPy 
 for matrices whereas the gpu subpackage utilise NumPy and another library CuPy which requires a GPU to be utilised for operations with the matrices. For that reason 
-it is only worth showing the code for the cpu subpackage. % TODO: Decide if this should remain true
+it is only worth showing the code for the cpu subpackage.
 
 Both the cpu and gpu subpackage contain a utils subpackage that provides the tools for creating Artificial Neural Networks, and three modules that are the implementation 
 of Artificial Neural Networks for each dataset.
@@ -119,7 +119,6 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
         \inputminted{python}{./school_project/frames/create_model.py}
     \item load\_model.py module:
         \inputminted{python}{./school_project/frames/load_model.py}
-    % TODO: Should test_model.py be here on in test section?
 \end{itemize}
 
 \subsection{\_\_main\_\_.py module}
