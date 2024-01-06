@@ -1,3 +1,5 @@
+"""Unit tests for tools module."""
+
 import unittest
 
 from school_project.models.cpu.utils import tools

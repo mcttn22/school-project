@@ -1,3 +1,5 @@
+"""Unit tests for model module."""
+
 import unittest
 
 # Test XOR implementation of Model for its lesser computation time
