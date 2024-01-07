@@ -132,17 +132,17 @@ def relu(z: np.ndarray | int | float) -> np.ndarray | float:
     """
     return np.maximum(0.1*z, 0)  # Divide by 10 to stop overflow errors
 
-def relu_derivative(output: np.ndarray | int | float) -> np.ndarray | float:
+def relu_derivative(output: np.ndarray) -> np.ndarray:
     """Calculate derivative of ReLu Transfer function with respect to z.
 
     Args:
-        output (numpy.ndarray | int | float):
-        the numpy.ndarray | int | float output of the ReLu transfer function.
+        output (numpy.ndarray):
+        the numpy.ndarray output of the ReLu transfer function.
     Returns:
-        numpy.ndarray | float,
+        numpy.ndarray,
         derivative of the ReLu transfer function with respect to z.
     Raises:
-        TypeError: if output is not of type numpy.ndarray | int | float.
+        TypeError: if output is not of type numpy.ndarray.
 
     """
     output[output <= 0] = 0
