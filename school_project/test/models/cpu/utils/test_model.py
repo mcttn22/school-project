@@ -24,7 +24,7 @@ class TestModel(unittest.TestCase):
                          second=train_dataset_size)
 
     def test_network_shape(self) -> None:
-        """Test the neuron count of each layer to match the set shape of the 
+        """Test the neuron count of each layer to match the set shape of the
            network."""
         layers_shape = [2, 100, 100, 1]
         model = XORModel(hidden_layers_shape = [100, 100],
@@ -76,8 +76,8 @@ class TestModel(unittest.TestCase):
                              second=transfer_types[count])
 
     def test_weight_matrice_shapes(self) -> None:
-        """Test that each layer's weight matrix has the same number of columns 
-        as the layer's input matrix's number of rows, for the matrice 
+        """Test that each layer's weight matrix has the same number of columns
+        as the layer's input matrix's number of rows, for the matrice
         multiplication."""
         model = XORModel(hidden_layers_shape = [100, 100],
                          train_dataset_size = 4,
@@ -90,8 +90,8 @@ class TestModel(unittest.TestCase):
                              second=layer.input.shape[0])
 
     def test_bias_matrice_shapes(self) -> None:
-        """Test that each layer's bias matrix has the same number of rows 
-        as the result of the layer's weights and input multiplication, for 
+        """Test that each layer's bias matrix has the same number of rows
+        as the result of the layer's weights and input multiplication, for
         element-wise addition of the biases."""
         model = XORModel(hidden_layers_shape = [100, 100],
                          train_dataset_size = 4,

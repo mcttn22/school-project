@@ -27,7 +27,7 @@ class _Layers():
         current_layer = self.head
         while True:
             yield current_layer
-            if current_layer.next_layer != None:
+            if current_layer.next_layer is not None:
                 current_layer = current_layer.next_layer
             else:
                 break
@@ -37,13 +37,13 @@ class _Layers():
         current_layer = self.tail
         while True:
             yield current_layer
-            if current_layer.previous_layer != None:
+            if current_layer.previous_layer is not None:
                 current_layer = current_layer.previous_layer
             else:
                 break
 
 class _FullyConnectedLayer():
-    """Fully connected layer for Deep ANNs, 
+    """Fully connected layer for Deep ANNs,
        represented as a node of a Doubly linked list."""
     def __init__(self, learning_rate: float, input_neuron_count: int,
                  output_neuron_count: int, transfer_type: str) -> None:
@@ -75,7 +75,7 @@ class _FullyConnectedLayer():
 
     def __repr__(self) -> str:
         """Read values of the layer.
-        
+
         Returns:
             a string description of the layers's
             weights, bias and learning rate values.
@@ -97,9 +97,9 @@ class _FullyConnectedLayer():
 
     def back_propagation(self, dloss_doutput) -> cp.ndarray:
         """Adjust the weights and biases via gradient descent.
-        
+
         Args:
-            dloss_doutput (cupy.ndarray): the derivative of the loss of the 
+            dloss_doutput (cupy.ndarray): the derivative of the loss of the
             layer's output, with respect to the layer's output.
         Returns:
             a cupy.ndarray derivative of the loss of the layer's input,
@@ -109,7 +109,7 @@ class _FullyConnectedLayer():
             if dloss_doutput
             is not a suitable multiplier with the weights
             (incorrect shape)
-        
+
         """
         match self.transfer_type:
             case 'sigmoid':
@@ -119,9 +119,9 @@ class _FullyConnectedLayer():
 
         dloss_dweights = cp.dot(dloss_dz, self.input.T)
         dloss_dbiases = cp.sum(dloss_dz)
-        
+
         assert dloss_dweights.shape == self.weights.shape
-        
+
         dloss_dinput = cp.dot(self.weights.T, dloss_dz)
 
         # Update weights and biases
@@ -132,7 +132,7 @@ class _FullyConnectedLayer():
 
     def forward_propagation(self, inputs) -> cp.ndarray:
         """Generate a layer output with the weights and biases.
-        
+
         Args:
             inputs (cp.ndarray): the input values to the layer.
         Returns:
@@ -163,9 +163,9 @@ class AbstractModel (ModelInterface):
             output_neuron_count (int):
             the number of output neurons in the model.
             learning_rate (float): the learning rate of the model.
-            use_relu (bool): True or False whether the ReLu Transfer function 
+            use_relu (bool): True or False whether the ReLu Transfer function
             should be used.
-        
+
         """
         # Setup model data
         self.train_inputs, self.train_outputs,\
@@ -177,7 +177,7 @@ class AbstractModel (ModelInterface):
         self.test_prediction_accuracy: float
         self.training_progress: str = ""
         self.training_time: float
-        
+
         # Setup model attributes
         self.__running = True
         self.input_neuron_count: int = self.train_inputs.shape[0]
@@ -185,19 +185,19 @@ class AbstractModel (ModelInterface):
         self.hidden_layers_shape = hidden_layers_shape
         self.output_neuron_count: int = self.train_outputs.shape[0]
         self.layers_shape = [f'{layer}' for layer in (
-                            [self.input_neuron_count] + 
-                            self.hidden_layers_shape + 
+                            [self.input_neuron_count] +
+                            self.hidden_layers_shape +
                             [self.output_neuron_count]
                             )]
         self.use_relu = use_relu
-        
+
         # Setup model values
         self.layers = _Layers()
         self.learning_rate = learning_rate
 
     def __repr__(self) -> str:
         """Read current state of model.
-        
+
         Returns:
             a string description of the model's shape,
             weights, bias and learning rate values.
@@ -205,22 +205,22 @@ class AbstractModel (ModelInterface):
         """
         return (f"Layers Shape: {','.join(self.layers_shape)}\n" +
                 f"Learning Rate: {self.learning_rate}")
-    
+
     def set_running(self, value: bool) -> None:
         """Set the running attribute to the given value.
-        
+
         Args:
             value (bool): the value to set the running attribute to.
-        
+
         """
         self.__running = value
 
     def _setup_layers(setup_values: callable) -> None:
-        """Decorator that sets up model layers and sets up values of each layer 
+        """Decorator that sets up model layers and sets up values of each layer
            with the method given.
-        
+
         Args:
-            setup_values (callable): the method that sets up the values of each 
+            setup_values (callable): the method that sets up the values of each
             layer.
 
         """
@@ -269,7 +269,7 @@ class AbstractModel (ModelInterface):
                                     )
                         current_layer.next_layer.previous_layer = current_layer
                         current_layer = current_layer.next_layer
-                
+
                 # Add output layer
                 current_layer.next_layer = _FullyConnectedLayer(
                                         learning_rate=self.learning_rate,
@@ -303,7 +303,7 @@ class AbstractModel (ModelInterface):
             # Initialise Layer values to random values
             for layer in self.layers:
                 layer.init_layer_values_random()
-        
+
         # Setup Perceptron Network
         else:
 
@@ -314,7 +314,7 @@ class AbstractModel (ModelInterface):
     @_setup_layers
     def load_model_values(self, file_location: str) -> None:
         """Load weights and bias/biases from .npz file.
-        
+
         Args:
             file_location (str): the location of the file to load from.
 
@@ -331,9 +331,9 @@ class AbstractModel (ModelInterface):
 
     def back_propagation(self, dloss_doutput) -> None:
         """Train each layer's weights and biases.
-        
+
         Args:
-            dloss_doutput (cp.ndarray): the derivative of the loss of the 
+            dloss_doutput (cp.ndarray): the derivative of the loss of the
             output layer's output, with respect to the output layer's output.
 
         """
@@ -342,7 +342,7 @@ class AbstractModel (ModelInterface):
 
     def forward_propagation(self) -> cp.ndarray:
         """Generate a prediction with the layers.
-        
+
         Returns:
             a cupy.ndarray of the prediction values.
 
@@ -358,7 +358,7 @@ class AbstractModel (ModelInterface):
         for layer in self.layers:
             output = layer.forward_propagation(inputs=output)
         self.test_prediction = output
-        
+
         # Calculate performance of model
         self.test_prediction_accuracy = calculate_prediction_accuracy(
                                               prediction=self.test_prediction,
@@ -367,14 +367,14 @@ class AbstractModel (ModelInterface):
 
     def train(self, epoch_count: int) -> None:
         """Train layers' weights and biases.
-        
+
            Args:
                epoch_count (int): the number of training epochs.
-        
+
         """
         self.layers_shape = [f'{layer}' for layer in (
-                            [self.input_neuron_count] + 
-                            self.hidden_layers_shape + 
+                            [self.input_neuron_count] +
+                            self.hidden_layers_shape +
                             [self.output_neuron_count]
                             )]
         self.train_losses = []
@@ -394,9 +394,9 @@ class AbstractModel (ModelInterface):
             self.back_propagation(dloss_doutput=dloss_doutput)
         self.training_time = round(number=time.time() - training_start_time,
                                    ndigits=2)
-        
+
     def save_model_values(self, file_location: str) -> None:
-        """Save the model by saving the weights then biases of each layer to 
+        """Save the model by saving the weights then biases of each layer to
             a .npz file with a given file location.
 
             Args:

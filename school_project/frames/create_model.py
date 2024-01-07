@@ -11,10 +11,10 @@ import numpy as np
 
 class HyperParameterFrame(tk.Frame):
     """Frame for hyper-parameter page."""
-    def __init__(self, root: tk.Tk, width: int, 
+    def __init__(self, root: tk.Tk, width: int,
                  height: int, bg: str, dataset: str) -> None:
         """Initialise hyper-parameter frame widgets.
-        
+
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
@@ -24,21 +24,21 @@ class HyperParameterFrame(tk.Frame):
             ('MNIST', 'Cat Recognition' or 'XOR')
         Raises:
             TypeError: if root, width or height are not of the correct type.
-        
+
         """
         super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
         self.BG = bg
-        
+
         # Setup hyper-parameter frame variables
         self.dataset = dataset
         self.use_gpu: bool
         self.default_hyper_parameters = self.load_default_hyper_parameters(
                                                                dataset=dataset
                                                                )
-        
+
         # Setup widgets
         self.title_label = tk.Label(master=self,
                                     bg=self.BG,
@@ -115,7 +115,7 @@ class HyperParameterFrame(tk.Frame):
         self.model_status_label = tk.Label(master=self,
                                            bg=self.BG,
                                            font=('Arial', 15))
-        
+
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=3)
         self.about_label.grid(row=1, column=0, columnspan=3)
@@ -129,13 +129,13 @@ class HyperParameterFrame(tk.Frame):
         self.use_gpu_check_button.grid(row=3, column=2, pady=(30, 0))
         self.model_status_label.grid(row=5, column=0,
                                      columnspan=3, pady=50)
-        
+
     def load_default_hyper_parameters(self, dataset: str) -> dict[
-                                                 str, 
+                                                 str,
                                                  str | int | list[int] | float
                                                  ]:
         """Load the dataset's default hyper-parameters from the json file.
-           
+
            Args:
                dataset (str): the name of the dataset to load hyper-parameters
                for. ('MNIST', 'Cat Recognition' or 'XOR')
@@ -144,7 +144,7 @@ class HyperParameterFrame(tk.Frame):
         """
         with open('school_project/frames/hyper-parameter-defaults.json') as f:
             return json.load(f)[dataset]
-    
+
     def create_model(self) -> object:
         """Create and return a Model using the hyper-parameters set.
 
@@ -171,10 +171,12 @@ class HyperParameterFrame(tk.Frame):
                 from school_project.models.cpu.cat_recognition import CatRecognitionModel as Model
             elif self.dataset == "XOR":
                 from school_project.models.cpu.xor import XORModel as Model
-            model = Model(hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
-                          train_dataset_size = self.train_dataset_size_scale.get(),
-                          learning_rate = self.learning_rate_scale.get(),
-                          use_relu = self.use_relu_check_button_var.get())
+            model = Model(
+                hidden_layers_shape = [int(neuron_count) for neuron_count in hidden_layers_shape_input],
+                train_dataset_size = self.train_dataset_size_scale.get(),
+                learning_rate = self.learning_rate_scale.get(),
+                use_relu = self.use_relu_check_button_var.get()
+                )
             model.create_model_values()
 
         else:
@@ -197,14 +199,14 @@ class HyperParameterFrame(tk.Frame):
                                         )
                 raise ImportError
         return model
-        
+
 class TrainingFrame(tk.Frame):
     """Frame for training page."""
     def __init__(self, root: tk.Tk, width: int,
                  height: int, bg: str,
                  model: object, epoch_count: int) -> None:
         """Initialise training frame widgets.
-        
+
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
@@ -214,14 +216,14 @@ class TrainingFrame(tk.Frame):
             epoch_count (int): the number of training epochs.
         Raises:
             TypeError: if root, width or height are not of the correct type.
-        
+
         """
         super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
         self.BG = bg
-        
+
         # Setup widgets
         self.model_status_label = tk.Label(master=self,
                                            bg=self.BG,
@@ -234,11 +236,11 @@ class TrainingFrame(tk.Frame):
                                                       figure=self.loss_figure,
                                                       master=self
                                                       )
-        
+
         # Pack widgets
         self.model_status_label.pack(pady=(30,0))
         self.training_progress_label.pack(pady=30)
-        
+
         # Start training thread
         self.model_status_label.configure(
                                         text="Training weights and biases...",
@@ -252,10 +254,10 @@ class TrainingFrame(tk.Frame):
 
     def plot_losses(self, model: object) -> None:
         """Plot losses of Model training.
-        
+
            Args:
                model (object): the Model object thats been trained.
-        
+
         """
         self.model_status_label.configure(
                  text=f"Weights and biases trained in {model.training_time}s",

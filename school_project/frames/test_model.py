@@ -14,7 +14,7 @@ class TestMNISTFrame(tk.Frame):
                  height: int, bg: str,
                  use_gpu: bool, model: object) -> None:
         """Initialise test MNIST frame widgets.
-        
+
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
@@ -24,17 +24,17 @@ class TestMNISTFrame(tk.Frame):
             model (object): The Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
-        
+
         """
         super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
         self.BG = bg
-        
+
         # Setup test MNIST frame variables
         self.use_gpu = use_gpu
-        
+
          # Setup widgets
         self.model_status_label = tk.Label(master=self,
                                            bg=self.BG,
@@ -52,7 +52,7 @@ class TestMNISTFrame(tk.Frame):
                                       figure=self.incorrect_prediction_figure,
                                       master=self
                                       )
-        
+
         # Grid widgets
         self.model_status_label.grid(row=0, columnspan=3, pady=(30,0))
         self.results_label.grid(row=1, columnspan=3)
@@ -67,10 +67,10 @@ class TestMNISTFrame(tk.Frame):
 
     def plot_results(self, model: object) -> None:
         """Plot results of Model test.
-        
+
            Args:
                model (object): the Model object thats been tested.
-        
+
         """
         self.model_status_label.configure(text="Testing Results:", fg='green')
         if not self.use_gpu:
@@ -80,12 +80,12 @@ class TestMNISTFrame(tk.Frame):
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            
+
             test_inputs = np.squeeze(model.test_inputs).T
             test_outputs = np.squeeze(model.test_outputs).T.tolist()
             test_prediction = np.squeeze(model.test_prediction).T.tolist()
 
-            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton
             # whilst maintaining order between them
             test_data = list(zip(test_inputs,
                                  test_outputs,
@@ -96,26 +96,26 @@ class TestMNISTFrame(tk.Frame):
         elif self.use_gpu:
 
             import cupy as cp
-            
+
             self.results_label.configure(
              text="Prediction Correctness: " +
              f"{round(number=100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100, ndigits=1)}%\n" +
              f"Network Shape: " +
              f"{','.join(model.layers_shape)}\n"
              )
-            
+
             test_inputs = cp.asnumpy(cp.squeeze(model.test_inputs)).T
             test_outputs = cp.asnumpy(cp.squeeze(model.test_outputs)).T.tolist()
             test_prediction = cp.squeeze(model.test_prediction).T.tolist()
 
-            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton
             # whilst maintaining order between them
             test_data = list(zip(test_inputs,
                                  test_outputs,
                                  test_prediction))
             random.shuffle(test_data)
             test_inputs, test_outputs, test_prediction = zip(*test_data)
-            
+
         # Setup incorrect prediction figure
         self.incorrect_prediction_figure.suptitle("Incorrect predictions:")
         image_count = 0
@@ -153,7 +153,7 @@ class TestCatRecognitionFrame(tk.Frame):
                  height: int, bg: str,
                  use_gpu: bool, model: object) -> None:
         """Initialise test cat recognition frame widgets.
-        
+
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
@@ -163,17 +163,17 @@ class TestCatRecognitionFrame(tk.Frame):
             model (object): the Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
-        
+
         """
         super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
         self.BG = bg
-        
+
         # Setup image recognition frame variables
         self.use_gpu = use_gpu
-        
+
         # Setup widgets
         self.model_status_label = tk.Label(master=self,
                                            bg=self.BG,
@@ -191,7 +191,7 @@ class TestCatRecognitionFrame(tk.Frame):
                                       figure=self.incorrect_prediction_figure,
                                       master=self
                                       )
-        
+
         # Grid widgets
         self.model_status_label.grid(row=0, columnspan=3, pady=(30,0))
         self.results_label.grid(row=1, columnspan=3)
@@ -206,10 +206,10 @@ class TestCatRecognitionFrame(tk.Frame):
 
     def plot_results(self, model: object) -> None:
         """Plot results of Model test
-        
+
            Args:
                model (object): the Model object thats been tested.
-        
+
         """
         self.model_status_label.configure(text="Testing Results:", fg='green')
         if not self.use_gpu:
@@ -220,7 +220,7 @@ class TestCatRecognitionFrame(tk.Frame):
              f"{','.join(model.layers_shape)}\n"
              )
 
-            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton
             # whilst maintaining order between them
             test_data = list(zip(model.test_inputs.T,
                                  np.squeeze(model.test_outputs).T.tolist(),
@@ -230,11 +230,11 @@ class TestCatRecognitionFrame(tk.Frame):
              test_outputs,
              test_prediction) = map(lambda arr: np.array(arr).T,
                                     zip(*test_data))
-        
+
         elif self.use_gpu:
 
             import cupy as cp
-            
+
             self.results_label.configure(
              text="Prediction Correctness: " +
              f"{round(number=100 - np.mean(np.abs(cp.asnumpy(model.test_prediction).round() - cp.asnumpy(model.test_outputs))) * 100, ndigits=1)}%\n" +
@@ -242,7 +242,7 @@ class TestCatRecognitionFrame(tk.Frame):
              f"{','.join(model.layers_shape)}\n"
              )
 
-            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton 
+            # Randomly shuffle order of test_inputs, test_outputs and test_prediciton
             # whilst maintaining order between them
             test_data = list(zip(cp.asnumpy(model.test_inputs).T,
                                  cp.asnumpy(cp.squeeze(model.test_outputs)).T.tolist(),
@@ -288,7 +288,7 @@ class TestXORFrame(tk.Frame):
     def __init__(self, root: tk.Tk, width: int,
                  height: int, bg: str, model: object) -> None:
         """Initialise test XOR frame widgets.
-        
+
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
@@ -297,14 +297,14 @@ class TestXORFrame(tk.Frame):
             model (object): the Model object to be tested.
         Raises:
             TypeError: if root, width or height are not of the correct type.
-        
+
         """
         super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
         self.BG = bg
-        
+
         # Setup widgets
         self.model_status_label = tk.Label(master=self,
                                            bg=self.BG,
@@ -312,7 +312,7 @@ class TestXORFrame(tk.Frame):
         self.results_label = tk.Label(master=self,
                                       bg=self.BG,
                                       font=('Arial', 20))
-        
+
         # Pack widgets
         self.model_status_label.pack(pady=(30,0))
 
@@ -324,10 +324,10 @@ class TestXORFrame(tk.Frame):
 
     def plot_results(self, model: object):
         """Plot results of Model test.
-        
+
            Args:
                model (object): the Model object thats been tested.
-        
+
         """
         self.model_status_label.configure(text="Testing Results:", fg='green')
         results = (

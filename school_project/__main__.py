@@ -9,15 +9,15 @@ import uuid
 
 import pympler.tracker as tracker
 
-from school_project.frames import (HyperParameterFrame, TrainingFrame, 
-                                   LoadModelFrame, TestMNISTFrame, 
+from school_project.frames import (HyperParameterFrame, TrainingFrame,
+                                   LoadModelFrame, TestMNISTFrame,
                                    TestCatRecognitionFrame, TestXORFrame)
 
 class SchoolProjectFrame(tk.Frame):
     """Main frame of school project."""
     def __init__(self, root: tk.Tk, width: int, height: int, bg: str) -> None:
         """Initialise school project pages.
-        
+
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
@@ -25,14 +25,14 @@ class SchoolProjectFrame(tk.Frame):
             bg (str): the hex value or name of the frame's background colour.
         Raises:
             TypeError: if root, width or height are not of the correct type.
-        
+
         """
         super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root.title("School Project")
         self.WIDTH = width
         self.HEIGHT = height
         self.BG = bg
-        
+
         # Setup school project frame variables
         self.hyper_parameter_frame: HyperParameterFrame
         self.training_frame: TrainingFrame
@@ -118,14 +118,14 @@ class SchoolProjectFrame(tk.Frame):
                                      command=self.enter_home_frame)
 
         # Setup home frame
-        self.home_frame = tk.Frame(master=self, 
-                                   width=self.WIDTH, 
+        self.home_frame = tk.Frame(master=self,
+                                   width=self.WIDTH,
                                    height=self.HEIGHT,
                                    bg=self.BG)
         self.title_label = tk.Label(
                        master=self.home_frame,
                        bg=self.BG,
-                       font=('Arial', 20), 
+                       font=('Arial', 20),
                        text="A-level Computer Science NEA Programming Project"
                        )
         self.about_label = tk.Label(
@@ -162,7 +162,7 @@ class SchoolProjectFrame(tk.Frame):
                                            font=tkf.Font(size=12),
                                            text="Load Model",
                                            command=self.enter_load_model_frame)
-        
+
         # Grid home frame widgets
         self.title_label.grid(row=0, column=0, columnspan=4, pady=(10,0))
         self.about_label.grid(row=1, column=0, columnspan=4, pady=(10,50))
@@ -172,19 +172,19 @@ class SchoolProjectFrame(tk.Frame):
         self.load_model_button.grid(row=4, column=2)
 
         self.home_frame.pack()
-        
+
         # Setup frame attributes
         self.grid_propagate(flag=False)
         self.pack_propagate(flag=False)
 
     @staticmethod
     def setup_database() -> tuple[sqlite3.Connection, sqlite3.Cursor]:
-        """Create a connection to the pretrained_models database file and 
+        """Create a connection to the pretrained_models database file and
            setup base table if needed.
-           
+
            Returns:
                a tuple of the database connection and the cursor for it.
-        
+
         """
         connection = sqlite3.connect(
                                 database='school_project/saved_models.db'
@@ -232,14 +232,14 @@ class SchoolProjectFrame(tk.Frame):
                                     )
         self.load_model_frame.pack()
 
-        # Don't give option to test loaded model if no models have been saved 
+        # Don't give option to test loaded model if no models have been saved
         # for the dataset.
         if len(self.load_model_frame.model_options) > 0:
             self.test_loaded_model_button.pack()
             self.delete_loaded_model_button.pack(pady=(5,0))
-        
+
         self.exit_load_model_frame_button.pack(pady=(5,0))
-        
+
     def exit_hyper_parameter_frame(self) -> None:
         """Unpack hyper-parameter frame and pack home frame."""
         self.hyper_parameter_frame.pack_forget()
@@ -269,7 +269,7 @@ class SchoolProjectFrame(tk.Frame):
         self.exit_hyper_parameter_frame_button.pack_forget()
         self.training_frame = TrainingFrame(
                 root=self,
-                width=self.WIDTH, 
+                width=self.WIDTH,
                 height=self.HEIGHT,
                 bg=self.BG,
                 model=self.model,
@@ -282,7 +282,7 @@ class SchoolProjectFrame(tk.Frame):
     def manage_training(self, train_thread: threading.Thread) -> None:
         """Wait for model training thread to finish,
            then plot training losses on training frame.
-        
+
         Args:
             train_thread (threading.Thread):
             the thread running the model's train() method.
@@ -308,7 +308,7 @@ class SchoolProjectFrame(tk.Frame):
         self.training_frame.pack_forget()
         self.test_created_model_button.pack_forget()
         if self.hyper_parameter_frame.dataset == "MNIST":
-            self.test_frame = TestMNISTFrame( 
+            self.test_frame = TestMNISTFrame(
                                    root=self,
                                    width=self.WIDTH,
                                    height=self.HEIGHT,
@@ -319,7 +319,7 @@ class SchoolProjectFrame(tk.Frame):
         elif self.hyper_parameter_frame.dataset == "Cat Recognition":
             self.test_frame = TestCatRecognitionFrame(
                                    root=self,
-                                   width=self.WIDTH, 
+                                   width=self.WIDTH,
                                    height=self.HEIGHT,
                                    bg=self.BG,
                                    use_gpu=self.hyper_parameter_frame.use_gpu,
@@ -335,7 +335,7 @@ class SchoolProjectFrame(tk.Frame):
         self.manage_testing(test_thread=self.test_frame.test_thread)
 
     def test_loaded_model(self) -> None:
-        """Load saved model from load model frame, unpack load model frame, 
+        """Load saved model from load model frame, unpack load model frame,
            pack test frame for the dataset and begin managing the test thread."""
         self.saving_model = False
         try:
@@ -347,7 +347,7 @@ class SchoolProjectFrame(tk.Frame):
         self.delete_loaded_model_button.pack_forget()
         self.exit_load_model_frame_button.pack_forget()
         if self.load_model_frame.dataset == "MNIST":
-            self.test_frame = TestMNISTFrame( 
+            self.test_frame = TestMNISTFrame(
                                         root=self,
                                         width=self.WIDTH,
                                         height=self.HEIGHT,
@@ -376,13 +376,13 @@ class SchoolProjectFrame(tk.Frame):
     def manage_testing(self, test_thread: threading.Thread) -> None:
         """Wait for model test thread to finish,
            then plot results on test frame.
-        
+
         Args:
             test_thread (threading.Thread):
             the thread running the model's predict() method.
         Raises:
             TypeError: if test_thread is not of type threading.Thread.
-        
+
         """
         if not test_thread.is_alive():
             self.test_frame.plot_results(model=self.model)
@@ -395,7 +395,7 @@ class SchoolProjectFrame(tk.Frame):
             self.after(1_000, self.manage_testing, test_thread)
 
     def save_model(self) -> None:
-        """Save the model, save the model information to the database, then 
+        """Save the model, save the model information to the database, then
            enter the home frame."""
         model_name = self.save_model_name_entry.get()
 
@@ -480,7 +480,7 @@ class SchoolProjectFrame(tk.Frame):
         self.home_frame.pack()
         summary_tracker.create_summary()  # BUG: Object summary seems to reduce
                                           # memory leak greatly
-        
+
 def main() -> None:
     """Entrypoint of project."""
     root = tk.Tk()
@@ -488,9 +488,9 @@ def main() -> None:
                                         height=835, bg='white')
     school_project_frame.pack(side='top', fill='both', expand=True)
     root.mainloop()
-    
+
     # Stop model training when GUI closes
-    if school_project_frame.model != None:
+    if school_project_frame.model is not None:
         school_project_frame.model.set_running(value=False)
 
 if __name__ == "__main__":

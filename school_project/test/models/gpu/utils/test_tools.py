@@ -9,7 +9,7 @@ class TestTools(unittest.TestCase):
     def __init__(self, *args, **kwargs) -> None:
         """Initialise unit tests and inputs."""
         super(TestTools, self).__init__(*args, **kwargs)
-            
+
     def test_relu(self) -> None:
         """Test ReLu output range to be >=0. """
         test_inputs = [-100, 0, 100]

@@ -20,16 +20,16 @@ class MNISTModel(AbstractModel):
             list of the number of neurons in each hidden layer.
             train_dataset_size (int): the number of train dataset inputs to use.
             learning_rate (float): the learning rate of the model.
-            use_relu (bool): True or False whether the ReLu Transfer function 
+            use_relu (bool): True or False whether the ReLu Transfer function
             should be used.
-        
+
         """
         super().__init__(hidden_layers_shape=hidden_layers_shape,
                          train_dataset_size=train_dataset_size,
                          learning_rate=learning_rate,
                          use_relu=use_relu)
-    
-    def load_datasets(self, train_dataset_size: int) -> tuple[np.ndarray, np.ndarray, 
+
+    def load_datasets(self, train_dataset_size: int) -> tuple[np.ndarray, np.ndarray,
                                                               np.ndarray, np.ndarray]:
         """Load image input and output datasets.
         Args:
@@ -37,10 +37,10 @@ class MNISTModel(AbstractModel):
         Returns:
             tuple of image train_inputs, train_outputs,
             test_inputs and test_outputs numpy.ndarrys.
-        
+
         Raises:
             FileNotFoundError: if file does not exist.
-        
+
         """
         # Load datasets from pkl.gz file
         with gzip.open(

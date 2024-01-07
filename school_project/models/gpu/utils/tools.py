@@ -9,11 +9,11 @@ class ModelInterface(ABC):
     """Interface for ANN models."""
     @abstractmethod
     def _setup_layers(setup_values: callable) -> None:
-        """Decorator that sets up model layers and sets up values of each layer 
+        """Decorator that sets up model layers and sets up values of each layer
            with the method given.
-        
+
         Args:
-            setup_values (callable): the method that sets up the values of each 
+            setup_values (callable): the method that sets up the values of each
             layer.
         Raises:
             NotImplementedError: if this method is not implemented.
@@ -24,7 +24,7 @@ class ModelInterface(ABC):
     @abstractmethod
     def create_model_values(self) -> None:
         """Create weights and bias/biases
-        
+
         Raises:
             NotImplementedError: if this method is not implemented.
 
@@ -34,7 +34,7 @@ class ModelInterface(ABC):
     @abstractmethod
     def load_model_values(self, file_location: str) -> None:
         """Load weights and bias/biases from .npz file.
-        
+
         Args:
             file_location (str): the location of the file to load from.
         Raises:
@@ -44,12 +44,12 @@ class ModelInterface(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def load_datasets(self, train_dataset_size: int) -> tuple[cp.ndarray, cp.ndarray, 
+    def load_datasets(self, train_dataset_size: int) -> tuple[cp.ndarray, cp.ndarray,
                                      cp.ndarray, cp.ndarray]:
-        """Load input and output datasets. For the input dataset, each column 
-           should represent a piece of data and each row should store the values 
+        """Load input and output datasets. For the input dataset, each column
+           should represent a piece of data and each row should store the values
            of the piece of data.
-        
+
         Args:
             train_dataset_size (int): the number of train dataset inputs to use.
         Returns:
@@ -64,19 +64,19 @@ class ModelInterface(ABC):
     @abstractmethod
     def back_propagation(self, prediction: cp.ndarray) -> None:
         """Adjust the weights and bias/biases via gradient descent.
-        
+
         Args:
             prediction (cupy.ndarray): the matrice of prediction values
         Raises:
             NotImplementedError: if this method is not implemented.
-        
+
         """
         raise NotImplementedError
 
     @abstractmethod
     def forward_propagation(self) -> cp.ndarray:
         """Generate a prediction with the weights and bias/biases.
-        
+
         Returns:
             cupy.ndarray of prediction values.
         Raises:
@@ -88,7 +88,7 @@ class ModelInterface(ABC):
     @abstractmethod
     def test(self) -> None:
         """Test trained weights and bias/biases.
-           
+
         Raises:
             NotImplementedError: if this method is not implemented.
 
@@ -98,18 +98,18 @@ class ModelInterface(ABC):
     @abstractmethod
     def train(self, epochs: int) -> None:
         """Train weights and bias/biases.
-        
+
         Args:
             epochs (int): the number of forward and back propagations to do.
         Raises:
             NotImplementedError: if this method is not implemented.
-        
+
         """
         raise NotImplementedError
 
     @abstractmethod
     def save_model_values(self, file_location: str) -> None:
-        """Save the model by saving the weights then biases of each layer to 
+        """Save the model by saving the weights then biases of each layer to
            a .npz file with a given file location.
 
            Args:
@@ -148,7 +148,7 @@ def relu_derivative(output: cp.ndarray) -> cp.ndarray:
     """
     output[output <= 0] = 0
     output[output > 0] = 1
-    
+
     return output
 
 def sigmoid(z: cp.ndarray | int | float) -> cp.ndarray | float:
@@ -185,7 +185,7 @@ def calculate_loss(input_count: int,
                    outputs: cp.ndarray,
                    prediction: cp.ndarray) -> float:
     """Calculate average loss/error of the prediction to the outputs.
-    
+
     Args:
         input_count (int): the number of inputs.
         outputs (cp.ndarray):
@@ -204,7 +204,7 @@ def calculate_loss(input_count: int,
 def calculate_prediction_accuracy(prediction: cp.ndarray,
                                   outputs: cp.ndarray) -> float:
     """Calculate the percentage accuracy of the predictions.
-    
+
     Args:
         prediction (cp.ndarray): the array of prediction values.
         outputs (cp.ndarray):

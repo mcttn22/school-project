@@ -5,7 +5,7 @@ import cupy as cp
 from .utils.model import AbstractModel
 
 class XORModel(AbstractModel):
-    """ANN model that trains to predict the output of a XOR gate with two 
+    """ANN model that trains to predict the output of a XOR gate with two
        inputs."""
     def __init__(self,
                  hidden_layers_shape: list[int],
@@ -19,19 +19,19 @@ class XORModel(AbstractModel):
             list of the number of neurons in each hidden layer.
             train_dataset_size (int): the number of train dataset inputs to use.
             learning_rate (float): the learning rate of the model.
-            use_relu (bool): True or False whether the ReLu Transfer function 
+            use_relu (bool): True or False whether the ReLu Transfer function
             should be used
-        
+
         """
         super().__init__(hidden_layers_shape=hidden_layers_shape,
                          train_dataset_size=train_dataset_size,
                          learning_rate=learning_rate,
                          use_relu=use_relu)
 
-    def load_datasets(self, train_dataset_size: int) -> tuple[cp.ndarray, cp.ndarray, 
+    def load_datasets(self, train_dataset_size: int) -> tuple[cp.ndarray, cp.ndarray,
                                                               cp.ndarray, cp.ndarray]:
         """Load XOR input and output datasets.
-        
+
         Args:
             train_dataset_size (int): the number of dataset inputs to use.
         Returns:

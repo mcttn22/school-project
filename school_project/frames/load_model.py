@@ -7,11 +7,11 @@ import tkinter.font as tkf
 class LoadModelFrame(tk.Frame):
     """Frame for load model page."""
     def __init__(self, root: tk.Tk,
-                 width: int, height: int, 
+                 width: int, height: int,
                  bg: str, connection: sqlite3.Connection,
                  cursor: sqlite3.Cursor, dataset: str) -> None:
         """Initialise load model frame widgets.
-        
+
         Args:
             root (tk.Tk): the widget object that contains this widget.
             width (int): the pixel width of the frame.
@@ -23,21 +23,21 @@ class LoadModelFrame(tk.Frame):
             ('MNIST', 'Cat Recognition' or 'XOR')
         Raises:
             TypeError: if root, width or height are not of the correct type.
-        
+
         """
         super().__init__(master=root, width=width, height=height, bg=bg)
         self.root = root
         self.WIDTH = width
         self.HEIGHT = height
         self.BG = bg
-        
+
         # Setup load model frame variables
         self.connection = connection
         self.cursor = cursor
         self.dataset = dataset
         self.use_gpu: bool
         self.model_options = self.load_model_options()
-        
+
         # Setup widgets
         self.title_label = tk.Label(master=self,
                                     bg=self.BG,
@@ -52,8 +52,8 @@ class LoadModelFrame(tk.Frame):
         self.model_status_label = tk.Label(master=self,
                                            bg=self.BG,
                                            font=('Arial', 15))
-        
-        # Don't give loaded model options if no models have been saved for the 
+
+        # Don't give loaded model options if no models have been saved for the
         # dataset.
         if len(self.model_options) > 0:
             self.model_option_menu_label = tk.Label(
@@ -84,7 +84,7 @@ class LoadModelFrame(tk.Frame):
                                      text='No saved models for this dataset.',
                                      fg='red'
                                      )
-        
+
         # Pack widgets
         self.title_label.grid(row=0, column=0, columnspan=3)
         self.about_label.grid(row=1, column=0, columnspan=3)
@@ -94,10 +94,10 @@ class LoadModelFrame(tk.Frame):
             self.model_option_menu.grid(row=3, column=0, padx=(0,30), pady=(10,0))
         self.model_status_label.grid(row=4, column=0,
                                      columnspan=3, pady=50)
-        
+
     def load_model_options(self) -> list[str]:
         """Load the model options from the database.
-           
+
            Returns:
                 a list of the model options.
         """
@@ -113,13 +113,13 @@ class LoadModelFrame(tk.Frame):
             model_options.append(model_option[0])
 
         return model_options
-        
+
     def load_model(self) -> object:
         """Create model using saved weights and biases.
-        
+
            Returns:
                a Model object.
-               
+
         """
         self.use_gpu = self.use_gpu_check_button_var.get()
 
