@@ -113,11 +113,13 @@ order to use matrices for this, the following basic theory must be known about t
 \begin{itemize}
     \item When Adding two matrices, both matrices must have the same number of rows and columns. Or one of the matrices can have the same number of rows but only one 
           column, then be added by element-wise addition where each element is added to all of the elements of the other matrix in the same row.
-    \item When multiplying two matrices, the number of columns of the 1st matrix must equal the number of rows of the 2nd matrix. And the result will have the same 
-          number of rows as the 1st matrix, and the same number of columns as the 2nd matrix. This is important, as the output of one layer must be formatted correctly 
-          to be used with the next layer.
     \item In order to multiply matrices, I take the 'dot product' of the matrices, which multiplies the row of one matrice with the column of the other, by multiplying 
           matching members and then summing up.
+    \item When taking the dot product of two matrices, the number of columns of the 1st matrix must equal the number of rows of the 2nd matrix. And the result will 
+          have the same number of rows as the 1st matrix, and the same number of columns as the 2nd matrix. This is important, as the output of one layer must be formatted 
+          correctly to be used with the next layer.
+    \item Alternatively, at times I take the Hadamard product of two matrices which performs element-wise multiplication of the matrices. For this, both matrices 
+          must have the same number of rows and columns.
     \item Transposing a matrix will turn all rows of the matrix into columns and all columns into rows.
     \item A matrix of values can be classified as a rank of Tensors, depending on the number of dimensions of the matrix. (Eg: A 2-dimensional matrix is a Tensor of 
           rank 2)
