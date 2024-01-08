@@ -125,13 +125,63 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
         \inputminted{json}{./school_project/frames/hyper-parameter-defaults.json}
     \item create\_model.py module:
         \inputminted{python}{./school_project/frames/create_model.py}
+        
+        Which outputs the following for the hyper-parameter frame:
+
+        \pagebreak
+        
+        \begin{figure}[h!]
+        \centering
+        \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/hyper-parameter-frame.png}}
+        \end{figure}
+
+        And outputs the following for the training frame during training:
+
+        \begin{figure}[h!]
+        \centering
+        \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/training-frame-1.png}}
+        \end{figure}
+
+        \pagebreak
+
+        And outputs the following for the training frame once training has completed:
+
+        \begin{figure}[h!]
+        \centering
+        \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/training-frame-2.png}}
+        \end{figure}
+
     \item load\_model.py module:
         \inputminted{python}{./school_project/frames/load_model.py}
+
+        Which outputs the following for the load model frame when models have been saved for the dataset:
+
+        \pagebreak
+
+        \begin{figure}[h!]
+        \centering
+        \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/load-model-frame-1.png}}
+        \end{figure}
+
+        And outputs the following for the load model frame when no models have been saved for the dataset:
+
+        \begin{figure}[h!]
+        \centering
+        \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/load-model-frame-2.png}}
+        \end{figure}
 \end{itemize}
 
 \subsection{\_\_main\_\_.py module}
 
 This module is the entrypoint to the project and loads the main window of the User Interface:
+
 \inputminted{python}{./school_project/__main__.py}
+
+Which outputs the following for the home frame:
+
+\begin{figure}[h!]
+\centering
+\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/home-frame.png}}
+\end{figure}
 
 \end{document}
