@@ -55,12 +55,33 @@ And outputs the following for the XOR dataset:
 
 \subsection{Manual Testing}
 
-\subsubsection{Input Validation Testing}
+\subsubsection{Input Validation Testing TODO}
 
 \subsection{Automated Testing}
 
 \subsubsection{Unit Tests}
 
+Within the test package, I have written the following unit tests for the utils subpackage of both the cpu and gpu subpackage of the models package. Similarly to the code for the cpu 
+and gpu subpackage, it is only worth showing the code for the cpu version as both are very similar in functionality.
+
+\begin{itemize}
+    \item test\_model.py module:
+        \inputminted{python}{./school_project/test/models/cpu/utils/test_model.py}
+
+        \pagebreak
+
+    \item test\_tools.py module:
+        \inputminted{python}{./school_project/test/models/cpu/utils/test_tools.py}
+\end{itemize}
+
+\inputminted{python}{./school_project/test/models/cpu.py}
+
 \subsubsection{GitHub Automated Testing}
+
+With the following configuration programmed, the unit tests are run automatically on GitHub servers after each commit that is pushed to GitHub and the status of the tests 
+(either passing or failing) can be viewed on the repository's page. This automatic testing allows for a faster workflow and allows me to identify which changes (commits) 
+cause issues within the code, allowing for easier maintenance of the project.
+
+\inputminted{yaml}{./.github/workflows/tests.yml}
 
 \end{document}
