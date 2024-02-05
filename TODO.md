@@ -30,3 +30,13 @@
 
 - Notes
   - Cat dataset has 50 test images (fewer needed for testing) and MNIST has 10,000
+
+- Does comparing hyper-parameter graphs + accuracy go in test section? Dr.Grey says test section
+
+- Objective trace table (obj, brief description, link to section in document, maybe link to where tested)
+- Remove memory leak mentioning
+Dr.Grey Qs:
+  - Not all 'show not tell', try to give comments/explanations in report that make it obvious (recursive methods)
+  - Docstrings and comments enough? yes but need to say this section does this objective
+  - Should test frames, test in file structure, test methods in school_project class and test instructions etc be in technical solution or testing section? yes~
+  - compare gpu vs cpu time?
