@@ -54,7 +54,99 @@ And outputs the following for the XOR dataset:
 
 \subsection{Manual Testing}
 
-\subsubsection{Input Validation Testing TODO}  % Add input validation images in table
+\subsubsection{Input Validation Testing TODO} % See table on teams, include images + link to video files on github
+
+The following tests check the input validation of each frames' inputs.
+
+\begin{itemize}
+    \item Hyper Parameter Frame:
+    \begin{itemize}
+        \item Use GPU Validation:
+            \begin{itemize}
+                \item Description: Select Use GPU checkbox without a GPU present.
+                \item Expected Result: The exception should be handled and a usefull error message should be dipslayed.
+                \item Actual Result: Expected Result
+                \item Test Status: Pass
+                \item Evidence:
+                    \begin{figure}[h!]
+                    \centering
+                    \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/create-model-use-gpu-validation.png}}
+                    \end{figure}
+            \end{itemize}
+
+        \pagebreak
+
+        \item Hidden Layers Shape Validation:
+            \begin{itemize}
+                \item Description: Enter an invalid hidden layers shape.
+                \item Data Value: "test"
+                \item Data Type: Erroneous
+                \item Expected Result: The exception should be handled and a usefull error message should be dipslayed.
+                \item Actual Result: Expected Result
+                \item Test Status: Pass
+                \item Evidence:
+                    \begin{figure}[h!]
+                    \centering
+                    \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/hidden-layers-shape-input-validation.png}}
+                    \end{figure}
+            \end{itemize}
+    \end{itemize}
+
+    \pagebreak
+
+    \item Load Model Frame:
+    \begin{itemize}
+        \item Use GPU Validation:
+            \begin{itemize}
+            \item Description: Select Use GPU checkbox without a GPU present.
+            \item Expected Result: The exception should be handled and a usefull error message should be dipslayed.
+            \item Actual Result: Expected Result
+            \item Test Status: Pass
+            \item Evidence:
+                \begin{figure}[h!]
+                \centering
+                \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/load-model-use-gpu-validation.png}}
+                \end{figure}
+            \end{itemize}
+    \end{itemize}
+
+    \pagebreak
+
+    \item Test Frames:
+    \begin{itemize}
+        \item Taken Trained Model Name Validation:
+            \begin{itemize}
+                \item Description: Try to save a trained model with an already taken name.
+                \item Data Value: "test"
+                \item Data Type: Erroneous
+                \item Expected Result: The exception should be handled and a usefull error message should be dipslayed.
+                \item Actual Result: Expected Result
+                \item Test Status: Pass
+                \item Evidence:
+                    \begin{figure}[h!]
+                    \centering
+                    \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/taken-trained-model-name-input-validation.png}}
+                    \end{figure}
+            \end{itemize}
+
+        \pagebreak
+        
+        \item Empty Trained Model Name Validation:
+            \begin{itemize}
+                \item Description: Try to save a trained model with blank name.
+                \item Data Value: ""
+                \item Data Type: Erroneous
+                \item Expected Result: The exception should be handled and a usefull error message should be dipslayed.
+                \item Actual Result: Expected Result
+                \item Test Status: Pass
+                \item Evidence:
+                    \begin{figure}[h!]
+                    \centering
+                    \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/empty-trained-model-name-input-validation.png}}
+                    \end{figure}
+            \end{itemize}
+    \end{itemize}
+\end{itemize}
 
 \subsection{Automated Testing}
 
