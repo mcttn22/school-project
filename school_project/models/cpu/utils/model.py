@@ -1,5 +1,6 @@
 """Provides an abstract class for Artificial Neural Network models."""
 
+from collections.abc import Generator
 import time
 
 import numpy as np
@@ -13,33 +14,6 @@ from .tools import (
                     calculate_loss,
                     calculate_prediction_accuracy
                     )
-
-class _Layers():
-    """Manages linked list of layers."""
-    def __init__(self) -> None:
-        """Initialise linked list."""
-        self.head = None
-        self.tail = None
-
-    def __iter__(self) -> None:
-        """Iterate forward through the network."""
-        current_layer = self.head
-        while True:
-            yield current_layer
-            if current_layer.next_layer is not None:
-                current_layer = current_layer.next_layer
-            else:
-                break
-
-    def __reversed__(self) -> None:
-        """Iterate back through the network."""
-        current_layer = self.tail
-        while True:
-            yield current_layer
-            if current_layer.previous_layer is not None:
-                current_layer = current_layer.previous_layer
-            else:
-                break
 
 class _FullyConnectedLayer():
     """Fully connected layer for Deep ANNs,
@@ -145,6 +119,33 @@ class _FullyConnectedLayer():
         elif self.transfer_type == 'relu':
             self.output = relu(z)
         return self.output
+
+class _Layers():
+    """Manages linked list of layers."""
+    def __init__(self) -> None:
+        """Initialise linked list."""
+        self.head = None
+        self.tail = None
+
+    def __iter__(self) -> Generator[_FullyConnectedLayer, None, None]:
+        """Iterate forward through the network."""
+        current_layer = self.head
+        while True:
+            yield current_layer
+            if current_layer.next_layer is not None:
+                current_layer = current_layer.next_layer
+            else:
+                break
+
+    def __reversed__(self) -> Generator[_FullyConnectedLayer, None, None]:
+        """Iterate back through the network."""
+        current_layer = self.tail
+        while True:
+            yield current_layer
+            if current_layer.previous_layer is not None:
+                current_layer = current_layer.previous_layer
+            else:
+                break
 
 class AbstractModel(ModelInterface):
     """ANN model with variable number of hidden layers"""
