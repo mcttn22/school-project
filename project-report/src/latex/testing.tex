@@ -11,6 +11,9 @@
 \subsubsection{test\_model module}
 
 The test\_model module is contained within the frames package, and contains tkinter frames for testing the trained Artificial Neural Network models for each dataset. 
+For each training dataset that an Artificial Neural Network is trained on, there is a corresponding test dataset with completely new images to be tested on to judge 
+the performance of the trained model. As fewer images are needed for testing than for training, the Cat dataset only has 50 test images (compared to the 209 images 
+for training) and the MNIST dataset only has 10,000 test images (compared to the 60,000 images for training).
 Each frame displays the results of the testing along with a random selection of incorrect and correct predictions.
 
 \inputminted{python}{./school_project/frames/test_model.py}
@@ -43,6 +46,8 @@ And outputs the following for the XOR dataset:
 \end{figure}
 
 \subsubsection{Effects of Hyper-Parameters}
+
+For the following investigations, I utilised Jupyter Notebook and have displayed the results below:
 
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/learning-rate-analysis.pdf}
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/epoch-count-analysis.pdf}
@@ -184,5 +189,12 @@ and the status of the tests (either passing or failing) can be viewed on the rep
 (commits) cause issues within the code, allowing for easier maintenance of the project.
 
 \inputminted{yaml}{./.github/workflows/tests.yml}
+
+\subsubsection{Docker}
+
+I also provide a basic Dockerfile and instructions for its use in the README.md file, so that the project can be quickly run and tested in Docker containers. Below 
+shows the contents of the basic Dockerfile:
+
+\inputminted{docker}{./Dockerfile}
 
 \end{document}
