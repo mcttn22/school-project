@@ -9,6 +9,7 @@
 \subsection{Investigation}
 
 \subsubsection{test\_model module}
+\label{sec:test_model-module}
 
 The test\_model module is contained within the frames package, and contains tkinter frames for testing the trained Artificial Neural Network models for each dataset. 
 For each training dataset that an Artificial Neural Network is trained on, there is a corresponding test dataset with completely new images to be tested on to judge 
@@ -46,15 +47,18 @@ And outputs the following for the XOR dataset:
 \end{figure}
 
 \subsubsection{Effects of Hyper-Parameters}
+\label{sec:effects-of-hyper-parameters}
 
 For the following investigations, I utilised Jupyter Notebook and have displayed the results below:
 
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/learning-rate-analysis.pdf}
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/epoch-count-analysis.pdf}
+\label{sec:train-dataset-size-analysis}
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/train-dataset-size-analysis.pdf}
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/layer-count-analysis.pdf}
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/neuron-count-analysis.pdf}
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/relu-analysis.pdf}
+\label{sec:cpu-vs-gpu-analysis}
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/cpu-vs-gpu-analysis.pdf}
 
 \subsection{Manual Testing}
@@ -65,6 +69,7 @@ The following tests check the input validation of each frames' inputs.
 
 \begin{itemize}
     \item Hyper Parameter Frame:
+    \label{sec:hyper-parameter-frame-input-validation}
     \begin{itemize}
         \item Use GPU Validation:
             \begin{itemize}
@@ -104,6 +109,7 @@ The following tests check the input validation of each frames' inputs.
     \pagebreak
 
     \item Load Model Frame:
+    \label{sec:load-model-frame-input-validation}
     \begin{itemize}
         \item Use GPU Validation:
             \begin{itemize}
@@ -124,6 +130,7 @@ The following tests check the input validation of each frames' inputs.
     \pagebreak
 
     \item Test Frames:
+    \label{sec:test-frames-input-validation}
     \begin{itemize}
         \item Taken Trained Model Name Validation:
             \begin{itemize}
@@ -166,6 +173,7 @@ The following tests check the input validation of each frames' inputs.
 \subsection{Automated Testing}
 
 \subsubsection{Unit Tests}
+\label{sec:unit-tests}
 
 Within the test package, I have written the following unit tests for the utils subpackage of both the cpu and gpu subpackage of the models package. Similarly to the code for the cpu 
 and gpu subpackage, it is only worth showing the code for the cpu version as both are very similar in functionality.

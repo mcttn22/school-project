@@ -62,34 +62,46 @@ for input on what they would like to see in my project, these were their respons
           A:"Yes, it would be nice to be able to save a model after training and have the option to load in a trained model for testing."
 \end{itemize}
 
-\subsection{Project Objectives}
-
-\begin{itemize}
-    \item Learn how Artificial Neural Networks work and develop them from first principles
-    \item Implement the Artificial Neural Networks by creating trained models on image datasets
-    \begin{itemize}
-        \item Allow use of Graphics Cards for faster training
-        \item Allow for the saving of trained models
-    \end{itemize}
-    \item Develop a Graphical User Interface
-    \begin{itemize}
-        \item Provide controls for hyper-parameters of models
-        \item Display and compare the results each model's predictions
-    \end{itemize}
-\end{itemize}
-
 \subsection{Requirements}
 
-\begin{tabular}{|p{0.25\linewidth}|p{0.25\linewidth}|p{0.25\linewidth}|p{0.25\linewidth}|}
+\begin{tabular}{|p{0.03\linewidth}|p{0.73\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
       \hline
       \textbf{ID} & \textbf{Description} & \textbf{Satisfied by} & \textbf{Tested by} \\
       \hline
-      1 & test 
-      description & test location & \hyperlink{page.44}{Go to page 44} \\
+      1 & Learn how Artificial Neural Networks work & \hyperref[sec:ann-theory]{Page \pageref{sec:ann-theory}} & N/A \\
+      \hline
+      2 & Develop Artficial Neural Networks from first principles & & \\
+      \hline
+      2.1 & Provide utilities for creating Artificial Neural Networks & \hyperref[sec:utils-subpackage]{Page \pageref{sec:utils-subpackage}} & \hyperref[sec:unit-tests]{Page \pageref{sec:unit-tests}} \\
+      \hline
+      2.2 & Allow for the saving of trained models' weights and biases & \hyperref[sec:model-module]{Page \pageref{sec:model-module}} & TODO Unit Test \\
+      \hline
+      2.3 & Allow use of Graphics Cards for faster training & Code not included in report & \hyperref[sec:cpu-vs-gpu-analysis]{Page \pageref{sec:cpu-vs-gpu-analysis}} \\
+      \hline
+      3 & Implement the Artificial Neural Networks on image datasets & & \\
+      \hline
+      3.1 & Allow input of unique hyper-parameters & \hyperref[sec:ann-implementations]{Page \pageref{sec:ann-implementations}} & \hyperref[sec:effects-of-hyper-parameters]{Page \pageref{sec:effects-of-hyper-parameters}} \\
+      \hline
+      3.2 & Allow unique datasets and train dataset size to be loaded & \hyperref[sec:ann-implementations]{Page \pageref{sec:ann-implementations}} & \hyperref[sec:train-dataset-size-analysis]{Page \pageref{sec:train-dataset-size-analysis}} \\
+      \hline
+      4 & Use database to store a model's features and the location of its weights and biases & \hyperref[sec:__main__-module]{Page \pageref{sec:__main__-module}} & TODO Unit Test \\
+      \hline
+      5 & Develop a Graphical User Interface & & \\
+      \hline
+      5.1 & Provide controls for hyper-parameters of models & \hyperref[sec:create_model-module]{Page \pageref{sec:create_model-module}} & \hyperref[sec:hyper-parameter-frame-input-validation]{Page \pageref{sec:hyper-parameter-frame-input-validation}} \\  % Can add more details as sub sections (Allow learning rate to be set between 0-1 etc)
+      \hline
+      5.2 & Display details of models' training & \hyperref[sec:create_model-module]{Page \pageref{sec:create_model-module}} & N/A \\
+      \hline
+      5.3 & Display the results of each model's predictions & \hyperref[sec:test_model-module]{Page \pageref{sec:test_model-module}} & User Tested \\
+      \hline
+      5.4 & Allow for the saving of trained models & \hyperref[sec:test_model-module]{Page \pageref{sec:test_model-module}} & \hyperref[sec:test-frames-input-validation]{Page \pageref{sec:test-frames-input-validation}} \\
+      \hline
+      5.5 & Allow for the loading of saved trained models & \hyperref[sec:load_model-module]{Page \pageref{sec:load_model-module}} & \hyperref[sec:load-model-frame-input-validation]{Page \pageref{sec:load-model-frame-input-validation}} \\
       \hline
 \end{tabular}
 
 \subsection{Theory behind Artificial Neural Networks}
+\label{sec:ann-theory}
 
 From an abstract perspective, Artificial Neural Networks are inspired by how the human mind works, by consisting of layers of 'neurons' all interconnected via 
 different links, each with their own strength. By adjusting these links, Artificial Neural Networks can be trained to take in an input and give its best 

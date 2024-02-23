@@ -94,6 +94,7 @@ Both the cpu and gpu subpackage contain a utils subpackage that provides the too
 of Artificial Neural Networks for each dataset.
 
 \subsubsection{utils subpackage}
+\label{sec:utils-subpackage}
 
 The utils subpackage consists of a tools.py module that provides a ModelInterface class and helper functions for the model.py module, that contains an AbstractModel 
 class that implements every method from the ModelInterface except for the load\_dataset method.
@@ -102,10 +103,12 @@ class that implements every method from the ModelInterface except for the load\_
     \item tools.py module:
         \inputminted{python}{./school_project/models/cpu/utils/tools.py}
     \item model.py module:
+        \label{sec:model-module}
         \inputminted{python}{./school_project/models/cpu/utils/model.py}
 \end{itemize}
 
 \subsubsection{Artificial Neural Network implementations}
+\label{sec:ann-implementations}
 
 The following three modules implement the AbstractModel class from the above model.py module from the utils subpackage, on the three datasets.
 
@@ -127,6 +130,7 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
     \item hyper-parameter-defaults.json file contents:
         \inputminted{json}{./school_project/frames/hyper-parameter-defaults.json}
     \item create\_model.py module:
+        \label{sec:create_model-module}
         \inputminted{python}{./school_project/frames/create_model.py}
         
         Which outputs the following for the hyper-parameter frame:
@@ -155,6 +159,7 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
         \end{figure}
 
     \item load\_model.py module:
+        \label{sec:load_model-module}
         \inputminted{python}{./school_project/frames/load_model.py}
 
         Which outputs the following for the load model frame when models have been saved for the dataset:
@@ -178,6 +183,7 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
 
 This module is the entrypoint to the project and loads the main window of the User Interface:
 
+\label{sec:__main__-module}
 \inputminted{python}{./school_project/__main__.py}
 
 Which outputs the following for the home frame:
