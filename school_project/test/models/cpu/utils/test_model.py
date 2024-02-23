@@ -1,5 +1,6 @@
 """Unit tests for model module."""
 
+import os
 import unittest
 import uuid
 
@@ -139,6 +140,9 @@ class TestModel(unittest.TestCase):
                                 learning_rate = 0.1,
                                 use_relu = True)
         loaded_model.load_model_values(file_location=file_location)
+
+        # Remove the saved model values
+        os.remove(path=file_location)
 
         # Compare initial and loaded model values
         for layer1, layer2 in zip(initial_model.layers, loaded_model.layers):
