@@ -89,6 +89,18 @@ Run Tests with:
   python3 -m unittest discover ./school_project/test/
   ```
 
+Use Docker with:
+- Build the Docker Image with:
+  ```
+  sudo docker build -t mcttn22/school-project ./
+  ```
+- Run the Docker Image with:
+  ```
+  sudo apt-get install x11-xserver-utils
+  xhost +
+  sudo docker run -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY mcttn22/school-project
+  ```
+
 Compile Project Report PDF with:
 ```
 make all
