@@ -1,7 +1,9 @@
 """Unit tests for model module."""
 
 import unittest
+import uuid
 
+import cupy as cp
 
 # Test XOR implementation of Model for its lesser computation time
 from school_project.models.gpu.xor import XORModel
@@ -116,6 +118,33 @@ class TestModel(unittest.TestCase):
             self.assertEqual(
                          first=(layer.weights.shape[0], layer.input.shape[1]),
                          second=layer.output.shape)
+            
+    def test_save_model(self) -> None:
+        """Test that the weights and biases are saved correctly."""
+        initial_model = XORModel(hidden_layers_shape = [100, 100],
+                                 train_dataset_size = 4,
+                                 learning_rate = 0.1,
+                                 use_relu = True)
+        initial_model.create_model_values()
+        initial_model.train(epoch_count=1)
+
+        # Save model values
+        file_location = f"school_project/saved-models/{uuid.uuid4().hex}.npz"
+        initial_model.save_model_values(file_location=file_location)
+
+        # Create model from the saved values
+        loaded_model = XORModel(hidden_layers_shape = [100, 100],
+                                train_dataset_size = 4,
+                                learning_rate = 0.1,
+                                use_relu = True)
+        loaded_model.load_model_values(file_location=file_location)
+
+        # Compare initial and loaded model values
+        for layer1, layer2 in zip(initial_model.layers, loaded_model.layers):
+            self.assertTrue(cp.array_equal(a1=layer1.weights,
+                                           a2=layer2.weights))
+            self.assertTrue(cp.array_equal(a1=layer1.biases,
+                                           a2=layer2.biases))
 
 if __name__ == '__main__':
     unittest.main()
