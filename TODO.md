@@ -10,9 +10,9 @@
     - Add ability to add external .npz file
 
 - Report
+  - Objective trace table (obj, brief description, link to section in document, maybe link to where tested)
+  - Evaluation
   - Mention time complexity in report, speed times of saving and loading
 
-- Update setup.py version
-
-- Objective trace table (obj, brief description, link to section in document, maybe link to where tested)
 - Remove memory leak mentioning
+- Update setup.py version
