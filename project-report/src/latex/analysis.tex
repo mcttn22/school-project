@@ -62,9 +62,33 @@ for input on what they would like to see in my project, these were their respons
           A:"Yes, it would be nice to be able to save a model after training and have the option to load in a trained model for testing."
 \end{itemize}
 
+\subsection{Project Objectives}
+
+\begin{tabular}{|p{0.13\linewidth}|p{0.87\linewidth}|}
+      \hline
+      \textbf{Objective ID} & \textbf{Description} \\
+      \hline
+      1 & Learn how Artificial Neural Networks work and develop them from first principles \\
+      \hline
+      2 & Implement the Artificial Neural Networks by creating trained models on image datasets \\
+      \hline
+      2.1 & Allow use of Graphics Cards for faster training \\
+      \hline
+      2.2 & Allow for the saving and loading of trained models \\
+      \hline
+      3 & Develop a Graphical User Interface \\
+      \hline
+      3.1 & Provide controls for hyper-parameters of models \\
+      \hline
+      3.2 & Display and compare the results each model's predictions \\
+      \hline
+\end{tabular}
+
 \subsection{Requirements}
 
-\begin{tabular}{|p{0.03\linewidth}|p{0.73\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
+The following sets out the steps that must be taken to accomplish the above objectives:
+
+\noindent\begin{tabular}{|p{0.03\linewidth}|p{0.73\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
       \hline
       \textbf{ID} & \textbf{Description} & \textbf{Satisfied by} & \textbf{Tested by} \\
       \hline
@@ -74,7 +98,7 @@ for input on what they would like to see in my project, these were their respons
       \hline
       2.1 & Provide utilities for creating Artificial Neural Networks & \hyperref[sec:utils-subpackage]{Page \pageref{sec:utils-subpackage}} & \hyperref[sec:unit-tests]{Page \pageref{sec:unit-tests}} \\
       \hline
-      2.2 & Allow for the saving of trained models' weights and biases & \hyperref[sec:model-module]{Page \pageref{sec:model-module}} & \hyperref[sec:unit-tests]{Page \pageref{sec:unit-tests}} \\
+      2.2 & Allow for the saving and loading of trained models' weights and biases & \hyperref[sec:model-module]{Page \pageref{sec:model-module}} & \hyperref[sec:unit-tests]{Page \pageref{sec:unit-tests}} \\
       \hline
       2.3 & Allow use of Graphics Cards for faster training & Code not included in report & \hyperref[sec:cpu-vs-gpu-analysis]{Page \pageref{sec:cpu-vs-gpu-analysis}} \\
       \hline
@@ -84,7 +108,7 @@ for input on what they would like to see in my project, these were their respons
       \hline
       3.2 & Allow unique datasets and train dataset size to be loaded & \hyperref[sec:ann-implementations]{Page \pageref{sec:ann-implementations}} & \hyperref[sec:train-dataset-size-analysis]{Page \pageref{sec:train-dataset-size-analysis}} \\
       \hline
-      4 & Use database to store a model's features and the location of its weights and biases & \hyperref[sec:__main__-module]{Page \pageref{sec:__main__-module}} & TODO Unit Test \\
+      4 & Use a database to store a model's features and the location of its weights and biases & \hyperref[sec:__main__-module]{Page \pageref{sec:__main__-module}} & TODO Unit Test \\
       \hline
       5 & Develop a Graphical User Interface & & \\
       \hline
