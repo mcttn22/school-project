@@ -105,4 +105,4 @@ Compile Project Report PDF with:
 ```
 make all
 ```
-*Note: This requires the Latexmk library*
+*Note: This requires the Latexmk, pdflatek and Pygments libraries*
