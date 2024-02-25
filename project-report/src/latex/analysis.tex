@@ -25,7 +25,7 @@ for input on what they would like to see in my project, these were their respons
 \begin{itemize}
     \item Q:"Are there any good resources you would recommend for learning the theory behind how Artificial Neural Networks work?"
     
-          A:"There are lots of usefull free resources on the internet to use. I particullarly like the platform 'Medium' which offers many scientific articles 
+          A:"There are lots of useful free resources on the internet to use. I particularly like the platform 'Medium' which offers many scientific articles 
              as well as more obvious resources such as IBMs'."
     \item Q:"What do you think would be a good goal for my project?"
 
@@ -94,7 +94,7 @@ The following sets out the steps that must be taken to accomplish the above obje
       \hline
       1 & Learn how Artificial Neural Networks work & \hyperref[sec:ann-theory]{Page \pageref{sec:ann-theory}} & N/A \\
       \hline
-      2 & Develop Artficial Neural Networks from first principles & & \\
+      2 & Develop Artificial Neural Networks from first principles & & \\
       \hline
       2.1 & Provide utilities for creating Artificial Neural Networks & \hyperref[sec:utils-subpackage]{Page \pageref{sec:utils-subpackage}} & \hyperref[sec:unit-tests]{Page \pageref{sec:unit-tests}} \\
       \hline
@@ -137,7 +137,7 @@ prediction as an output.
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/shallow-ann-diagram.png}
-\caption{This shows an Artificial Neural Network with one single hidden layer and is known as a Shallow Neural Netwok.}
+\caption{This shows an Artificial Neural Network with one single hidden layer and is known as a Shallow Neural Network.}
 \end{figure}
 
 I have focused on Feed-Forward Artificial Neural Networks, where values are entered to the input layer and passed forwards repetitively to the next layer until 
@@ -182,7 +182,7 @@ I have focused on just using Fully-Connected layers, that will take in input val
     \item A Transfer function
     \begin{itemize}
         \item This takes the result of the Activation function and transfers it to a suitable output value as well as adding more non-linearity to the Neural Network.
-        \item For example, the Sigmoid Transfer function converts the input to a number between zero and one, making it usefull for logistic regression where the output 
+        \item For example, the Sigmoid Transfer function converts the input to a number between zero and one, making it useful for logistic regression where the output 
               value can be considered as closer to zero or one allowing for a binary classification of predicting zero or one.
     \end{itemize}
 \end{itemize}
@@ -245,13 +245,13 @@ To train an Artificial Neural Network, the following processes will be carried o
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/deep-ann-diagram.png}
-\caption{This shows an abstracted view of an Artificial Neural Network with multiple hidden layers and is known as a Deep Neural Netwok.}
+\caption{This shows an abstracted view of an Artificial Neural Network with multiple hidden layers and is known as a Deep Neural Network.}
 \end{figure}
 
 \begin{itemize}
     \item Where a layer takes the previous layer's output as its input X
     \item Then it applies an Activation function to X to obtain Z, by taking the dot product of X with a weight matrix W, then sums the result with a bias matrix B. At 
-          first the weights are intialised to random values and the biases are set to zeros.
+          first the weights are initialised to random values and the biases are set to zeros.
     \begin{itemize}
         \item $Z = W * X + B$
     \end{itemize}
@@ -263,7 +263,7 @@ To train an Artificial Neural Network, the following processes will be carried o
             \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
         \end{itemize}
         \item However, for the input layer and the hidden layers, another transfer function known as ReLu (Rectified Linear Unit) can be better suited as it produces 
-              largers values of $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ for Gradient Descent than Sigmoid, so updates at a quicker rate.
+              larger values of $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ for Gradient Descent than Sigmoid, so updates at a quicker rate.
         \begin{itemize}
             \item Where $relu(Z) = max(0, Z)$
         \end{itemize}
@@ -323,13 +323,13 @@ To train an Artificial Neural Network, the following processes will be carried o
               $=> \frac{\partial{L}}{\partial{W2}} = \frac{\partial{L}}{\partial{A2}} * \frac{\partial{A2}}{\partial{Z2}} * 1$
     \end{itemize}
     \item As you can see, when moving back through the network, the $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ of the layer can be 
-          calculated with the rate of change of loss with respect to its output, which is calculated by the previous layer using the above formula; the derviative of 
+          calculated with the rate of change of loss with respect to its output, which is calculated by the previous layer using the above formula; the derivative of 
           the layer's transfer function, and the layers input (which in this case is A1)
     \begin{itemize}
         \item Where by using function 2, $\frac{\partial{A_{relu}}}{\partial{Z}} = 1$ when $Z >= 0$ otherwise $\frac{\partial{A_{relu}}}{\partial{Z}} = 0$
         \item Where by using function 3, $\frac{\partial{A_{sigmoid}}}{\partial{Z}} = A * (1 - A)$
     \end{itemize}
-    \item At the start of backpropagation, the rate of change of loss with respect to the output layer's output has no previous layer's caluculations, so instead it can 
+    \item At the start of backpropagation, the rate of change of loss with respect to the output layer's output has no previous layer's calculations, so instead it can 
           be found with the derivative of the Log-Loss function, as shown in the following:
     \begin{itemize}
         \item Using function 4, $\frac{\partial{L}}{\partial{A}} = (-\frac{1}{m})(\frac{Y-A}{A * (1-A)})$
@@ -351,7 +351,7 @@ epochs, or when the Neural Network is too simple (too linear).
 \begin{itemize}
     \item MNIST dataset
     \begin{itemize}
-        \item The MNIST dataset is a famouse dataset of images of handwritten digits from zero to ten and is commonly used to test the performance of an Artificial 
+        \item The MNIST dataset is a famous dataset of images of handwritten digits from zero to ten and is commonly used to test the performance of an Artificial 
               Neural Network.
         \item The dataset consists of 60,000 input images, made up from 28x28 pixels and each pixel has an RGB value from 0 to 255
         \item To format the images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrice of RGB values are 'flattened' into a 
@@ -377,15 +377,15 @@ epochs, or when the Neural Network is too simple (too linear).
     \begin{itemize}
         \item For experimenting with Artificial Neural Networks, I solve the XOR gate problem, where the Neural Network is fed input pairs of zeros and ones and learns 
               to predict the output of a XOR gate used in circuits.
-        \item This takes much less computation time than image datasets, so is usefull for quickly comparing different hyper-parameters of a Network, whilst still 
-              not being linearly seperable.
+        \item This takes much less computation time than image datasets, so is useful for quickly comparing different hyper-parameters of a Network, whilst still 
+              not being linearly separable.
     \end{itemize}
 \end{itemize}
 
 \subsubsection{Theory behind using Graphics Cards to train Artificial Neural Networks}
 \vspace{5mm}
 
-Graphics Cards consist of many Tensor cores which are processing units specialiased for matrix operations for calculating the co-ordinates of 3D graphics, however they 
+Graphics Cards consist of many Tensor cores which are processing units specialised for matrix operations for calculating the co-ordinates of 3D graphics, however they 
 can be used here for operating on the matrices in the network at a much faster speed compared to CPUs. GPUs also include CUDA cores which act as an API to the GPU's 
 computing to be used for any operations (in this case training the Artificial Neural Networks).
 
