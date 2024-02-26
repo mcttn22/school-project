@@ -7,8 +7,6 @@ import tkinter as tk
 import tkinter.font as tkf
 import uuid
 
-import pympler.tracker as tracker
-
 from school_project.frames import (HyperParameterFrame, TrainingFrame,
                                    LoadModelFrame, TestMNISTFrame,
                                    TestCatRecognitionFrame, TestXORFrame)
@@ -478,8 +476,6 @@ class SchoolProjectFrame(tk.Frame):
             self.save_model_button.pack_forget()
         self.exit_button.pack_forget()
         self.home_frame.pack()
-        summary_tracker.create_summary()  # BUG: Object summary seems to reduce
-                                          # memory leak greatly
 
 def main() -> None:
     """Entrypoint of project."""
@@ -494,5 +490,4 @@ def main() -> None:
         school_project_frame.model.set_running(value=False)
 
 if __name__ == "__main__":
-    summary_tracker = tracker.SummaryTracker()  # Setup object tracker
     main()
