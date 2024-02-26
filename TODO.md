@@ -1,11 +1,6 @@
 ### Todo
 
-- Code
-  - Memory Leak issue
-
 - Report
-  - Investigation
-    - Investigate anomally in epoch count analysis (add more points + maybe do separately below)
   - Evaluation
     - Third party feedback
       - Maybe create questions for interviewee?
