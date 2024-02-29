@@ -191,13 +191,13 @@ class SchoolProjectFrame(tk.Frame):
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS Models
         (Model_ID INTEGER PRIMARY KEY,
-        Dataset TEXT,
-        File_Location TEXT,
-        Hidden_Layers_Shape TEXT,
-        Learning_Rate FLOAT,
-        Name TEXT,
-        Train_Dataset_Size INTEGER,
-        Use_ReLu INTEGER,
+        Dataset TEXT NOT NULL,
+        File_Location TEXT NOT NULL,
+        Hidden_Layers_Shape TEXT NOT NULL,
+        Learning_Rate FLOAT NOT NULL,
+        Name TEXT NOT NULL,
+        Train_Dataset_Size INTEGER NOT NULL,
+        Use_ReLu INTEGER NOT NULL,
         UNIQUE (Dataset, Name))
         """)
         return (connection, cursor)
