@@ -173,19 +173,26 @@ The following tests check the input validation of each frames' inputs.
 \subsection{Automated Testing}
 
 \subsubsection{Unit Tests}
-\label{sec:unit-tests}
 
-Within the test package, I have written the following unit tests for the utils subpackage of both the cpu and gpu subpackage of the models package. Similarly to the code for the cpu 
-and gpu subpackage, it is only worth showing the code for the cpu version as both are very similar in functionality.
+Within the test package, I have written the following unit tests:
 
 \begin{itemize}
-    \item test\_model.py module:
-        \inputminted{python}{./school_project/test/models/cpu/utils/test_model.py}
+    \label{sec:database-unit-tests}
+    \item Unit tests for the database in a test\_database.py module:
+        \inputminted{python}{./school_project/test/test_database.py}
+    
+    \label{sec:models-utils-unit-tests}
+    \item Unit tests for the utils subpackage of both the cpu and gpu subpackage of the models package. Similarly to the code for the cpu and gpu subpackage, it is 
+          only worth showing the code for the cpu version as both are very similar in functionality.
+        \begin{itemize}
+            \item test\_model.py module:
+                \inputminted{python}{./school_project/test/models/cpu/utils/test_model.py}
 
-        \pagebreak
+                \pagebreak
 
-    \item test\_tools.py module:
-        \inputminted{python}{./school_project/test/models/cpu/utils/test_tools.py}
+            \item test\_tools.py module:
+                \inputminted{python}{./school_project/test/models/cpu/utils/test_tools.py}
+        \end{itemize}
 \end{itemize}
 
 \subsubsection{GitHub Automated Testing}

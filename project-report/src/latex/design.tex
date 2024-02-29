@@ -100,6 +100,10 @@ saved models' weights and biases and the saved models' hyper-parameters) are sav
     \begin{minted}{sql}
     UNIQUE (Dataset, Name)
     \end{minted}
+    \item I will also use the following constraint on each attribute to ensure no attribute is left empty:
+    \begin{minted}{sql}
+    NOT NULL
+    \end{minted}
 \end{itemize}
 
 \subsection{Queries}
