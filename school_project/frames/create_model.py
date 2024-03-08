@@ -154,7 +154,7 @@ class HyperParameterFrame(tk.Frame):
         self.use_gpu = self.use_gpu_check_button_var.get()
 
         # Validate hidden layers shape input
-        hidden_layers_shape_input = [layer for layer in self.hidden_layers_shape_entry.get().replace(' ', '').split(',') if layer != '']
+        hidden_layers_shape_input = [layer for layer in self.hidden_layers_shape_entry.get().replace(' ', '').split(',')]
         for layer in hidden_layers_shape_input:
             if not layer.isdigit():
                 self.model_status_label.configure(
