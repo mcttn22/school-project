@@ -138,3 +138,6 @@ class TestDatabase(unittest.TestCase):
         # Compare test data with loaded data
         for test_value, loaded_value in zip(test_data, loaded_data[1:]):
             self.assertEqual(first=test_value, second=loaded_value)
+
+if __name__ == "__main__":
+    unittest.main()
