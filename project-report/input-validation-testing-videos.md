@@ -30,6 +30,12 @@ https://github.com/mcttn22/school-project/assets/77845180/3ceaf010-24c6-45f1-86e
 
 ## test_database.py
 
+https://github.com/mcttn22/school-project/assets/77845180/4e55db4f-7e24-41b6-9fc1-3b73ddc59140
+
 ## test_model.py
 
+https://github.com/mcttn22/school-project/assets/77845180/69e84a24-e19a-4b3f-9272-607b65d75ea0
+
 ## test_tools.py
+
+https://github.com/mcttn22/school-project/assets/77845180/4f0f2fdf-44d2-424e-b06d-4acf008c9133
