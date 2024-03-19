@@ -332,7 +332,8 @@ Within the test package, I have written the following unit tests:
         \begin{itemize}
             \item test\_model.py module:
 				\begin{itemize}
-					\item test\_train\_dataset\_size: \newline\newline
+					\item test\_train\_dataset\_size: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test the size of training dataset to be value chosen. \\
@@ -351,7 +352,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_network\_shape: \newline\newline
+					\end{adjustwidth}
+					\item test\_network\_shape: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test the neuron count of each layer to match the set shape of the network. \\
@@ -370,7 +373,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_learning\_rates: \newline\newline
+					\end{adjustwidth}
+					\item test\_learning\_rates: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test learning rate of each layer to be the same. \\
@@ -389,7 +394,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_relu\_model\_transfer\_types: \newline\newline
+					\end{adjustwidth}
+					\item test\_relu\_model\_transfer\_types: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test transfer type of each layer to match whats set. \\
@@ -408,7 +415,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_sigmoid\_model\_transfer\_types: \newline\newline
+					\end{adjustwidth}
+					\item test\_sigmoid\_model\_transfer\_types: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test transfer type of each layer to match whats set. \\
@@ -427,7 +436,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_weight\_matrice\_shapes: \newline\newline
+					\end{adjustwidth}
+					\item test\_weight\_matrice\_shapes: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test that each layer's weight matrix has the same number of columns as the layer's input matrix's number of rows, for the matrice multiplication. \\
@@ -446,7 +457,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_bias\_matrice\_shapes: \newline\newline
+					\end{adjustwidth}
+					\item test\_bias\_matrice\_shapes: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test that each layer's bias matrix has the same number of rows as the result of the layer's weights and input multiplication, for element-wise addition of the biases. \\
@@ -465,7 +478,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_layer\_output\_shapes: \newline\newline
+					\end{adjustwidth}
+					\item test\_layer\_output\_shapes: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test the shape of each layer's activation function's output. \\
@@ -484,7 +499,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_save\_model: \newline\newline
+					\end{adjustwidth}
+					\item test\_save\_model: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test that the weights and biases are saved correctly. \\
@@ -502,6 +519,7 @@ Within the test package, I have written the following unit tests:
 						Actual Result & Expected Result \\
 						\hline
 					\end{tabular}
+					\end{adjustwidth}
 					\item Evidence:
 						\inputminted{python}{./school_project/test/models/cpu/utils/test_model.py}
 
@@ -517,7 +535,8 @@ Within the test package, I have written the following unit tests:
 				\end{itemize}
             \item test\_tools.py module:
 				\begin{itemize}
-					\item test\_relu: \newline\newline
+					\item test\_relu: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test ReLu output range to be greater than or equal to zero. \\
@@ -533,7 +552,9 @@ Within the test package, I have written the following unit tests:
 						Test Status & Pass \\
 						\hline
 					\end{tabular}
-					\item test\_sigmoid: \newline\newline
+					\end{adjustwidth}
+					\item test\_sigmoid: \newline
+					\begin{adjustwidth}{-\leftmargin}{0pt}
 					\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 						\hline
 						Description & Test sigmoid output range to be within 0-1. \\
@@ -547,7 +568,9 @@ Within the test package, I have written the following unit tests:
 						Actual Result & Expected Result \\
 						\hline
 						Test Status & Pass \\
+						\hline
 					\end{tabular}
+					\end{adjustwidth}
 					\item Evidence:
                 		\inputminted{python}{./school_project/test/models/cpu/utils/test_tools.py}
 
