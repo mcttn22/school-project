@@ -93,14 +93,14 @@ The following tests check the input validation of each frames' inputs.
 			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/create-model-use-gpu-validation.png}}
 			\end{figure}
 
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#use-gpu-validation}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#use-gpu-validation}
 
         \pagebreak
 
-        \item Hidden Layers Shape Validation: \newline\newline
+        \item Non-Numeric Hidden Layers Shape Validation: \newline\newline
 			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
 				\hline
-				Description & Enter an invalid hidden layers shape. \\
+				Description & Enter a non-numeric hidden layers shape. \\
 				\hline
 				Data Value & "test" \\
 				\hline
@@ -119,10 +119,74 @@ The following tests check the input validation of each frames' inputs.
 			Evidence:
 			\begin{figure}[h!]
 			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/hidden-layers-shape-input-validation.png}}
+			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/non-numeric-hidden-layers-shape-input-validation.png}}
 			\end{figure}
 
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#hidden-layers-shape-validation}
+			\begin{sloppypar}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#non-numeric-hidden-layers-shape-validation}
+			\end{sloppypar}
+	
+			\pagebreak
+
+        \item Negative Hidden Layers Shape Validation: \newline\newline
+			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+				\hline
+				Description & Enter a negative hidden layers shape. \\
+				\hline
+				Data Value & "-100" \\
+				\hline
+				Data Type & Erroneous \\
+				\hline
+				Expected Result & The exception should be handled and a useful error message should be displayed. \\
+				\hline
+				Actual Result & Expected Result \\
+				\hline
+				Test Status & Pass \\
+				\hline
+			\end{tabular}
+
+			\vspace{5mm}
+
+			Evidence:
+			\begin{figure}[h!]
+			\centering
+			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/negative-hidden-layers-shape-input-validation.png}}
+			\end{figure}
+
+			\begin{sloppypar}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#negative-hidden-layers-shape-validation}
+			\end{sloppypar}
+
+		\pagebreak
+
+        \item Invalid Delimiter Hidden Layers Shape Validation: \newline\newline
+			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+				\hline
+				Description & Enter a hidden layers shape with invalid delimiters. \\
+				\hline
+				Data Value & "100,,100" \\
+				\hline
+				Data Type & Erroneous \\
+				\hline
+				Expected Result & The exception should be handled and a useful error message should be displayed. \\
+				\hline
+				Actual Result & Expected Result \\
+				\hline
+				Test Status & Pass \\
+				\hline
+			\end{tabular}
+
+			\vspace{5mm}
+
+			Evidence:
+			\begin{figure}[h!]
+			\centering
+			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/invalid-delimiter-hidden-layers-shape-input-validation.png}}
+			\end{figure}
+
+			\begin{sloppypar}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#invalid-delimiter-hidden-layers-shape-validation}
+			\end{sloppypar}
     \end{itemize}
 
     \pagebreak
@@ -151,7 +215,7 @@ The following tests check the input validation of each frames' inputs.
 			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/load-model-use-gpu-validation.png}}
 			\end{figure}
 
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#hidden-layers-shape-validation}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#use-gpu-validation-1}
     \end{itemize}
 
     \pagebreak
@@ -184,7 +248,7 @@ The following tests check the input validation of each frames' inputs.
 			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/taken-trained-model-name-input-validation.png}}
 			\end{figure}
 
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#hidden-layers-shape-validation}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#taken-trained-model-name-validation}
 
         \pagebreak
         
@@ -211,7 +275,36 @@ The following tests check the input validation of each frames' inputs.
 			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/empty-trained-model-name-input-validation.png}}
 			\end{figure}
 
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#hidden-layers-shape-validation}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#empty-trained-model-name-validation}
+
+		\pagebreak
+
+        \item Invalid Delimiter Trained Model Name Validation: \newline\newline
+			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+				\hline
+				Description & Try to save a trained model with a name with incorrect delimiters. \\
+				\hline
+				Data Value & "test  test" \\
+				\hline
+				Expected Result & The exception should be handled and a useful error message should be displayed. \\
+				\hline
+				Actual Result & Expected Result \\
+				\hline
+				Test Status & Pass \\
+				\hline
+			\end{tabular}
+
+			\vspace{5mm}
+
+            Evidence:
+			\begin{figure}[h!]
+			\centering
+			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/invalid-delimiter-trained-model-name-input-validation.png}}
+			\end{figure}
+
+			\begin{sloppypar}
+			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#invalid-delimiter-trained-model-name-validation}
+			\end{sloppypar}
     \end{itemize}
 \end{itemize}
 
@@ -332,7 +425,7 @@ Within the test package, I have written the following unit tests:
 				\frame{\includegraphics[width=1.3\textwidth]{./project-report/src/images/test-database.png}}
 				\end{figure}
 
-				Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#test_databasepy}
+				Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#test_databasepy}
 		\end{itemize}
     
     \label{sec:models-utils-unit-tests}
@@ -566,7 +659,7 @@ Within the test package, I have written the following unit tests:
 						\frame{\includegraphics[width=1.3\textwidth]{./project-report/src/images/test-model.png}}
 						\end{figure}
 	
-						Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#test_modelpy}
+						Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#test_modelpy}
 
 				\end{itemize}
             \item test\_tools.py module:
@@ -623,7 +716,7 @@ Within the test package, I have written the following unit tests:
 						\frame{\includegraphics[width=1.3\textwidth]{./project-report/src/images/test-tools.png}}
 						\end{figure}
 	
-						Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/input-validation-testing-videos.md/#test_toolspy}
+						Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#test_toolspy}
 				\end{itemize}
         \end{itemize}
 \end{itemize}
