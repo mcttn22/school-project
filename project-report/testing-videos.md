@@ -8,9 +8,15 @@ https://github.com/mcttn22/school-project/assets/77845180/8999d39a-7840-486e-943
 
 ### Non-Numeric Hidden Layers Shape Validation
 
+https://github.com/mcttn22/school-project/assets/77845180/4b99a061-9c94-4281-b7a6-2bb856194163
+
 ### Negative Hidden Layers Shape Validation
 
+https://github.com/mcttn22/school-project/assets/77845180/81ec6dc3-ffb5-4545-8e3d-5db0912afb26
+
 ### Invalid Delimiter Hidden Layers Shape Validation
+
+https://github.com/mcttn22/school-project/assets/77845180/84efc4ce-8b94-449a-9d96-2b0995019ca8
 
 ## Load Model Frame
 
@@ -29,6 +35,8 @@ https://github.com/mcttn22/school-project/assets/77845180/7abd67f9-7539-4b09-afc
 https://github.com/mcttn22/school-project/assets/77845180/3ceaf010-24c6-45f1-86e8-236f03e4851d
 
 ### Invalid Delimiter Trained Model Name Validation
+
+https://github.com/mcttn22/school-project/assets/77845180/64c9b0d5-6b95-4178-bb23-e41a7242f001
 
 # Unit Testing Videos
 
