@@ -6,9 +6,11 @@
 
 https://github.com/mcttn22/school-project/assets/77845180/8999d39a-7840-486e-943d-d90141b821b7
 
-### Hidden Layers Shape Validation
+### Non-Numeric Hidden Layers Shape Validation
 
-https://github.com/mcttn22/school-project/assets/77845180/98b3f56c-973e-4917-a8e9-84438bac2737
+### Negative Hidden Layers Shape Validation
+
+### Invalid Delimiter Hidden Layers Shape Validation
 
 ## Load Model Frame
 
@@ -26,7 +28,9 @@ https://github.com/mcttn22/school-project/assets/77845180/7abd67f9-7539-4b09-afc
 
 https://github.com/mcttn22/school-project/assets/77845180/3ceaf010-24c6-45f1-86e8-236f03e4851d
 
-# Unit Tests Videos
+### Invalid Delimiter Trained Model Name Validation
+
+# Unit Testing Videos
 
 ## test_database.py
 
