@@ -7,62 +7,6 @@
 \clearpage
 \section{Analysis}
 
-\subsection{About}
-
-Artificial Intelligence mimics human cognition in order to perform tasks and learn from them, Machine Learning is a subfield of Artificial Intelligence that uses 
-algorithms trained on data to produce models (trained programs) and Deep Learning is a subfield of Machine Learning that uses Artificial Neural Networks, a process of 
-learning from data inspired by the human brain. Artificial Neural Networks can be trained to learn a vast number of problems, such as Image Recognition, and have uses 
-across multiple fields, such as medical imaging in hospitals. This project is an investigation into how Artificial Neural Networks work, the effects of changing their 
-hyper-parameters and their applications in Image Recognition. To achieve this, I will derive and research all theory behind the project, using sources such as IBM's online 
-research, and develop Neural Networks from first principles without the use of any third-party Machine Learning libraries. I then will implement the Artificial Neural 
-Networks in Image Recognition, by creating trained models and will allow for experimentation of the hyper-parameters of each model to allow for comparisons between each 
-model's performances, via a Graphical User Interface.
-
-\subsection{Interview}
-
-In order to gain a better foundation for my investigation, I presented my prototype code and interviewed the head of Artificial Intelligence at Cambridge Consultants 
-for input on what they would like to see in my project, these were their responses:
-
-\begin{itemize}
-    \item Q:"Are there any good resources you would recommend for learning the theory behind how Artificial Neural Networks work?"
-    
-          A:"There are lots of useful free resources on the internet to use. I particularly like the platform 'Medium' which offers many scientific articles 
-             as well as more obvious resources such as IBMs'."
-    \item Q:"What do you think would be a good goal for my project?"
-
-          A:"I think it would be great to aim for applying the Neural Networks on Image Recognition for some famous datasets. For you, I would recommend 
-             the MNIST dataset as a goal."
-    \item Q:"What features of the Artificial Neural Networks would you like to be able to experiment with?"
-
-          A:"I'd like to be able to experiment with the number of layers and the number of neurons in each layer, and then be able to see how these changes effect 
-             the performance of the model. I can see that you've utilised the Sigmoid transfer function and I would recommend having the option to test alternatives 
-              such as the ReLu transfer function, which will help stop issues such as a vanishing gradient."
-    \item Q:"What are some practical constraints of AI?"
-
-          A:"Training AI models can require a large amount of computing power, also large datasets are needed for training models to a high accuracy which can be hard 
-             to obtain."
-    \item Q:"What would you say increases the computing power required the most?"
-
-          A:"The number of layers and neurons in each layer will have the greatest effect on the computing power required. This is another reason why I recommend adding 
-             the ReLu transfer function as it updates the values of the weights and biases faster than the Sigmoid transfer function."
-    \item Q:"Do you think I should explore other computer architectures for training the models?"
-
-          A:"Yes, it would be great to add support for using graphics cards for training models, as this would be a vast improvement in training time compared to using 
-             just CPU power."
-    \item Q:"I am also creating a user interface for the program, what hyper-parameters would you like to be able to control through this?"
-
-          A:"It would be nice to control the transfer functions used, as well as the general hyper-parameters of the model. I also think you could add a progress tracker 
-             to be displayed during training for the user."
-    \item Q:"How do you think I should measure the performance of models?"
-
-          A:"You should show the accuracy of the model's predictions, as well as example incorrect and correct prediction results for the trained model. Additionally, 
-             you could compare how the size of the training dataset effects the performance of the model after training, to see if a larger dataset would seem 
-             beneficial."
-    \item Q:"Are there any other features you would like add?"
-
-          A:"Yes, it would be nice to be able to save a model after training and have the option to load in a trained model for testing."
-\end{itemize}
-
 \subsection{Project Objectives}
 
 \begin{tabular}{|p{0.13\linewidth}|p{0.87\linewidth}|}
@@ -71,7 +15,7 @@ for input on what they would like to see in my project, these were their respons
       \hline
       1 & Learn how Artificial Neural Networks work and develop them from first principles \\
       \hline
-      2 & Implement the Artificial Neural Networks by creating trained models on image datasets \\
+      2 & Implement the Artificial Neural Networks by creating trained models based on image datasets \\
       \hline
       2.1 & Allow use of Graphics Cards for faster training \\
       \hline
@@ -85,52 +29,19 @@ for input on what they would like to see in my project, these were their respons
       \hline
 \end{tabular}
 
-\subsection{Requirements}
-
-The following sets out the steps that must be taken to accomplish the above objectives:
-
-\noindent\begin{tabular}{|p{0.03\linewidth}|p{0.73\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
-      \hline
-      \textbf{ID} & \textbf{Description} & \textbf{Satisfied by} & \textbf{Tested by} \\
-      \hline
-      1 & Learn how Artificial Neural Networks work & \hyperref[sec:ann-theory]{Page \pageref{sec:ann-theory}} & N/A \\
-      \hline
-      2 & Develop Artificial Neural Networks from first principles & & \\
-      \hline
-      2.1 & Provide utilities for creating Artificial Neural Networks & \hyperref[sec:utils-subpackage]{Page \pageref{sec:utils-subpackage}} & \hyperref[sec:models-utils-unit-tests]{Page \pageref{sec:models-utils-unit-tests}} \\
-      \hline
-      2.2 & Allow for the saving and loading of trained models' weights and biases & \hyperref[sec:model-module]{Page \pageref{sec:model-module}} & \hyperref[sec:models-utils-unit-tests]{Page \pageref{sec:models-utils-unit-tests}} \\
-      \hline
-      2.3 & Allow use of Graphics Cards for faster training & Code not included in report & \hyperref[sec:cpu-vs-gpu-analysis]{Page \pageref{sec:cpu-vs-gpu-analysis}} \\
-      \hline
-      3 & Implement the Artificial Neural Networks on image datasets & & \\
-      \hline
-      3.1 & Allow input of unique hyper-parameters & \hyperref[sec:ann-implementations]{Page \pageref{sec:ann-implementations}} & \hyperref[sec:effects-of-hyper-parameters]{Page \pageref{sec:effects-of-hyper-parameters}} \\
-      \hline
-      3.2 & Allow unique datasets and train dataset size to be loaded & \hyperref[sec:ann-implementations]{Page \pageref{sec:ann-implementations}} & \hyperref[sec:train-dataset-size-analysis]{Page \pageref{sec:train-dataset-size-analysis}} \\
-      \hline
-      4 & Use a database to store a model's features and the location of its weights and biases & \hyperref[sec:__main__-module]{Page \pageref{sec:__main__-module}} & \hyperref[sec:database-unit-tests]{Page \pageref{sec:database-unit-tests}} \\
-      \hline
-      5 & Develop a Graphical User Interface & & \\
-      \hline
-      5.1 & Provide controls for hyper-parameters of models & \hyperref[sec:create_model-module]{Page \pageref{sec:create_model-module}} & \hyperref[sec:hyper-parameter-frame-input-validation]{Page \pageref{sec:hyper-parameter-frame-input-validation}} \\  % Can add more details as sub sections (Allow learning rate to be set between 0-1 etc)
-      \hline
-      5.2 & Display details of models' training & \hyperref[sec:create_model-module]{Page \pageref{sec:create_model-module}} & N/A \\
-      \hline
-      5.3 & Display the results of each model's predictions & \hyperref[sec:test_model-module]{Page \pageref{sec:test_model-module}} & User Tested \\
-      \hline
-      5.4 & Allow for the saving of trained models & \hyperref[sec:test_model-module]{Page \pageref{sec:test_model-module}} & \hyperref[sec:test-frames-input-validation]{Page \pageref{sec:test-frames-input-validation}} \\
-      \hline
-      5.5 & Allow for the loading of saved trained models & \hyperref[sec:load_model-module]{Page \pageref{sec:load_model-module}} & \hyperref[sec:load-model-frame-input-validation]{Page \pageref{sec:load-model-frame-input-validation}} \\
-      \hline
-\end{tabular}
-
 \subsection{Theory behind Artificial Neural Networks}
 \label{sec:ann-theory}
 
-From an abstract perspective, Artificial Neural Networks are inspired by how the human mind works, by consisting of layers of 'neurons' all interconnected via 
-different links, each with their own strength. By adjusting these links, Artificial Neural Networks can be trained to take in an input and give its best 
-prediction as an output.
+From an abstract perspective, Artificial Neural Networks are inspired by the anatomy of the human brain, consisting of layers of 'neurons' all interconnected via 
+different links, 'axons with connecting synapses', each with their own strengths, 'weights'. By adjusting these links and weights, Artificial Neural Networks can be trained 
+to take in an input and give its best prediction as an output.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{./project-report/src/images/connected-neurons.png}
+\caption{Two connected biological neurons sourced from https://www.researchgate.net}
+\end{figure}
+
 \vspace{5mm}
 
 \subsubsection{Structure}
@@ -142,11 +53,14 @@ prediction as an output.
 \end{figure}
 
 I have focused on Feed-Forward Artificial Neural Networks, where values are entered to the input layer and passed forwards repetitively to the next layer until 
-reaching the output layer. Within this, I have learnt two types of Feed-Forward Artificial Neural Networks: Perceptron Artificial Neural Networks, that contain no 
-hidden layers and are best at learning more linear patterns and Multi-Layer Perceptron Artificial Neural Networks, that contain at least one hidden layer, as a result 
-increasing the non-linearity in the Artificial Neural Network and allowing it to learn more complex / non-linear problems.
+reaching the output layer. Within this, I have investigated two types of Feed-Forward Artificial Neural Networks: Perceptron Artificial Neural Networks, that contain no 
+hidden layers and are suitable for addressing simple linear problems, and Multi-Layer Perceptron Artificial Neural Networks, that contain at least one hidden layer. 
+The expanded complexity of the Multi-Layer Perceptron Artificial Neural Network increases the non-linearity in the Artificial Neural Network allowing it to address 
+more complex / non-linear problems.
+
 \vspace{5mm}
 
+\noindent
 Multi-Layer Perceptron Artificial Neural Networks consist of:
 
 \begin{itemize}
@@ -155,86 +69,72 @@ Multi-Layer Perceptron Artificial Neural Networks consist of:
     \item An output layer of output neurons, which outputs the final prediction.
 \end{itemize}
 
-To implement an Artificial Neural Network, matrices are used to represent the layers, where each layer is a matrice of the layer's neuron's values. In 
+To implement an Artificial Neural Network, matrices are typically used to represent the layers, where each layer is a matrix of the layer's neuron's values. In 
 order to use matrices for this, the following basic theory must be known about them:
 
 \begin{itemize}
-    \item When Adding two matrices, both matrices must have the same number of rows and columns. Or one of the matrices can have the same number of rows but only one 
-          column, then be added by element-wise addition where each element is added to all of the elements of the other matrix in the same row.
-    \item In order to multiply matrices, I take the 'dot product' of the matrices, which multiplies the row of one matrice with the column of the other, by multiplying 
+    \item When Adding two matrices, both matrices must have the same number of rows and columns. Alternatively, a single column matrix with the same number of rows can be 
+          added by element-wise addition where each element is added to all of the elements of the corresponding rows in the associated matrix.
+    \item In order to multiply matrices, the 'dot product' of the matrices is computed which multiplies the rows of one matrice with the columns of the other, multiplying 
           matching members and then summing up.
-    \item When taking the dot product of two matrices, the number of columns of the 1st matrix must equal the number of rows of the 2nd matrix. And the result will 
-          have the same number of rows as the 1st matrix, and the same number of columns as the 2nd matrix. This is important, as the output of one layer must be formatted 
-          correctly to be used with the next layer.
-    \item Alternatively, at times I take the Hadamard product of two matrices which performs element-wise multiplication of the matrices. For this, both matrices 
+    \item When calculating the dot product of two matrices, the number of columns of the 1st matrix must equal the number of rows of the 2nd matrix. The resulting matrix will 
+          have the same number of rows as the 1st matrix, and the same number of columns as the 2nd matrix. This is important in implementing an Artificial Neural Network, 
+          as the output of one layer must be formatted correctly to be used with the next layer.
+    \item Alternatively, the Hadamard product of two matrices can be utilised which performs element-wise multiplication of the matrices. For this, both matrices 
           must have the same number of rows and columns.
-    \item Transposing a matrix will turn all rows of the matrix into columns and all columns into rows.
+    \item Transposing a matrix is also utilised which switches all rows of the matrix into columns and all columns into rows in an output matrix.
     \item A matrix of values can be classified as a rank of Tensors, depending on the number of dimensions of the matrix. (Eg: A 2-dimensional matrix is a Tensor of 
           rank 2)
 \end{itemize}
 
-I have focused on just using Fully-Connected layers, that will take in input values and apply the following calculations to produce an output of the layer:
+I have focused on using Fully-Connected layers, that input values and apply the following functions to produce an output value for the layer:
 
 \begin{itemize}
-    \item An Activation function
-    \begin{itemize}
-        \item This calculates the dot product of the input matrix with a weight matrix, then sums the result with a bias matrix
-    \end{itemize}
-    \item A Transfer function
-    \begin{itemize}
-        \item This takes the result of the Activation function and transfers it to a suitable output value as well as adding more non-linearity to the Neural Network.
-        \item For example, the Sigmoid Transfer function converts the input to a number between zero and one, making it useful for logistic regression where the output 
-              value can be considered as closer to zero or one allowing for a binary classification of predicting zero or one.
-    \end{itemize}
+    \item \textbf{Activation function} which calculates the dot product of an input matrix with a weight matrix, then sums the result with a bias matrix.
+    \item \textbf{Transfer function} which takes the result of the activation function and calculates a suitable output value as well as adding more non-linearity to the Neural Network. 
+          For example, the Sigmoid Transfer function converts the input value to an output number between zero and one - this makes it useful for logistic regression where the output value 
+          can be rounded to allow for a binary classification.
 \end{itemize}
+
 \vspace{5mm}
 
 \subsubsection{How Artificial Neural Networks learn}
 \vspace{5mm}
 
-To train an Artificial Neural Network, the following processes will be carried out for each of a number of training epochs:
+To train an Artificial Neural Network, the following processes are carried out for each of a number of training iterations called epochs:
 
 \begin{itemize}
-    \item Forward Propagation:
+    \item Forward Propagation which is the process of feeding inputs in and getting a prediction (moving forward through the network).
+    \item Back Propagation, the process of calculating the error, known as the loss, in the prediction and then adjusting the weights and biases accordingly.
+\end{itemize}
 
-    \begin{itemize}
-        \item The process of feeding inputs in and getting a prediction (moving forward through the network)
-    \end{itemize}
+I have used Supervised Learning to train the Artificial Neural Networks, where the output prediction of the Artificial Neural Network is compared to the theoretical values it should have 
+predicted. With this, I can calculate the loss value of the prediction. I then move back through the network and update the weights and biases via Gradient Descent which aims to reduce 
+the Loss value of the prediction to a minimum, by subtracting the rate of change of Loss with respect to the weights / biases, multiplied with a learning rate, from the weights / biases. 
+To calculate the rate of change of Loss with respect to the weights / biases, I used the following calculus methods:
 
-    \item Back Propagation:
+\begin{itemize}
+    \item Partial Differentiation, which allows differentiation of multi-variable functions, by differentiating with respect to one variable and treating the rest as constants.
+    \item The Chain Rule, where for $y = f(u)$ and $u = g(x)$, $\frac{\partial{y}}{\partial{x}}$ can be calculated as: $\frac{\partial{y}}{\partial{x}} = \frac{\partial{y}}{\partial{u}} * \frac{\partial{u}}{\partial{x}}$.
+\end{itemize}
 
-    \begin{itemize}
-        \item The process of calculating the Loss in the prediction and then adjusting the weights and biases accordingly
-        \item I have used Supervised Learning to train the Artificial Neural Networks, where the output prediction of the Artificial Neural Network is compared to the 
-              values it should have predicted. With this, I can calculate the Loss value of the prediction (how wrong the prediction is from the actual value).
-        \item I then move back through the network and update the weights and biases via Gradient Descent:
-        \begin{itemize}
-            \item Gradient Descent aims to reduce the Loss value of the prediction to a minimum, by subtracting the rate of change of Loss with respect to the weights/
-                  biases, multiplied with a learning rate, from the weights/biases.
-            \item To calculate the rate of change of Loss with respect to the weights/biases, you must use the following calculus methods:
-            \begin{itemize}
-                \item Partial Differentiation, in order to differentiate the multi-variable functions, by taking respect to one variable and treating the rest as 
-                      constants.
-                \item The Chain Rule, where for $y = f(u)$ and $u = g(x)$, 
-                      $\frac{\partial{y}}{\partial{x}} = \frac{\partial{y}}{\partial{u}} * \frac{\partial{u}}{\partial{x}}$
-                \item For a matrice of $f(x)$ values, the matrice of $\frac{\partial{f(x)}}{\partial{x}}$ values is known as the Jacobian matrix
-            \end{itemize}
-            \item This repetitive process will continue to reduce the Loss to a minimum, if the learning rate is set to an appropriate value
-                \begin{figure}[h!]
-                \centering
-                \includegraphics[width=1\textwidth]{./project-report/src/images/gradient-descent.png}
-                \caption{Gradient Descent\\
-                        sourced from https://www.ibm.com/topics/gradient-descent}
-                \end{figure}
-            \item However, during backpropagation some issues can occur, such as the following:
-            \begin{itemize}
-                \item Finding a false local minimum rather than the global minimum of the function
-                \item Having an 'Exploding Gradient', where the gradient value grows exponentially to the point of overflow errors
-                \item Having a 'Vanishing Gradient', where the gradient value decreases to a very small value or zero, resulting in a lack of updating values during 
-                      training.
-            \end{itemize}
-        \end{itemize}
-    \end{itemize}
+This repetitive process will continue to reduce the Loss to a minimum, if the learning rate is set to an appropriate value
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{./project-report/src/images/gradient-descent.png}
+\caption{Gradient Descent\\
+        sourced from https://www.ibm.com/topics/gradient-descent}
+\end{figure}
+
+\pagebreak
+
+However, during backpropagation some issues can occur, such as the following:
+
+\begin{itemize}
+    \item Finding a false local minimum rather than the global minimum of the function
+    \item Having an 'Exploding Gradient', where the gradient value grows exponentially to the point of overflow errors
+    \item Having a 'Vanishing Gradient', where the gradient value decreases to a very small value or zero, resulting in a lack of updating values during training.
 \end{itemize}
 
 \vspace{5mm}
@@ -341,56 +241,140 @@ To train an Artificial Neural Network, the following processes will be carried o
 
 \subsection{Theory behind training the Artificial Neural Networks}
 
-Training an Artificial Neural Network's weights and biases to predict on a dataset, will create a trained model for that dataset, so that it can predict on future 
-images inputted. However, training Artificial Neural Networks can involve some problems such as Overfitting, where the trained model learns the patterns of the 
-training dataset too well, causing worse prediction on a different test dataset. This can occur when the training dataset does not cover enough situations of inputs 
-and the desired outputs (by being too small for example), if the model is trained for too many epochs on the poor dataset and having too many layers in the Neural 
-Network. Another problem is Underfitting, where the model has not learnt the patterns of the training dataset well enough, often when it has been trained for too few 
-epochs, or when the Neural Network is too simple (too linear).
+Training an Artificial Neural Network's weights and biases to predict on a dataset, will create a trained model for that dataset. This model can be used to create 
+predictions based on future data / images inputted. However, training Artificial Neural Networks involves problems such as Overfitting, where the trained model learns 
+the patterns of the training dataset too well, resuting in poor predictions on new datasets. This can occur when the training dataset does not cover enough situations 
+of inputs and the desired outputs (by being too small for example), if the model is trained for too many epochs on the poor dataset or by having too many layers in the 
+Neural Network.
+
+Another common problem is Underfitting, where the model has not learnt the patterns of the training dataset well enough, often when it has been trained for too few 
+epochs, or when the Neural Network is too linear.
 
 \subsubsection{Datasets}
-\vspace{5mm}
 
-\begin{itemize}
-    \item MNIST dataset
-    \begin{itemize}
-        \item The MNIST dataset is a famous dataset of images of handwritten digits from zero to ten and is commonly used to test the performance of an Artificial 
-              Neural Network.
-        \item The dataset consists of 60,000 input images, made up from 28x28 pixels and each pixel has an RGB value from 0 to 255
-        \item To format the images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrice of RGB values are 'flattened' into a 
-              1 dimensional matrix of values, where each element is also divided by 255 (the max RGB value) to a number between 0 and 1, to standardize the dataset.
-        \item The output dataset is also loaded, where each output for each image is an array, where the index represents the number of the image, by having a 1 in the 
-              index that matches the number represented and zeros for all other indexes.
-        \item To create a trained Artificial Neural Network model on this dataset, the model will require 10 output neurons (one for each digit), then by using the 
-              Sigmoid Transfer function to output a number between one and zero to each neuron, whichever neuron has the highest value is predicted. This is multi-class 
-              classification, where the model must predict one of 10 classes (in this case, each class is one of the digits from zero to ten).
-    \end{itemize}
-    \item Cat dataset
-    \begin{itemize}
-        \item I will also use a dataset of images sourced from https://github.com/marcopeix, where each image is either a cat or not a cat.
-        \item The dataset consists of 209 input images, made up from 64x64 pixels and each pixel has an RGB value from 0 to 255
-        \item To format the images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrice of RGB values are 'flattened' into a 
-              1 dimensional array of values, where each element is also divided by 255 (the max RGB value) to a number between 0 and 1, to standardize the dataset.
-        \item The output dataset is also loaded, and is reshaped into a 1 dimensional array of 1s and 0s, to store the output of each image (1 for cat, 0 for non cat)
-        \item To create a trained Artificial Neural Network model on this dataset, the model will require only 1 output neuron, then by using the Sigmoid Transfer 
-              function to output a number between one and zero for the neuron, if the neuron's value is closer to 1 it predicts cat, otherwise it predicts not a cat. 
-              This is binary classification, where the model must use logistic regression to predict whether it is a cat or not a cat.
-    \end{itemize}
-    \item XOR dataset
-    \begin{itemize}
-        \item For experimenting with Artificial Neural Networks, I solve the XOR gate problem, where the Neural Network is fed input pairs of zeros and ones and learns 
-              to predict the output of a XOR gate used in circuits.
-        \item This takes much less computation time than image datasets, so is useful for quickly comparing different hyper-parameters of a Network, whilst still 
-              not being linearly separable.
-    \end{itemize}
-\end{itemize}
+I have utilised a series of open source datasets on which to train and test by Neural Networks.
+
+\subsubsection{XOR dataset}
+
+As a first step in developing and testing Artificial Neural Networks, I have utilised the XOR gate problem, where the Neural Network is fed input pairs of zeros and 
+ones and learns  to predict the output of a XOR gate used in circuits. This takes far less computation time than image datasets and is extremely useful in debugging. 
+It is a good example of a relatively simple problem whilst not being linearly separable.
+
+\subsubsection{MNIST dataset}
+
+The MNIST dataset is a well known dataset consisting of images of handwritten digits from zero to ten and is commonly used to test the performance of an Artificial Neural 
+Network. The dataset consists of 60,000 input images representing single digits made up from 28x28 pixels with each pixel having an RGB value from 0 to 255. To format the 
+images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrix of RGB values is commonly 'flattened' into a 1 dimensional matrix of 
+values, where each element is also divided by 255 (the max RGB value) to produce a number between 0 and 1, to standardize the dataset. The output dataset is also loaded which 
+represents the actual value of the number in the image. This is commonly implemented by using an array for each image where the index of the array represesents the number in 
+an image (i.e. a 1 in column 2 could represent a 2, or a 1 if zero indexed).
+
+To create a trained Artificial Neural Network model on this dataset, the model requires 10 output neurons (one for each digit). The Sigmoid Transfer function is then utilized 
+to output a number between one and zero to each neuron - whichever neuron received the highest value is selected as the predicted outcome. This an example of a multi-class 
+
+classification, where the model must predict one of 10 classes (in this case, each class is one of the digits from zero to ten).
+\subsubsection{Cat dataset}
+
+I have also used a dataset of images of cats sourced from https://github.com/marcopeix, where each image is classified as either a cat or not a cat. The dataset consists of 
+209 input images, made up from 64x64 pixels with each pixel having an RGB value from 0 to 255. To normalise the images into a suitable format to be input into the Artificial 
+Neural Network, each image's matrix of RGB values is 'flattened' into a 1 dimensional matrix of values, where each element is divided by 255 (the max RGB value) to a number 
+between 0 and 1, to standardize the dataset.
+
+The output dataset represents an array of binary values representing the output of each image (1 for a cat, 0 for not a cat). To create a trained Artificial Neural Network model 
+on this dataset, the model requires only 1 output neuron - representing the chance of being a cat. By using the Sigmoid Transfer function, a number is outputted between one and zero 
+for the neuron, if the neuron's value is closer to 1 it predicts a cat, otherwise it predicts not a cat - this is binary classification.
 
 \subsubsection{Theory behind using Graphics Cards to train Artificial Neural Networks}
 \vspace{5mm}
 
-Graphics Cards consist of many Tensor cores which are processing units specialised for matrix operations for calculating the co-ordinates of 3D graphics, however they 
-can be used here for operating on the matrices in the network at a much faster speed compared to CPUs. GPUs also include CUDA cores which act as an API to the GPU's 
-computing to be used for any operations (in this case training the Artificial Neural Networks).
+Graphics Cards have been designed essentially to undertake parallel matrix computations utilising many Tensor cores - which are processing units specialised for matrix operations 
+calculating the co-ordinates of 3D graphics, however they can be used for operating on the matrices in the network at a much faster speed compared to CPUs. GPUs also include CUDA 
+cores which act as an API to the GPU's computing to be used for any operations (in this case training the Artificial Neural Networks).
+
+\subsection{Interview}
+
+In order to gain a better foundation for my investigation, I presented my prototype code and interviewed the head of Artificial Intelligence at Cambridge Consultants 
+for input on what they would like to see in my project, these were their responses:
+
+\begin{itemize}
+    \item Q:"Are there any good resources you would recommend for learning the theory behind how Artificial Neural Networks work?"
+    
+          A:"There are lots of useful free resources on the internet to use. I particularly like the platform 'Medium' which offers many scientific articles 
+             as well as more obvious resources such as IBMs'."
+    \item Q:"What do you think would be a good goal for my project?"
+
+          A:"I think it would be great to aim for applying the Neural Networks on Image Recognition for some famous datasets. For you, I would recommend 
+             the MNIST dataset as a goal."
+    \item Q:"What features of the Artificial Neural Networks would you like to be able to experiment with?"
+
+          A:"I'd like to be able to experiment with the number of layers and the number of neurons in each layer, and then be able to see how these changes effect 
+             the performance of the model. I can see that you've utilised the Sigmoid transfer function and I would recommend having the option to test alternatives 
+              such as the ReLu transfer function, which will help stop issues such as a vanishing gradient."
+    \item Q:"What are some practical constraints of AI?"
+
+          A:"Training AI models can require a large amount of computing power, also large datasets are needed for training models to a high accuracy which can be hard 
+             to obtain."
+    \item Q:"What would you say increases the computing power required the most?"
+
+          A:"The number of layers and neurons in each layer will have the greatest effect on the computing power required. This is another reason why I recommend adding 
+             the ReLu transfer function as it updates the values of the weights and biases faster than the Sigmoid transfer function."
+    \item Q:"Do you think I should explore other computer architectures for training the models?"
+
+          A:"Yes, it would be great to add support for using graphics cards for training models, as this would be a vast improvement in training time compared to using 
+             just CPU power."
+    \item Q:"I am also creating a user interface for the program, what hyper-parameters would you like to be able to control through this?"
+
+          A:"It would be nice to control the transfer functions used, as well as the general hyper-parameters of the model. I also think you could add a progress tracker 
+             to be displayed during training for the user."
+    \item Q:"How do you think I should measure the performance of models?"
+
+          A:"You should show the accuracy of the model's predictions, as well as example incorrect and correct prediction results for the trained model. Additionally, 
+             you could compare how the size of the training dataset effects the performance of the model after training, to see if a larger dataset would seem 
+             beneficial."
+    \item Q:"Are there any other features you would like add?"
+
+          A:"Yes, it would be nice to be able to save a model after training and have the option to load in a trained model for testing."
+\end{itemize}
+
+\subsection{Requirements}
+
+The following sets out the steps that must be taken to accomplish the above objectives:
+
+\noindent\begin{tabular}{|p{0.03\linewidth}|p{0.73\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
+      \hline
+      \textbf{ID} & \textbf{Description} & \textbf{Satisfied by} & \textbf{Tested by} \\
+      \hline
+      1 & Learn how Artificial Neural Networks work & \hyperref[sec:ann-theory]{Page \pageref{sec:ann-theory}} & N/A \\
+      \hline
+      2 & Develop Artificial Neural Networks from first principles & & \\
+      \hline
+      2.1 & Provide utilities for creating Artificial Neural Networks & \hyperref[sec:utils-subpackage]{Page \pageref{sec:utils-subpackage}} & \hyperref[sec:models-utils-unit-tests]{Page \pageref{sec:models-utils-unit-tests}} \\
+      \hline
+      2.2 & Allow for the saving and loading of trained models' weights and biases & \hyperref[sec:model-module]{Page \pageref{sec:model-module}} & \hyperref[sec:models-utils-unit-tests]{Page \pageref{sec:models-utils-unit-tests}} \\
+      \hline
+      2.3 & Allow use of Graphics Cards for faster training & Code not included in report & \hyperref[sec:cpu-vs-gpu-analysis]{Page \pageref{sec:cpu-vs-gpu-analysis}} \\
+      \hline
+      3 & Implement the Artificial Neural Networks on image datasets & & \\
+      \hline
+      3.1 & Allow input of unique hyper-parameters & \hyperref[sec:ann-implementations]{Page \pageref{sec:ann-implementations}} & \hyperref[sec:effects-of-hyper-parameters]{Page \pageref{sec:effects-of-hyper-parameters}} \\
+      \hline
+      3.2 & Allow unique datasets and train dataset size to be loaded & \hyperref[sec:ann-implementations]{Page \pageref{sec:ann-implementations}} & \hyperref[sec:train-dataset-size-analysis]{Page \pageref{sec:train-dataset-size-analysis}} \\
+      \hline
+      4 & Use a database to store a model's features and the location of its weights and biases & \hyperref[sec:__main__-module]{Page \pageref{sec:__main__-module}} & \hyperref[sec:database-unit-tests]{Page \pageref{sec:database-unit-tests}} \\
+      \hline
+      5 & Develop a Graphical User Interface & & \\
+      \hline
+      5.1 & Provide controls for hyper-parameters of models & \hyperref[sec:create_model-module]{Page \pageref{sec:create_model-module}} & \hyperref[sec:hyper-parameter-frame-input-validation]{Page \pageref{sec:hyper-parameter-frame-input-validation}} \\  % Can add more details as sub sections (Allow learning rate to be set between 0-1 etc)
+      \hline
+      5.2 & Display details of models' training & \hyperref[sec:create_model-module]{Page \pageref{sec:create_model-module}} & N/A \\
+      \hline
+      5.3 & Display the results of each model's predictions & \hyperref[sec:test_model-module]{Page \pageref{sec:test_model-module}} & User Tested \\
+      \hline
+      5.4 & Allow for the saving of trained models & \hyperref[sec:test_model-module]{Page \pageref{sec:test_model-module}} & \hyperref[sec:test-frames-input-validation]{Page \pageref{sec:test-frames-input-validation}} \\
+      \hline
+      5.5 & Allow for the loading of saved trained models & \hyperref[sec:load_model-module]{Page \pageref{sec:load_model-module}} & \hyperref[sec:load-model-frame-input-validation]{Page \pageref{sec:load-model-frame-input-validation}} \\
+      \hline
+\end{tabular}
 
 \pagebreak
 
