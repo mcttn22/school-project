@@ -29,7 +29,7 @@
       \hline
 \end{tabular}
 
-\subsection{Theory behind Artificial Neural Networks}
+\subsection{Theory Behind Artificial Neural Networks}
 \label{sec:ann-theory}
 
 From an abstract perspective, Artificial Neural Networks are inspired by the anatomy of the human brain, consisting of layers of 'neurons' all interconnected via 
@@ -141,27 +141,27 @@ However, during backpropagation some issues can occur, such as the following:
 \subsection{Theory Behind Deep Artificial Neural Networks}
 \vspace{5mm}
 
-\subsubsection{Setup}
+\subsubsection{Network Architecture and Training}
+
+The figure below shows a simplified view of an Artificial Neural Network with multiple hidden layers, known as a Deep Neural Network, where:
 
 \pagebreak
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/deep-ann-diagram.png}
-\caption{This shows an abstracted view of an Artificial Neural Network with multiple hidden layers and is known as a Deep Neural Network.}
+\caption{Showing an abstracted view of an Artificial Neural Network with multiple hidden layers.}
 \end{figure}
 
 \begin{itemize}
-    \item Where a layer takes the previous layer's output as its input X
-    \item Then it applies an Activation function to X to obtain Z, by taking the dot product of X with a weight matrix W, then sums the result with a bias matrix B. At 
-          first the weights are initialised to random values and the biases are set to zeros.
+    \item Each layer takes the previous layer's output as its input X
+    \item An Activation function is applied to X to obtain Z, by taking the dot product of X with a weight matrix W, and sums the result with a bias matrix B. At 
+          first when the Neural Network is initialised pre-training the weights are initialised to random values and the biases are set to zeros.
+          $Z = W * X + B$
+    \item A Transfer function is then applied to Z to obtain the layer's output A
     \begin{itemize}
-        \item $Z = W * X + B$
-    \end{itemize}
-    \item Then it applies a Transfer function to Z to obtain the layer's output
-    \begin{itemize}
-        \item For the output layer, the sigmoid function (explained previously) must be used for either for binary classification via logistic regression, or for multi-
-              class classification where it predicts the output neuron, and the associated class, that has the highest value between zero and one.
+        \item For the output layer, the sigmoid function (explained previously) can be used for either for binary classification via logistic regression, or for multi-
+              class classification where the output neuron, and the associated class, that has the highest value between zero and one is selected.
         \begin{itemize}
             \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
         \end{itemize}
@@ -173,28 +173,32 @@ However, during backpropagation some issues can occur, such as the following:
     \end{itemize}
 \end{itemize}
 
+\subsubsection{Training}
+
+Training takes place through a series of forward and backward propagation called epochs. The forward propagation generates a potential output and associated error known 
+as the loss. Backward propagation then adjusts the weights and biases in an attempt to reduce this loss.
+
 \subsubsection{Forward Propagation:}
 
 \begin{itemize}
-    \item For each epoch the input layer is given a matrix of input values, which are fed through the network to obtain a final prediction A from the output layer.
+    \item For each epoch the input layer is presented with a matrix of input values, which are fed through the network to obtain a final prediction A from the output layer.
+	\item Using the process described in the previous section, backpropagation trains the network by adjusting weights and biases.
 \end{itemize}
 
 \subsubsection{Back Propagation:}
 
 \begin{itemize}
     \item First the Loss value L is calculated using the following Log-Loss function, which calculates the average difference between A and the value it should have 
-          predicted Y. Then the average is found by summing the result of the Loss function for each value in the matrix A, then dividing by the number of predictions m, 
-          resulting in a Loss value to show how well the network is performing.
-    \begin{itemize}
-        \item Where $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$ and "log()" is the natural logarithm
-    \end{itemize}
-    \item I then move back through the network, adjusting the weights and biases via Gradient Descent. For each layer, the weights and biases are updated with the 
-          following formulae:
+          predicted Y. The average is then found by summing the result of the Loss function for each value in the matrix A, then dividing by the number of predictions m, 
+          resulting in a Loss value indicating how well the network is performing.
+    	  Where $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$ and "log()" is the natural logarithm
+    \item The network is then trained by moving back through the layers, adjusting the weights and biases via Gradient Descent. For each layer, the weights and biases are 
+		  updated with the following formulae:
     \begin{itemize}
         \item $W = W - learningRate * \frac{\partial{L}}{\partial{W}}$
         \item $B = B - learningRate * \frac{\partial{L}}{\partial{B}}$
     \end{itemize}
-    \item The derivation for Layer 2's $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ can be seen below:
+    \item The derivation for Layer 2's $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ is shown below:
     \begin{itemize}
         \item Functions used so far:
         \begin{enumerate}
@@ -225,8 +229,8 @@ However, during backpropagation some issues can occur, such as the following:
               \newline
               $=> \frac{\partial{L}}{\partial{W2}} = \frac{\partial{L}}{\partial{A2}} * \frac{\partial{A2}}{\partial{Z2}} * 1$
     \end{itemize}
-    \item As you can see, when moving back through the network, the $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ of the layer can be 
-          calculated with the rate of change of loss with respect to its output, which is calculated by the previous layer using the above formula; the derivative of 
+    \item As can be seen, when moving back through the network, $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ can be calculated for each layer 
+		  with the rate of change of loss with respect to its output, which is calculated by the previous layer using the above formula; the derivative of 
           the layer's transfer function, and the layers input (which in this case is A1)
     \begin{itemize}
         \item Where by using function 2, $\frac{\partial{A_{relu}}}{\partial{Z}} = 1$ when $Z >= 0$ otherwise $\frac{\partial{A_{relu}}}{\partial{Z}} = 0$
