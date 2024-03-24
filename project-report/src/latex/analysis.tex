@@ -7,28 +7,6 @@
 \clearpage
 \section{Analysis}
 
-\subsection{Project Objectives}
-
-\begin{tabular}{|p{0.13\linewidth}|p{0.87\linewidth}|}
-      \hline
-      \textbf{Objective ID} & \textbf{Description} \\
-      \hline
-      1 & Learn how Artificial Neural Networks work and develop them from first principles \\
-      \hline
-      2 & Implement the Artificial Neural Networks by creating trained models based on image datasets \\
-      \hline
-      2.1 & Allow use of Graphics Cards for faster training \\
-      \hline
-      2.2 & Allow for the saving and loading of trained models \\
-      \hline
-      3 & Develop a Graphical User Interface \\
-      \hline
-      3.1 & Provide controls for hyper-parameters of models \\
-      \hline
-      3.2 & Display and compare the results each model's predictions \\
-      \hline
-\end{tabular}
-
 \subsection{Theory Behind Artificial Neural Networks}
 \label{sec:ann-theory}
 
@@ -143,7 +121,7 @@ However, during backpropagation some issues can occur, such as the following:
 
 \subsubsection{Network Architecture and Training}
 
-The figure below shows a simplified view of an Artificial Neural Network with multiple hidden layers, known as a Deep Neural Network, where:
+Figure \ref{fig:abstract-network} below shows a simplified view of an Artificial Neural Network with multiple hidden layers, known as a Deep Neural Network, where:
 
 \pagebreak
 
@@ -151,6 +129,7 @@ The figure below shows a simplified view of an Artificial Neural Network with mu
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/deep-ann-diagram.png}
 \caption{Showing an abstracted view of an Artificial Neural Network with multiple hidden layers.}
+\label{fig:abstract-network}
 \end{figure}
 
 \begin{itemize}
@@ -297,8 +276,9 @@ cores which act as an API to the GPU's computing to be used for any operations (
 
 \subsection{Interview}
 
-In order to gain a better foundation for my investigation, I presented my prototype code and interviewed the head of Artificial Intelligence at Cambridge Consultants 
-for input on what they would like to see in my project, these were their responses:
+In order to gain a better foundation for my investigation, and ensure my project would allow a user interested in Artificial Neural Networks to experiment with the 
+fundamentals of the network and conduct experiments, I presented my prototype code and interviewed the head of Artificial Intelligence at Cambridge Consultants. 
+These were their responses:
 
 \begin{itemize}
     \item Q:"Are there any good resources you would recommend for learning the theory behind how Artificial Neural Networks work?"
@@ -339,6 +319,30 @@ for input on what they would like to see in my project, these were their respons
 
           A:"Yes, it would be nice to be able to save a model after training and have the option to load in a trained model for testing."
 \end{itemize}
+
+Based on the interview above, the following high-level objectives were formulated:
+
+\subsection{Project Objectives}
+
+\begin{tabular}{|p{0.13\linewidth}|p{0.87\linewidth}|}
+      \hline
+      \textbf{Objective ID} & \textbf{Description} \\
+      \hline
+      1 & Learn how Artificial Neural Networks work and develop them from first principles \\
+      \hline
+      2 & Implement the Artificial Neural Networks by creating trained models based on image datasets \\
+      \hline
+      2.1 & Allow use of Graphics Cards for faster training \\
+      \hline
+      2.2 & Allow for the saving and loading of trained models \\
+      \hline
+      3 & Develop a Graphical User Interface \\
+      \hline
+      3.1 & Provide controls for hyper-parameters of models \\
+      \hline
+      3.2 & Display and compare the results each model's predictions \\
+      \hline
+\end{tabular}
 
 \subsection{Requirements}
 
