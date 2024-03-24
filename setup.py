@@ -12,6 +12,6 @@ setup(
                       'cupy-cuda12x',
                       'h5py',
                       'matplotlib',
-                      'numpy'
+                      'numpy==1.26.4'
     ],
 )
