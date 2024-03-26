@@ -7,7 +7,7 @@
 \clearpage
 \section{Technical Solution}
 
-\subsection{Setup}
+\subsection{Source file organisation and management }
 
 \subsubsection{File Structure}
 
@@ -30,6 +30,7 @@ Each package within the school\_project package contains a \_\_init\_\_.py file,
 so that the modules of the package can be imported from the installed package.
 
 Show below are the contents of the frames package's \_\_init\_\_.py for example, which allows the classes of all modules in the package to be imported simultaneously:
+
 \inputminted{python}{./school_project/frames/__init__.py}
 
 I have omitted the source code for this report, which included a Makefile for its compilation.
@@ -139,6 +140,8 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
         \begin{figure}[h!]
         \centering
         \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/hyper-parameter-frame.png}}
+		\caption{Hyper parameter frame - showing MNIST parameters}
+        \label{fig:hyper-parameter-frame}
         \end{figure}
 
         And outputs the following for the training frame during training:
@@ -146,6 +149,7 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
         \begin{figure}[h!]
         \centering
         \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/training-frame-1.png}}
+        \caption{}
         \end{figure}
 
         \pagebreak

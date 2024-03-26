@@ -23,15 +23,17 @@ I will also be using SysML for designing the following diagrams.
 \subsection{System Architecture}
 
 The project is architected using object-orientated design principles, it was then implemented in Python. A SysML block diagram showing the key architectural components is 
-shown in Figure ** below with detailed SysML class diagrams shown in sections ** to **.
+shown in the figure below with detailed SysML class diagrams shown in section \ref{UI-class-diagram}.
 
-As shown in the Figure ** the User interacts with the software through a User Interface (UI) which is written in tkinter. The UI classes interface with the Model block which 
-contains all the classes necessary for representing the Artificial Neural Network models. As such functional separation is maintained between the user interface elements and 
-the Neural Network representation.
+As shown in the Figure \ref{fig:high-level-sys-arch} the User interacts with the software through a User Interface (UI) which is written in tkinter. The UI classes interface 
+with the Model block which contains all the classes necessary for representing the Artificial Neural Network models. As such functional separation is maintained between the 
+user interface elements and the Neural Network representation.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/system-architecture-diagram.png}
+\caption{High level system architecture}
+\label{fig:system-architecture}
 \end{figure}
 
 \pagebreak
@@ -39,13 +41,16 @@ the Neural Network representation.
 \subsection{Class Diagrams}
 
 \subsubsection{UI Class Diagram}
-
-The classes utilised to implement the UI are shown in Figure **. As can be seen the School\_Project\_Frame inherits the tk.Frame class - a tkinter base class which provides 
+\label{UI-class-diagram}
+The classes utilised to implement the UI are shown in Figure \ref{fig:UI-class-diag}. As can be seen the School\_Project\_Frame inherits the tk.Frame class - a tkinter base 
+class which provides 
 the basic frame functionality. The School\_Project\_Frame then contains a series of UI interaction specific Frames.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/ui-class-diagram.png}
+\caption{UI SysML Class Diagam}
+\label{fig:UI-class-diagram}
 \end{figure}
 
 \subsubsection{Model Class Diagram}
@@ -56,6 +61,8 @@ Artificial Neural Network.
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/model-class-diagram.png}
+\caption{Artificial Neural Network and Layers SysML Class Diagram}
+\label{fig:model-class-diagram}
 \end{figure}
 
 \pagebreak
@@ -71,6 +78,8 @@ build models on a desk-based, GPU accelerated PC, and undertake testing / demons
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/system-flow-chart.png}
+\caption{System flow chart}
+\label{fig:system-flow-chart}
 \end{figure}
 
 \subsection{Algorithms}
@@ -146,6 +155,8 @@ saved models' weights and biases and the saved models' hyper-parameters) are sav
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/database-design.png}
+\caption{Database design}
+\label{fig:database-design}
 \end{figure}
 
 The following unique constraint is also used so that each dataset can not have more than one model with the same name:
@@ -181,14 +192,16 @@ Below are some example queries used for interacting with the database:
 
 \subsection{Human-Computer Interaction}
 
-Below are the designs of each tkinter frame in the User Interface. The flow of the frames is described in Figure **. The final implementation of the frames is shown in the 
-technical solution section.
+Below are the designs of each tkinter frame in the User Interface. The flow of the frames is described in Figure \ref{fig:system-flow-chart}. The final implementation of the 
+frames is shown in the technical solution section.
 
 \begin{itemize}
     \item The home Frame design which acts as the entry point to the program, the implemented version is shown in Figure **.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/home-frame-design.png}
+        \caption{Home frame design - the entry point to the program}
+        \label{fig:home-frame-design}
         \end{figure}
 
     \pagebreak
@@ -197,6 +210,8 @@ technical solution section.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/hyper-parameter-frame-design.png}
+        \caption{Hyper-Parameter Frame design which allows setting of parameters}
+        \label{fig:hyper-parameter-frame-design}
         \end{figure}
 
     \pagebreak
@@ -207,6 +222,8 @@ technical solution section.
                 \begin{figure}[h!]
                 \centering
                 \includegraphics[width=0.7\textwidth]{./project-report/src/images/training-frame-1-design.png}
+                \caption{Training frame layout during training}
+                \label{fig:training-frame-1-design}
                 \end{figure}
 
             \pagebreak
@@ -214,7 +231,9 @@ technical solution section.
             \item Once training has finished, the following is displayed on the Training Frame, the implemented version is shown in Figure **.
                 \begin{figure}[h!]
                 \centering
-                \includegraphics[width=0.7\textwidth]{./project-report/src/images/training-frame-1-design.png}
+                \includegraphics[width=0.7\textwidth]{./project-report/src/images/training-frame-2-design.png}
+                \caption{Training frame layout after training}
+                \label{fig:training-frame-2-design}
                 \end{figure}
             \end{itemize}
 
@@ -224,6 +243,8 @@ technical solution section.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/load-model-frame-design.png}
+        \caption{Load model frame design}
+        \label{fig:load-model-frame-design}
         \end{figure}
     
     \pagebreak
@@ -232,6 +253,8 @@ technical solution section.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/testing-frame-design.png}
+        \caption{Test frame design}
+        \label{fig:testing-frame-design}
         \end{figure}
 \end{itemize}
 
@@ -239,7 +262,7 @@ technical solution section.
 
 To allow for faster training of an Artificial Neural Network, I will give the option to use a Graphics Card to train the Artificial Neural Network where available. 
 I will also give the option to load pretrained weights to run on less computationally powerful hardware using just the CPU as standard. This was implemented by using the *** 
-instead of ***.
+instead of *** libraries.
 
 \subsection{Workflow and source control}
 
