@@ -22,6 +22,13 @@ I will also be using SysML for designing the following diagrams.
 
 \subsection{System Architecture}
 
+The project is architected using object-orientated design principles, it was then implemented in Python. A SysML block diagram showing the key architectural components is 
+shown in Figure ** below with detailed SysML class diagrams shown in sections ** to **.
+
+As shown in the Figure ** the User interacts with the software through a User Interface (UI) which is written in tkinter. The UI classes interface with the Model block which 
+contains all the classes necessary for representing the Artificial Neural Network models. As such functional separation is maintained between the user interface elements and 
+the Neural Network representation.
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/system-architecture-diagram.png}
@@ -33,12 +40,18 @@ I will also be using SysML for designing the following diagrams.
 
 \subsubsection{UI Class Diagram}
 
+The classes utilised to implement the UI are shown in Figure **. As can be seen the School\_Project\_Frame inherits the tk.Frame class - a tkinter base class which provides 
+the basic frame functionality. The School\_Project\_Frame then contains a series of UI interaction specific Frames.
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/ui-class-diagram.png}
 \end{figure}
 
 \subsubsection{Model Class Diagram}
+
+The  Model class diagram is shown below in figure **. An AbstractModel class contains a linked list of FullyConnectedLayer classes which represent the layers within the 
+Artificial Neural Network.
 
 \begin{figure}[h!]
 \centering
@@ -49,6 +62,12 @@ I will also be using SysML for designing the following diagrams.
 
 \subsection{System Flow chart}
 
+The system flow is shown in Figure ** below. When the program is initialised the Home Frame is displayed. The left-hand route - \textit{Hyper-Parameter Frame} and 
+\textit{Training Frame} - provide the functionality to set hyper-parameters and train a new model. This model can be saved and loaded, following the right-hand route, 
+if desired before entering the \textit{Testing Frame} where the model can be applied to testing data and the model performance assessed. The ability to save models is 
+important as it allows for model training on a computer with a GPU and utilisation on a non-GPU-accelerated computer. This allowed an efficient build test cycle as I could 
+build models on a desk-based, GPU accelerated PC, and undertake testing / demonstration on a laptop.
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/system-flow-chart.png}
@@ -56,11 +75,34 @@ I will also be using SysML for designing the following diagrams.
 
 \subsection{Algorithms}
 
-Refer to Analysis for the algorithms behind the Artificial Neural Networks.
+The detail of algorithms underpinning the Artifical Neural Network are outlined in section **. To implement the algorithm each layer within the Artificial Neural Network is 
+represented as an instance of a \textit{FullyConnectedLayer} class each of which:
 
-\subsection{Data Structures}
+\begin{itemize}
+    \item Contains a weight and bias matrix.
+	\item Has a \textit{transfer\_function} which be selected by the user to be either Sigmoid or ReLu but can be easily extended to other functions.
+    \item Has a \textit{forward\_propagation} function which takes an input matrix which it then multiplies by the weight matrix and sums the result with the bias matrix, this 
+		  is then put through the \textit{transfer\_function}.
+    \item Has a \textit{backward\_propagation} function which passes the loss with respect to each layers output allowing adjustment of the weights and biases.
+\end{itemize}
 
-I will use the following data structures in the program:
+Each \textit{FullyConnectedLayer} class is then held within a doubly linked list contained within the \textit{Abstract Model Class}, which is a parent class of the 
+data-specific classes \textit{MNIST Model}, \textit{Cat Recognition Model} and \textit{XOR Model}. The use of a doubly linked list allows for a user defined number of hidden 
+layers from 0 upwards and allows easy propagation of the list.
+
+The algorithm to train the Artificial Neural Network iterates over a user-defined number of epochs. 
+
+Each epoch starts with the presentation of data / an image to the input layer. The doubly linked list of layers is traversed calling the \textit{forward\_propagation} function 
+on each. When the output layer is reached the derivative of the \textit{Log-Loss} function is calculated alongside the absolute \textit{Loss} for debugging and learning rate 
+plotting. 
+
+Following the calculation of the derivative of the \textit{Log-Loss} function, the doubly linked list is then iterated in reverse back through the layers calculating the loss 
+with respect to the weights and biases of each layer. This process is then used to adjust the weights and biases in each layer using the specified learning rate in an attempt 
+to reduce the loss value.
+
+\subsection{Data Structures and Techniques used}
+
+The following data structures are utilised in implementing the Artificial Neural Network:
 
 \begin{itemize}
     \item Standard lists for storing data, for example storing the shape of the Artificial Neural Network's layers.
@@ -68,8 +110,18 @@ I will use the following data structures in the program:
     \item Dictionaries for loading the default hyper-parameter values from a JSON file.
     \item Matrices to represent the layers and allow for a varied number of neurons in each layer. To represent the Matrices I will use both numpy arrays and cupy 
           arrays.
-    \item A Doubly linked list to represent the Artificial Neural Network, where each node is a layer of the network. This will allow me to traverse both forwards and 
+    \item A Doubly linked list to represent the Artificial Neural Network, where each node is a layer of the network. This allows traversing both forwards and 
           backwards through the network, as well as storing the first and last layer to start forward and backward propagation respectively.
+\end{itemize}
+
+TODO Some techniques used include:
+
+\begin{itemize}
+    \item Object-oriented design including inheritance, abstract classes and interfaces
+    \item Encapsulation
+    \item Decorators to wrap functions and modify behaviour
+    \item tkinter for interface design
+    \item SQL for database access
 \end{itemize}
 
 \subsection{File Structure}
@@ -78,49 +130,50 @@ I will use the following file structures to store necessary data for the program
 
 \begin{itemize}
     \item A JSON file for storing the default hyper-parameters for creating a new model for each dataset.
-    \item I will store the image dataset files in a 'datasets' directory. The dataset files will either be a compressed archive file (such as .pkl.gz files) or of the 
-          Hierarchical Data Format (such as .h5) for storing large datasets with fast retrieval.
-    \item I will save the weights and biases of saved models as numpy arrays in .npz files (a zipped archive file format) in a 'saved-models' directory, due to 
-          their compatibility with the numpy library.
+	\item Image dataset files are stored in either a compressed archive file (such as .pkl.gz files) or of the Hierarchical Data Format (such as .h5) for storing large 
+		  datasets with fast retrieval.
+	\item Weights and biases of saved models are stored as numpy arrays in .npz files (a zipped archive file format) in a 'saved-models' directory, which allows compatibility 
+		  with the standard numpy library.
 \end{itemize}
 
 \pagebreak
 
 \subsection{Database Design}
 
-I will use the following Relational database design for saving models, where the dataset, name and features of the saved model (including the location of the 
-saved models' weights and biases and the saved models' hyper-parameters) are saved:
+The following Relational database design is used for saving models, where the dataset, name and features of the saved model (including the location of the 
+saved models' weights and biases and the saved models' hyper-parameters) are saved. The Model\_ID field is the primary key.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/database-design.png}
 \end{figure}
 
-\begin{itemize}
-    \item I will also use the following unique constraint, so that each dataset can not have more than one model with the same name:
-    \begin{minted}{sql}
-    UNIQUE (Dataset, Name)
-    \end{minted}
-    \item I will also use the following constraint on each attribute to ensure no attribute is left empty:
-    \begin{minted}{sql}
-    NOT NULL
-    \end{minted}
-\end{itemize}
+The following unique constraint is also used so that each dataset can not have more than one model with the same name:
+
+\begin{minted}{sql}
+UNIQUE (Dataset, Name)
+\end{minted}
+
+The following constraint is applied to ensure no attribute is left empty:
+
+\begin{minted}{sql}
+NOT NULL
+\end{minted}
 
 \subsection{Queries}
 
-Here are some example queries for interacting with the database:
+Below are some example queries used for interacting with the database:
 
 \begin{itemize}
-    \item I can query the names of all saved models for a dataset with:
+    \item Query the names of all saved models for a dataset with:
     \begin{minted}{sql}
     SELECT Name FROM Models WHERE Dataset=?;
     \end{minted}
-    \item I can query the file location of a saved model with:
+    \item Query the file location of a saved model with:
     \begin{minted}{sql}
     SELECT File_Location FROM Models WHERE Dataset=? AND Name=?;
     \end{minted}
-    \item I can query the features of a saved model with:
+    \item Query the features of a saved model with:
     \begin{minted}{sql}
     SELECT * FROM Models WHERE Dataset=? AND Name=?;
     \end{minted}
@@ -128,10 +181,11 @@ Here are some example queries for interacting with the database:
 
 \subsection{Human-Computer Interaction}
 
-Here are the designs of each tkinter frame in the User Interface:
+Below are the designs of each tkinter frame in the User Interface. The flow of the frames is described in Figure **. The final implementation of the frames is shown in the 
+technical solution section.
 
 \begin{itemize}
-    \item Home Frame design:
+    \item The home Frame design which acts as the entry point to the program, the implemented version is shown in Figure **.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/home-frame-design.png}
@@ -139,7 +193,7 @@ Here are the designs of each tkinter frame in the User Interface:
 
     \pagebreak
 
-    \item Hyper-Parameter Frame design:
+    \item Hyper-Parameter Frame design which allows setting of the Hyper-parameters, the implemented version is shown in Figure **.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/hyper-parameter-frame-design.png}
@@ -147,9 +201,9 @@ Here are the designs of each tkinter frame in the User Interface:
 
     \pagebreak
 
-    \item Training Frame design:
+    \item Training Frame design: 
         \begin{itemize}
-            \item During training, the following is displayed on the Training Frame:
+            \item During training, the following is displayed on the Training Frame, the implemented version is shown in Figure **.
                 \begin{figure}[h!]
                 \centering
                 \includegraphics[width=0.7\textwidth]{./project-report/src/images/training-frame-1-design.png}
@@ -157,7 +211,7 @@ Here are the designs of each tkinter frame in the User Interface:
 
             \pagebreak
 
-            \item Once training has finished, the following is displayed on the Training Frame:
+            \item Once training has finished, the following is displayed on the Training Frame, the implemented version is shown in Figure **.
                 \begin{figure}[h!]
                 \centering
                 \includegraphics[width=0.7\textwidth]{./project-report/src/images/training-frame-1-design.png}
@@ -166,7 +220,7 @@ Here are the designs of each tkinter frame in the User Interface:
 
     \pagebreak
 
-    \item Load Model Frame design:
+    \item Load Model Frame design, the implemented version is shown in Figure **.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/load-model-frame-design.png}
@@ -174,7 +228,7 @@ Here are the designs of each tkinter frame in the User Interface:
     
     \pagebreak
     
-    \item Test Frame design:
+    \item Test Frame design, the implemented version is shown in Figure **.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/testing-frame-design.png}
@@ -183,19 +237,19 @@ Here are the designs of each tkinter frame in the User Interface:
 
 \subsection{Hardware Design}
 
-To allow for faster training of an Artificial Neural Network, I will give the option to use a Graphics Card to train the Artificial Neural Network if available. 
-I will also give the option to load pretrained weights to run on less computationally powerful hardware using just the CPU as standard.
+To allow for faster training of an Artificial Neural Network, I will give the option to use a Graphics Card to train the Artificial Neural Network where available. 
+I will also give the option to load pretrained weights to run on less computationally powerful hardware using just the CPU as standard. This was implemented by using the *** 
+instead of ***.
 
 \subsection{Workflow and source control}
 
-I will use Git along with GitHub to manage my workflow and source control as I develop the project, by utilising the following features:
+Git and GitHub were used to manage the workflow and provide source control as the project was developed. In particular the following features were utilised:
 
 \begin{itemize}
     \item Commits and branches for adding features and fixing bugs separately.
     \item Using GitHub to back up the project as a repository.
-    \item I will setup automated testing on GitHub after each pushed commit.
-    \item I will also provide the necessary instructions and information for the installation and usage of this project, aswell as creating releases of the project 
-          with new patches.
+    \item Automated testing on GitHub after each pushed commit.
+    \item Providing the necessary instructions and information for the installation and usage of this project, as well as creating releases of the project with new patches.
 \end{itemize}
 
 \end{document}
