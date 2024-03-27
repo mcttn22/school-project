@@ -83,7 +83,7 @@ Git and Github were used extensively to manage the codebase and utilised the fol
 
 I also utilise a TODO.md file for keeping track of what features and/or bugs need to be worked on.
 
-\subsection{models package}
+\subsection{Models package}
 
 This package is a self-contained package for creating the trained Artificial Neural Networks and can either be used with a CPU or a GPU, as well as containing the test 
 and training data for all three datasets in a datasets directory. Whilst both the cpu and gpu subpackage are similar in functionality, the cpu subpackage uses NumPy 
@@ -93,7 +93,7 @@ code for the cpu subpackage - the GPU subpackage is identical apart from calling
 Both the cpu and gpu subpackage contain a utils subpackage that provides the tools for creating Artificial Neural Networks, and three modules that are the implementation 
 of Artificial Neural Networks for each dataset.
 
-\subsubsection{utils subpackage}
+\subsubsection{Utils subpackage}
 \label{sec:utils-subpackage}
 
 The utils subpackage consists of a tools.py module that provides a ModelInterface class and helper functions for the model.py module, that contains an AbstractModel 
@@ -121,7 +121,7 @@ The following three modules implement the AbstractModel class from the above mod
         \inputminted{python}{./school_project/models/cpu/xor.py}
 \end{itemize}
 
-\subsection{frames package}
+\subsection{Frames package}
 
 I have used tkinter for the User Interface and the frames package which consists of tkinter frames to be loaded onto the main window when needed. The package also 
 includes a hyper-parameter-defaults.json file, which stores optimum default values for the hyper-parameters to be set to.
@@ -189,7 +189,7 @@ includes a hyper-parameter-defaults.json file, which stores optimum default valu
         \end{figure}
 \end{itemize}
 
-\subsection{\_\_main\_\_.py module}
+\subsection{Project Entrypoint - \_\_main\_\_.py module}
 
 This module is the entrypoint to the project and loads the main window of the User Interface:
 
