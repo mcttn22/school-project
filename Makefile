@@ -17,3 +17,4 @@ project_report:
 
 clean:
 	$(TEX) -c -jobname=./project-report/project-report ./project-report/src/latex/project-report.tex
+	rm ./project-report/project-report.bbl

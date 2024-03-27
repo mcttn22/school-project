@@ -22,10 +22,10 @@ I will also be using SysML for designing the following diagrams.
 
 \subsection{System Architecture}
 
-The project is architected using object-orientated design principles, it was then implemented in Python. A SysML block diagram showing the key architectural components is 
-shown in the figure below with detailed SysML class diagrams shown in section \ref{UI-class-diagram}.
+The project is architected using object-orientated design principles, it was then implemented in Python. A SysML block diagram \cite{delligatti2013sysml} showing the key 
+architectural components is shown in the figure below with detailed SysML class diagrams shown in section \ref{UI-class-diagram}.
 
-As shown in the Figure \ref{fig:high-level-sys-arch} the User interacts with the software through a User Interface (UI) which is written in tkinter. The UI classes interface 
+As shown in the Figure \ref{fig:system-architecture} the User interacts with the software through a User Interface (UI) which is written in tkinter. The UI classes interface 
 with the Model block which contains all the classes necessary for representing the Artificial Neural Network models. As such functional separation is maintained between the 
 user interface elements and the Neural Network representation.
 
@@ -42,7 +42,7 @@ user interface elements and the Neural Network representation.
 
 \subsubsection{UI Class Diagram}
 \label{UI-class-diagram}
-The classes utilised to implement the UI are shown in Figure \ref{fig:UI-class-diag}. As can be seen the School\_Project\_Frame inherits the tk.Frame class - a tkinter base 
+The classes utilised to implement the UI are shown in Figure \ref{fig:UI-class-diagram}. As can be seen the School\_Project\_Frame inherits the tk.Frame class - a tkinter base 
 class which provides 
 the basic frame functionality. The School\_Project\_Frame then contains a series of UI interaction specific Frames.
 
@@ -137,7 +137,7 @@ Some techniques used include:
 I will use the following file structures to store necessary data for the program:
 
 \begin{itemize}
-    \item A JSON file for storing the default hyper-parameters for creating a new model for each dataset.
+	\item A JSON file \cite{w3json} for storing the default hyper-parameters for creating a new model for each dataset.
 	\item Image dataset files are stored in either a compressed archive file (such as .pkl.gz files) or of the Hierarchical Data Format (such as .h5) for storing large 
 		  datasets with fast retrieval.
 	\item Weights and biases of saved models are stored as numpy arrays in .npz files (a zipped archive file format) in a 'saved-models' directory, which allows compatibility 

@@ -12,7 +12,7 @@
 
 From an abstract perspective, Artificial Neural Networks are inspired by the anatomy of the human brain, consisting of layers of 'neurons' all interconnected via 
 different links, 'axons with connecting synapses', each with their own strengths, 'weights'. By adjusting these links and weights, Artificial Neural Networks can be trained 
-to take in an input and give its best prediction as an output.
+to take in an input and give its best prediction as an output \cite{IBMweb}.
 
 \begin{figure}[h!]
 \centering
@@ -48,7 +48,7 @@ Multi-Layer Perceptron Artificial Neural Networks consist of:
 \end{itemize}
 
 To implement an Artificial Neural Network, matrices are typically used to represent the layers, where each layer is a matrix of the layer's neuron's values. In 
-order to use matrices for this, the following basic theory must be known about them:
+order to use matrices for this, the following basic theory must be known about them \cite{nelson2023essential}:
 
 \begin{itemize}
     \item When Adding two matrices, both matrices must have the same number of rows and columns. Alternatively, a single column matrix with the same number of rows can be 
@@ -154,7 +154,8 @@ Figure \ref{fig:abstract-network} below shows a simplified view of an Artificial
             \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
         \end{itemize}
         \item However, for the input layer and the hidden layers, another transfer function known as ReLu (Rectified Linear Unit) can be better suited as it produces 
-              larger values of $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ for Gradient Descent than Sigmoid, so updates at a quicker rate.
+			larger values of $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ for Gradient Descent than Sigmoid \cite{nelson2023essential}, so updates 
+			at a quicker rate.
         \begin{itemize}
             \item Where $relu(Z) = max(0, Z)$
         \end{itemize}
@@ -177,7 +178,8 @@ as the loss. Backward propagation then adjusts the weights and biases in an atte
 
 \begin{itemize}
     \item First the Loss value L is calculated using the following Log-Loss function, which calculates the average difference between A and the value it should have 
-          predicted Y. The average is then found by summing the result of the Loss function for each value in the matrix A, then dividing by the number of predictions m, 
+		predicted Y. The average is then found by summing the result of the Loss function \cite{datacamp} for each value in the matrix A, then dividing by the number of 
+		predictions m, 
           resulting in a Loss value indicating how well the network is performing.
     	  Where $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$ and "log()" is the natural logarithm
     \item The network is then trained by moving back through the layers, adjusting the weights and biases via Gradient Descent. For each layer, the weights and biases are 
