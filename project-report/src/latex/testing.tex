@@ -7,250 +7,249 @@
 \clearpage
 \section{Testing}
 
-\subsection{Manual Testing}
+Testing on the project consists of manual testing, where the inputs to frames were tested to ensure correct behaviour and error handling, and automated testing through the 
+use of unit tests that run upon every commit to GitHub.
 
-\subsubsection{Input Validation Testing} % See table on teams
+\subsection{Manual Testing - Input Validation Testing}
 
 The following tests check the input validation of each frames' inputs.
 
+\subsubsection{Hyper Parameter Frame}
+\label{sec:hyper-parameter-frame-input-validation}
 \begin{itemize}
-    \item Hyper Parameter Frame:
-    \label{sec:hyper-parameter-frame-input-validation}
-    \begin{itemize}
-        \item Use GPU Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Select Use GPU checkbox without a GPU present. \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
+	\item Use GPU Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Select Use GPU checkbox without a GPU present. \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
 
-			\vspace{5mm}
+		\vspace{5mm}
 
-			Evidence:
-			\begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/create-model-use-gpu-validation.png}}
-			\end{figure}
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/create-model-use-gpu-validation.png}}
+		\end{figure}
 
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#use-gpu-validation}
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#use-gpu-validation}
 
-        \pagebreak
+	\pagebreak
 
-        \item Non-Numeric Hidden Layers Shape Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Enter a non-numeric hidden layers shape. \\
-				\hline
-				Data Value & "test" \\
-				\hline
-				Data Type & Erroneous \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
+	\item Non-Numeric Hidden Layers Shape Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Enter a non-numeric hidden layers shape. \\
+			\hline
+			Data Value & "test" \\
+			\hline
+			Data Type & Erroneous \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
 
-			\vspace{5mm}
+		\vspace{5mm}
 
-			Evidence:
-			\begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/non-numeric-hidden-layers-shape-input-validation.png}}
-			\end{figure}
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/non-numeric-hidden-layers-shape-input-validation.png}}
+		\end{figure}
 
-			\begin{sloppypar}
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#non-numeric-hidden-layers-shape-validation}
-			\end{sloppypar}
+		\begin{sloppypar}
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#non-numeric-hidden-layers-shape-validation}
+		\end{sloppypar}
+
+		\pagebreak
+
+	\item Negative Hidden Layers Shape Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Enter a negative hidden layers shape. \\
+			\hline
+			Data Value & "-100" \\
+			\hline
+			Data Type & Erroneous \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
+
+		\vspace{5mm}
+
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/negative-hidden-layers-shape-input-validation.png}}
+		\end{figure}
+
+		\begin{sloppypar}
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#negative-hidden-layers-shape-validation}
+		\end{sloppypar}
+
+	\pagebreak
+
+	\item Invalid Delimiter Hidden Layers Shape Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Enter a hidden layers shape with invalid delimiters. \\
+			\hline
+			Data Value & "100,,100" \\
+			\hline
+			Data Type & Erroneous \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
+
+		\vspace{5mm}
+
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/invalid-delimiter-hidden-layers-shape-input-validation.png}}
+		\end{figure}
+
+		\begin{sloppypar}
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#invalid-delimiter-hidden-layers-shape-validation}
+		\end{sloppypar}
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{Load Model Frame}
+\label{sec:load-model-frame-input-validation}
+\begin{itemize}
+	\item Use GPU Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Select Use GPU checkbox without a GPU present. \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
+		
+		\vspace{5mm}
+
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/load-model-use-gpu-validation.png}}
+		\end{figure}
+
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#use-gpu-validation-1}
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{Test Frames}
+\label{sec:test-frames-input-validation}
+\begin{itemize}
+	\item Taken Trained Model Name Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Try to save a trained model with an already taken name. \\
+			\hline
+			Data Value & "test" \\
+			\hline
+			Data Type & Erroneous \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
+
+		\vspace{5mm}
+
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/taken-trained-model-name-input-validation.png}}
+		\end{figure}
+
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#taken-trained-model-name-validation}
+
+	\pagebreak
 	
-			\pagebreak
+	\item Empty Trained Model Name Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Try to save a trained model with blank name. \\
+			\hline
+			Data Value & "" \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
 
-        \item Negative Hidden Layers Shape Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Enter a negative hidden layers shape. \\
-				\hline
-				Data Value & "-100" \\
-				\hline
-				Data Type & Erroneous \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
+		\vspace{5mm}
 
-			\vspace{5mm}
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/empty-trained-model-name-input-validation.png}}
+		\end{figure}
 
-			Evidence:
-			\begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/negative-hidden-layers-shape-input-validation.png}}
-			\end{figure}
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#empty-trained-model-name-validation}
 
-			\begin{sloppypar}
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#negative-hidden-layers-shape-validation}
-			\end{sloppypar}
+	\pagebreak
 
-		\pagebreak
+	\item Invalid Delimiter Trained Model Name Validation: \newline\newline
+		\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
+			\hline
+			Description & Try to save a trained model with a name with incorrect delimiters. \\
+			\hline
+			Data Value & "test  test" \\
+			\hline
+			Expected Result & The exception should be handled and a useful error message should be displayed. \\
+			\hline
+			Actual Result & Expected Result \\
+			\hline
+			Test Status & Pass \\
+			\hline
+		\end{tabular}
 
-        \item Invalid Delimiter Hidden Layers Shape Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Enter a hidden layers shape with invalid delimiters. \\
-				\hline
-				Data Value & "100,,100" \\
-				\hline
-				Data Type & Erroneous \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
+		\vspace{5mm}
 
-			\vspace{5mm}
+		Evidence:
+		\begin{figure}[h!]
+		\centering
+		\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/invalid-delimiter-trained-model-name-input-validation.png}}
+		\end{figure}
 
-			Evidence:
-			\begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/invalid-delimiter-hidden-layers-shape-input-validation.png}}
-			\end{figure}
-
-			\begin{sloppypar}
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#invalid-delimiter-hidden-layers-shape-validation}
-			\end{sloppypar}
-    \end{itemize}
-
-    \pagebreak
-
-    \item Load Model Frame:
-    \label{sec:load-model-frame-input-validation}
-    \begin{itemize}
-        \item Use GPU Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Select Use GPU checkbox without a GPU present. \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
-			
-			\vspace{5mm}
-
-			Evidence:
-            \begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/load-model-use-gpu-validation.png}}
-			\end{figure}
-
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#use-gpu-validation-1}
-    \end{itemize}
-
-    \pagebreak
-
-    \item Test Frames:
-    \label{sec:test-frames-input-validation}
-    \begin{itemize}
-        \item Taken Trained Model Name Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Try to save a trained model with an already taken name. \\
-				\hline
-				Data Value & "test" \\
-				\hline
-				Data Type & Erroneous \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
-
-			\vspace{5mm}
-
-            Evidence:
-			\begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/taken-trained-model-name-input-validation.png}}
-			\end{figure}
-
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#taken-trained-model-name-validation}
-
-        \pagebreak
-        
-        \item Empty Trained Model Name Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Try to save a trained model with blank name. \\
-				\hline
-				Data Value & "" \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
-
-			\vspace{5mm}
-
-            Evidence:
-			\begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/empty-trained-model-name-input-validation.png}}
-			\end{figure}
-
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#empty-trained-model-name-validation}
-
-		\pagebreak
-
-        \item Invalid Delimiter Trained Model Name Validation: \newline\newline
-			\begin{tabular}{|p{0.25\linewidth}|p{0.75\linewidth}|}
-				\hline
-				Description & Try to save a trained model with a name with incorrect delimiters. \\
-				\hline
-				Data Value & "test  test" \\
-				\hline
-				Expected Result & The exception should be handled and a useful error message should be displayed. \\
-				\hline
-				Actual Result & Expected Result \\
-				\hline
-				Test Status & Pass \\
-				\hline
-			\end{tabular}
-
-			\vspace{5mm}
-
-            Evidence:
-			\begin{figure}[h!]
-			\centering
-			\frame{\includegraphics[width=1\textwidth]{./project-report/src/images/invalid-delimiter-trained-model-name-input-validation.png}}
-			\end{figure}
-
-			\begin{sloppypar}
-			Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#invalid-delimiter-trained-model-name-validation}
-			\end{sloppypar}
-    \end{itemize}
+		\begin{sloppypar}
+		Link to video evidence: \url{https://github.com/mcttn22/school-project/blob/main/project-report/testing-videos.md/#invalid-delimiter-trained-model-name-validation}
+		\end{sloppypar}
 \end{itemize}
 
 \subsection{Automated Testing}
