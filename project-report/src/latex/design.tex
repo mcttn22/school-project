@@ -55,8 +55,8 @@ the basic frame functionality. The School\_Project\_Frame then contains a series
 
 \subsubsection{Model Class Diagram}
 
-The  Model class diagram is shown below in figure **. An AbstractModel class contains a linked list of FullyConnectedLayer classes which represent the layers within the 
-Artificial Neural Network.
+The Model class diagram is shown below in figure \ref{fig:model-class-diagram}. An AbstractModel class contains a linked list of FullyConnectedLayer classes which represent 
+the layers within the Artificial Neural Network.
 
 \begin{figure}[h!]
 \centering
@@ -69,11 +69,10 @@ Artificial Neural Network.
 
 \subsection{System Flow chart}
 
-The system flow is shown in Figure ** below. When the program is initialised the Home Frame is displayed. The left-hand route - \textit{Hyper-Parameter Frame} and 
-\textit{Training Frame} - provide the functionality to set hyper-parameters and train a new model. This model can be saved and loaded, following the right-hand route, 
-if desired before entering the \textit{Testing Frame} where the model can be applied to testing data and the model performance assessed. The ability to save models is 
-important as it allows for model training on a computer with a GPU and utilisation on a non-GPU-accelerated computer. This allowed an efficient build test cycle as I could 
-build models on a desk-based, GPU accelerated PC, and undertake testing / demonstration on a laptop.
+The system flow is shown in Figure \ref{fig:system-flow-chart} below. When the program is initialised the Home Frame is displayed. The left-hand route - 
+\textit{Hyper-Parameter Frame} and \textit{Training Frame} - provide the functionality to set hyper-parameters and train a new model. This model can be saved and loaded, 
+following the right-hand route, if desired before entering the \textit{Testing Frame} where the model can be applied to testing data and the model performance assessed. The 
+ability to save models is important as it allows for model training on a computer with a GPU and utilisation on a non-GPU-accelerated computer. This allowed an efficient build test cycle as I could build models on a desk-based, GPU accelerated PC, and undertake testing / demonstration on a laptop.
 
 \begin{figure}[h!]
 \centering
@@ -123,7 +122,7 @@ The following data structures are utilised in implementing the Artificial Neural
           backwards through the network, as well as storing the first and last layer to start forward and backward propagation respectively.
 \end{itemize}
 
-TODO Some techniques used include:
+Some techniques used include:
 
 \begin{itemize}
     \item Object-oriented design including inheritance, abstract classes and interfaces
@@ -196,7 +195,7 @@ Below are the designs of each tkinter frame in the User Interface. The flow of t
 frames is shown in the technical solution section.
 
 \begin{itemize}
-    \item The home Frame design which acts as the entry point to the program, the implemented version is shown in Figure **.
+    \item The home Frame design which acts as the entry point to the program, the implemented version is shown in Figure \ref{fig:home-frame-impl}.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/home-frame-design.png}
@@ -206,7 +205,7 @@ frames is shown in the technical solution section.
 
     \pagebreak
 
-    \item Hyper-Parameter Frame design which allows setting of the Hyper-parameters, the implemented version is shown in Figure **.
+    \item Hyper-Parameter Frame design which allows setting of the Hyper-parameters, the implemented version is shown in Figure \ref{fig:hyper-parameter-frame}.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/hyper-parameter-frame-design.png}
@@ -218,7 +217,7 @@ frames is shown in the technical solution section.
 
     \item Training Frame design: 
         \begin{itemize}
-            \item During training, the following is displayed on the Training Frame, the implemented version is shown in Figure **.
+            \item During training, the following is displayed on the Training Frame, the implemented version is shown in Figure \ref{fig:training-frame-1-impl}
                 \begin{figure}[h!]
                 \centering
                 \includegraphics[width=0.7\textwidth]{./project-report/src/images/training-frame-1-design.png}
@@ -228,7 +227,7 @@ frames is shown in the technical solution section.
 
             \pagebreak
 
-            \item Once training has finished, the following is displayed on the Training Frame, the implemented version is shown in Figure **.
+            \item Once training has finished, the following is displayed on the Training Frame, the implemented version is shown in Figure \ref{fig:training-frame-2-impl}.
                 \begin{figure}[h!]
                 \centering
                 \includegraphics[width=0.7\textwidth]{./project-report/src/images/training-frame-2-design.png}
@@ -239,7 +238,7 @@ frames is shown in the technical solution section.
 
     \pagebreak
 
-    \item Load Model Frame design, the implemented version is shown in Figure **.
+    \item Load Model Frame design, the implemented version is shown in Figure \ref{fig:load-model-frame-impl}.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/load-model-frame-design.png}
@@ -249,7 +248,7 @@ frames is shown in the technical solution section.
     
     \pagebreak
     
-    \item Test Frame design, the implemented version is shown in Figure **.
+    \item Test Frame design, the implemented version is shown in Figure \ref{fig:test-frame-impl}.
         \begin{figure}[h!]
         \centering
         \includegraphics[width=0.7\textwidth]{./project-report/src/images/testing-frame-design.png}
