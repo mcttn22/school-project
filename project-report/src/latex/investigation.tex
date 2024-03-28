@@ -14,15 +14,15 @@ Artificial Neural Network performance.
 \subsection{test\_model module}
 \label{sec:test_model-module}
 
-The test\_model module is contained within the frames package, and contains tkinter frames for testing the trained Artificial Neural Network models for each dataset. 
-For each training dataset that an Artificial Neural Network is trained on, there is a corresponding test dataset with completely new images to be tested on to judge 
-the performance of the trained model. As fewer images are needed for testing than for training, the Cat dataset only has 50 test images (compared to the 209 images 
-for training) and the MNIST \cite{wiki_mnist} dataset only has 10,000 test images (compared to the 60,000 images for training).
-Each frame displays the results of the testing along with a random selection of incorrect and correct predictions.
+The test\_model module is contained within the frames package, and contains tkinter frames for investigating the behaviour of trained Artificial Neural Network models for 
+each dataset. For each training dataset that an Artificial Neural Network is trained on, there is a corresponding test dataset with completely new images to be tested on to 
+judge the performance of the trained model. As fewer images are needed for testing than for training, the Cat dataset only has 50 test images (compared to the 209 images for 
+training) and the MNIST \cite{wiki_mnist} dataset only has 10,000 test images (compared to the 60,000 images for training).Each frame displays the results of the testing 
+along with a random selection of incorrect and correct predictions.
 
 \inputminted{python}{./school_project/frames/test_model.py}
 
-Which outputs the following results depending on the dataset used:
+This code outputs the following results, as shown in figures \ref{fig:test-frame-impl} to \ref{fig:xor-test_frame-impl} depending on the dataset used:
 
 \pagebreak
 
@@ -47,9 +47,10 @@ Which outputs the following results depending on the dataset used:
 \centering
 \frame{\includegraphics[width=1\textwidth]{./project-report/src/images/test-xor-frame.png}}
 \caption{Model test results for XOR dataset}
+\label{fig:xor-test_frame-impl}
 \end{figure}
 
-\subsection{Effects of Hyper-Parameters}
+\subsection{Exploration into the effects of Hyper-Parameters}
 \label{sec:effects-of-hyper-parameters}
 
 As discussed in section \ref{sec:ann-theory} Artificial Neural Networks have a number of critical hyper-parameters which describe the shape of the network and the nature in 
@@ -93,7 +94,7 @@ analysis below.
 
 \includepdf[pages=-, pagecommand={\thispagestyle{plain}}, scale=0.9]{./project-report/src/pdfs/cpu-vs-gpu-analysis.pdf}
 
-\subsubsection{Conclusions}
+\subsection{Conclusions}
 
 The principle conclusion from this analysis is that both the shape of the network and selection of other hyper-parameters is critical to develop an optimum Artificial Neural 
 Network. 

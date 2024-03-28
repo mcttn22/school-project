@@ -17,7 +17,7 @@ to take in an input and give its best prediction as an output \cite{IBMweb}.
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/connected-neurons.png}
-\caption{Two connected biological neurons sourced from https://www.researchgate.net}
+\caption{Two connected biological neurons sourced from https://www.researchgate.net~/cite{researchgate}}
 \end{figure}
 
 \vspace{5mm}
@@ -47,8 +47,8 @@ Multi-Layer Perceptron Artificial Neural Networks consist of:
     \item An output layer of output neurons, which outputs the final prediction.
 \end{itemize}
 
-To implement an Artificial Neural Network, matrices are typically used to represent the layers, where each layer is a matrix of the layer's neuron's values. In 
-order to use matrices for this, the following basic theory must be known about them \cite{nelson2023essential}:
+To implement an Artificial Neural Network, matrices are typically used to represent the layers, where each layer is a matrix of the layer's neuron's values. In order to use 
+matrices for this, the following basic theory must be understood about them \cite{nelson2023essential}:
 
 \begin{itemize}
     \item When Adding two matrices, both matrices must have the same number of rows and columns. Alternatively, a single column matrix with the same number of rows can be 
@@ -69,7 +69,8 @@ I have focused on using Fully-Connected layers, that input values and apply the 
 
 \begin{itemize}
     \item \textbf{Activation function} which calculates the dot product of an input matrix with a weight matrix, then sums the result with a bias matrix.
-    \item \textbf{Transfer function} which takes the result of the activation function and calculates a suitable output value as well as adding more non-linearity to the Neural Network. 
+    \item \textbf{Transfer function} which takes the result of the activation function and calculates a suitable output value as well as adding non-linearity to the Neural 
+		  Network. 
           For example, the Sigmoid Transfer function converts the input value to an output number between zero and one - this makes it useful for logistic regression where the output value 
           can be rounded to allow for a binary classification.
 \end{itemize}
@@ -92,7 +93,8 @@ the Loss value of the prediction to a minimum, by subtracting the rate of change
 To calculate the rate of change of Loss with respect to the weights / biases, I used the following calculus methods:
 
 \begin{itemize}
-    \item Partial Differentiation, which allows differentiation of multi-variable functions, by differentiating with respect to one variable and treating the rest as constants.
+    \item Partial Differentiation, which allows differentiation of multi-variable functions, by differentiating with respect to one variable and considering the rest as 
+		  constants.
     \item The Chain Rule, where for $y = f(u)$ and $u = g(x)$, $\frac{\partial{y}}{\partial{x}}$ can be calculated as: $\frac{\partial{y}}{\partial{x}} = \frac{\partial{y}}{\partial{u}} * \frac{\partial{u}}{\partial{x}}$.
 \end{itemize}
 
@@ -102,17 +104,18 @@ This repetitive process will continue to reduce the Loss to a minimum, if the le
 \centering
 \includegraphics[width=1\textwidth]{./project-report/src/images/gradient-descent.png}
 \caption{Gradient Descent\\
-        sourced from https://www.ibm.com/topics/gradient-descent}
+         sourced from https://www.ibm.com/topics/gradient-descent~/cite{IBMweb}}
 \end{figure}
 
 \pagebreak
 
-However, during backpropagation some issues can occur, such as the following:
+During backpropagation, however, some issues can occur, such as the following:
 
 \begin{itemize}
     \item Finding a false local minimum rather than the global minimum of the function
-    \item Having an 'Exploding Gradient', where the gradient value grows exponentially to the point of overflow errors
-    \item Having a 'Vanishing Gradient', where the gradient value decreases to a very small value or zero, resulting in a lack of updating values during training.
+    \item Having an 'Exploding Gradient'~\cite{hunt2014artificial}, where the gradient value grows exponentially to the point of overflow errors
+    \item Having a 'Vanishing Gradient'~\cite{hunt2014artificial}, where the gradient value decreases to a very small value or zero, resulting in a lack of updating values 
+		  during training.
 \end{itemize}
 
 \pagebreak
@@ -122,13 +125,6 @@ However, during backpropagation some issues can occur, such as the following:
 \vspace{5mm}
 
 \subsubsection{Network Architecture and Training}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width=1\textwidth]{./project-report/src/images/deep-ann-diagram-2.png}
-\caption{This shows an Artificial Neural Network with multiple hidden layers and is known as a Deep Neural Network.}
-\label{fig:abstract-network}
-\end{figure}
 
 Figure \ref{fig:abstract-network} below shows a simplified view of an Artificial Neural Network with multiple hidden layers, known as a Deep Neural Network, where:
 
@@ -141,6 +137,15 @@ Figure \ref{fig:abstract-network} below shows a simplified view of an Artificial
 \label{fig:abstract-network}
 \end{figure}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\textwidth]{./project-report/src/images/deep-ann-diagram-2.png}
+\caption{This shows an Artificial Neural Network with multiple hidden layers and is known as a Deep Neural Network.}
+\label{fig:abstract-network2}
+\end{figure}
+
+Figure \ref{fig:abstract-network2} shows the network in more detail. The layers have inputs x, weight matrix wN and biases BN.
+
 \begin{itemize}
     \item Each layer takes the previous layer's output as its input X
     \item An Activation function is applied to X to obtain Z, by taking the dot product of X with a weight matrix W, and sums the result with a bias matrix B. At 
@@ -148,8 +153,8 @@ Figure \ref{fig:abstract-network} below shows a simplified view of an Artificial
           $Z = W * X + B$
     \item A Transfer function is then applied to Z to obtain the layer's output A
     \begin{itemize}
-        \item For the output layer, the sigmoid function (explained previously) can be used for either for binary classification via logistic regression, or for multi-
-              class classification where the output neuron, and the associated class, that has the highest value between zero and one is selected.
+        \item For the output layer, the sigmoid function, explained in section \ref{sec:ann-theory}, can be used for either for binary classification via logistic regression, 
+			  or for multi-class classification where the output neuron, and the associated class, that has the highest value between zero and one is selected.
         \begin{itemize}
             \item Where $sigmoid(Z) = \frac{1}{1+e^{-Z}}$
         \end{itemize}
@@ -164,8 +169,8 @@ Figure \ref{fig:abstract-network} below shows a simplified view of an Artificial
 
 \subsubsection{Training}
 
-Training takes place through a series of forward and backward propagation called epochs. The forward propagation generates a potential output and associated error known 
-as the loss. Backward propagation then adjusts the weights and biases in an attempt to reduce this loss.
+Training takes place through a series of forward and backward propagations called epochs. The forward propagation generates a potential output and associated error known as 
+the loss. Backward propagation then adjusts the weights and biases in an attempt to reduce this loss.
 
 \subsubsection{Forward Propagation:}
 
@@ -177,11 +182,14 @@ as the loss. Backward propagation then adjusts the weights and biases in an atte
 \subsubsection{Back Propagation:}
 
 \begin{itemize}
-    \item First the Loss value L is calculated using the following Log-Loss function, which calculates the average difference between A and the value it should have 
-		predicted Y. The average is then found by summing the result of the Loss function \cite{datacamp} for each value in the matrix A, then dividing by the number of 
-		predictions m, 
-          resulting in a Loss value indicating how well the network is performing.
-    	  Where $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$ and "log()" is the natural logarithm
+    \item The Loss value L is first calculated using the following Log-Loss function shown in the equation below, which calculates the average difference between A and the 
+		  value it should have predicted Y. The average is then found by summing the result of the Loss function \cite{datacamp} for each value in the matrix A, then dividing 
+		  by the number of predictions m, resulting in a Loss value indicating how well the network is performing.
+    	  Where 
+       
+          $L = -(\frac{1}{m}) * \sum(Y * log(A) + (1-Y) * log(1-A))$ 
+       
+          and "log()" is the natural logarithm.
     \item The network is then trained by moving back through the layers, adjusting the weights and biases via Gradient Descent. For each layer, the weights and biases are 
 		  updated with the following formulae:
     \begin{itemize}
@@ -219,9 +227,9 @@ as the loss. Backward propagation then adjusts the weights and biases in an atte
               \newline
               $=> \frac{\partial{L}}{\partial{W2}} = \frac{\partial{L}}{\partial{A2}} * \frac{\partial{A2}}{\partial{Z2}} * 1$
     \end{itemize}
-    \item As can be seen, when moving back through the network, $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ can be calculated for each layer 
-		  with the rate of change of loss with respect to its output, which is calculated by the previous layer using the above formula; the derivative of 
-          the layer's transfer function, and the layers input (which in this case is A1)
+    \item As can be seen, when moving back through the network, $\frac{\partial{L}}{\partial{W}}$ and $\frac{\partial{L}}{\partial{B}}$ can be calculated for each layer using 
+		  the rate of change of loss with respect to its output. This is calculated by the previous layer using the above formula; the derivative of the layer's transfer 
+		  function, and the layers input (which in this case is A1)
     \begin{itemize}
         \item Where by using function 2, $\frac{\partial{A_{relu}}}{\partial{Z}} = 1$ when $Z >= 0$ otherwise $\frac{\partial{A_{relu}}}{\partial{Z}} = 0$
         \item Where by using function 3, $\frac{\partial{A_{sigmoid}}}{\partial{Z}} = A * (1 - A)$
@@ -235,48 +243,49 @@ as the loss. Backward propagation then adjusts the weights and biases in an atte
 
 \subsection{Theory behind training the Artificial Neural Networks}
 
-Training an Artificial Neural Network's weights and biases to predict on a dataset, will create a trained model for that dataset. This model can be used to create 
-predictions based on future data / images inputted. However, training Artificial Neural Networks involves problems such as Overfitting, where the trained model learns 
-the patterns of the training dataset too well, resuting in poor predictions on new datasets. This can occur when the training dataset does not cover enough situations 
+Training an Artificial Neural Network's weights and biases to predict on a dataset creates a trained model for that dataset. This model can be used to create 
+predictions based on future data / images inputted. However, training Artificial Neural Networks suffers problems such as Overfitting, where the trained model learns 
+the patterns of the training dataset too well, resulting in poor predictions on new datasets. This can occur when the training dataset does not cover enough situations 
 of inputs and the desired outputs (by being too small for example), if the model is trained for too many epochs on the poor dataset or by having too many layers in the 
 Neural Network.
 
 Another common problem is Underfitting, where the model has not learnt the patterns of the training dataset well enough, often when it has been trained for too few 
 epochs, or when the Neural Network is too linear.
 
-\subsubsection{Datasets}
+\subsection{Datasets}
 
 I have utilised a series of open source datasets on which to train and test by Neural Networks.
 
 \subsubsection{XOR dataset}
 
 As a first step in developing and testing Artificial Neural Networks, I have utilised the XOR gate problem, where the Neural Network is fed input pairs of zeros and 
-ones and learns  to predict the output of a XOR gate used in circuits. This takes far less computation time than image datasets and is extremely useful in debugging. 
+ones and learns  to predict the output of a XOR gate used in circuits. This takes far less computation time than image datasets and was extremely useful in debugging. 
 It is a good example of a relatively simple problem whilst not being linearly separable.
 
 \subsubsection{MNIST dataset}
 
-The MNIST dataset is a well known dataset consisting of images of handwritten digits from zero to ten and is commonly used to test the performance of an Artificial Neural 
-Network. The dataset consists of 60,000 input images representing single digits made up from 28x28 pixels with each pixel having an RGB value from 0 to 255. To format the 
-images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrix of RGB values is commonly 'flattened' into a 1 dimensional matrix of 
-values, where each element is also divided by 255 (the max RGB value) to produce a number between 0 and 1, to standardize the dataset. The output dataset is also loaded which 
+The MNIST dataset \cite{wiki_mnist} is a well known dataset consisting of images of handwritten digits from zero to ten and is commonly used to test the performance of an 
+Artificial Neural 
+Network. The dataset consists of 60,000 input images representing single digits made up from 28x28 pixels with each pixel having a value from 0 to 255. To format the
+images into a suitable format to be inputted into the Artificial Neural Networks, each image's matrix of pixel values is commonly 'flattened' into a 1 dimensional matrix of 
+values, where each element is divided by 255 (the maximum 8 Bit value) to produce a number between 0 and 1, to standardize the dataset. The output dataset is also loaded which 
 represents the actual value of the number in the image. This is commonly implemented by using an array for each image where the index of the array represesents the number in 
 an image (i.e. a 1 in column 2 could represent a 2, or a 1 if zero indexed).
 
 To create a trained Artificial Neural Network model on this dataset, the model requires 10 output neurons (one for each digit). The Sigmoid Transfer function is then utilized 
 to output a number between one and zero to each neuron - whichever neuron received the highest value is selected as the predicted outcome. This an example of a multi-class 
-
 classification, where the model must predict one of 10 classes (in this case, each class is one of the digits from zero to ten).
+
 \subsubsection{Cat dataset}
 
-I have also used a dataset of images of cats sourced from https://github.com/marcopeix, where each image is classified as either a cat or not a cat. The dataset consists of 
-209 input images, made up from 64x64 pixels with each pixel having an RGB value from 0 to 255. To normalise the images into a suitable format to be input into the Artificial 
-Neural Network, each image's matrix of RGB values is 'flattened' into a 1 dimensional matrix of values, where each element is divided by 255 (the max RGB value) to a number 
-between 0 and 1, to standardize the dataset.
+I have also used a dataset of images of cats sourced from https://github.com/marcopeix~\cite{catdatabase}, where each image is classified as either a cat or not a cat. The 
+dataset consists of 209 input images, made up from 64x64 pixels with each pixel having an value from 0 to 255. To normalise the images into a suitable format to be input into 
+the Artificial Neural Network, each image's matrix of values is 'flattened' into a 1 dimensional matrix of values, where each element is divided by 255 (the maximum 8 bit 
+value) to a number between 0 and 1, to standardize the dataset.
 
-The output dataset represents an array of binary values representing the output of each image (1 for a cat, 0 for not a cat). To create a trained Artificial Neural Network model 
-on this dataset, the model requires only 1 output neuron - representing the chance of being a cat. By using the Sigmoid Transfer function, a number is outputted between one and zero 
-for the neuron, if the neuron's value is closer to 1 it predicts a cat, otherwise it predicts not a cat - this is binary classification.
+The output dataset represents an array of binary values representing the output of each image (1 for a cat, 0 for not a cat). To create a trained Artificial Neural Network 
+model on this dataset, the model requires only 1 output neuron - representing the chance of being a cat. By using the Sigmoid Transfer function, a number is outputted between 
+one and zero for the neuron, if the neuron's value is closer to 1 it predicts a cat, otherwise it predicts not a cat - this is binary classification.
 
 \subsubsection{Theory behind using Graphics Cards to train Artificial Neural Networks}
 \vspace{5mm}
@@ -286,9 +295,10 @@ calculating the co-ordinates of 3D graphics, however they can be used for operat
 cores which act as an API to the GPU's computing to be used for any operations (in this case training the Artificial Neural Networks).
 
 \subsection{Interview}
+\label{sec:interview}
 
 In order to gain a better foundation for my investigation, and ensure my project would allow a user interested in Artificial Neural Networks to experiment with the 
-fundamentals of the network and conduct experiments, I presented my prototype code and interviewed the head of Artificial Intelligence at Cambridge Consultants. 
+fundamentals of the network and conduct experiments, I presented my prototype code and interviewed the head of Artificial Intelligence at Cambridge Consultants - Will Addison. 
 These were their responses:
 
 \begin{itemize}
@@ -331,9 +341,11 @@ These were their responses:
           A:"Yes, it would be nice to be able to save a model after training and have the option to load in a trained model for testing."
 \end{itemize}
 
-Based on the interview above, the following high-level objectives were formulated:
+\subsection{Project Objectives and Requirements}
 
-\subsection{Project Objectives}
+Based on the interview above in section \ref{sec:interview}, the following high-level objectives were formulated:
+
+\subsubsection{Objectives}
 
 \begin{tabular}{|p{0.13\linewidth}|p{0.87\linewidth}|}
       \hline
@@ -355,7 +367,7 @@ Based on the interview above, the following high-level objectives were formulate
       \hline
 \end{tabular}
 
-\subsection{Requirements}
+\subsubsection{Requirements}
 
 The following sets out the steps that must be taken to accomplish the above objectives:
 

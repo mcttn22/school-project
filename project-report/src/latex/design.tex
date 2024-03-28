@@ -14,11 +14,10 @@ The following design focuses have been made for the project:
 \begin{itemize}
     \item The program will support multiple platforms to run on, including Windows and Linux.
     \item The program will use python3 as its main programming language.
-    \item I will take an object-orientated approach to the project.
-    \item I will give an option to use either a Graphics Card or a CPU to train and test the Artificial Neural Networks.
+    \item An object-orientated approach is used in the design of the project.
+    \item An option will be given to use either a Graphics Card or a CPU to train and test the Artificial Neural Networks.
+    \item SysML will be utilised in the design of the architecture and class diagrams
 \end{itemize}
-
-I will also be using SysML for designing the following diagrams.
 
 \subsection{System Architecture}
 
@@ -42,9 +41,8 @@ user interface elements and the Neural Network representation.
 
 \subsubsection{UI Class Diagram}
 \label{UI-class-diagram}
-The classes utilised to implement the UI are shown in Figure \ref{fig:UI-class-diagram}. As can be seen the School\_Project\_Frame inherits the tk.Frame class - a tkinter base 
-class which provides 
-the basic frame functionality. The School\_Project\_Frame then contains a series of UI interaction specific Frames.
+The classes utilised to implement the UI are shown in Figure \ref{fig:UI-class-diagram}. As can be seen the School\_Project\_Frame inherits the tk.Frame class - the tkinter 
+base class which provides the basic frame functionality. The School\_Project\_Frame then contains a series of UI interaction specific Frames.
 
 \begin{figure}[h!]
 \centering
@@ -69,7 +67,7 @@ the layers within the Artificial Neural Network.
 
 \subsection{System Flow chart}
 
-The system flow is shown in Figure \ref{fig:system-flow-chart} below. When the program is initialised the Home Frame is displayed. The left-hand route - 
+The system flow is shown in Figure \ref{fig:system-flow-chart} below. When the program is initialised the Home Frame is first displayed. The left-hand route - 
 \textit{Hyper-Parameter Frame} and \textit{Training Frame} - provide the functionality to set hyper-parameters and train a new model. This model can be saved and loaded, 
 following the right-hand route, if desired before entering the \textit{Testing Frame} where the model can be applied to testing data and the model performance assessed. The 
 ability to save models is important as it allows for model training on a computer with a GPU and utilisation on a non-GPU-accelerated computer. This allowed an efficient build test cycle as I could build models on a desk-based, GPU accelerated PC, and undertake testing / demonstration on a laptop.
@@ -81,10 +79,10 @@ ability to save models is important as it allows for model training on a compute
 \label{fig:system-flow-chart}
 \end{figure}
 
-\subsection{Algorithms}
+\subsection{Algorithm implementation}
 
-The detail of algorithms underpinning the Artifical Neural Network are outlined in section \ref{sec:ann-theory}. To implement the algorithm each layer within the Artificial 
-Neural Network is represented as an instance of a \textit{FullyConnectedLayer} class each of which:
+The detail of algorithms underpinning the Artifical Neural Network are outlined in section \ref{sec:ann-theory}. To implement the algorithm within the project each layer 
+within the Artificial Neural Network is represented as an instance of a \textit{FullyConnectedLayer} class each of which:
 
 \begin{itemize}
     \item Contains a weight and bias matrix.
@@ -94,21 +92,21 @@ Neural Network is represented as an instance of a \textit{FullyConnectedLayer} c
     \item Has a \textit{backward\_propagation} function which passes the loss with respect to each layers output allowing adjustment of the weights and biases.
 \end{itemize}
 
-Each \textit{FullyConnectedLayer} class is then held within a doubly linked list contained within the \textit{Abstract Model Class}, which is a parent class of the 
+Each \textit{FullyConnectedLayer} class is held within a doubly linked list contained within the \textit{Abstract Model Class}, which is a parent class of the 
 data-specific classes \textit{MNIST Model}, \textit{Cat Recognition Model} and \textit{XOR Model}. The use of a doubly linked list allows for a user defined number of hidden 
 layers from 0 upwards and allows easy propagation of the list.
 
-The algorithm to train the Artificial Neural Network iterates over a user-defined number of epochs. 
-
-Each epoch starts with the presentation of data / an image to the input layer. The doubly linked list of layers is traversed calling the \textit{forward\_propagation} function 
-on each. When the output layer is reached the derivative of the \textit{Log-Loss} function is calculated alongside the absolute \textit{Loss} for debugging and learning rate 
-plotting. 
+The algorithm to train the Artificial Neural Network iterates over a user-defined number of epochs. Each epoch starts with the presentation of data to the input layer. The 
+doubly linked list of layers is then traversed calling the \textit{forward\_propagation} function on each. When the output layer is reached the derivative of the 
+\textit{Log-Loss} function is calculated alongside the absolute \textit{Loss} for debugging and learning rate plotting. 
 
 Following the calculation of the derivative of the \textit{Log-Loss} function, the doubly linked list is then iterated in reverse back through the layers calculating the loss 
 with respect to the weights and biases of each layer. This process is then used to adjust the weights and biases in each layer using the specified learning rate in an attempt 
 to reduce the loss value.
 
-\subsection{Data Structures and Techniques used}
+\subsection{Data Structures, Techniques and File Structures used}
+
+\subsubsection{Data structures}
 
 The following data structures are utilised in implementing the Artificial Neural Network:
 
@@ -122,19 +120,21 @@ The following data structures are utilised in implementing the Artificial Neural
           backwards through the network, as well as storing the first and last layer to start forward and backward propagation respectively.
 \end{itemize}
 
+\subsubsection{Techniques}
+
 Some techniques used include:
 
 \begin{itemize}
     \item Object-oriented design including inheritance, abstract classes and interfaces
     \item Encapsulation
     \item Decorators to wrap functions and modify behaviour
-    \item tkinter for interface design
+    \item tkinter for user interface design
     \item SQL for database access
 \end{itemize}
 
-\subsection{File Structure}
+\subsubsection{File Structure}
 
-I will use the following file structures to store necessary data for the program:
+I have used the following file structures to store necessary data for the program:
 
 \begin{itemize}
 	\item A JSON file \cite{w3json} for storing the default hyper-parameters for creating a new model for each dataset.
@@ -175,15 +175,15 @@ NOT NULL
 Below are some example queries used for interacting with the database:
 
 \begin{itemize}
-    \item Query the names of all saved models for a dataset with:
+    \item Query the names of all saved models for a dataset:
     \begin{minted}{sql}
     SELECT Name FROM Models WHERE Dataset=?;
     \end{minted}
-    \item Query the file location of a saved model with:
+    \item Query the file location of a saved model:
     \begin{minted}{sql}
     SELECT File_Location FROM Models WHERE Dataset=? AND Name=?;
     \end{minted}
-    \item Query the features of a saved model with:
+    \item Query the features of a saved model:
     \begin{minted}{sql}
     SELECT * FROM Models WHERE Dataset=? AND Name=?;
     \end{minted}
@@ -259,9 +259,8 @@ frames is shown in the technical solution section.
 
 \subsection{Hardware Design}
 
-To allow for faster training of an Artificial Neural Network, I will give the option to use a Graphics Card to train the Artificial Neural Network where available. 
-I will also give the option to load pretrained weights to run on less computationally powerful hardware using just the CPU as standard. This was implemented by using the CuPy 
-library.
+To allow for faster training of an Artificial Neural Network, I gave the option to use a Graphics Card to train the Artificial Neural Network where available. I also gave the 
+option to load pretrained weights to run on less computationally powerful hardware using just the CPU as standard. This was implemented by using the CuPy library.
 
 \subsection{Workflow and source control}
 

@@ -7,8 +7,62 @@
 \clearpage
 \section{Testing}
 
-Testing on the project consists of manual testing, where the inputs to frames were tested to ensure correct behaviour and error handling, and automated testing through the 
-use of unit tests that run upon every commit to GitHub.
+Testing on the project source code consists of manual testing, where the inputs to frames were tested to ensure correct behaviour and error handling, and automated testing 
+through the use of unit tests that run upon every commit to GitHub.
+
+\subsubsection{Summary of tests}
+
+\begin{tabular}{|p{0.15\linewidth}|p{0.76\linewidth}|p{0.09\linewidth}|}
+	\hline
+	\textbf{Test Type} & \textbf{Description} & \textbf{Result} \\
+	\hline
+	Manual & Hyper Parameter Frame - Use GPU Validation & Pass \\
+	\hline
+	Manual & Hyper Parameter Frame - Non-Numeric Hidden Layers Shape Validation & Pass \\
+	\hline
+	Manual & Hyper Parameter Frame - Negative Hidden Layers Shape Validation & Pass \\
+	\hline
+	Manual & Hyper Parameter Frame - Invalid Delimiter Hidden Layers Shape Validation & Pass \\
+	\hline
+	Manual & Load Model Frame - Use GPU Validation & Pass \\
+	\hline
+	Manual & Test Frames - Taken Trained Model Name Validation & Pass \\
+	\hline
+	Manual & Test Frames - Empty Trained Model Name Validation & Pass \\
+	\hline
+	Manual & Test Frames - Invalid Delimiter Trained Model Name Validation & Pass \\
+	\hline
+	Unit & test\_database.py - test\_database\_structure & Pass \\
+	\hline
+	Unit & test\_database.py - test\_not\_null\_constraint & Pass \\
+	\hline
+	Unit & test\_database.py - test\_unique\_constraint & Pass \\
+	\hline
+	Unit & test\_database.py - test\_save\_load\_consistency & Pass \\
+	\hline
+	Unit & test\_model.py - test\_train\_dataset\_size & Pass \\
+	\hline
+	Unit & test\_model.py - test\_network\_shape & Pass \\
+	\hline
+	Unit & test\_model.py - test\_learning\_rates & Pass \\
+	\hline
+	Unit & test\_model.py - test\_relu\_model\_transfer\_types & Pass \\
+	\hline
+	Unit & test\_model.py - test\_sigmoid\_model\_transfer\_types & Pass \\
+	\hline
+	Unit & test\_model.py - test\_weight\_matrice\_shapes & Pass \\
+	\hline
+	Unit & test\_model.py - test\_biase\_matrice\_shapes & Pass \\
+	\hline
+	Unit & test\_model.py - test\_layer\_output\_shapes & Pass \\
+	\hline
+	Unit & test\_model.py - test\_save\_model & Pass \\
+	\hline
+	Unit & test\_tools.py - test\_relu & Pass \\
+	\hline
+	Unit & test\_tools.py - test\_sigmoid & Pass \\
+	\hline
+\end{tabular}
 
 \subsection{Manual Testing - Input Validation Testing}
 
@@ -383,7 +437,7 @@ Within the test package, I have written the following unit tests:
     
     \label{sec:models-utils-unit-tests}
     \item Unit tests for the utils subpackage of both the cpu and gpu subpackage of the models package. Similarly to the code for the cpu and gpu subpackage, it is 
-          only worth showing the code for the cpu version as both are very similar in functionality.
+          not shown as they are identical part from the call to NumPy for the CPU and CuPy for the GPU.
         \begin{itemize}
             \item test\_model.py module:
 				\begin{itemize}
@@ -678,16 +732,16 @@ Within the test package, I have written the following unit tests:
 
 \subsubsection{GitHub Automated Testing}
 
-With the following configuration programmed in the .github/workflows/tests.yml file, the unit tests are run automatically on GitHub servers after each commit that is pushed to GitHub, 
-and the status of the tests (either passing or failing) can be viewed on the repository's page. This automatic testing allows for a faster workflow and allows me to identify which changes 
-(commits) cause issues within the code, allowing for easier maintenance of the project.
+With the following configuration entered in the .github/workflows/tests.yml file, the unit tests are run automatically on GitHub servers after each commit that is pushed to 
+GitHub, and the status of the tests (either passing or failing) can be viewed on the repository's page. This automatic testing allows for a faster workflow and allows me to 
+identify which changes (commits) cause issues within the code, allowing for easier maintenance of the project.
 
 \inputminted{yaml}{./.github/workflows/tests.yml}
 
 \subsubsection{Docker}
 
-I also provide a basic Dockerfile and instructions for its use in the README.md file, so that the project can be quickly run and tested in Docker containers. Below 
-shows the contents of the basic Dockerfile:
+Basic Dockerfile instructions are included for its use in the README.md file, this allows the project to be quickly run and tested in Docker containers. Below shows the 
+contents of the basic Dockerfile:
 
 \inputminted{docker}{./Dockerfile}
 
