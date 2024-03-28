@@ -278,10 +278,10 @@ classification, where the model must predict one of 10 classes (in this case, ea
 
 \subsubsection{Cat dataset}
 
-I have also used a dataset of images of cats sourced from https://github.com/marcopeix~\cite{catdatabase}, where each image is classified as either a cat or not a cat. The 
-dataset consists of 209 input images, made up from 64x64 pixels with each pixel having an value from 0 to 255. To normalise the images into a suitable format to be input into 
-the Artificial Neural Network, each image's matrix of values is 'flattened' into a 1 dimensional matrix of values, where each element is divided by 255 (the maximum 8 bit 
-value) to a number between 0 and 1, to standardize the dataset.
+I have also used a dataset of images of cats sourced from \newline https://github.com/marcopeix \cite{catdatabase}, where each image is classified as either a cat or not a 
+cat. The dataset consists of 209 input images, made up from 64x64 pixels with each pixel having an value from 0 to 255. To normalise the images into a suitable format to be 
+input into the Artificial Neural Network, each image's matrix of values is 'flattened' into a 1 dimensional matrix of values, where each element is divided by 255 (the 
+maximum 8 bit value) to a number between 0 and 1, to standardize the dataset.
 
 The output dataset represents an array of binary values representing the output of each image (1 for a cat, 0 for not a cat). To create a trained Artificial Neural Network 
 model on this dataset, the model requires only 1 output neuron - representing the chance of being a cat. By using the Sigmoid Transfer function, a number is outputted between 
